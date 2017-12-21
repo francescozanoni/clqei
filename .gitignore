@@ -13,3 +13,4 @@ yarn-error.log
 /public/.htaccess
 public/phpliteadmin/*
 !public/phpliteadmin/phpliteadmin.config.clqei.php
+phpunit.xml

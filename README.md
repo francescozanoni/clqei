@@ -3,6 +3,7 @@
 Clinical Learning Quality Environment Inventory
 
 ### Installation
+
     composer install
     
     cp .env.example .env
@@ -20,9 +21,13 @@ Clinical Learning Quality Environment Inventory
     
 
 ### Local deployment
+
     cp public/.htaccess.example .htaccess
     php artisan serve
 
+
 ### Production deployment
+
 Change password of user administrator@example.com.
+
 Change the administrator password of PHPLiteAdmin.
