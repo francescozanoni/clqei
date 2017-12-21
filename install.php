@@ -59,7 +59,7 @@ $file = file_get_contents($urls['phpliteadmin']);
 file_put_contents(sys_get_temp_dir() . '/phpliteadmin.zip', $file);
 $zip = new ZipArchive();
 if ($zip->open(sys_get_temp_dir() . '/phpliteadmin.zip') === true) {
-    $zip->extractTo(__DIR__ . '/public/lib/phpliteadmin/');
+    $zip->extractTo(__DIR__ . '/public/phpliteadmin/');
     $zip->close();
 }
 unlink(sys_get_temp_dir() . '/phpliteadmin.zip');
@@ -73,7 +73,7 @@ echo 'Application URL? (e.g.: http://localhost/clqei) ';
 $applicationUrl = trim(fgets(STDIN));
 $file = file_get_contents(__DIR__ . '/.env');
 $file = preg_replace('#http://localhost#', $applicationUrl, $file);
-file_put_contents(__DIR__ . '/application/configs/application.ini', $file);
+file_put_contents(__DIR__ . '/.env', $file);
 echo PHP_EOL;
 echo 'Base URL? (e.g.: / or /clqei) ';
 $baseUrl = trim(fgets(STDIN));

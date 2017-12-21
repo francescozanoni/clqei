@@ -21,3 +21,8 @@ Clinical Learning Quality Environment Inventory
 ### Production deployment
 
 Change password of user administrator@example.com.
+
+
+# Test
+
+    cp phpunit.xml.example phpunit.xml
