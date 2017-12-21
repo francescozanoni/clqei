@@ -16,7 +16,12 @@ Clinical Learning Quality Environment Inventory
     chmod 777 database/database.sqlite
     
     php artisan migrate
+    php artisan db:seed
+    
 
 ### Local deployment
     cp public/.htaccess.example .htaccess
     php artisan serve
+
+### Production deployment
+Change password of user administrator@example.com.
