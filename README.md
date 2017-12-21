@@ -25,3 +25,4 @@ Clinical Learning Quality Environment Inventory
 
 ### Production deployment
 Change password of user administrator@example.com.
+Change the administrator password of PHPLiteAdmin.
