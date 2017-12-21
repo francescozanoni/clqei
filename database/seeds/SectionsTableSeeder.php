@@ -16,6 +16,11 @@ class SectionsTableSeeder extends Seeder
         // @todo move to an external file, maybe JSON
 
         DB::table('sections')->insert([
+            'id' => 0,
+            'text' => 'Dati anagrafici',
+        ]);
+
+        DB::table('sections')->insert([
             'id' => 1,
             'text' => 'Qualità delle strategie tutoriali',
         ]);

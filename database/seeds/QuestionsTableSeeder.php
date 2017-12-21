@@ -15,6 +15,93 @@ class QuestionsTableSeeder extends Seeder
 
         // @todo move to an external file, maybe JSON
 
+        // Anagraphical data
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Genere',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Età',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Nazionalità',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Anno di corso',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'In corso',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Durata del tirocinio (in settimane)',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Ho svolto tirocinio prevalentemente',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Di quanti pazienti, in media, ti occupavi durante un turno?',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'C\'erano altri studenti durante la tua esperienza di tirocinio nella sede che hai frequentato?',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Se sì, che tipologia di studente?',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Se sì, quali studenti erano presenti?',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'È stata condotta la valutazione finale delle competenze raggiunte?',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Se sì, con quale esito?',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Quale era il modello tutoriale prevalente con cui sei stato/a seguito/a in tirocinio?',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Il tutor clinico a cui sono stata affidato/a era: (è opzionale indicare il nominativo)',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Se hai indicato il nome del tutor di tirocinio, indica il tuo nominativo',
+            'section_id' => 0,
+        ]);
+        DB::table('questions')->insert([
+            'id' => 1,
+            'text' => 'Quanto è stata efficace questa esperienza di tirocinio per apprendere le competenze cliniche attese?',
+            'section_id' => 0,
+        ]);
+
         // Section 1
         DB::table('questions')->insert([
             'id' => 1,
