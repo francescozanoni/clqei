@@ -10,7 +10,19 @@
 
                     <div class="panel-body">
 
-                        {!! BootForm::open() !!}
+                        {!! BootForm::open(['route' => 'compilations.store', 'method' => 'post']) !!}
+
+                        {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                There were some problems adding the category.<br />
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         {{-- Nav tabs --}}
                         <ul class="nav nav-tabs" role="tablist" id="myTabs">
@@ -52,7 +64,7 @@
 
                                                 {{-- Questions with less than 5 predefined answers are rendered as radio buttons --}}
                                                 {!! BootForm::radios(
-                                                's' . $section->id . '_q' . $question->id,
+                                                'q' . $question->id,
                                                 $questionCounter++ . '. ' . $question->text,
                                                 $question->answers->pluck('text', 'id')
                                                 ) !!}
@@ -61,7 +73,7 @@
 
                                                 {{-- Questions with more than 5 predefined answers are rendered as select boxes --}}
                                                 {!! BootForm::select(
-                                                's' . $section->id . '_q' . $question->id,
+                                                'q' . $question->id,
                                                 $questionCounter++ . '. ' . $question->text,
                                                 $question->answers->pluck('text', 'id')
                                                 ) !!}
@@ -72,7 +84,7 @@
 
                                             {{-- Questions without predefined answers are free text --}}
                                             {!! BootForm::text(
-                                            's' . $section->id . '_q' . $question->id,
+                                            'q' . $question->id,
                                             $questionCounter++ . '. ' . $question->text
                                             ) !!}
 
@@ -83,8 +95,6 @@
                                 </div>
                             @endforeach
                         </div>
-
-                        {!! Form::token() !!}
 
                         {!! BootForm::submit('Create!') !!}
 
