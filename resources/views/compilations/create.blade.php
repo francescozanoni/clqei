@@ -10,9 +10,9 @@
 
                     <div class="panel-body">
 
-                        {!! Form::open(['route' => 'compilations.store', 'method' => 'post']) !!}
+                        {!! BootForm::open() !!}
 
-                        <!-- Nav tabs -->
+                        {{-- Nav tabs --}}
                         <ul class="nav nav-tabs" role="tablist" id="myTabs">
                             @foreach ($sections as $section)
                                 <li role="presentation"
@@ -27,7 +27,13 @@
                             @endforeach
                         </ul>
 
-                        <!-- Tab panes -->
+                        @php
+                        // This variable is used in oder not to rely on question IDs,
+                        // that may be non-continuous.
+                        $questionCounter = 1;
+                        @endphp
+
+                        {{-- Tab panes --}}
                         <div class="tab-content">
                             @foreach ($sections as $section)
                                 <div role="tabpanel"
@@ -37,42 +43,52 @@
                                      class="tab-pane"
                                      @endif
                                      id="section_{{ $section->id }}">
-                                    {{ $section->text }}
+
+                                    @foreach ($section->questions as $question)
+
+                                        @if ($question->answers->isEmpty() === false)
+
+                                            @if (count($question->answers) < 5)
+
+                                                {{-- Questions with less than 5 predefined answers are rendered as radio buttons --}}
+                                                {!! BootForm::radios(
+                                                's' . $section->id . '_q' . $question->id,
+                                                $questionCounter++ . '. ' . $question->text,
+                                                $question->answers->pluck('text', 'id')
+                                                ) !!}
+
+                                            @else
+
+                                                {{-- Questions with more than 5 predefined answers are rendered as select boxes --}}
+                                                {!! BootForm::select(
+                                                's' . $section->id . '_q' . $question->id,
+                                                $questionCounter++ . '. ' . $question->text,
+                                                $question->answers->pluck('text', 'id')
+                                                ) !!}
+
+                                            @endif
+
+                                        @else
+
+                                            {{-- Questions without predefined answers are free text --}}
+                                            {!! BootForm::text(
+                                            's' . $section->id . '_q' . $question->id,
+                                            $questionCounter++ . '. ' . $question->text
+                                            ) !!}
+
+                                        @endif
+
+                                    @endforeach
+
                                 </div>
                             @endforeach
                         </div>
 
                         {!! Form::token() !!}
-                        {!! Form::submit('Create!') !!}
-                        {!! Form::close() !!}
 
-                                <!--
-                        <form class="form-horizontal" method="POST" action="{{ route('compilations.store') }}">
-                            {{ csrf_field() }}
+                        {!! BootForm::submit('Create!') !!}
 
-                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                    @if ($errors->has('email'))
-                                <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Login
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        -->
+                        {!! BootForm::close() !!}
 
                     </div>
                 </div>

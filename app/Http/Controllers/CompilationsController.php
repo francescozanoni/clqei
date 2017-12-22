@@ -25,14 +25,19 @@ class CompilationsController extends Controller
      */
     public function create()
     {
-        $sections = Section::where('active', true)->get();
+        // Fetch all active sections,
+        // with their questions and answers.
+        // @todo filter active questions and active answers
+        $sections = Section::where('active', true)
+            ->with('questions.answers')
+            ->get();
         return view('compilations.create', ['sections' => $sections]);
     }
 
     /**
      * Store a newly created compilation in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +48,7 @@ class CompilationsController extends Controller
     /**
      * Display the specified compilation.
      *
-     * @param  \App\Models\Compilation  $compilation
+     * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
     public function show(Compilation $compilation)
@@ -54,7 +59,7 @@ class CompilationsController extends Controller
     /**
      * Show the form for editing the specified compilation.
      *
-     * @param  \App\Models\Compilation  $compilation
+     * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
     public function edit(Compilation $compilation)
@@ -65,8 +70,8 @@ class CompilationsController extends Controller
     /**
      * Update the specified compilation in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Compilation  $compilation
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Compilation $compilation)
@@ -77,7 +82,7 @@ class CompilationsController extends Controller
     /**
      * Remove the specified compilation from storage.
      *
-     * @param  \App\Models\Compilation  $compilation
+     * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
     public function destroy(Compilation $compilation)

@@ -168,7 +168,7 @@ return [
          * Package Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
-        Core\BootstrapForm\BootstrapFormServiceProvider::class,
+        Watson\BootstrapForm\BootstrapFormServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -231,6 +231,7 @@ return [
         // Package aliases
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'BootForm' => Watson\BootstrapForm\Facades\BootstrapForm::class,
 
     ],
 

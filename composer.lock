@@ -4,46 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "68e78b6d83e3c803d0a80fa22c9c1de1",
+    "content-hash": "195d7b34813a50dc07bb4ab34b627182",
     "packages": [
-        {
-            "name": "core-system/bootstrap-form",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/core-system/bootstrap-form.git",
-                "reference": "6423c6865d69636c86c08b431f0e8aa853ce0624"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/core-system/bootstrap-form/zipball/6423c6865d69636c86c08b431f0e8aa853ce0624",
-                "reference": "6423c6865d69636c86c08b431f0e8aa853ce0624",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^5.2",
-                "laravelcollective/html": "^5.4",
-                "php": ">=5.5.9"
-            },
-            "type": "package",
-            "autoload": {
-                "psr-4": {
-                    "Core\\BootstrapForm\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Martin Hrášek",
-                    "email": "martin@hrasek.email"
-                }
-            ],
-            "description": "Laravel Collective 5 based Twitter Bootstrap 3 Form service.",
-            "time": "2017-12-12T16:49:36+00:00"
-        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -2254,6 +2216,65 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
+        },
+        {
+            "name": "watson/bootstrap-form",
+            "version": "1.1.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dwightwatson/bootstrap-form.git",
+                "reference": "dfe57bb75730bab588ec62c78e51c130804f0a6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dwightwatson/bootstrap-form/zipball/dfe57bb75730bab588ec62c78e51c130804f0a6b",
+                "reference": "dfe57bb75730bab588ec62c78e51c130804f0a6b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5.0",
+                "illuminate/session": "~5.0",
+                "illuminate/support": "~5.0",
+                "laravelcollective/html": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~4.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Watson\\BootstrapForm\\BootstrapFormServiceProvider"
+                    ],
+                    "aliases": {
+                        "BootForm": "Watson\\BootstrapForm\\Facades\\BootstrapForm"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Watson\\BootstrapForm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dwight Watson",
+                    "email": "dwightwatson@me.com"
+                }
+            ],
+            "description": "Laravel 5 form wrappers for Bootstrap 3.",
+            "keywords": [
+                "bootstrap",
+                "form",
+                "laravel"
+            ],
+            "time": "2017-12-16T09:21:34+00:00"
         }
     ],
     "packages-dev": [
