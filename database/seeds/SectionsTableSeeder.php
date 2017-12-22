@@ -13,32 +13,16 @@ class SectionsTableSeeder extends Seeder
     public function run()
     {
 
-        // @todo move to an external file, maybe JSON
+        // @todo make the chosen file dynamic, based on configuration
+        $questionnaire = json_decode(file_get_contents(__DIR__ . '/it.json'), true);
 
-        DB::table('sections')->insert([
-            'id' => 0,
-            'text' => 'Dati anagrafici',
-        ]);
+        foreach (array_keys($questionnaire) as $index => $section) {
+            DB::table('sections')->insert([
+                'id' => ($index + 1),
+                'text' => $section,
+                'position' => ($index + 1),
+            ]);
+        }
 
-        DB::table('sections')->insert([
-            'id' => 1,
-            'text' => 'Qualità delle strategie tutoriali',
-        ]);
-        DB::table('sections')->insert([
-            'id' => 2,
-            'text' => 'Opportunità di apprendimento',
-        ]);
-        DB::table('sections')->insert([
-            'id' => 3,
-            'text' => 'Sicurezza e qualità dell\'assistenza',
-        ]);
-        DB::table('sections')->insert([
-            'id' => 4,
-            'text' => 'Auto-apprendimento'
-        ]);
-        DB::table('sections')->insert([
-            'id' => 5,
-            'text' => 'Qualità dell\'ambiente di apprendimento',
-        ]);
     }
 }

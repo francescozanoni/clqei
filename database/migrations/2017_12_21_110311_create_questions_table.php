@@ -14,9 +14,12 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement();
             $table->string('text')->nullable(false);
             $table->unsignedInteger('section_id')->nullable(false);
+            // Position of the question within the set of questions of a section (1...N)
+            $table->unsignedTinyInteger('position')->nullable(false);
+            // @todo find how to create a unique index on fields section_id and position
         });
     }
 

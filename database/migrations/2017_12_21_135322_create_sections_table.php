@@ -14,8 +14,10 @@ class CreateSectionsTable extends Migration
     public function up()
     {
         Schema::create('sections', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement();
             $table->string('text')->nullable(false);
+            // Position of the section within the set of section (1...N)
+            $table->unsignedTinyInteger('position')->nullable(false)->unique();
         });
     }
 

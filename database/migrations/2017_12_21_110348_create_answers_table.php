@@ -14,10 +14,12 @@ class CreateAnswersTable extends Migration
     public function up()
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement();
             $table->string('text')->nullable(false);
-            $table->enum('code', ['A', 'B', 'C', 'D'])->nullable(false);
             $table->unsignedInteger('question_id')->nullable(false);
+            // Position of the answer within the set of answers of a question (1...N)
+            $table->unsignedTinyInteger('position')->nullable(false);
+            // @todo find how to create a unique index on fields question_id and position
         });
     }
 
