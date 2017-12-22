@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedTinyInteger('position')->nullable(false);
             // @todo find how to create a unique index on fields section_id and position
             $table->foreign('section_id')->references('id')->on('sections');
+            $table->boolean('active')->nullable(false)->default(true);
         });
     }
 

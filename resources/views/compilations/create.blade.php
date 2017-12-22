@@ -5,11 +5,43 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+
                     <div class="panel-heading">Create</div>
 
                     <div class="panel-body">
 
                         {!! Form::open(['route' => 'compilations.store', 'method' => 'post']) !!}
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                            @foreach ($sections as $section)
+                                <li role="presentation"
+                                    @if ($section->id === 1)
+                                    class="active"
+                                        @endif
+                                >
+                                    <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
+                                       role="tab"
+                                       data-toggle="tab">{{ $section->text }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            @foreach ($sections as $section)
+                                <div role="tabpanel"
+                                     @if ($section->id === 1)
+                                     class="tab-pane active"
+                                     @else
+                                     class="tab-pane"
+                                     @endif
+                                     id="section_{{ $section->id }}">
+                                    {{ $section->text }}
+                                </div>
+                            @endforeach
+                        </div>
+
                         {!! Form::token() !!}
                         {!! Form::submit('Create!') !!}
                         {!! Form::close() !!}

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compilation;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class CompilationsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the compilations.
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,17 +19,18 @@ class CompilationsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new compilation.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('compilations.create');
+        $sections = Section::where('active', true)->get();
+        return view('compilations.create', ['sections' => $sections]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created compilation in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -39,7 +41,7 @@ class CompilationsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified compilation.
      *
      * @param  \App\Models\Compilation  $compilation
      * @return \Illuminate\Http\Response
@@ -50,7 +52,7 @@ class CompilationsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified compilation.
      *
      * @param  \App\Models\Compilation  $compilation
      * @return \Illuminate\Http\Response
@@ -61,7 +63,7 @@ class CompilationsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified compilation in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Compilation  $compilation
@@ -73,7 +75,7 @@ class CompilationsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified compilation from storage.
      *
      * @param  \App\Models\Compilation  $compilation
      * @return \Illuminate\Http\Response
