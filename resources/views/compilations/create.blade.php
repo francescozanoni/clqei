@@ -15,7 +15,7 @@
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
-                                There were some problems adding the category.<br />
+                                There were some problems adding the category.<br/>
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -75,7 +75,7 @@
                                                 {!! BootForm::select(
                                                 'q' . $question->id,
                                                 $questionCounter++ . '. ' . $question->text,
-                                                $question->answers->pluck('text', 'id')
+                                                collect([0 => ''])->merge($question->answers->pluck('text', 'id'))
                                                 ) !!}
 
                                             @endif

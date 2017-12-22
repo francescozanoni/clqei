@@ -90,7 +90,7 @@ class CompilationsController extends Controller
          *     [q41] => 251
          * )
          */
-        print_r($request->all());exit;
+        // print_r($request->all());exit;
 
         /* http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
         $category = new Category;
