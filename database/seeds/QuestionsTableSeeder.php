@@ -19,18 +19,22 @@ class QuestionsTableSeeder extends Seeder
         $sectionId = 1;
         $questionId = 1;
 
+        $dataToInsert = [];
+
         foreach ($questionnaire as $section => $questions) {
             foreach (array_keys($questions) as $index => $question) {
-                DB::table('questions')->insert([
+                $dataToInsert[] = [
                     'id' => $questionId,
                     'text' => $question,
                     'section_id' => $sectionId,
                     'position' => ($index + 1),
-                ]);
+                ];
                 $questionId++;
             }
             $sectionId++;
         }
+
+        DB::table('questions')->insert($dataToInsert);
 
     }
 }

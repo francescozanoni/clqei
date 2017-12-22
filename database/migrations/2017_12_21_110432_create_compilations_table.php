@@ -14,10 +14,11 @@ class CreateCompilationsTable extends Migration
     public function up()
     {
         Schema::create('compilations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->autoIncrement();
             $table->unsignedInteger('student_id')->nullable(false);
             // @todo choose table structure: compilations stored vertically or horizontally?
             $table->timestamps();
+            $table->foreign('student_id')->references('id')->on('students');
         });
     }
 

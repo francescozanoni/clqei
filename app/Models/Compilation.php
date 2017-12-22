@@ -12,7 +12,15 @@ class Compilation extends Model
      */
     public function student()
     {
-        return $this->belongsTo('App\Student');
+        return $this->belongsTo('App\Models\Student');
+    }
+
+    /**
+     * Get the items of this compilation
+     */
+    public function items()
+    {
+        return $this->hasMany('App\Models\CompilationItem');
     }
 
 }

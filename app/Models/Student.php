@@ -12,7 +12,7 @@ class Student extends Model
      */
     public function compilations()
     {
-        return $this->hasMany('App\Compilation');
+        return $this->hasMany('App\Models\Compilation');
     }
 
 }

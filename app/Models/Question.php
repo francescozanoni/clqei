@@ -14,7 +14,7 @@ class Question extends Model
      */
     public function answers()
     {
-        return $this->hasMany('App\Answer');
+        return $this->hasMany('App\Models\Answer');
     }
 
     /**
@@ -22,7 +22,7 @@ class Question extends Model
      */
     public function section()
     {
-        return $this->belongsTo('App\Section');
+        return $this->belongsTo('App\Models\Section');
     }
 
 }
