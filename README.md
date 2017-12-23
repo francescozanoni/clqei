@@ -9,6 +9,7 @@ Clinical Learning Quality Environment Inventory
     
     php install.php
     
+    php artisan key:generate
     php artisan migrate
     php artisan db:seed
     
