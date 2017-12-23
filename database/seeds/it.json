@@ -1,11 +1,11 @@
 {
   "Dati anagrafici":
   {
-    "Genere": ["Maschio", "Femmina"],
+    "Genere": ["maschio", "femmina"],
     "Età": [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100],
-    "Nazionalità": ["Italiana", "Altro"],
+    "Nazionalità": ["italiana", "altro"],
     "Anno di corso": ["1°", "2°", "3°"],
-    "In corso": ["Regolare", "Fuori corso"]
+    "In corso": ["regolare", "fuori corso"]
   },
   "Dati tirocinio":
   {
@@ -13,184 +13,183 @@
     "Reparto di tirocinio": "",
     "Durata del tirocinio (in settimane)": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15],
     "Ho svolto tirocinio prevalentemente": [
-      "Diurno (esempio: mattina e/o pomeriggio)",
-      "In turno (anche di notte)"
+      "diurno (esempio: mattina e/o pomeriggio)",
+      "in turno (anche di notte)"
     ],
     "Di quanti pazienti, in media, ti occupavi durante un turno?": [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     "C'erano altri studenti durante la tua esperienza di tirocinio nella sede che hai frequentato?": [
-      "Sì",
-      "No, ero l'unico/a studente (ignora le prossime due domande)"
+      "sì",
+      "no, ero l'unico/a studente (ignora le prossime due domande)"
     ],
     "Se sì, che tipologia di studente?": [
-      "C'erano studenti di infermieristica del mio stesso anno di corso",
-      "C'erano studenti di infermieristica di altri anni di corso",
-      "C'erano studenti di altre professioni sanitarie",
-      "C'erano studenti di medicina/specializzandi"
+      "studenti di infermieristica del mio stesso anno di corso",
+      "studenti di infermieristica di altri anni di corso",
+      "studenti di altre professioni sanitarie",
+      "studenti di medicina/specializzandi"
     ],
     "Se sì, quali studenti erano presenti?": "",
-    "È stata condotta la valutazione finale delle competenze raggiunte?": ["Sì", "No"],
+    "È stata condotta la valutazione finale delle competenze raggiunte?": ["sì", "no"],
     "Se sì, con quale esito (in trentesimi)?": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
     "Quale era il modello tutoriale prevalente con cui sei stato/a seguito/a in tirocinio?": [
-      "Ero affidato/a a un infermiere guida (o un tutore clinico) di tirocinio ",
-      "Ero affidato/a al gruppo degli infermieri, che di volta in volta mi seguivano",
-      "Ero affidato/a al coordinatore che mi seguiva",
-      "Ero affidato/a al coordinatore che a sua volta mi assegnava ad un infermiere",
-      "Il mio tutor universitario veniva in reparto con me"
+      "ero affidato/a a un infermiere guida (o un tutor clinico) di tirocinio ",
+      "ero affidato/a al gruppo degli infermieri, che di volta in volta mi seguivano",
+      "ero affidato/a al coordinatore che mi seguiva",
+      "ero affidato/a al coordinatore che a sua volta mi assegnava ad un infermiere",
+      "il mio tutor universitario veniva in reparto con me"
     ],
     "Il tutor clinico a cui sono stato/a affidato/a era (è opzionale indicare il nominativo)": "",
-    "Se hai indicato il nome del tutor di tirocinio, indica il tuo nominativo": "",
     "Quanto è stata efficace questa esperienza di tirocinio per apprendere le competenze cliniche attese?": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ]
   },
   "Qualità delle strategie tutoriali":
   {
     "Il tutor* ha esplicitato i ragionamenti che sottendevano le decisioni assistenziali": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Il tutor* mi poneva domande che mi aiutavano nel ragionamento clinico": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Ho avuto la possibilità di condividere con il tutor* le emozioni provate durante l'esperienza di tirocinio": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Il tutor* ha mediato la mia relazione con i pazienti/famigliari quando la situazione era difficile": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Il tutor* era entusiasta di insegnarmi la pratica infermieristica": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Nella valutazione finale, il tutor* è stato/a coerente con i feedback che mi ha fornito durante il tirocinio": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ]
   },
   "Opportunità di apprendimento":
   {
     "Ho percepito fiducia nei miei confronti": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Ho potuto sperimentarmi in autonomia nelle attività": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Mi è stato affidato un adeguato livello di responsabilità": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Ho avuto la possibilità di esprimere le mie opinioni e riflessioni critiche": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Mi sono sentito/a rispettato/a come studente": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Sono stato incoraggiato/a nei momenti di difficoltà": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ]
   },
   "Sicurezza e qualità dell'assistenza":
   {
     "Gli infermieri avevano buoni standard di pratica professionale": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Era garantita la sicurezza dei pazienti/residenti/ospiti": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "I dispositivi di protezione individuali e di sicurezza erano accessibili": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Gli infermieri mostravano passione per la professione": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ]
   },
   "Auto-apprendimento":
   {
     "Mi sono stati offerti incontri sui miei bisogni di apprendimento": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Sono stato/a sollecitato/a ad elaborare il mio piano di autoapprendimento": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Sono stato/a sollecitato/a ad auto-valutarmi": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ]
   },
   "Qualità dell'ambiente di apprendimento":
   {
     "Questa sede è stata per me un buon ambiente di apprendimento": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Complessivamente sono soddisfatto/a della mia esperienza di tirocinio": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ],
     "Vorrei tornare un giorno in questo contesto a lavorare": [
-      "Per nulla",
-      "Abbastanza",
-      "Molto",
-      "Moltissimo"
+      "per nulla",
+      "abbastanza",
+      "molto",
+      "moltissimo"
     ]
   }
 }
