@@ -39,157 +39,88 @@
     ],
     "Il tutor clinico a cui sono stato/a affidato/a era (è opzionale indicare il nominativo)": "",
     "Quanto è stata efficace questa esperienza di tirocinio per apprendere le competenze cliniche attese?": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ]
   },
   "Qualità delle strategie tutoriali":
   {
     "Il tutor* ha esplicitato i ragionamenti che sottendevano le decisioni assistenziali": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Il tutor* mi poneva domande che mi aiutavano nel ragionamento clinico": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Ho avuto la possibilità di condividere con il tutor* le emozioni provate durante l'esperienza di tirocinio": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Il tutor* ha mediato la mia relazione con i pazienti/famigliari quando la situazione era difficile": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Il tutor* era entusiasta di insegnarmi la pratica infermieristica": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Nella valutazione finale, il tutor* è stato/a coerente con i feedback che mi ha fornito durante il tirocinio": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ]
   },
   "Opportunità di apprendimento":
   {
     "Ho percepito fiducia nei miei confronti": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Ho potuto sperimentarmi in autonomia nelle attività": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Mi è stato affidato un adeguato livello di responsabilità": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Ho avuto la possibilità di esprimere le mie opinioni e riflessioni critiche": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Mi sono sentito/a rispettato/a come studente": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Sono stato incoraggiato/a nei momenti di difficoltà": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ]
   },
   "Sicurezza e qualità dell'assistenza":
   {
     "Gli infermieri avevano buoni standard di pratica professionale": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Era garantita la sicurezza dei pazienti/residenti/ospiti": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "I dispositivi di protezione individuali e di sicurezza erano accessibili": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Gli infermieri mostravano passione per la professione": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ]
   },
   "Auto-apprendimento":
   {
     "Mi sono stati offerti incontri sui miei bisogni di apprendimento": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Sono stato/a sollecitato/a ad elaborare il mio piano di autoapprendimento": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Sono stato/a sollecitato/a ad auto-valutarmi": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ]
   },
   "Qualità dell'ambiente di apprendimento":
   {
     "Questa sede è stata per me un buon ambiente di apprendimento": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Complessivamente sono soddisfatto/a della mia esperienza di tirocinio": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ],
     "Vorrei tornare un giorno in questo contesto a lavorare": [
-      "per nulla",
-      "abbastanza",
-      "molto",
-      "moltissimo"
+      "per nulla", "abbastanza", "molto", "moltissimo"
     ]
   }
 }
