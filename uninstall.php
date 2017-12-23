@@ -19,7 +19,7 @@ $filePathsToDelete = [
 // Check all file paths are correct.
 foreach ($filePathsToDelete as $filePath) {
     if (file_exists($filePath) === false) {
-        echo $filePath . ' does not exist' . PHP_EOL;
+        die($filePath . ' does not exist' . PHP_EOL);
     }
     if (is_writable($filePath) === false) {
         die($filePath . ' is not writable' . PHP_EOL);

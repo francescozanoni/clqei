@@ -1,6 +1,28 @@
 #!/usr/bin/env php
 <?php
 
+$filePathsToCheck = [
+
+	__DIR__ . '/public/.htaccess',
+
+	__DIR__ . '/database/database.sqlite',
+
+	__DIR__ . '/.env',
+
+	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.php',
+	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.sample.php',
+	__DIR__ . '/public/phpliteadmin/phpliteadmin.php',
+	__DIR__ . '/public/phpliteadmin/readme.md',
+
+];
+
+// Ensure all previous file paths do not exist.
+foreach ($filePathsToCheck as $filePath) {
+    if (file_exists($filePath) === true) {
+        die($filePath . ' already exists' . PHP_EOL);
+    }
+}
+
 # #####################################################
 
 # Other software URLs
