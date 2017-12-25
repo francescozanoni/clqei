@@ -58,19 +58,31 @@
 
                                     @foreach ($section->questions as $question)
 
-                                        @if ($question->answers->isEmpty() === false)
+                                        @if ($question->type === 'text')
 
-                                            @if ($question->type === 'multiple_choice')
+                                            {{-- Questions without predefined answers are free text --}}
+                                            {!! BootForm::text(
+                                            'q' . $question->id,
+                                            $questionCounter++ . '. ' . $question->text
+                                            ) !!}
 
-                                                {!! BootForm::checkboxes(
+                                        @endif
+                                        
+                                        @if ($question->type === 'multiple_choice')
+
+                                            {!! BootForm::checkboxes(
                                                 'q' . $question->id . '[]',
                                                 $questionCounter++ . '. ' . $question->text,
                                                 $question->answers->pluck('text', 'id')
                                                 ) !!}
 
-                                            @elseif (count($question->answers) < 5)
+                                        @endif
+                                        
+                                        @if ($question->type === 'single_choice')
 
-                                                {{-- Questions with less than 5 predefined answers are rendered as radio buttons --}}
+                                            @if (count($question->answers) < 5)
+
+                                                {{-- Questions with less than 5 answers are rendered as radio buttons --}}
                                                 {!! BootForm::radios(
                                                 'q' . $question->id,
                                                 $questionCounter++ . '. ' . $question->text,
@@ -79,7 +91,7 @@
 
                                             @else
 
-                                                {{-- Questions with more than 5 predefined answers are rendered as select boxes --}}
+                                                {{-- Questions with 5 or more answers are rendered as select boxes --}}
                                                 {!! BootForm::select(
                                                 'q' . $question->id,
                                                 $questionCounter++ . '. ' . $question->text,
@@ -87,14 +99,6 @@
                                                 ) !!}
 
                                             @endif
-
-                                        @else
-
-                                            {{-- Questions without predefined answers are free text --}}
-                                            {!! BootForm::text(
-                                            'q' . $question->id,
-                                            $questionCounter++ . '. ' . $question->text
-                                            ) !!}
 
                                         @endif
 
