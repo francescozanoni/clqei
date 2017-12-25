@@ -13,6 +13,12 @@ Clinical Learning Quality Environment Inventory
     php artisan migrate
     php artisan db:seed
     
+#### Manual steps
+
+- add stage locations
+- add stage wards
+- add non-student users
+
 
 ### Local deployment
 

@@ -9,8 +9,8 @@
   },
   "Dati tirocinio":
   {
-    "Sede di tirocinio": "",
-    "Reparto di tirocinio": "",
+    "Sede di tirocinio": ["TEST"],
+    "Reparto di tirocinio": ["TEST"],
     "Durata del tirocinio (in settimane)": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15],
     "Ho svolto tirocinio prevalentemente": [
       "diurno (esempio: mattina e/o pomeriggio)",
