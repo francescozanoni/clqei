@@ -1,0 +1,56 @@
+[
+  [
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required']
+  ],
+  [
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice'],
+    ['text'],
+    ['single_choice', 'required'],
+    ['single_choice'],
+    ['single_choice', 'required'],
+    ['text'],
+    ['single_choice', 'required']
+  ],
+  [
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required']
+  ],
+  [
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required']
+  ],
+  [
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required']
+  ],
+  [
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required']
+  ],
+  [
+    ['single_choice', 'required'],
+    ['single_choice', 'required'],
+    ['single_choice', 'required']
+  ]
+]
