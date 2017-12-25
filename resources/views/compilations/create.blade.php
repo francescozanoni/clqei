@@ -62,8 +62,8 @@
 
                                             @if ($question->type === 'multiple_choice')
 
-                                                {!! BootForm::checkbox(
-                                                'q' . $question->id,
+                                                {!! BootForm::checkboxes(
+                                                'q' . $question->id . '[]',
                                                 $questionCounter++ . '. ' . $question->text,
                                                 $question->answers->pluck('text', 'id')
                                                 ) !!}
