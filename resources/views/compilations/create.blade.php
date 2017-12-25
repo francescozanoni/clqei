@@ -60,7 +60,15 @@
 
                                         @if ($question->answers->isEmpty() === false)
 
-                                            @if (count($question->answers) < 5)
+                                            @if ($question->type === 'multiple_choice')
+
+                                                {!! BootForm::checkbox(
+                                                'q' . $question->id,
+                                                $questionCounter++ . '. ' . $question->text,
+                                                $question->answers->pluck('text', 'id')
+                                                ) !!}
+
+                                            @elseif (count($question->answers) < 5)
 
                                                 {{-- Questions with less than 5 predefined answers are rendered as radio buttons --}}
                                                 {!! BootForm::radios(

@@ -15,6 +15,8 @@ class QuestionsTableSeeder extends Seeder
 
         // @todo make the chosen file dynamic, based on configuration
         $questionnaire = json_decode(file_get_contents(__DIR__ . '/it.json'), true);
+        
+        $metadata = json_decode(file_get_contents(__DIR__ . '/metadata.json'), true);
 
         $sectionId = 1;
         $questionId = 1;
@@ -26,6 +28,9 @@ class QuestionsTableSeeder extends Seeder
                 $dataToInsert[] = [
                     'id' => $questionId,
                     'text' => $question,
+                    // @todo improve type detection logic
+                    'type' => ($metadata[$sectionId - 1][$index][0]),
+                    'required' => (in_array('required', $metadata[$sectionId - 1][$index]) === true),
                     'section_id' => $sectionId,
                     'position' => ($index + 1),
                 ];
