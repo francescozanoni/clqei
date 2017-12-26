@@ -30,19 +30,23 @@ class StoreCompilationRequest extends FormRequest
         $rules = [];
 
         $questions = Question::where('active', true)->get();
+        
         foreach ($questions as $question) {
-            if (count($question->answers) > 0) {
-                $questionId = $question->id;
-                $rules['q' . $questionId] = [
-                    'required',
-                    Rule::exists('answers', 'id')->where(function ($query) use ($questionId) {
+            $questionId = $question->id;
+            $singleQuestionRules = [];
+            if ($question->required === true) {
+                $singleQuestionRules[] = 'required';
+            }
+            if ($question->type === 'single_choice' ||
+                $question->type === 'multiple_choice') {
+                $singleQuestionRules[] = Rule::exists('answers', 'id')->where(function ($query) use ($questionId) {
                         $query->where('question_id', $questionId)
                             ->where('active', true);
-                    })
-                ];
+                    });
             }
+            $rules['q' . $questionId] = $singleQuestionRules;
         }
-
+dd($rules);
         return $rules;
     }
 }
