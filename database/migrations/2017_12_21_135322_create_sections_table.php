@@ -18,7 +18,8 @@ class CreateSectionsTable extends Migration
             $table->string('text')->nullable(false);
             // Position of the section within the set of section (1...N)
             $table->unsignedTinyInteger('position')->nullable(false)->unique();
-            $table->boolean('active')->nullable(false)->default(true);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

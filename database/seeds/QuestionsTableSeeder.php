@@ -33,6 +33,7 @@ class QuestionsTableSeeder extends Seeder
                     'required' => (in_array('required', $metadata[$sectionId - 1][$index]) === true),
                     'section_id' => $sectionId,
                     'position' => ($index + 1),
+                    // @todo add default "created_at" value
                 ];
                 $questionId++;
             }

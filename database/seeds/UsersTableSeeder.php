@@ -13,9 +13,12 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Administrator',
+            'first_name' => 'Administrator',
+            'last_name' => '',
             'email' => 'administrator@example.com',
             'password' => bcrypt('admin'),
+            'role' => 'administrator',
         ]);
+        // @todo add default "created_at" value
     }
 }

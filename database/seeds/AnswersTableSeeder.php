@@ -32,6 +32,7 @@ class AnswersTableSeeder extends Seeder
                             'question_id' => $questionId,
                             'position' => ($index + 1),
                         ];
+                        // @todo add default "created_at" value
                         $answerId++;
                     }
                 }

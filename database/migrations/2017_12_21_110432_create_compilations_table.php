@@ -16,9 +16,9 @@ class CreateCompilationsTable extends Migration
         Schema::create('compilations', function (Blueprint $table) {
             $table->increments('id')->autoIncrement();
             $table->unsignedInteger('student_id')->nullable(false);
-            // @todo choose table structure: compilations stored vertically or horizontally?
-            $table->timestamps();
             $table->foreign('student_id')->references('id')->on('students');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

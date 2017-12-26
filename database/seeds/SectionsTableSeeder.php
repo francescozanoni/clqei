@@ -22,6 +22,7 @@ class SectionsTableSeeder extends Seeder
                 'text' => $section,
                 'position' => ($index + 1),
             ]);
+            // @todo add default "created_at" value
         }
 
     }

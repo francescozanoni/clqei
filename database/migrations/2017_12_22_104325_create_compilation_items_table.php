@@ -16,13 +16,11 @@ class CreateCompilationItemsTable extends Migration
         Schema::create('compilation_items', function (Blueprint $table) {
             $table->increments('id')->autoIncrement();
             $table->unsignedInteger('compilation_id')->nullable(false);
-            $table->unsignedInteger('section_id')->nullable(false);
             $table->unsignedInteger('question_id')->nullable(false);
-            $table->unsignedInteger('answer_id');
-            $table->string('free_text_answer');
+            // Answer ID or free text answer, according to question type.
+            $table->string('answer');
             $table->foreign('compilation_id')->references('id')->on('compilations');
-            $table->foreign('section_id')->references('id')->on('sections');
-            $table->foreign('answer_id')->references('id')->on('answers');
+            $table->foreign('question_id')->references('id')->on('questions');
         });
     }
 
