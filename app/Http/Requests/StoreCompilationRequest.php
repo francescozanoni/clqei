@@ -34,7 +34,7 @@ class StoreCompilationRequest extends FormRequest
         foreach ($questions as $question) {
             $questionId = $question->id;
             $singleQuestionRules = [];
-            if ($question->required === true) {
+            if ($question->required == true) {
                 $singleQuestionRules[] = 'required';
             }
             if ($question->type === 'single_choice' ||
@@ -46,7 +46,7 @@ class StoreCompilationRequest extends FormRequest
             }
             $rules['q' . $questionId] = $singleQuestionRules;
         }
-dd($rules);
+
         return $rules;
     }
 }
