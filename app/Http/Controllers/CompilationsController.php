@@ -29,8 +29,7 @@ class CompilationsController extends Controller
         // Fetch all active sections,
         // with their questions and answers.
         // @todo filter active questions and active answers
-        $sections = Section::where('active', true)
-            ->with('questions.answers')
+        $sections = Section::with('questions.answers')
             ->get();
 
         return view('compilations.create', ['sections' => $sections]);

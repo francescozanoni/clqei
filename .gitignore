@@ -14,3 +14,4 @@ yarn-error.log
 public/phpliteadmin/*
 !public/phpliteadmin/phpliteadmin.config.clqei.php
 phpunit.xml
+.DS_Store

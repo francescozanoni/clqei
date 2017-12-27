@@ -29,7 +29,7 @@ class StoreCompilationRequest extends FormRequest
 
         $rules = [];
 
-        $questions = Question::where('active', true)->get();
+        $questions = Question::all();
         
         foreach ($questions as $question) {
             $questionId = $question->id;
