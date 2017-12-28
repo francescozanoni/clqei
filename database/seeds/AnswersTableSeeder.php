@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -31,8 +32,8 @@ class AnswersTableSeeder extends Seeder
                             'text' => $answer,
                             'question_id' => $questionId,
                             'position' => ($index + 1),
+                            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                         ];
-                        // @todo add default "created_at" value
                         $answerId++;
                     }
                 }
