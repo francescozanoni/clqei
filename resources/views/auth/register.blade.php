@@ -8,18 +8,65 @@
                 <div class="panel-heading">Register</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
+                
+                        {!! BootForm::open(['route' => 'register', 'method' => 'post']) !!}
+                        {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                There were some problems adding the category.<br/>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        
+                        {!! BootForm::text('first_name', __('First name')) !!}
+                        {!! BootForm::text('last_name', __('Last name')) !!}
+                        {!! BootForm::text('email', __('E-mail address')) !!}
+                        {!! BootForm::password('password', __('Password')) !!}
+                        {!! BootForm::password('password_confirmation', __('Confirm password')) !!}
+
+                        {!! BootForm::select(
+                        'role',
+                        'Role',
+                        ['viewer' => __('viewer'), 'student' => __('student')]
+                        ) !!}
+
+                                            
+                        {!! BootForm::submit('Register') !!}
+
+                        {!! BootForm::close() !!}
+                        
+                        <!--
+                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                        {{-- csrf_field() --}}
+
+                        <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">First name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('first_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+                        <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Last name</label>
+
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required>
+
+                                @if ($errors->has('last_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -69,9 +116,12 @@
                             </div>
                         </div>
                     </form>
+                    -->
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+          
