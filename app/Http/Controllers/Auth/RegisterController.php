@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -52,7 +53,9 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|in:viewer,student',
+            // Guest users can only register student users.
+            // Authenticated users can only register viewer users.
+            'role' => 'required|in:' . (Auth::guest() ? 'student' : 'viewer'),
         ]);
     }
 
