@@ -26,7 +26,7 @@
 
                         {{-- Nav tabs --}}
                         <ul class="nav nav-tabs" role="tablist" id="myTabs">
-                            @foreach ($sections as $section)
+                            @foreach ($sections as $index => $section)
                                 <li role="presentation"
                                     @if ($section->id === 1)
                                     class="active"
@@ -34,7 +34,7 @@
                                 >
                                     <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
                                        role="tab"
-                                       data-toggle="tab">{{ $section->text }}</a>
+                                       data-toggle="tab">{{ __('Section') . ' ' . ($index + 1) }}</a>
                                 </li>
                             @endforeach
                         </ul>
@@ -55,6 +55,8 @@
                                      class="tab-pane"
                                      @endif
                                      id="section_{{ $section->id }}">
+                                     
+                                     <h3>{{ $section->text }}</h3>
 
                                     @foreach ($section->questions as $question)
 
