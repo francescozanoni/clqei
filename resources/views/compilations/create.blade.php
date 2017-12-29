@@ -23,6 +23,8 @@
                                 </ul>
                             </div>
                         @endif
+                        
+                        {!! BootForm::hidden('student_id', Auth::user()->student->id) !!}
 
                         {{-- Nav tabs --}}
                         <ul class="nav nav-tabs" role="tablist" id="myTabs">
@@ -40,7 +42,7 @@
                         </ul>
 
                         @php
-                        // This variable is used in oder not to rely on question IDs,
+                        // This variable is used in order not to rely on question IDs,
                         // that may be non-continuous.
                         $questionCounter = 1;
                         @endphp

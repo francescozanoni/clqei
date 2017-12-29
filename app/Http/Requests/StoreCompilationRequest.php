@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Question;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Auth;
 
 class StoreCompilationRequest extends FormRequest
 {
@@ -15,8 +16,7 @@ class StoreCompilationRequest extends FormRequest
      */
     public function authorize()
     {
-        // @todo add authorization logic
-        return true;
+        return Auth::user()->role === 'student';
     }
 
     /**
@@ -27,7 +27,9 @@ class StoreCompilationRequest extends FormRequest
     public function rules()
     {
 
-        $rules = [];
+        $rules = [
+            'student_id' => 'required|exists:students,id',
+        ];
 
         $questions = Question::all();
         
@@ -40,8 +42,7 @@ class StoreCompilationRequest extends FormRequest
             if ($question->type === 'single_choice' ||
                 $question->type === 'multiple_choice') {
                 $singleQuestionRules[] = Rule::exists('answers', 'id')->where(function ($query) use ($questionId) {
-                        $query->where('question_id', $questionId)
-                            ->where('active', true);
+                        $query->where('question_id', $questionId);
                     });
             }
             $rules['q' . $questionId] = $singleQuestionRules;
