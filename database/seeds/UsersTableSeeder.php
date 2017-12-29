@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Student',
             'last_name' => 'Student',
-            'email' => 'student@example.com',
+            'email' => '12345678@example.com',
             'password' => bcrypt('test'),
             'role' => 'student',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

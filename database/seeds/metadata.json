@@ -2,8 +2,6 @@
   [
     ["single_choice", "required"],
     ["single_choice", "required"],
-    ["single_choice", "required"],
-    ["single_choice", "required"],
     ["single_choice", "required"]
   ],
   [
