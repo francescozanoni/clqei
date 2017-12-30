@@ -45,51 +45,48 @@ class CompilationsController extends Controller
     {
         /* Example request data:
          * Array (
-         *     [_token] => 0gEJv4qWJP2NsUpa9Ed0PuQHspcXzqW2Jk8XviIb
-         *     [q1] => 1
-         *     [q2] => 12
-         *     [q3] => 86
-         *     [q4] => 88
-         *     [q5] => 91
-         *     [q6] => asdfafa
-         *     [q7] => asdfasdf
-         *     [q8] => 102
-         *     [q9] => 107
-         *     [q10] => 116
-         *     [q11] => 121
-         *     [q12] => 123
-         *     [q13] => dsfsfdgds
-         *     [q14] => 127
-         *     [q15] => 137
-         *     [q16] => 160
-         *     [q17] => adfgdsf
-         *     [q18] => sdfgsdfg
-         *     [q19] => 163
-         *     [q20] => 167
-         *     [q21] => 171
-         *     [q22] => 175
-         *     [q23] => 179
-         *     [q24] => 183
-         *     [q25] => 187
-         *     [q26] => 191
-         *     [q27] => 195
-         *     [q28] => 199
-         *     [q29] => 203
-         *     [q30] => 207
-         *     [q31] => 211
-         *     [q32] => 215
-         *     [q33] => 219
-         *     [q34] => 223
-         *     [q35] => 227
-         *     [q36] => 231
-         *     [q37] => 235
-         *     [q38] => 239
-         *     [q39] => 243
-         *     [q40] => 247
-         *     [q41] => 251
-         * )
+         [_token] => K5Q5fLi5jfLfiqmQE1zwHJ7qNTH3T8HiZX3Ht1ct
+         [student_id] => 1
+         [q1] => 6
+         [q2] => 84
+         [q3] => 87
+         [q4] => 89
+         [q5] => 90
+         [q6] => 94
+         [q7] => 106
+         [q8] => 110
+         [q9] => 121
+         [q11] => 
+         [q12] => 127
+         [q13] => 136
+         [q14] => 159
+         [q15] => 
+         [q16] => 162
+         [q17] => 166
+         [q18] => 171
+         [q19] => 175
+         [q20] => 180
+         [q21] => 184
+         [q22] => 187
+         [q23] => 190
+         [q24] => 196
+         [q25] => 199
+         [q26] => 203
+         [q27] => 208
+         [q28] => 211
+         [q29] => 214
+         [q30] => 219
+         [q31] => 223
+         [q32] => 227
+         [q33] => 231
+         [q34] => 235
+         [q35] => 239
+         [q36] => 243
+         [q37] => 248
+         [q38] => 251
+         )
          */
-        print_r($request->all());exit;
+        //print_r($request->all());exit;
 
         /* http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
         $category = new Category;

@@ -99,7 +99,9 @@
                                                 {!! BootForm::select(
                                                 'q' . $question->id,
                                                 $questionCounter++ . '. ' . $question->text,
-                                                collect([0 => ''])->merge($question->answers->pluck('text', 'id'))
+                                                $question->answers->pluck('text', 'id'),
+                                                null,
+                                                ['placeholder' => __('Select') . '...']
                                                 ) !!}
 
                                             @endif
