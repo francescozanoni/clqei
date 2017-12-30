@@ -26,7 +26,7 @@ class CompilationPolicy
     }
 
     /**
-     * Determine whether the user can create appModelsCompilations.
+     * Determine whether the user can create compilations.
      *
      * @param  \App\User  $user
      * @return bool
@@ -58,5 +58,16 @@ class CompilationPolicy
     public function delete(User $user, Compilation $compilation)
     {
         return false;
+    }
+    
+    /**
+     * Determine whether the user can view all compilations.
+     *
+     * @param  \App\User  $user
+     * @return bool
+     */
+    public function viewAll(User $user)
+    {
+        return $user->role !== 'student';
     }
 }

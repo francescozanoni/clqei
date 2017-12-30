@@ -16,6 +16,11 @@
 
                     @can('create', App\Models\Compilation::class)
                         {!! link_to_route('compilations.create', __('Create new compilation')) !!}
+                        <br />
+                        {!! link_to_route('compilations.index', __('View your compilations')) !!}
+                    @endcan
+                    @can('viewAll', App\Models\Compilation::class)
+                        {!! link_to_route('compilations.index', __('View all compilations')) !!}
                     @endcan
                 </div>
             </div>
