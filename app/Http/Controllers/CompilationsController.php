@@ -30,11 +30,13 @@ class CompilationsController extends Controller
      */
     public function create()
     {
+    
+        // Only students can create compilations.
+        $this->authorize('create', Compilation::class);
+        
         // Fetch all active sections,
-        // with their questions and answers.
-        // @todo filter active questions and active answers
-        $sections = Section::with('questions.answers')
-            ->get();
+        // with their active questions and active answers.
+        $sections = Section::with('questions.answers')->get();
 
         return view('compilations.create', ['sections' => $sections]);
     }
@@ -90,7 +92,6 @@ class CompilationsController extends Controller
          [q38] => 251
          )
          */
-        //print_r($request->all());exit;
 
         // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
         

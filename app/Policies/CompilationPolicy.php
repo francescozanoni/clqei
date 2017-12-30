@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\User;
-use App\AppModelsCompilation;
+use App\Models\Compilation;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CompilationPolicy
@@ -11,49 +11,52 @@ class CompilationPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the appModelsCompilation.
+     * Determine whether the user can view the compilation.
      *
      * @param  \App\User  $user
-     * @param  \App\AppModelsCompilation  $appModelsCompilation
-     * @return mixed
+     * @param  \App\Models\Compilation  $compilation
+     * @return bool
      */
-    public function view(User $user, AppModelsCompilation $appModelsCompilation)
+    public function view(User $user, Compilation $compilation)
     {
-        //
+        // Compilations can be viewed by administrators, viewers
+        // and the student that created the compilation.
+        return $user->role !== 'student' ||
+            $user->student->id === $compilation->student->id;
     }
 
     /**
      * Determine whether the user can create appModelsCompilations.
      *
      * @param  \App\User  $user
-     * @return mixed
+     * @return bool
      */
     public function create(User $user)
     {
-        //
+        return $user->role === 'student';
     }
 
     /**
-     * Determine whether the user can update the appModelsCompilation.
+     * Determine whether the user can update the compilation.
      *
      * @param  \App\User  $user
-     * @param  \App\AppModelsCompilation  $appModelsCompilation
-     * @return mixed
+     * @param  \App\Models\Compilation  $compilation
+     * @return bool
      */
-    public function update(User $user, AppModelsCompilation $appModelsCompilation)
+    public function update(User $user, Compilation $compilation)
     {
-        //
+        return false;
     }
 
     /**
-     * Determine whether the user can delete the appModelsCompilation.
+     * Determine whether the user can delete the compilation.
      *
      * @param  \App\User  $user
-     * @param  \App\AppModelsCompilation  $appModelsCompilation
-     * @return mixed
+     * @param  \App\Models\Compilation  $compilation
+     * @return bool
      */
-    public function delete(User $user, AppModelsCompilation $appModelsCompilation)
+    public function delete(User $user, Compilation $compilation)
     {
-        //
+        return false;
     }
 }

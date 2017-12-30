@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Question;
+use App\Models\Compilation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Auth;
@@ -16,7 +17,8 @@ class StoreCompilationRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->role === 'student';
+        $user = Auth::user();
+        return $user->can('create', Compilation::class);
     }
 
     /**
