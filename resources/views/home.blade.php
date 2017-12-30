@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    @can('create', App\Models\Compilation::class)
+                        {!! link_to_route('compilations.create', __('Create new compilation')) !!}
+                    @endcan
                 </div>
             </div>
         </div>
