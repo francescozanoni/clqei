@@ -21,6 +21,8 @@ class CreateCompilationItemsTable extends Migration
             $table->string('answer');
             $table->foreign('compilation_id')->references('id')->on('compilations');
             $table->foreign('question_id')->references('id')->on('questions');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

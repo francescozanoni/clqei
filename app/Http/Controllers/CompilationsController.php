@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompilationRequest;
 use App\Models\Compilation;
+use App\Models\CompilationItem;
 use App\Models\Section;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use Auth;
+use DB;
 
 class CompilationsController extends Controller
 {
@@ -88,14 +92,34 @@ class CompilationsController extends Controller
          */
         //print_r($request->all());exit;
 
-        /* http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
-        $category = new Category;
-        $category->name = $request->get('name');
-        $category->save();
-        return \Redirect::route('categories.show',
-            array($category->id))
-            ->with('message', 'Your category has been created!');
-        */
+        // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
+        
+        DB::transaction(function () use ($request) {
+ 
+        $student = Auth::user()->student;
+        
+        $compilation = new Compilation;
+        $compilation->student()->associate($student);
+        $compilation->save();
+                
+        foreach ($request->all() as $key => $value) {
+           if (preg_match('/^q\d+$/', $key) === 1 &&
+               empty($value) === false) {
+              $item = new CompilationItem;
+              $item->answer = $value;
+              $question = Question::find(substr($key, 1));
+              $item->question()->associate($question);
+              $item->compilation()->associate($compilation);
+              $item->save();
+           }
+        }
+        
+        // @todo check why redirection towards compilations index page
+        return \Redirect::route('compilations.show', [$compilation->id])
+            ->with('message', 'Your compilation has been created!');
+ 
+        });
+        
     }
 
     /**

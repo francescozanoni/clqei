@@ -33,6 +33,8 @@ class StoreCompilationRequest extends FormRequest
 
         $questions = Question::all();
         
+        // @todo fix optional select box field validation (e.g. question 13)
+        
         foreach ($questions as $question) {
             $questionId = $question->id;
             $singleQuestionRules = [];
