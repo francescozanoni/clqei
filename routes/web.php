@@ -32,4 +32,5 @@ Route::get('/home', 'HomeController@index')->name('home');
  *
  * @see https://laravel.com/docs/5.5/controllers#resource-controllers
  */
-Route::resource('compilations', 'CompilationsController');
+Route::resource('compilations', 'CompilationsController')->middleware('auth');
+;
