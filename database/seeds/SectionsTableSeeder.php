@@ -14,8 +14,7 @@ class SectionsTableSeeder extends Seeder
     public function run()
     {
 
-        // @todo make the chosen file dynamic, based on configuration
-        $questionnaire = json_decode(file_get_contents(__DIR__ . '/it.json'), true);
+        $questionnaire = json_decode(file_get_contents(database_path('seeds/' . config('app.locale') . '.json')), true);
 
         foreach (array_keys($questionnaire) as $index => $section) {
             DB::table('sections')->insert([

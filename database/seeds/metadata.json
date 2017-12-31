@@ -7,7 +7,8 @@
   [
     ["single_choice", "required"],
     ["single_choice", "required"],
-    ["single_choice", "required"],
+    ["date", "required"],
+    ["date", "required"],
     ["single_choice", "required"],
     ["single_choice", "required"],
     ["single_choice", "required"],

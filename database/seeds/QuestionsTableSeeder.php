@@ -14,10 +14,9 @@ class QuestionsTableSeeder extends Seeder
     public function run()
     {
 
-        // @todo make the chosen file dynamic, based on configuration
-        $questionnaire = json_decode(file_get_contents(__DIR__ . '/it.json'), true);
+        $questionnaire = json_decode(file_get_contents(database_path('seeds/' . config('app.locale') . '.json')), true);
         
-        $metadata = json_decode(file_get_contents(__DIR__ . '/metadata.json'), true);
+        $metadata = json_decode(file_get_contents(database_path('seeds/metadata.json')), true);
 
         $sectionId = 1;
         $questionId = 1;

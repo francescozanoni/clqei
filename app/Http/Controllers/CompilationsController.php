@@ -49,57 +49,15 @@ class CompilationsController extends Controller
      */
     public function store(StoreCompilationRequest $request)
     {
-        /* Example request data:
-         * Array (
-         [_token] => K5Q5fLi5jfLfiqmQE1zwHJ7qNTH3T8HiZX3Ht1ct
-         [student_id] => 1
-         [q1] => 6
-         [q2] => 84
-         [q3] => 87
-         [q4] => 89
-         [q5] => 90
-         [q6] => 94
-         [q7] => 106
-         [q8] => 110
-         [q9] => 121
-         [q11] => 
-         [q12] => 127
-         [q13] => 136
-         [q14] => 159
-         [q15] => 
-         [q16] => 162
-         [q17] => 166
-         [q18] => 171
-         [q19] => 175
-         [q20] => 180
-         [q21] => 184
-         [q22] => 187
-         [q23] => 190
-         [q24] => 196
-         [q25] => 199
-         [q26] => 203
-         [q27] => 208
-         [q28] => 211
-         [q29] => 214
-         [q30] => 219
-         [q31] => 223
-         [q32] => 227
-         [q33] => 231
-         [q34] => 235
-         [q35] => 239
-         [q36] => 243
-         [q37] => 248
-         [q38] => 251
-         )
-         */
-
+    
         // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
-        
-        DB::transaction(function () use ($request) {
+       
+        $compilation = new Compilation;
+         
+        DB::transaction(function () use ($request, $compilation) {
  
         $student = Auth::user()->student;
         
-        $compilation = new Compilation;
         $compilation->student()->associate($student);
         $compilation->save();
                 
@@ -114,12 +72,12 @@ class CompilationsController extends Controller
               $item->save();
            }
         }
-        
-        // @todo check why redirection towards compilations index page
-        return \Redirect::route('compilations.show', [$compilation->id])
-            ->with('message', 'Your compilation has been created!');
  
         });
+        
+        // Redirection does not work from within transaction block.
+        return \Redirect::route('compilations.show', [$compilation->id])
+            ->with('message', 'Your compilation has been created!');
         
     }
 

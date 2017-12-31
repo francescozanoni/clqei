@@ -35,7 +35,9 @@ class StoreCompilationRequest extends FormRequest
 
         $questions = Question::all();
         
-        // @todo fix optional select box field validation (e.g. question 13)
+        // @todo fix optional select box field validation (e.g. question 14)
+        // @todo add required_if constraints
+        // @todo add date range constraints
         
         foreach ($questions as $question) {
             $questionId = $question->id;
@@ -45,9 +47,13 @@ class StoreCompilationRequest extends FormRequest
             }
             if ($question->type === 'single_choice' ||
                 $question->type === 'multiple_choice') {
-                $singleQuestionRules[] = Rule::exists('answers', 'id')->where(function ($query) use ($questionId) {
+                $singleQuestionRules[] = Rule::exists('answers', 'id')
+                    ->where(function ($query) use ($questionId) {
                         $query->where('question_id', $questionId);
                     });
+            }
+            if ($question->type === 'date') {
+                $singleQuestionRules[] = 'date';
             }
             $rules['q' . $questionId] = $singleQuestionRules;
         }

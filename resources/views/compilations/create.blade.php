@@ -75,10 +75,10 @@
                                         @if ($question->type === 'multiple_choice')
 
                                             {!! BootForm::checkboxes(
-                                                'q' . $question->id . '[]',
-                                                $questionCounter++ . '. ' . $question->text,
-                                                $question->answers->pluck('text', 'id')
-                                                ) !!}
+                                            'q' . $question->id . '[]',
+                                            $questionCounter++ . '. ' . $question->text,
+                                            $question->answers->pluck('text', 'id')
+                                            ) !!}
 
                                         @endif
                                         
@@ -105,6 +105,15 @@
                                                 ) !!}
 
                                             @endif
+
+                                        @endif
+                                        
+                                        @if ($question->type === 'date')
+
+                                            {!! BootForm::date(
+                                            'q' . $question->id,
+                                            $questionCounter++ . '. ' . $question->text
+                                            ) !!}
 
                                         @endif
 
