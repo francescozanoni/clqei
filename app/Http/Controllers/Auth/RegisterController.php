@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
+use DB;
+use App\Models\Student;
 
 class RegisterController extends Controller
 {
@@ -67,12 +69,32 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+    
+        $user = null;
+        
+        DB::transaction(function () use (&$user, $data) {
+        
+        $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => $data['role'],
         ]);
+        
+        // If a student user is created, the related student model is created.
+        // @todo move this logic to an event.
+        if ($user->role === 'student') {
+            $student = new Student;
+            $student->identification_number = $data['identification_number'];
+            $student->gender = $data['gender'];
+            $student->nationality = $data['nationality'];
+            $student->user()->associate($user);
+            $student->save();
+        }
+        
+        });
+        
+        return $user;
     }
 }
