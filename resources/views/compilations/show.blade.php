@@ -6,9 +6,13 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">SHOW</div>
+                    <div class="panel-heading">{{ __('Compilation') . ': ' . $compilation->created_at }}</div>
 
                     <div class="panel-body">
+                    
+                        <code>
+                        {{ $compilation->toJson() }}
+                        </code>
 
                     </div>
 

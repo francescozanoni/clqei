@@ -53,6 +53,14 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
+                                         @can('create', App\Models\Compilation::class)
+                                         {!! link_to_route('compilations.index', __('My compilations')) !!}
+                                         @endcan
+                                         @can('viewAll', App\Models\Compilation::class)
+                                         {!! link_to_route('compilations.index', __('All compilations')) !!}
+                                         @endcan
+                                    </li>
+                                    <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

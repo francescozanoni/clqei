@@ -20,7 +20,15 @@ class CompilationsController extends Controller
      */
     public function index()
     {
-        return view('compilations.index');
+        $compilations = null;
+        if (Auth::user()->can('viewAll', Compilation::class)) {
+            $compilations = Compilation::all();
+        } else {
+            // @todo check if student association can be checked in a better way.
+            $compilations = Compilation::where('student_id', Auth::user()->student->id)->get();
+        }
+        
+        return view('compilations.index', ['compilations' => $compilations]);
     }
 
     /**
@@ -89,7 +97,10 @@ class CompilationsController extends Controller
      */
     public function show(Compilation $compilation)
     {
-        return view('compilations.show');
+    
+        $compilation->load('items');
+        
+        return view('compilations.show', ['compilation' => $compilation]);
     }
 
     /**
