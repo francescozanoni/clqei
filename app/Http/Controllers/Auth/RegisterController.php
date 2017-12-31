@@ -83,6 +83,7 @@ class RegisterController extends Controller
         ]);
         
         // If a student user is created, the related student model is created.
+        // @todo add student data validation.
         // @todo move this logic to an event.
         if ($user->role === 'student') {
             $student = new Student;
