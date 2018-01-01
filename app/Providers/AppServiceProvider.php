@@ -24,8 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(App\Services\CountryService::class, function ($app) {
-          // @todo add country list retrieval.
-          return new App\Services\CountryService();
+          // @todo add file availability check.
+          $countries = require_once(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
+          return new App\Services\CountryService($countries);
         });
     }
 }
