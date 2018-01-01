@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(App\Services\CountryService::class, function ($app) {
+          // @todo add country list retrieval.
+          return new App\Services\CountryService();
+        });
     }
 }
