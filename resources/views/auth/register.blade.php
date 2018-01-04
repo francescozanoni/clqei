@@ -1,3 +1,5 @@
+@inject('countryService', App\Services\CountryService::class)
+
 @extends('layouts.app')
 
 @section('content')
@@ -22,8 +24,21 @@
                         @if (Auth::guest() === true)
                             {!! BootForm::hidden('role', 'student') !!}
                             {!! BootForm::text('identification_number', __('Identification number')) !!}
-                            {!! BootForm::text('gender', __('Gender')) !!}
-                            {!! BootForm::text('nationality', __('Nationality')) !!}
+                            {!! BootForm::radios(
+                                'gender',
+                                 __('Gender'),
+                                 [
+                                     'male' => __('male'),
+                                     'female' => __('female')
+                                 ]
+                                ) !!}
+                            {!! BootForm::select(
+                                'nationality',
+                                __('Nationality'),
+                                $countryService->getCountries(),
+                                null,
+                                ['placeholder' => __('Select') . '...']
+                                ) !!}
                         @endif
                         
                         {{-- Authenticated users can only register viewer users. --}}
