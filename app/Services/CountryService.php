@@ -17,4 +17,9 @@ class CountryService
     return $this->countries;
   }
   
+  public function getCountryCodes()
+  {
+    return array_keys($this->countries);
+  }
+  
 }

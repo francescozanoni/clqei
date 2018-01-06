@@ -12,7 +12,7 @@ Clinical Learning Quality Environment Inventory
     php artisan key:generate
     php artisan migrate
     php artisan db:seed
-    
+
 #### Manual steps
 
 - add stage locations

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
+use App;
 use DB;
 use App\Models\Student;
 
@@ -39,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('not_student');
     }
 
     /**
@@ -50,15 +51,27 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            // Guest users can only register student users.
-            // Authenticated users can only register viewer users.
-            'role' => 'required|in:' . (Auth::guest() ? 'student' : 'viewer'),
-        ]);
+            'role' => 'required',
+        ];
+        
+        // Guest users can only register student users.
+        // Authenticated users can only register viewer users.
+        if (Auth::guest()) {
+            $rules['role'] .= '|in:student';
+            $rules['identification_number'] = 'required|regex:/^\\d{8}$/|unique:students';
+            $rules['gender'] = 'required|in:male,female';
+            $countryCodes = App::make('App\Services\CountryService')->getCountryCodes();
+            $rules['nationality'] = 'required|in:' . implode(',', $countryCodes);
+        } else {
+            $rules['role'] .= '|in:viewer';
+        }
+        
+        return Validator::make($data, $rules);
     }
 
     /**
