@@ -35,7 +35,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('compilations', 'CompilationsController')->middleware('auth');
 
 if (App::environment() !== 'production') {
-    Route::get('/test', function () use ($app) {
+    Route::get('/test', function () {
         return 'test';
     });
 }

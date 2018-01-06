@@ -23,10 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(App\Services\CountryService::class, function ($app) {
-          // @todo add file availability check.
-          $countries = require_once(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
-          return new App\Services\CountryService($countries);
-        });
+         // @todo ensure $countries population can stay here or must be moved to boot() method
+         $countries = require_once(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
+         
+        $this->app->when('App\Services\CountryService')
+          ->needs('$countries')
+          ->give($countries);
     }
 }

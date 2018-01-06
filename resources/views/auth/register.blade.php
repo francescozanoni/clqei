@@ -1,4 +1,4 @@
-@inject('countryService', App\Services\CountryService::class)
+@inject('countryService', 'App\Services\CountryService')
 
 @extends('layouts.app')
 
