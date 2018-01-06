@@ -17,8 +17,8 @@ class RedirectIfStudent
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guest() === false &&
-            Auth::user()->role === 'student') {
+        if (Auth::guard($guard)->check() &&
+            Auth::guard($guard)->user()->role === 'student') {
             return redirect('/home');
         }
 

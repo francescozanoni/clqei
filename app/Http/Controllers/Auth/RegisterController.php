@@ -6,10 +6,12 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 use Auth;
 use App;
 use DB;
 use App\Models\Student;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -110,5 +112,29 @@ class RegisterController extends Controller
         });
         
         return $user;
+    }
+    
+    /**
+     * Handle a registration request for the application.
+     *
+     * This method overrides the default from trait
+     * Illuminate\Foundation\Auth\RegistersUsers
+     * in order to restrict auto-login only after student users registration.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        if ($user->role === 'student') {
+            $this->guard()->login($user);
+        }
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 }
