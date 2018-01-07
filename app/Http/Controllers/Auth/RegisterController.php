@@ -71,6 +71,9 @@ class RegisterController extends Controller
             $rules['nationality'] = 'required|in:' . implode(',', $countryCodes);
         } else {
             $rules['role'] .= '|in:viewer';
+            if (Auth::user()->can('createAdministrator', User::class)) {
+            $rules['role'] .= ',administrator';
+            }
         }
         
         return Validator::make($data, $rules);

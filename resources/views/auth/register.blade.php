@@ -42,9 +42,22 @@
                         @endif
                         
                         {{-- Authenticated users can only register viewer users. --}}
-                        {{-- @todo find how to access this page when authenticated --}}
+                        
                         @if (Auth::guest() === false)
-                            {!! BootForm::hidden('role', 'viewer') !!}
+                        @can('createAdministrator', App\User::class)
+                                         {!! BootForm::radios(
+                                'role',
+                                 __('Role'),
+                                 [
+                                     'viewer' => __('viewer'),
+                                     'administrator' => __('administrator')
+                                 ]
+                                ) !!}
+@else
+{!! BootForm::hidden('role', 'viewer') !!}
+                                
+                                @endcan
+                           
                         @endif
                                             
                         {!! BootForm::submit('Register') !!}

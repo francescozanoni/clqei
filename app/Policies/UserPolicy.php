@@ -34,16 +34,26 @@ class UserPolicy
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can create models with viewer role.
      *
      * @param  \App\User  $user
      * @return bool
      */
-    public function create(User $user)
+    public function createViewer(User $user)
     {
-        // @todo check how to filter the possibility of creating only viewers.
         return $user->role === 'viewer' ||
             $user->role === 'administrator';
+    }
+    
+    /**
+     * Determine whether the user can create models with administrator role.
+     *
+     * @param  \App\User  $user
+     * @return bool
+     */
+    public function createAdministrator(User $user)
+    {
+        return $user->role === 'administrator';
     }
 
     /**
@@ -55,7 +65,8 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        // A user can only update its own same user.
+        return $user->id === $model->id;
     }
 
     /**
@@ -67,6 +78,8 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        // Only administrators can delete users, but not themselves.
+        return $user->role === 'administrator' &&
+        $user->id === $model->id;
     }
 }

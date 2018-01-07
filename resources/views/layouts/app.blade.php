@@ -62,9 +62,15 @@
                                          {!! link_to_route('compilations.index', __('All compilations')) !!}
                                          </li>
                                      @endcan
-                                     @can('create', App\User::class)
+                                     @can('createViewer', App\User::class)
                                          <li>
                                          {!! link_to_route('register', __('Create viewer')) !!}
+                                         </li>
+                                     @endcan
+                                     
+                                     @can('createAdministrator', App\User::class)
+                                         <li>
+                                         {!! link_to_route('register', __('Create administrator')) !!}
                                          </li>
                                      @endcan
                                     <li>
