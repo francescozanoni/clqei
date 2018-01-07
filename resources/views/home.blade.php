@@ -22,6 +22,9 @@
                     @can('viewAll', App\Models\Compilation::class)
                         <li>{!! link_to_route('compilations.index', __('All compilations')) !!}</li>
                     @endcan
+                    @can('create', App\User::class)
+                        <li>{!! link_to_route('register', __('Create viewer')) !!}</li>
+                    @endcan
                     </ul>
                 </div>
             </div>

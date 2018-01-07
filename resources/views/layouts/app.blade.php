@@ -52,14 +52,21 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    <li>
-                                         @can('create', App\Models\Compilation::class)
+                                     @can('create', App\Models\Compilation::class)
+                                         <li>
                                          {!! link_to_route('compilations.index', __('My compilations')) !!}
-                                         @endcan
-                                         @can('viewAll', App\Models\Compilation::class)
+                                         </li>
+                                     @endcan
+                                     @can('viewAll', App\Models\Compilation::class)
+                                         <li>
                                          {!! link_to_route('compilations.index', __('All compilations')) !!}
-                                         @endcan
-                                    </li>
+                                         </li>
+                                     @endcan
+                                     @can('create', App\User::class)
+                                         <li>
+                                         {!! link_to_route('register', __('Create viewer')) !!}
+                                         </li>
+                                     @endcan
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
