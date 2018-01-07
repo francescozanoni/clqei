@@ -6,7 +6,14 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">{{ __('My compilations') }}</div>
+                    <div class="panel-heading">
+                    @can('viewAll', App\Models\Compilation::class)
+                        {{ __('All compilations') }}
+                    @elsecan
+                    {{ __('My compilations') }}
+                    @endcan
+                    
+                    </div>
 
                     <div class="panel-body">
 
