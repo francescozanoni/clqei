@@ -28,9 +28,10 @@ class QuestionsTableSeeder extends Seeder
                 $dataToInsert[] = [
                     'id' => $questionId,
                     'text' => $question,
-                    // @todo improve type detection logic
-                    'type' => ($metadata[$sectionId - 1][$index][0]),
-                    'required' => (in_array('required', $metadata[$sectionId - 1][$index]) === true),
+                    'type' => ($metadata[$sectionId - 1][$index]['type']),
+                    'required' => (in_array('required', $metadata[$sectionId - 1][$index]) === true &&
+                                   $metadata[$sectionId - 1][$index]['required'] == true),
+                    'options' => (isset($metadata[$sectionId - 1][$index]['options']) === true ? json_encode($metadata[$sectionId - 1][$index]['options']) : null),
                     'section_id' => $sectionId,
                     'position' => ($index + 1),
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
