@@ -43,11 +43,13 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    @guest
-                    <li>{!! link_to_route('login', __('Login')) !!}</li>
-                    @if (\Request::is('register') === false)
-                        <li>{!! link_to_route('register', __('Register')) !!}</li>
-                    @endif
+                    @if (Auth::guest())
+
+                        <li>{!! link_to_route('login', __('Login')) !!}</li>
+                        @if (\Request::is('register') === false)
+                            <li>{!! link_to_route('register', __('Register')) !!}</li>
+                        @endif
+
                     @else
 
                         @can('create', App\Models\Compilation::class)
@@ -99,7 +101,7 @@
                                 </li>
                             </ul>
                         </li>
-                        @endguest
+                    @endif
                 </ul>
             </div>
         </div>
