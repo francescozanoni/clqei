@@ -3,27 +3,27 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                  @if (Auth::guest() === true)
-                      {{ __('Register new student') }}
-                  @else
-                      @can('createAdministrator', App\User::class)
-                          {{ __('Register new viewer or administrator') }}
-                      @elsecan
-                          {{ __('Register new viewer') }}
-                      @endcan
-                  @endif
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @if (Auth::guest() === true)
+                            {{ __('Register as student') }}
+                        @else
+                            @can('createAdministrator', App\User::class)
+                            {{ __('Register new viewer or administrator') }}
+                            @else
+                            {{ __('Register new viewer') }}
+                            @endcan
+                        @endif
+                    </div>
 
-                <div class="panel-body">
-                
+                    <div class="panel-body">
+
                         {!! BootForm::open(['route' => 'register', 'method' => 'post']) !!}
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
-   
+
                         {!! BootForm::text('first_name', __('First name')) !!}
                         {!! BootForm::text('last_name', __('Last name')) !!}
                         {!! BootForm::email('email', __('E-mail address')) !!}
@@ -50,34 +50,32 @@
                                 ['placeholder' => __('Select') . '...']
                                 ) !!}
                         @endif
-                        
+
                         {{-- Authenticated users can only register viewer users. --}}
-                        
+
                         @if (Auth::guest() === false)
-                        @can('createAdministrator', App\User::class)
-                                         {!! BootForm::radios(
-                                'role',
-                                 __('Role'),
-                                 [
-                                     'viewer' => __('viewer'),
-                                     'administrator' => __('administrator')
-                                 ]
-                                ) !!}
-@else
-{!! BootForm::hidden('role', 'viewer') !!}
-                                
-                                @endcan
-                           
+                            @can('createAdministrator', App\User::class)
+                            {!! BootForm::radios(
+                               'role',
+                                __('Role'),
+                                [
+                                    'viewer' => __('viewer'),
+                                    'administrator' => __('administrator')
+                                ]
+                               ) !!}
+                            @else
+                            {!! BootForm::hidden('role', 'viewer') !!}
+                            @endcan
+
                         @endif
-                                            
+
                         {!! BootForm::submit(__('Register')) !!}
 
                         {!! BootForm::close() !!}
-                    
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
-          

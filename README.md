@@ -6,12 +6,11 @@ Clinical Learning Quality Environment Inventory
 ### Installation
 
     composer install
-    
+
     php install.php
-    
+
     php artisan key:generate
-    php artisan migrate
-    php artisan db:seed
+    php artisan migrate --seed
 
 #### Manual steps
 

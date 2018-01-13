@@ -7,18 +7,17 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
-                    @can('viewAll', App\Models\Compilation::class)
+                        @can('viewAll', App\Models\Compilation::class)
                         {{ __('All compilations') }}
-                    @elsecan
-                    {{ __('My compilations') }}
-                    @endcan
-                    
+                        @else
+                        {{ __('My compilations') }}
+                        @endcan
                     </div>
 
                     <div class="panel-body">
 
                         @if ($compilations->isEmpty() === false)
-                        
+
                             <ul>
                                 @foreach ($compilations as $compilation)
                                     <li>
@@ -27,7 +26,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                        
+
                         @endif
 
                     </div>

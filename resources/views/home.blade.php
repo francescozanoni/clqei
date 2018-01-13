@@ -16,7 +16,7 @@
 
                     <ul>
                     @can('create', App\Models\Compilation::class)
-                        <li>{!! link_to_route('compilations.create', __('Create new compilation')) !!}</li>
+                        <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
                         <li>{!! link_to_route('compilations.index', __('My compilations')) !!}</li>
                     @endcan
                     @can('viewAll', App\Models\Compilation::class)

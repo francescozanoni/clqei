@@ -1,5 +1,9 @@
 {
-  "Register new student": "Registra un nuovo studente",
+  "Login": "Accedi",
+  "Register": "Registrati",
+  "Logout": "Esci",
+
+  "Register as student": "Registrati come studente",
   "Register new viewer": "Registra un nuovo visualizzatore",
   "Register new viewer or administrator": "Registra un nuovo visualizzatore o amministratore",
   "First name": "Nome",
@@ -16,5 +20,8 @@
   "Select": "Seleziona",
   "viewer": "visualizzatore",
   "administrator": "amministratore",
-  "Register": "Registra"
+
+  "New compilation": "Nuova compilazione",
+  "My compilations": "Le mie compilazioni",
+  "All compilations": "Tutte le compilazioni"
 }
