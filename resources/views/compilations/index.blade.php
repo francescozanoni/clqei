@@ -21,7 +21,15 @@
                             <ul>
                                 @foreach ($compilations as $compilation)
                                     <li>
-                                        <code>{{ $compilation }}</code>
+                                        @can('viewAll', App\Models\Compilation::class)
+                                        {{ $compilation->student->identification_number }}
+                                        -
+                                        {{ $compilation->student->user->last_name }}
+                                        {{ $compilation->student->user->first_name }}
+                                        -
+                                        @endcan
+                                        {{ $compilation->created_at }}
+                                        -
                                         {!! link_to_route('compilations.show', __('View'), ['compilation' => $compilation]) !!}
                                     </li>
                                 @endforeach
