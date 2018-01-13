@@ -44,8 +44,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @guest
-                    {!! link_to_route('login', __('Login')) !!}
-                    {!! link_to_route('register', __('Register')) !!}
+                    <li>{!! link_to_route('login', __('Login')) !!}</li>
+                    <li>{!! link_to_route('register', __('Register')) !!}</li>
                     @else
 
                         @can('create', App\Models\Compilation::class)

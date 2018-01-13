@@ -10,18 +10,29 @@
                     <div class="panel-heading">
                         @if (Auth::guest() === true)
                             {{ __('Register as student') }}
+                        @elseif (Auth::user()->can('createAdministrator', App\User::class))
+                            {{ __('Register new viewer or administrator') }}
                         @else
-                            @if (Auth::user()->can('createAdministrator', App\User::class))
-                                {{ __('Register new viewer or administrator') }}
-                            @else
-                                {{ __('Register new viewer') }}
-                            @endif
+                            {{ __('Register new viewer') }}
                         @endif
                     </div>
 
                     <div class="panel-body">
 
                         {!! BootForm::open(['route' => 'register', 'method' => 'post']) !!}
+
+                        {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                {{ __('There were some problems registering the user') }}
+                                <br/>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
 
                         {!! BootForm::text('first_name', __('First name')) !!}
