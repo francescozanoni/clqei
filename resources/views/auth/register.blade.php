@@ -7,7 +7,17 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">
+                  @if (Auth::guest() === true)
+                      {{ __('Register new student') }}
+                  @else
+                      @can('createAdministrator', App\User::class)
+                          {{ __('Register new viewer or administrator') }}
+                      @elsecan
+                          {{ __('Register new viewer') }}
+                      @endcan
+                  @endif
+                </div>
 
                 <div class="panel-body">
                 
