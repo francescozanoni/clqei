@@ -70,7 +70,7 @@
                            
                         @endif
                                             
-                        {!! BootForm::submit('Register') !!}
+                        {!! BootForm::submit(__('Register')) !!}
 
                         {!! BootForm::close() !!}
                     
