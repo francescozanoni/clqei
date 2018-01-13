@@ -1,5 +1,15 @@
 {
   "Register new student": "Registra un nuovo studente",
   "Register new viewer": "Registra un nuovo visualizzatore",
-  "Register new viewer or administrator": "Registra un nuovo visualizzatore o amministratore"
+  "Register new viewer or administrator": "Registra un nuovo visualizzatore o amministratore",
+  "First name": "Nome",
+  "Last name": "Cognome",
+  "E-mail address": "Indirizzo e-mail",
+  "Password": "Password",
+  "Confirm password": "Conferma password",
+  "Identification number": "Matricola",
+  "Gender": "Sesso",
+  "male": "maschio",
+  "female": "femmina",
+  "Nationality": "Nazionalità"
 }
