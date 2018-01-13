@@ -15,7 +15,7 @@
                         {!! BootForm::submit(__('Login')) !!}
                         {!! BootForm::close() !!}
 
-                        {!! link_to_route('password.request', __('Forgot Your Password?')) !!}
+                        {!! link_to_route('password.request', __('Forgot your password?')) !!}
 
                 </div>
             </div>

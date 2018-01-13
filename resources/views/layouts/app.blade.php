@@ -45,7 +45,9 @@
                     <!-- Authentication Links -->
                     @guest
                     <li>{!! link_to_route('login', __('Login')) !!}</li>
-                    <li>{!! link_to_route('register', __('Register')) !!}</li>
+                    @if (\Request::is('register') === false)
+                        <li>{!! link_to_route('register', __('Register')) !!}</li>
+                    @endif
                     @else
 
                         @can('create', App\Models\Compilation::class)
