@@ -29,7 +29,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
             </div>
@@ -44,8 +44,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @guest
-                    <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                    <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                    {!! link_to_route('login', __('Login')) !!}
+                    {!! link_to_route('register', __('Register')) !!}
                     @else
 
                         @can('create', App\Models\Compilation::class)
