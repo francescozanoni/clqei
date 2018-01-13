@@ -29,6 +29,7 @@
   "My compilations": "Le mie compilazioni",
   "All compilations": "Tutte le compilazioni",
   "Creation date": "Data di creazione",
+  "View": "Visualizza",
 
   "Section": "Sezione",
   "Create": "Crea",
@@ -37,5 +38,6 @@
 
   "Compilation": "Compilazione",
   "Question": "Domanda",
-  "Answer": "Risposta"
+  "Answer": "Risposta",
+  "Print": "Stampa"
 }

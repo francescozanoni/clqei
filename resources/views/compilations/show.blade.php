@@ -7,7 +7,9 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
+
                         {{ __('Compilation') . ': ' . $compilation->created_at }}
+
                         @can('viewAll', App\Models\Compilation::class)
                         -
                         {{ $compilation->student->identification_number }}
@@ -15,6 +17,14 @@
                         {{ $compilation->student->user->last_name }}
                         {{ $compilation->student->user->first_name }}
                         @endcan
+
+                        @can('create', App\Models\Compilation::class)
+                        <div class="pull-right" onclick="window.print()" style="cursor:pointer">
+                            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                            {{ __('Print') }}
+                        </div>
+                        @endcan
+
                     </div>
 
                     <div class="panel-body">
