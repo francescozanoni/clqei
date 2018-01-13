@@ -34,16 +34,18 @@ class StoreCompilationRequest extends FormRequest
         ];
 
         $questions = Question::all();
-        
-        // @todo fix optional select box field validation (e.g. question 14)
+
         // @todo add required_if constraints
         // @todo add date range constraints
-        
+
         foreach ($questions as $question) {
             $questionId = $question->id;
             $singleQuestionRules = [];
             if ($question->required == true) {
                 $singleQuestionRules[] = 'required';
+            } else {
+                // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
+                $singleQuestionRules[] = 'nullable';
             }
             if ($question->type === 'single_choice' ||
                 $question->type === 'multiple_choice') {

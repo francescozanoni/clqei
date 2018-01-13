@@ -14,89 +14,96 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+<div id="app">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
-                                    <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                     @can('create', App\Models\Compilation::class)
-                                         <li>
-                                         {!! link_to_route('compilations.index', __('My compilations')) !!}
-                                         </li>
-                                     @endcan
-                                     @can('viewAll', App\Models\Compilation::class)
-                                         <li>
-                                         {!! link_to_route('compilations.index', __('All compilations')) !!}
-                                         </li>
-                                     @endcan
-                                     @can('createViewer', App\User::class)
-                                         <li>
-                                         {!! link_to_route('register', __('Create viewer')) !!}
-                                         </li>
-                                     @endcan
-
-                                     @can('createAdministrator', App\User::class)
-                                         <li>
-                                         {!! link_to_route('register', __('Create administrator')) !!}
-                                         </li>
-                                     @endcan
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
             </div>
-        </nav>
 
-        @yield('content')
-    </div>
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    &nbsp;
+                </ul>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Authentication Links -->
+                    @guest
+                    <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                    <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                    @else
+
+                        @can('create', App\Models\Compilation::class)
+                        <li>
+                            {!! link_to_route('compilations.index', __('My compilations')) !!}
+                        </li>
+                        @endcan
+
+                        @can('viewAll', App\Models\Compilation::class)
+                        <li>
+                            {!! link_to_route('compilations.index', __('All compilations')) !!}
+                        </li>
+                        @endcan
+
+                        @can('createViewer', App\User::class)
+                        @if (Auth::user()->can('createAdministrator', App\User::class))
+                            <li>
+                                {!! link_to_route('register', __('Register new viewer or administrator')) !!}
+                            </li>
+                        @else
+                            <li>
+                                {!! link_to_route('register', __('Register new viewer')) !!}
+                            </li>
+                        @endif
+                        @endcan
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false" aria-haspopup="true">
+                                {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                        @endguest
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @yield('content')
+</div>
+
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

@@ -11,11 +11,11 @@
                         @if (Auth::guest() === true)
                             {{ __('Register as student') }}
                         @else
-                            @can('createAdministrator', App\User::class)
-                            {{ __('Register new viewer or administrator') }}
+                            @if (Auth::user()->can('createAdministrator', App\User::class))
+                                {{ __('Register new viewer or administrator') }}
                             @else
-                            {{ __('Register new viewer') }}
-                            @endcan
+                                {{ __('Register new viewer') }}
+                            @endif
                         @endif
                     </div>
 
@@ -54,8 +54,9 @@
                         {{-- Authenticated users can only register viewer users. --}}
 
                         @if (Auth::guest() === false)
-                            @can('createAdministrator', App\User::class)
-                            {!! BootForm::radios(
+
+                            @if (Auth::user()->can('createAdministrator', App\User::class))
+                                {!! BootForm::radios(
                                'role',
                                 __('Role'),
                                 [
@@ -64,11 +65,12 @@
                                 ]
                                ) !!}
                             @else
-                            {!! BootForm::hidden('role', 'viewer') !!}
-                            @endcan
+                                {!! BootForm::hidden('role', 'viewer') !!}
+                            @endif
 
                         @endif
 
+                        {{-- @todo fix string in case of viewer/administrator user --}}
                         {!! BootForm::submit(__('Register')) !!}
 
                         {!! BootForm::close() !!}

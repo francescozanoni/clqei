@@ -7,6 +7,11 @@ $filePathsToDelete = [
 
 	__DIR__ . '/database/database.sqlite',
 
+    __DIR__ . '/resources/lang/it/auth.php',
+    __DIR__ . '/resources/lang/it/pagination.php',
+    __DIR__ . '/resources/lang/it/passwords.php',
+    __DIR__ . '/resources/lang/it/validation.php',
+
 	__DIR__ . '/.env',
 
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.php',

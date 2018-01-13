@@ -4,8 +4,8 @@
   "Logout": "Esci",
 
   "Register as student": "Registrati come studente",
-  "Register new viewer": "Registra un nuovo visualizzatore",
-  "Register new viewer or administrator": "Registra un nuovo visualizzatore o amministratore",
+  "Register new viewer": "Registra nuovo visualizzatore",
+  "Register new viewer or administrator": "Registra nuovo visualizzatore o amministratore",
   "First name": "Nome",
   "Last name": "Cognome",
   "E-mail address": "Indirizzo e-mail",
@@ -28,5 +28,7 @@
   "Section": "Sezione",
   "Create": "Crea",
   "There were some problems adding the compilation": "Alcuni problemi rilevati durante la creazione della compilazione",
-  "The new compilation has been created": "La nuova compilazione è stata creata"
+  "The new compilation has been created": "La nuova compilazione è stata creata",
+
+  "Compilation": "Compilazione"
 }

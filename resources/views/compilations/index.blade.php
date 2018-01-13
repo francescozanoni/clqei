@@ -7,11 +7,11 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
-                        @can('viewAll', App\Models\Compilation::class)
-                        {{ __('All compilations') }}
+                        @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
+                            {{ __('All compilations') }}
                         @else
-                        {{ __('My compilations') }}
-                        @endcan
+                            {{ __('My compilations') }}
+                        @endif
                     </div>
 
                     <div class="panel-body">
