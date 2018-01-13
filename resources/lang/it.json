@@ -11,5 +11,10 @@
   "Gender": "Sesso",
   "male": "maschio",
   "female": "femmina",
-  "Nationality": "Nazionalità"
+  "Nationality": "Nazionalità",
+  "Role": "Ruolo",
+  "Select": "Seleziona",
+  "viewer": "visualizzatore",
+  "administrator": "amministratore",
+  "Register": "Registra"
 }
