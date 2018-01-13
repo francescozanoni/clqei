@@ -18,22 +18,35 @@
 
                         @if ($compilations->isEmpty() === false)
 
-                            <ul>
+                            <table class="table">
+
+                                <thead>
+                                <tr>
+                                    @can('viewAll', App\Models\Compilation::class)
+                                    <th>{{ __('Identification number') }}</th>
+                                    <th>{{ __('Last name') }}</th>
+                                    <th>{{ __('First name') }}</th>
+                                    @endcan
+                                    <th>{{ __('Creation date') }}</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
                                 @foreach ($compilations as $compilation)
-                                    <li>
+                                    <tr>
                                         @can('viewAll', App\Models\Compilation::class)
-                                        {{ $compilation->student->identification_number }}
-                                        -
-                                        {{ $compilation->student->user->last_name }}
-                                        {{ $compilation->student->user->first_name }}
-                                        -
+                                        <td>{{ $compilation->student->identification_number }}</td>
+                                        <td>{{ $compilation->student->user->last_name }}</td>
+                                        <td>{{ $compilation->student->user->first_name }}</td>
                                         @endcan
-                                        {{ $compilation->created_at }}
-                                        -
-                                        {!! link_to_route('compilations.show', __('View'), ['compilation' => $compilation]) !!}
-                                    </li>
+                                        <td>{{ $compilation->created_at }}</td>
+                                        <td>{!! link_to_route('compilations.show', __('View'), ['compilation' => $compilation]) !!}</td>
+                                    </tr>
                                 @endforeach
-                            </ul>
+                                </tbody>
+
+                            </table>
 
                         @endif
 

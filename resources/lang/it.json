@@ -3,6 +3,8 @@
   "Register": "Registrati",
   "Logout": "Esci",
   "Forgot your password?": "Hai scordato la password?",
+  "Reset password": "Reimposta password",
+  "Send password reset link": "Invia link di reimpostazione password",
 
   "Register as student": "Registrati come studente",
   "Register new viewer": "Registra nuovo visualizzatore",
@@ -26,11 +28,14 @@
   "New compilation": "Nuova compilazione",
   "My compilations": "Le mie compilazioni",
   "All compilations": "Tutte le compilazioni",
+  "Creation date": "Data di creazione",
 
   "Section": "Sezione",
   "Create": "Crea",
   "There were some problems adding the compilation": "Alcuni problemi riscontrati durante la creazione della compilazione",
   "The new compilation has been created": "La nuova compilazione è stata creata",
 
-  "Compilation": "Compilazione"
+  "Compilation": "Compilazione",
+  "Question": "Domanda",
+  "Answer": "Risposta"
 }

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Auth\Events\Registered;
-use Auth;
 use App;
-use DB;
+use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\User;
+use Auth;
+use DB;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -37,8 +37,6 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -46,85 +44,13 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        $rules = [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'role' => 'required',
-        ];
-        
-        // Guest users can only register student users.
-        // Authenticated users can only register viewer users.
-        if (Auth::guest()) {
-            $rules['role'] .= '|in:student';
-            $rules['identification_number'] = 'required|regex:/^\\d{8}$/|unique:students';
-            $rules['gender'] = 'required|in:male,female';
-            $countryCodes = App::make('App\Services\CountryService')->getCountryCodes();
-            $rules['nationality'] = 'required|in:' . implode(',', $countryCodes);
-        } else {
-            $rules['role'] .= '|in:viewer';
-            if (Auth::user()->can('createAdministrator', User::class)) {
-            $rules['role'] .= ',administrator';
-            }
-        }
-        
-        return Validator::make($data, $rules);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-    
-        $user = null;
-        
-        DB::transaction(function () use (&$user, $data) {
-        
-        $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'role' => $data['role'],
-        ]);
-        
-        // If a student user is created, the related student model is created.
-        // @todo add student data validation.
-        // @todo move this logic to an event.
-        if ($user->role === 'student') {
-            $student = new Student;
-            $student->identification_number = $data['identification_number'];
-            $student->gender = $data['gender'];
-            $student->nationality = $data['nationality'];
-            $student->user()->associate($user);
-            $student->save();
-        }
-        
-        });
-        
-        return $user;
-    }
-    
-    /**
      * Handle a registration request for the application.
      *
      * This method overrides the default from trait
      * Illuminate\Foundation\Auth\RegistersUsers
      * in order to restrict auto-login only after student users registration.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
@@ -138,6 +64,83 @@ class RegisterController extends Controller
         }
 
         return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+            ?: redirect($this->redirectPath());
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        $rules = [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required',
+        ];
+
+        // Guest users can only register student users.
+        // Authenticated users can only register viewer users.
+        if (Auth::guest()) {
+            $rules['role'] .= '|in:student';
+            $rules['identification_number'] = 'required|regex:/^\\d{8}$/|unique:students';
+            $rules['gender'] = 'required|in:male,female';
+            $countryCodes = App::make('App\Services\CountryService')->getCountryCodes();
+            $rules['nationality'] = 'required|in:' . implode(',', $countryCodes);
+        } else {
+            $rules['role'] .= '|in:viewer';
+            if (Auth::user()->can('createAdministrator', User::class)) {
+                $rules['role'] .= ',administrator';
+            }
+        }
+
+        // @todo move this customization to configuration files
+        // @todo add identification number validation against e-mail address
+        if (Auth::guest()) {
+            $rules['email'] .= '|regex:/^\\d{8}@studenti\\.uniupo\\.it$/';
+        }
+
+        return Validator::make($data, $rules);
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array $data
+     * @return \App\User
+     */
+    protected function create(array $data)
+    {
+
+        $user = null;
+
+        DB::transaction(function () use (&$user, $data) {
+
+            $user = User::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'role' => $data['role'],
+            ]);
+
+            // If a student user is created, the related student model is created.
+            // @todo move this logic to an event.
+            if ($user->role === 'student') {
+                $student = new Student;
+                $student->identification_number = $data['identification_number'];
+                $student->gender = $data['gender'];
+                $student->nationality = $data['nationality'];
+                $student->user()->associate($user);
+                $student->save();
+            }
+
+        });
+
+        return $user;
     }
 }

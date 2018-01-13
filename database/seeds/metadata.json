@@ -1,55 +1,180 @@
 [
   [
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true}
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    }
   ],
   [
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"date", "required":true},
-    {"type":"date", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true, "options": {"makes_next_required":{"next":2,"answer":1}}},
-    {"type":"multiple_choice"},
-    {"type":"text"},
-    {"type":"single_choice", "required":true, "options": {"makes_next_required":{"next":1,"answer":1}}},
-    {"type":"single_choice"},
-    {"type":"single_choice", "required":true},
-    {"type":"text"},
-    {"type":"single_choice", "required":true}
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "date",
+      "required": true
+    },
+    {
+      "type": "date",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true,
+      "options": {
+        "makes_next_required": {
+          "next": 2,
+          "answer": 1
+        }
+      }
+    },
+    {
+      "type": "multiple_choice"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "single_choice",
+      "required": true,
+      "options": {
+        "makes_next_required": {
+          "next": 1,
+          "answer": 1
+        }
+      }
+    },
+    {
+      "type": "single_choice"
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    }
   ],
   [
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true}
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    }
   ],
   [
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true}
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    }
   ],
   [
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true}
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    }
   ],
   [
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true}
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    }
   ],
   [
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true},
-    {"type":"single_choice", "required":true}
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "type": "single_choice",
+      "required": true
+    }
   ]
 ]

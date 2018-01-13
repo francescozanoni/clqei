@@ -24,13 +24,27 @@ class CompilationItem extends Model
     {
         return $this->belongsTo('App\Models\Compilation');
     }
-    
+
     /**
      * Get the question to which this item answers
      */
     public function question()
     {
         return $this->belongsTo('App\Models\Question');
+    }
+
+    /**
+     * Get the related answer object (if any)
+     */
+    public function answer()
+    {
+        // Scalar answers (other than "single_choice" and "multiple_choice")
+        // are retrieved straightforward by the "answer" attribute.
+        if ($this->question->type !== 'single_choice' &&
+            $this->question->type !== 'multiple_choice') {
+            return null;
+        }
+        return $this->belongsTo('App\Models\Answer', 'answer', 'id');
     }
 
 }

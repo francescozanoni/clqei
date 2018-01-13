@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Question;
 use App\Models\Compilation;
+use App\Models\Question;
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Auth;
 
 class StoreCompilationRequest extends FormRequest
 {
@@ -34,7 +34,7 @@ class StoreCompilationRequest extends FormRequest
         ];
 
         $questions = Question::all();
-        
+
         // Flag object reporting whether the current question must be
         // required according to the value of a previous question.
         $makesNextRequired = null;
@@ -44,14 +44,14 @@ class StoreCompilationRequest extends FormRequest
         foreach ($questions as $question) {
             $questionId = $question->id;
             $singleQuestionRules = [];
-            
+
             if ($question->required == true) {
                 $singleQuestionRules[] = 'required';
             } else {
                 // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
                 $singleQuestionRules[] = 'nullable';
             }
-            
+
             // Usage of the flag object reporting whether the current question must be
             // required according to the value of a previous question.
             if ($makesNextRequired !== null) {
@@ -65,7 +65,8 @@ class StoreCompilationRequest extends FormRequest
                 }
             }
             if ($question->type === 'single_choice' ||
-                $question->type === 'multiple_choice') {
+                $question->type === 'multiple_choice'
+            ) {
                 $singleQuestionRules[] = Rule::exists('answers', 'id')
                     ->where(function ($query) use ($questionId) {
                         $query->where('question_id', $questionId);
@@ -75,7 +76,7 @@ class StoreCompilationRequest extends FormRequest
                 $singleQuestionRules[] = 'date';
             }
             $rules['q' . $questionId] = $singleQuestionRules;
-            
+
             // Management of the flag reporting whether next question(s) must be
             // required according to the value of the current question.
             // This statement must stay here on the bottom,

@@ -19,9 +19,34 @@
 
                     <div class="panel-body">
 
-                        <code>
-                        {{ $compilation->toJson() }}
-                        </code>
+                        <table class="table">
+
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ __('Question') }}</th>
+                                <th>{{ __('Answer') }}</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            @foreach ($compilation->items as $item)
+                                <tr>
+                                    <td>{{ $item->question->id }}</td>
+                                    <td>{{ $item->question->text }}</td>
+                                    <td>
+                                        @if ($item->answer() !== null)
+                                            {{-- @todo handle correctly case of multiple choice item --}}
+                                            {{ $item->answer()->first()->text }}
+                                        @else
+                                            {{ $item->answer }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+
+                        </table>
 
                     </div>
 
