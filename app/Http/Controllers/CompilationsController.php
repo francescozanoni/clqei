@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompilationRequest;
 use App\Models\Compilation;
 use App\Models\CompilationItem;
-use App\Models\Section;
 use App\Models\Question;
-use Illuminate\Http\Request;
+use App\Models\Section;
 use Auth;
 use DB;
+use Illuminate\Http\Request;
 
 class CompilationsController extends Controller
 {
@@ -27,7 +27,7 @@ class CompilationsController extends Controller
             // @todo check if student association can be checked in a better way.
             $compilations = Compilation::where('student_id', Auth::user()->student->id)->get();
         }
-        
+
         return view('compilations.index', ['compilations' => $compilations]);
     }
 
@@ -38,10 +38,10 @@ class CompilationsController extends Controller
      */
     public function create()
     {
-    
+
         // Only students can create compilations.
         $this->authorize('create', Compilation::class);
-        
+
         // Fetch all active sections,
         // with their active questions and active answers.
         $sections = Section::with('questions.answers')->get();
@@ -57,36 +57,50 @@ class CompilationsController extends Controller
      */
     public function store(StoreCompilationRequest $request)
     {
-    
+
         // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
-       
+
         $compilation = new Compilation;
-         
+
         DB::transaction(function () use ($request, $compilation) {
- 
-        $student = Auth::user()->student;
-        
-        $compilation->student()->associate($student);
-        $compilation->save();
-                
-        foreach ($request->all() as $key => $value) {
-           if (preg_match('/^q\d+$/', $key) === 1 &&
-               empty($value) === false) {
-              $item = new CompilationItem;
-              $item->answer = $value;
-              $question = Question::find(substr($key, 1));
-              $item->question()->associate($question);
-              $item->compilation()->associate($compilation);
-              $item->save();
-           }
-        }
- 
+
+            $student = Auth::user()->student;
+
+            $compilation->student()->associate($student);
+            $compilation->save();
+
+            foreach ($request->all() as $key => $value) {
+                if (preg_match('/^q\d+$/', $key) === 1 &&
+                    empty($value) === false
+                ) {
+                    // When a question has several answers,
+                    // one compilation item is created for each answer.
+                    if (is_array($value) === true) {
+                        foreach ($value as $singleValue) {
+                            $item = new CompilationItem;
+                            $item->answer = $singleValue;
+                            $question = Question::find(substr($key, 1));
+                            $item->question()->associate($question);
+                            $item->compilation()->associate($compilation);
+                            $item->save();
+                        }
+                    } else {
+                        $item = new CompilationItem;
+                        $item->answer = $value;
+                        $question = Question::find(substr($key, 1));
+                        $item->question()->associate($question);
+                        $item->compilation()->associate($compilation);
+                        $item->save();
+                    }
+                }
+            }
+
         });
-        
+
         // Redirection does not work from within transaction block.
         return \Redirect::route('compilations.show', [$compilation->id])
-            ->with('message', 'Your compilation has been created!');
-        
+            ->with('message', __('The new compilation has been created'));
+
     }
 
     /**
@@ -97,9 +111,9 @@ class CompilationsController extends Controller
      */
     public function show(Compilation $compilation)
     {
-    
+
         $compilation->load('items');
-        
+
         return view('compilations.show', ['compilation' => $compilation]);
     }
 

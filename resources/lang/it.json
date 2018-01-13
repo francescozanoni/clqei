@@ -23,5 +23,10 @@
 
   "New compilation": "Nuova compilazione",
   "My compilations": "Le mie compilazioni",
-  "All compilations": "Tutte le compilazioni"
+  "All compilations": "Tutte le compilazioni",
+
+  "Section": "Sezione",
+  "Create": "Crea",
+  "There were some problems adding the compilation": "Alcuni problemi rilevati durante la creazione della compilazione",
+  "The new compilation has been created": "La nuova compilazione è stata creata"
 }

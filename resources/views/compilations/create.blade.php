@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">Create</div>
+                    <div class="panel-heading">{{ __('New compilation') }}</div>
 
                     <div class="panel-body">
 
@@ -15,7 +15,8 @@
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
-                                There were some problems adding the category.<br/>
+                                {{ __('There were some problems adding the compilation') }}
+                                <br/>
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -23,7 +24,7 @@
                                 </ul>
                             </div>
                         @endif
-                        
+
                         {!! BootForm::hidden('student_id', Auth::user()->student->id) !!}
 
                         {{-- Nav tabs --}}
@@ -57,7 +58,7 @@
                                      class="tab-pane"
                                      @endif
                                      id="section_{{ $section->id }}">
-                                     
+
                                      <h3>{{ $section->text }}</h3>
 
                                     @foreach ($section->questions as $question)
@@ -71,7 +72,7 @@
                                             ) !!}
 
                                         @endif
-                                        
+
                                         @if ($question->type === 'multiple_choice')
 
                                             {!! BootForm::checkboxes(
@@ -81,7 +82,7 @@
                                             ) !!}
 
                                         @endif
-                                        
+
                                         @if ($question->type === 'single_choice')
 
                                             @if (count($question->answers) < 5)
@@ -107,7 +108,7 @@
                                             @endif
 
                                         @endif
-                                        
+
                                         @if ($question->type === 'date')
 
                                             {!! BootForm::date(
@@ -123,7 +124,7 @@
                             @endforeach
                         </div>
 
-                        {!! BootForm::submit('Create!') !!}
+                        {!! BootForm::submit(__('Create')) !!}
 
                         {!! BootForm::close() !!}
 
