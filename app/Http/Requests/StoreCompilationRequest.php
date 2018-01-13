@@ -34,18 +34,35 @@ class StoreCompilationRequest extends FormRequest
         ];
 
         $questions = Question::all();
+        
+        // Flag object reporting whether the current question must be
+        // required according to the value of a previous question.
+        $makesNextRequired = null;
 
-        // @todo add required_if constraints
         // @todo add date range constraints
 
         foreach ($questions as $question) {
             $questionId = $question->id;
             $singleQuestionRules = [];
+            
             if ($question->required == true) {
                 $singleQuestionRules[] = 'required';
             } else {
                 // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
                 $singleQuestionRules[] = 'nullable';
+            }
+            
+            // Usage of the flag object reporting whether the current question must be
+            // required according to the value of a previous question.
+            if ($makesNextRequired !== null) {
+                $singleQuestionRules[] =
+                    'required_if:' .
+                    'q' . $makesNextRequired->question . ',' .
+                    $makesNextRequired->answer;
+                $makesNextRequired->next--;
+                if ($makesNextRequired->next === 0) {
+                    $makesNextRequired = null;
+                }
             }
             if ($question->type === 'single_choice' ||
                 $question->type === 'multiple_choice') {
@@ -58,6 +75,19 @@ class StoreCompilationRequest extends FormRequest
                 $singleQuestionRules[] = 'date';
             }
             $rules['q' . $questionId] = $singleQuestionRules;
+            
+            // Management of the flag reporting whether next question(s) must be
+            // required according to the value of the current question.
+            // This statement must stay here on the bottom,
+            // anyway after if ($makesNextRequired !== null) {} block.
+            if (isset($question->options) === true) {
+                $options = json_decode($question->options);
+                if (isset($options->makes_next_required) === true) {
+                    $makesNextRequired = $options->makes_next_required;
+                    $makesNextRequired->question = $question->id;
+                    $makesNextRequired->answer = $question->answers[$makesNextRequired->answer - 1]->id;
+                }
+            }
         }
 
         return $rules;
