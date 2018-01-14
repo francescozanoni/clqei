@@ -43,8 +43,6 @@ class StoreCompilationRequest extends FormRequest
         // required according to the value of a previous question.
         $makesNextRequired = null;
 
-        // @todo add date range constraints
-
         foreach ($questions as $question) {
             $questionId = $question->id;
             $singleQuestionRules = [];

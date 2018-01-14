@@ -18,13 +18,6 @@
                         {{ $compilation->student->user->first_name }}
                         @endcan
 
-                        @can('create', App\Models\Compilation::class)
-                        <div class="pull-right" onclick="window.print()" style="cursor:pointer">
-                            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                            {{ __('Print') }}
-                        </div>
-                        @endcan
-
                     </div>
 
                     <div class="panel-body">
@@ -58,7 +51,7 @@
                                     <td>
                                         @if ($item->answer() !== null)
                                             {{-- @todo handle correctly case of multiple choice item --}}
-                                            {{ $item->answer()->first()->text }}
+                                            {{ $item->answer()->first() }}
                                         @else
                                             {{ $item->answer }}
                                         @endif

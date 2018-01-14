@@ -24,9 +24,10 @@
                                 <tr>
                                     @can('viewAll', App\Models\Compilation::class)
                                     <th>{{ __('Identification number') }}</th>
-                                    <th>{{ __('Last name') }}</th>
-                                    <th>{{ __('First name') }}</th>
+                                    <th>{{ __('Last and first name') }}</th>
                                     @endcan
+                                    <th>{{ __('Stage location') }}</th>
+                                    <th>{{ __('Stage ward') }}</th>
                                     <th>{{ __('Date') }}</th>
                                     <th></th>
                                 </tr>
@@ -37,9 +38,10 @@
                                     <tr>
                                         @can('viewAll', App\Models\Compilation::class)
                                         <td>{{ $compilation->student->identification_number }}</td>
-                                        <td>{{ $compilation->student->user->last_name }}</td>
-                                        <td>{{ $compilation->student->user->first_name }}</td>
+                                        <td>{{ $compilation->student->user->last_name}} {{ $compilation->student->user->first_name }}</td>
                                         @endcan
+                                        <td>{{ $compilation->stageLocation->name }}</td>
+                                        <td>{{ $compilation->stageWard->name }}</td>
                                         <td>{{ $compilation->created_at }}</td>
                                         <td>{!! link_to_route('compilations.show', __('View'), ['compilation' => $compilation]) !!}</td>
                                     </tr>
