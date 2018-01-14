@@ -26,6 +26,23 @@
                         @endif
 
                         {!! BootForm::hidden('student_id', Auth::user()->student->id) !!}
+                        
+                        {!! BootForm::select(
+                                'stage_location_id',
+                                __('Stage location'),
+                                App\Models\Location::all()->pluck('name', 'id'),
+                                null,
+                                ['placeholder' => __('Select') . '...']
+                                ) !!}
+                        {!! BootForm::select(
+                                'stage_ward_id',
+                                __('Stage ward'),
+                                App\Models\Ward::all()->pluck('name', 'id'),
+                                null,
+                                ['placeholder' => __('Select') . '...']
+                                ) !!}
+                        {!! BootForm::date('stage_start_date', __('Stage start date')) !!}
+                        {!! BootForm::date('stage_end_date', __('Stage end date')) !!}
 
                         {{-- Nav tabs --}}
                         <ul class="nav nav-tabs" role="tablist" id="myTabs">
@@ -68,7 +85,7 @@
                                             {{-- Questions without predefined answers are free text --}}
                                             {!! BootForm::text(
                                             'q' . $question->id,
-                                            $questionCounter++ . '. ' . $question->text
+                                            $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text
                                             ) !!}
 
                                         @endif
@@ -77,7 +94,7 @@
 
                                             {!! BootForm::checkboxes(
                                             'q' . $question->id . '[]',
-                                            $questionCounter++ . '. ' . $question->text,
+                                            $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text,
                                             $question->answers->pluck('text', 'id')
                                             ) !!}
 
@@ -90,7 +107,7 @@
                                                 {{-- Questions with less than 5 answers are rendered as radio buttons --}}
                                                 {!! BootForm::radios(
                                                 'q' . $question->id,
-                                                $questionCounter++ . '. ' . $question->text,
+                                                $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text,
                                                 $question->answers->pluck('text', 'id')
                                                 ) !!}
 
@@ -99,7 +116,7 @@
                                                 {{-- Questions with 5 or more answers are rendered as select boxes --}}
                                                 {!! BootForm::select(
                                                 'q' . $question->id,
-                                                $questionCounter++ . '. ' . $question->text,
+                                                $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text,
                                                 $question->answers->pluck('text', 'id'),
                                                 null,
                                                 ['placeholder' => __('Select') . '...']
@@ -113,7 +130,7 @@
 
                                             {!! BootForm::date(
                                             'q' . $question->id,
-                                            $questionCounter++ . '. ' . $question->text
+                                            $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text
                                             ) !!}
 
                                         @endif

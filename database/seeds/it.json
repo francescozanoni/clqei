@@ -7,10 +7,6 @@
   },
   "Dati tirocinio":
   {
-    "Sede di tirocinio": ["TEST"],
-    "Reparto di tirocinio": ["TEST"],
-    "Inizio del tirocinio": "",
-    "Fine del tirocinio": "",
     "Ho svolto tirocinio prevalentemente": [
       "diurno (esempio: mattina e/o pomeriggio)",
       "in turno (anche di notte)"

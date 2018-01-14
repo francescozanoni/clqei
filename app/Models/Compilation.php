@@ -24,6 +24,22 @@ class Compilation extends Model
     {
         return $this->belongsTo('App\Models\Student');
     }
+    
+    /**
+     * Get the location where the stage of this compilation took place
+     */
+    public function stageLocation()
+    {
+        return $this->belongsTo('App\Models\Location', 'stage_location_id', 'id');
+    }
+    
+    /**
+     * Get the ward where the stage of this compilation took place
+     */
+    public function stageWard()
+    {
+        return $this->belongsTo('App\Models\Ward', 'stage_ward_id', 'id');
+    }
 
     /**
      * Get the items of this compilation

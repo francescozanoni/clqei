@@ -28,6 +28,17 @@
                     </div>
 
                     <div class="panel-body">
+                    
+                        <dl class="dl-horizontal">
+                            <dt>{{ __('Stage location') }}</dt>
+                            <dd>{{ $compilation->stageLocation->name }}</dd>
+                            <dt>{{ __('Stage ward') }}</dt>
+                            <dd>{{ $compilation->stageWard->name }}</dd>
+                            <dt>{{ __('Stage start date') }}</dt>
+                            <dd>{{ $compilation->stage_start_date }}</dd>
+                            <dt>{{ __('Stage end date') }}</dt>
+                            <dd>{{ $compilation->stage_end_date }}</dd>
+                        </dl>
 
                         <table class="table">
 

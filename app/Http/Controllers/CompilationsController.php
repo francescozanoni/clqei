@@ -7,6 +7,8 @@ use App\Models\Compilation;
 use App\Models\CompilationItem;
 use App\Models\Question;
 use App\Models\Section;
+use App\Models\Location;
+use App\Models\Ward;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -65,8 +67,16 @@ class CompilationsController extends Controller
         DB::transaction(function () use ($request, $compilation) {
 
             $student = Auth::user()->student;
+            $stageLocation = Location::find($request->input('stage_location_id'));
+            $stageWard = Ward::find($request->input('stage_ward_id'));
+            $stageStartDate = $request->input('stage_start_date');
+            $stageEndDate = $request->input('stage_end_date');
 
             $compilation->student()->associate($student);
+            $compilation->stageLocation()->associate($stageLocation);
+            $compilation->stageWard()->associate($stageWard);
+            $compilation->stage_start_date = $stageStartDate;
+            $compilation->stage_end_date = $stageEndDate;
             $compilation->save();
 
             foreach ($request->all() as $key => $value) {

@@ -23,22 +23,6 @@
       "required": true
     },
     {
-      "type": "date",
-      "required": true
-    },
-    {
-      "type": "date",
-      "required": true
-    },
-    {
-      "type": "single_choice",
-      "required": true
-    },
-    {
-      "type": "single_choice",
-      "required": true
-    },
-    {
       "type": "single_choice",
       "required": true,
       "options": {

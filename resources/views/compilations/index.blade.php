@@ -27,7 +27,7 @@
                                     <th>{{ __('Last name') }}</th>
                                     <th>{{ __('First name') }}</th>
                                     @endcan
-                                    <th>{{ __('Creation date') }}</th>
+                                    <th>{{ __('Date') }}</th>
                                     <th></th>
                                 </tr>
                                 </thead>

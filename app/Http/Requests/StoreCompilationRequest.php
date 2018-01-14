@@ -30,7 +30,11 @@ class StoreCompilationRequest extends FormRequest
     {
 
         $rules = [
-            'student_id' => 'required|exists:students,id',
+            'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
+            'stage_location_id' => 'required|exists:locations,id',
+            'stage_ward_id' => 'required|exists:wards,id',
+            'stage_start_date' => 'required|date|before:today',
+            'stage_end_date' => 'required|date|after:stage_start_date|before:today',
         ];
 
         $questions = Question::all();
