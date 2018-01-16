@@ -38,13 +38,29 @@ class CompilationItem extends Model
      */
     public function answer()
     {
-        // Scalar answers (other than "single_choice" and "multiple_choice")
-        // are retrieved straightforward by the "answer" attribute.
-        if ($this->question->type !== 'single_choice' &&
-            $this->question->type !== 'multiple_choice') {
-            return null;
-        }
         return $this->belongsTo('App\Models\Answer', 'answer', 'id');
+    }
+
+    public function getAnswerAttribute()
+    {
+        switch ($this->question->type) {
+            case 'single_choice':
+                return $this->answer->first()->text;
+                break;
+            case 'multiple_choice':
+                $siblingItems =
+                    CompilationItem::where('compilation_id', $this->compilation_id)
+                        ->where('question_id', $this->question_id)
+                        ->get();
+                $siblingItemAnswers = [];
+                foreach ($siblingItems as $siblingItem) {
+                    $siblingItemAnswers[] = $siblingItem->answer->first();
+                }
+                return [];
+                break;
+            default:
+                return $this->attributes['answer'];
+        }
     }
 
 }

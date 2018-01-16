@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="panel-body">
-                    
+
                         <dl class="dl-horizontal">
                             <dt>{{ __('Stage location') }}</dt>
                             <dd>{{ $compilation->stageLocation->name }}</dd>
@@ -49,9 +49,12 @@
                                     <td>{{ $item->question->id }}</td>
                                     <td>{{ $item->question->text }}</td>
                                     <td>
-                                        @if ($item->answer() !== null)
-                                            {{-- @todo handle correctly case of multiple choice item --}}
-                                            {{ $item->answer()->first() }}
+                                        @if (is_array($item->answer) === true)
+                                            <ul>
+                                                @foreach ($item->answer as $answer)
+                                                    <li>{{ $answer }}</li>
+                                                @endforeach
+                                            </ul>
                                         @else
                                             {{ $item->answer }}
                                         @endif
