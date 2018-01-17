@@ -24,10 +24,5 @@ class Answer extends Model
     {
         return $this->belongsTo('App\Models\Question');
     }
-    
-    public function __toString()
-    {
-        return $this->text;
-    }
 
 }

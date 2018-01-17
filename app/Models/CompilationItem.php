@@ -41,12 +41,12 @@ class CompilationItem extends Model
         return $this->belongsTo('App\Models\Answer', 'answer', 'id');
     }
 
-    public function getAnswerAttribute()
+    public function getAnswersAttribute()
     {
         switch ($this->question->type) {
-            case 'single_choice':
-                return $this->answer->first()->text;
-                break;
+            //case 'single_choice':
+            //    return $this->answer()->first()->text;
+            //    break;
             case 'multiple_choice':
                 $siblingItems =
                     CompilationItem::where('compilation_id', $this->compilation_id)
@@ -54,9 +54,20 @@ class CompilationItem extends Model
                         ->get();
                 $siblingItemAnswers = [];
                 foreach ($siblingItems as $siblingItem) {
-                    $siblingItemAnswers[] = $siblingItem->answer->first();
+                    $siblingItemAnswers[] = $siblingItem->answer()->first();
                 }
-                return [];
+                return $siblingItemAnswers;
+                break;
+            //default:
+            //    return $this->attributes['answer'];
+        }
+    }
+    
+    public function getAnswerAttribute()
+    {
+        switch ($this->question->type) {
+            case 'single_choice':
+                return $this->answer()->first()->text;
                 break;
             default:
                 return $this->attributes['answer'];
