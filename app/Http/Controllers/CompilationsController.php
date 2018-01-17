@@ -1,13 +1,14 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompilationRequest;
 use App\Models\Compilation;
 use App\Models\CompilationItem;
+use App\Models\Location;
 use App\Models\Question;
 use App\Models\Section;
-use App\Models\Location;
 use App\Models\Ward;
 use Auth;
 use DB;

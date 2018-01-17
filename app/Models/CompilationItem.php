@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -34,19 +35,25 @@ class CompilationItem extends Model
     }
 
     /**
-     * Get the related answer object (if any)
+     * Get the answer of the item:
+     *  - as a scalar value, if "answer" attribute contains an Answer model ID (single choice question)
+     *  - as an array, if "answer" attribute contains an Answer model ID (multiple choice question)
+     *  - as a string, if "answer" attribute contains the answer text itself
+     *
+     * This method cannot be "getAnswerAttribute",
+     * because an attribute with the same name exists
+     * @see https://stackoverflow.com/questions/41937721/undefined-property-in-model#41939732
+     *
+     * @return array|mixed
      */
-    public function answer()
-    {
-        return $this->belongsTo('App\Models\Answer', 'answer', 'id');
-    }
-
-    public function getAnswersAttribute()
+    public function getTheAnswerAttribute()
     {
         switch ($this->question->type) {
-            //case 'single_choice':
-            //    return $this->answer()->first()->text;
-            //    break;
+
+            case 'single_choice':
+                return $this->answer()->first()->text;
+                break;
+
             case 'multiple_choice':
                 $siblingItems =
                     CompilationItem::where('compilation_id', $this->compilation_id)
@@ -58,20 +65,18 @@ class CompilationItem extends Model
                 }
                 return $siblingItemAnswers;
                 break;
-            //default:
-            //    return $this->attributes['answer'];
-        }
-    }
-    
-    public function getAnswerAttribute()
-    {
-        switch ($this->question->type) {
-            case 'single_choice':
-                return $this->answer()->first()->text;
-                break;
+
             default:
                 return $this->attributes['answer'];
         }
+    }
+
+    /**
+     * Get the related answer object (if any)
+     */
+    public function answer()
+    {
+        return $this->belongsTo('App\Models\Answer', 'answer', 'id');
     }
 
 }

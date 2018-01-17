@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Policies;
 
@@ -12,43 +13,45 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\User $user
+     * @param  \App\User $model
      * @return bool
      */
     public function view(User $user, User $model)
     {
         // A user can view itself and administrators can view any users.
         if ($user->id === $model->id ||
-            $user->role === 'administrator') {
+            $user->role === 'administrator'
+        ) {
             return true;
         }
-        
+
         // Viewers can view only viewers.
         if ($user->role === $model->role &&
-            $user->role === 'viewer') {
+            $user->role === 'viewer'
+        ) {
             return true;
         }
-        
+
         return false;
     }
 
     /**
      * Determine whether the user can create models with viewer role.
      *
-     * @param  \App\User  $user
+     * @param  \App\User $user
      * @return bool
      */
     public function createViewer(User $user)
     {
         return $user->role === 'viewer' ||
-            $user->role === 'administrator';
+        $user->role === 'administrator';
     }
-    
+
     /**
      * Determine whether the user can create models with administrator role.
      *
-     * @param  \App\User  $user
+     * @param  \App\User $user
      * @return bool
      */
     public function createAdministrator(User $user)
@@ -59,8 +62,8 @@ class UserPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\User $user
+     * @param  \App\User $model
      * @return bool
      */
     public function update(User $user, User $model)
@@ -72,8 +75,8 @@ class UserPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\User $user
+     * @param  \App\User $model
      * @return bool
      */
     public function delete(User $user, User $model)

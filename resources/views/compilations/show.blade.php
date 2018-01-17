@@ -49,14 +49,14 @@
                                     <td>{{ $item->question->id }}</td>
                                     <td>{{ $item->question->text }}</td>
                                     <td>
-                                        @if (is_array($item->answers) === true)
+                                        @if (is_array($item->the_answer) === true)
                                             <ul>
-                                                @foreach ($item->answers as $answer)
+                                                @foreach ($item->the_answer as $answer)
                                                     <li>{{ $answer->text }}</li>
                                                 @endforeach
                                             </ul>
                                         @else
-                                            {{ $item->answer }}
+                                            {{ $item->the_answer }}
                                         @endif
                                     </td>
                                 </tr>

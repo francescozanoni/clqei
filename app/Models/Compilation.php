@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 class Compilation extends Model
 {
@@ -44,13 +44,7 @@ class Compilation extends Model
 
     /**
      * Get the items of this compilation
-     */
-    public function items()
-    {
-        return $this->hasMany('App\Models\CompilationItem');
-    }
-
-    /**
+     *
      * @return array
      */
     public function getItemsAttribute() : array
@@ -68,6 +62,14 @@ class Compilation extends Model
         }
 
         return $itemsToReturn;
+    }
+
+    /**
+     * Get the items of this compilation (as relationship)
+     */
+    public function items()
+    {
+        return $this->hasMany('App\Models\CompilationItem');
     }
 
 }
