@@ -13,7 +13,8 @@
         "laravelcollective/html": "^5.5",
         "nesbot/carbon": "^1.22",
         "umpirsky/country-list": "^2.0",
-        "watson/bootstrap-form": "^1.1"
+        "watson/bootstrap-form": "^1.1",
+        "yajra/laravel-datatables": "^1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
