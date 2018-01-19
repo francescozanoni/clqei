@@ -29,7 +29,7 @@ class Compilation extends Model
     /**
      * Get the location where the stage of this compilation took place
      */
-    public function stageLocation()
+    public function location()
     {
         return $this->belongsTo('App\Models\Location', 'stage_location_id', 'id');
     }
@@ -37,7 +37,7 @@ class Compilation extends Model
     /**
      * Get the ward where the stage of this compilation took place
      */
-    public function stageWard()
+    public function ward()
     {
         return $this->belongsTo('App\Models\Ward', 'stage_ward_id', 'id');
     }

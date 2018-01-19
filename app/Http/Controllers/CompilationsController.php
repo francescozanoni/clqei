@@ -13,6 +13,7 @@ use App\Models\Ward;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;;
 
 class CompilationsController extends Controller
 {
@@ -23,13 +24,17 @@ class CompilationsController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return DataTables::of(Compilation::query())->make(true);
+        }
         $compilations = null;
+        /*
         if (Auth::user()->can('viewAll', Compilation::class)) {
             $compilations = Compilation::all();
         } else {
             // @todo check if student association can be checked in a better way.
             $compilations = Compilation::where('student_id', Auth::user()->student->id)->get();
-        }
+        }*/
 
         return view('compilations.index', ['compilations' => $compilations]);
     }

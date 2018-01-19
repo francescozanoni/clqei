@@ -15,42 +15,18 @@
                     </div>
 
                     <div class="panel-body">
-
-                        @if ($compilations->isEmpty() === false)
-
-                            <table class="table">
-
-                                <thead>
-                                <tr>
-                                    @can('viewAll', App\Models\Compilation::class)
-                                    <th>{{ __('Identification number') }}</th>
-                                    <th>{{ __('Last and first name') }}</th>
-                                    @endcan
-                                    <th>{{ __('Stage location') }}</th>
-                                    <th>{{ __('Stage ward') }}</th>
-                                    <th>{{ __('Date') }}</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                @foreach ($compilations as $compilation)
-                                    <tr>
-                                        @can('viewAll', App\Models\Compilation::class)
-                                        <td>{{ $compilation->student->identification_number }}</td>
-                                        <td>{{ $compilation->student->user->last_name}} {{ $compilation->student->user->first_name }}</td>
-                                        @endcan
-                                        <td>{{ $compilation->stageLocation->name }}</td>
-                                        <td>{{ $compilation->stageWard->name }}</td>
-                                        <td>{{ $compilation->created_at }}</td>
-                                        <td>{!! link_to_route('compilations.show', __('View'), ['compilation' => $compilation]) !!}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-
-                            </table>
-
-                        @endif
+                    
+                    
+                    <table id="users-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                    </table>
 
                     </div>
 
@@ -59,3 +35,21 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+$(function() {
+    $('#users-table').DataTable({
+        serverSide: true,
+        processing: true,
+        ajax: '',
+        columns: [
+            {data: 'id', name: 'compilations.id'},
+            {data: 'student.first_name', name: 'student.first_name'},
+            {data: 'ward.name', name: 'ward.name'},
+            {data: 'created_at', name: 'compilations.created_at'}
+        ]
+    });
+});
+</script>
+@endpush
