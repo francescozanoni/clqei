@@ -52,31 +52,49 @@
 
                     @else
 
-                        @can('create', App\Models\Compilation::class)
-                        <li>
-                            {!! link_to_route('compilations.create', __('New compilation')) !!}
-                        </li>
-                        <li>
-                            {!! link_to_route('compilations.index', __('My compilations')) !!}
-                        </li>
-                        @endcan
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false" aria-haspopup="true">
+                                {{ __('Compilations') }}
+                                <span class="caret"></span>
+                            </a>
 
-                        @can('viewAll', App\Models\Compilation::class)
-                        <li>
-                            {!! link_to_route('compilations.index', __('All compilations')) !!}
+                            <ul class="dropdown-menu">
+                                @can('create', App\Models\Compilation::class)
+                                <li>
+                                    {!! link_to_route('compilations.create', __('New compilation')) !!}
+                                </li>
+                                <li>
+                                    {!! link_to_route('compilations.index', __('My compilations')) !!}
+                                </li>
+                                @endcan
+                                @can('viewAll', App\Models\Compilation::class)
+                                <li>
+                                    {!! link_to_route('compilations.index', __('All compilations')) !!}
+                                </li>
+                                @endcan
+                            </ul>
                         </li>
-                        @endcan
 
                         @can('createViewer', App\User::class)
-                        @if (Auth::user()->can('createAdministrator', App\User::class))
-                            <li>
-                                {!! link_to_route('register', __('Register new viewer or administrator')) !!}
-                            </li>
-                        @else
-                            <li>
-                                {!! link_to_route('register', __('Register new viewer')) !!}
-                            </li>
-                        @endif
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false" aria-haspopup="true">
+                                {{ __('Users') }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (Auth::user()->can('createAdministrator', App\User::class))
+                                    <li>
+                                        {!! link_to_route('register', __('Register new viewer or administrator')) !!}
+                                    </li>
+                                @else
+                                    <li>
+                                        {!! link_to_route('register', __('Register new viewer')) !!}
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
                         @endcan
 
                         <li class="dropdown">
