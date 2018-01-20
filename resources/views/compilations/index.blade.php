@@ -15,15 +15,14 @@
                     </div>
 
                     <div class="panel-body">
-                    
-                    
-                    <table id="users-table" class="table">
+
+
+                    <table id="compilations-table" class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Created At</th>
+                                <th>{{ __('Stage location') }}</th>
+                                <th>{{ __('Stage ward') }}</th>
+                                <th>{{ __('Date') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -39,14 +38,13 @@
 @push('scripts')
 <script>
 $(function() {
-    $('#users-table').DataTable({
+    $('#compilations-table').DataTable({
         serverSide: true,
         processing: true,
         ajax: '',
         columns: [
-            {data: 'id', name: 'compilations.id'},
-            {data: 'student.first_name', name: 'student.first_name'},
-            {data: 'ward.name', name: 'ward.name'},
+            {data: 'stage_location.name', name: 'stageLocation.name'},
+            {data: 'stage_ward.name', name: 'stageWard.name'},
             {data: 'created_at', name: 'compilations.created_at'}
         ]
     });

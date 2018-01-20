@@ -13,7 +13,7 @@ use App\Models\Ward;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;;
+use Yajra\DataTables\DataTables;
 
 class CompilationsController extends Controller
 {
@@ -25,7 +25,7 @@ class CompilationsController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(Compilation::query())->make(true);
+            return DataTables::of(Compilation::with('stageLocation')->with('stageWard'))->make(true);
         }
         $compilations = null;
         /*
