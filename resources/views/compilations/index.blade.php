@@ -54,10 +54,15 @@
                     name: 'student.identification_number'
                 },
                 {
+                    {{-- @todo find how to make this column searchable for both first and last name --}}
+                    /*
                     render: function (data, type, row) {
                         return row['student']['user']['last_name'] + ' ' + row['student']['user']['first_name'];
                     },
                     name: 'student.user.last_first_name'
+                    */
+                    data: 'student.user.last_name',
+                    name: 'student.user.last_name'
                 },
                     @endif
                 {
@@ -78,7 +83,8 @@
                     render: function (data, type, row) {
                         return '<a href="compilations/' + row['id'] + '">{{ __('View') }}</a>';
                     },
-                    sortable: false
+                    sortable: false,
+                    searchable: false
                 }
             ]
         });

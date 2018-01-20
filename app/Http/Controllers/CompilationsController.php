@@ -31,16 +31,8 @@ class CompilationsController extends Controller
                     ->with('student.user')
             )->make(true);
         }
-        $compilations = null;
-        /*
-        if (Auth::user()->can('viewAll', Compilation::class)) {
-            $compilations = Compilation::all();
-        } else {
-            // @todo check if student association can be checked in a better way.
-            $compilations = Compilation::where('student_id', Auth::user()->student->id)->get();
-        }*/
 
-        return view('compilations.index', ['compilations' => $compilations]);
+        return view('compilations.index');
     }
 
     /**
