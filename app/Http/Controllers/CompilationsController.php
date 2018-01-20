@@ -25,7 +25,11 @@ class CompilationsController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(Compilation::with('stageLocation')->with('stageWard'))->make(true);
+            return DataTables::of(
+                Compilation::with('stageLocation')
+                    ->with('stageWard')
+                    ->with('student.user')
+            )->make(true);
         }
         $compilations = null;
         /*
