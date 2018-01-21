@@ -45,7 +45,9 @@
         $('#compilations-table').DataTable({
             serverSide: true,
             processing: true,
-            {{-- @todo localize DataTables --}}
+            language: {
+                url: window.datatablesLocalizations.{{ config('app.locale') }}
+            },
             ajax: '',
             columns: [
                     @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
