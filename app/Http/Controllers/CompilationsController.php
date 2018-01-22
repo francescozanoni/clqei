@@ -31,7 +31,7 @@ class CompilationsController extends Controller
             $compilationQuery = Compilation
                 ::with('stageLocation')
                 ->with('stageWard')
-                ->with('student')
+                ->with('student.user')
                 ->select('compilations.*');
 
             if (Auth::user()->cannot('viewAll', Compilation::class)) {
