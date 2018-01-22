@@ -24,12 +24,24 @@ class CompilationsController extends Controller
      */
     public function index()
     {
+
+        // AJAX data call from DataDables.
         if (request()->ajax()) {
-            return DataTables::of(
-                Compilation::with('stageLocation')
-                    ->with('stageWard')
-                    ->with('student.user')
-            )->make(true);
+
+            $compilationQuery = Compilation
+                ::with('stageLocation')
+                ->with('stageWard')
+                ->with('student')
+                ->select('compilations.*');
+
+            if (Auth::user()->cannot('viewAll', Compilation::class)) {
+                $compilationQuery
+                    ->whereHas('student', function ($query) {
+                        $query->where('id', Auth::user()->student->id);
+                    });
+            }
+
+            return DataTables::of($compilationQuery)->make(true);
         }
 
         return view('compilations.index');
@@ -40,7 +52,8 @@ class CompilationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public
+    function create()
     {
 
         // Only students can create compilations.
@@ -59,8 +72,10 @@ class CompilationsController extends Controller
      * @param  StoreCompilationRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompilationRequest $request)
-    {
+    public
+    function store(
+        StoreCompilationRequest $request
+    ) {
 
         // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
 
@@ -121,8 +136,10 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function show(Compilation $compilation)
-    {
+    public
+    function show(
+        Compilation $compilation
+    ) {
 
         $compilation->load('items');
 
@@ -135,8 +152,10 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Compilation $compilation)
-    {
+    public
+    function edit(
+        Compilation $compilation
+    ) {
         return view('compilations.edit');
     }
 
@@ -147,8 +166,11 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compilation $compilation)
-    {
+    public
+    function update(
+        Request $request,
+        Compilation $compilation
+    ) {
         //
     }
 
@@ -158,8 +180,10 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Compilation $compilation)
-    {
+    public
+    function destroy(
+        Compilation $compilation
+    ) {
         //
     }
 }

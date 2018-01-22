@@ -1,9 +1,11 @@
 <?php
+declare(strict_types = 1);
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -15,7 +17,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'role',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'role',
     ];
 
     /**
@@ -24,13 +30,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
-    
+
     /**
      * Get the student of this user
      */
-    public function student()
+    public function student() : HasOne
     {
         return $this->hasOne('App\Models\Student');
     }

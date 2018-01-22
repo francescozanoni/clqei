@@ -19,7 +19,6 @@ class CreateAnswersTable extends Migration
             $table->unsignedInteger('question_id')->nullable(false);
             // Position of the answer within the set of answers of a question (1...N)
             $table->unsignedTinyInteger('position')->nullable(false);
-            // @todo find how to create a unique index on fields question_id and position
             $table->foreign('question_id')->references('id')->on('questions');
             $table->timestamps();
             $table->softDeletes();

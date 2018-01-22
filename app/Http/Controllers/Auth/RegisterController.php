@@ -88,7 +88,7 @@ class RegisterController extends Controller
         // Authenticated users can only register viewer users.
         if (Auth::guest()) {
             $rules['role'] .= '|in:student';
-            $rules['identification_number'] = 'required|regex:/^\\d{8}$/|unique:students';
+            $rules['identification_number'] = 'required|regex:/' . config('clqei.students.identification_number.pattern') . '/|unique:students';
             $rules['gender'] = 'required|in:male,female';
             $countryCodes = App::make('App\Services\CountryService')->getCountryCodes();
             $rules['nationality'] = 'required|in:' . implode(',', $countryCodes);
@@ -99,10 +99,9 @@ class RegisterController extends Controller
             }
         }
 
-        // @todo move this customization to configuration files
         // @todo add identification number validation against e-mail address
         if (Auth::guest()) {
-            $rules['email'] .= '|regex:/^\\d{8}@studenti\\.uniupo\\.it$/';
+            $rules['email'] .= '|regex:/' . config('clqei.students.email.pattern') . '/';
         }
 
         return Validator::make($data, $rules);

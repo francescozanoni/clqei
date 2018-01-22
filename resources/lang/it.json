@@ -14,6 +14,7 @@
   "First name": "Nome",
   "Last name": "Cognome",
   "E-mail address": "Indirizzo e-mail",
+  "University e-mail address": "Indirizzo e-mail di ateneo",
   "Password": "Password",
   "Confirm password": "Conferma password",
   "Identification number": "Matricola",
@@ -25,6 +26,7 @@
   "Select": "Seleziona",
   "viewer": "visualizzatore",
   "administrator": "amministratore",
+  "Register new user": "Registra il nuovo utente",
   "There were some problems registering the user": "Alcuni problemi riscontrati durante la registrazione dell'utente",
 
   "New compilation": "Nuova compilazione",

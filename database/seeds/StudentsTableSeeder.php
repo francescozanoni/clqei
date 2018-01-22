@@ -15,8 +15,7 @@ class StudentsTableSeeder extends Seeder
     {
 
         DB::table('students')->insert([
-            // @todo retrieve the user ID dynamically
-            'user_id' => 3,
+            'user_id' => DB::table('users')->where('role', 'student')->first()->id,
             'identification_number' => '12345678',
             'gender' => 'male',
             'nationality' => 'Italian',

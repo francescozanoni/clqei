@@ -37,7 +37,11 @@
 
                         {!! BootForm::text('first_name', __('First name')) !!}
                         {!! BootForm::text('last_name', __('Last name')) !!}
-                        {!! BootForm::email('email', __('E-mail address')) !!}
+                        @if (Auth::guest() === true)
+                            {!! BootForm::email('email', __('University e-mail address')) !!}
+                        @else
+                            {!! BootForm::email('email', __('E-mail address')) !!}
+                        @endif
                         {!! BootForm::password('password', __('Password')) !!}
                         {!! BootForm::password('password_confirmation', __('Confirm password')) !!}
 
@@ -81,8 +85,11 @@
 
                         @endif
 
-                        {{-- @todo fix string in case of viewer/administrator user --}}
-                        {!! BootForm::submit(__('Register')) !!}
+                        @if (Auth::guest() === true)
+                            {!! BootForm::submit(__('Register')) !!}
+                        @else
+                            {!! BootForm::submit(__('Register new user')) !!}
+                        @endif
 
                         {!! BootForm::close() !!}
 

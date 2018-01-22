@@ -22,7 +22,6 @@ class CreateQuestionsTable extends Migration
             $table->json('options')->nullable(true);
             // Position of the question within the set of questions of a section (1...N)
             $table->unsignedTinyInteger('position')->nullable(false);
-            // @todo find how to create a unique index on fields section_id and position
             $table->foreign('section_id')->references('id')->on('sections');
             $table->timestamps();
             $table->softDeletes();
