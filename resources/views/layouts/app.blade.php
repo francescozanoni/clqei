@@ -96,6 +96,24 @@
                             </ul>
                         </li>
                         @endcan
+                        
+                        @can('create', App\Models\Location::class)
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false" aria-haspopup="true">
+                                {{ __('Stages') }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                    <li>
+                                        {!! link_to_route('locations.index', __('Locations')) !!}
+                                    </li>
+                                    <li>
+                                        {!! link_to_route('wards.index', __('Wards')) !!}
+                                    </li>
+                            </ul>
+                        </li>
+                        @endcan
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"

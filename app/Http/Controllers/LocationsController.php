@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLocationRequest;
 use App\Models\Location;
 use Illuminate\Http\Request;
 
@@ -31,12 +32,19 @@ class LocationsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\StoreLocationRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLocationRequest $request)
     {
-        //
+        $location = new Location;
+
+        $location->name = $request->input('name');
+        $location->save();
+
+        return \Redirect::route('locations.index')
+            ->with('message', __('The new location has been created'));
+
     }
 
     /**

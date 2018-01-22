@@ -51,7 +51,10 @@
   "Answer": "Risposta",
   "Print": "Stampa",
 
+  "Stages": "Tirocini",
   "Stage locations": "Sedi di tirocinio",
   "Stage wards": "Reparti di tirocinio",
-  "Name": "Nome"
+  "Name": "Nome",
+  "Locations": "Sedi",
+  "Wards": "Reparti"
 }

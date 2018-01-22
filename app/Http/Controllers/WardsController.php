@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreWardRequest;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class WardsController extends Controller
      */
     public function index()
     {
-        //
+        $wards = Ward::all();
+        return view('wards.index', ['wards' => $wards]);
     }
 
     /**
@@ -30,12 +32,19 @@ class WardsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\StoreWardRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreWardRequest $request)
     {
-        //
+        $ward = new Ward;
+
+        $ward->name = $request->input('name');
+        $ward->save();
+
+        return \Redirect::route('wards.index')
+            ->with('message', __('The new ward has been created'));
+
     }
 
     /**

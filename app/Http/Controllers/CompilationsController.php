@@ -71,9 +71,7 @@ class CompilationsController extends Controller
      * @param  StoreCompilationRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(
-        StoreCompilationRequest $request
-    ) {
+    public function store(StoreCompilationRequest $request) {
 
         // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
 
