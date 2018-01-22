@@ -52,8 +52,7 @@ class CompilationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function create()
+    public function create()
     {
 
         // Only students can create compilations.
@@ -72,8 +71,7 @@ class CompilationsController extends Controller
      * @param  StoreCompilationRequest $request
      * @return \Illuminate\Http\Response
      */
-    public
-    function store(
+    public function store(
         StoreCompilationRequest $request
     ) {
 
@@ -136,8 +134,7 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public
-    function show(
+    public function show(
         Compilation $compilation
     ) {
 
@@ -152,8 +149,7 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public
-    function edit(
+    public function edit(
         Compilation $compilation
     ) {
         return view('compilations.edit');
@@ -166,8 +162,7 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public
-    function update(
+    public function update(
         Request $request,
         Compilation $compilation
     ) {
@@ -180,8 +175,7 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy(
+    public function destroy(
         Compilation $compilation
     ) {
         //

@@ -69,7 +69,8 @@ class CompilationPolicy
      */
     public function viewAll(User $user) : bool
     {
-        return $user->role !== 'student' &&
-        Compilation::count() > 0;
+        return
+            $user->role !== 'student' &&
+            Compilation::count() > 0;
     }
 }

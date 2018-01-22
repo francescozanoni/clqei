@@ -44,8 +44,9 @@ class UserPolicy
      */
     public function createViewer(User $user)
     {
-        return $user->role === 'viewer' ||
-        $user->role === 'administrator';
+        return
+            $user->role === 'viewer' ||
+            $user->role === 'administrator';
     }
 
     /**
@@ -82,7 +83,8 @@ class UserPolicy
     public function delete(User $user, User $model)
     {
         // Only administrators can delete users, but not themselves.
-        return $user->role === 'administrator' &&
-        $user->id === $model->id;
+        return
+            $user->role === 'administrator' &&
+            $user->id === $model->id;
     }
 }

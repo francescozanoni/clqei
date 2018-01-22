@@ -21,7 +21,7 @@
                             <tr>
                                 @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
                                     <th>{{ __('Identification number') }}</th>
-                                    <th>{{ __('Last and first name') }}</th>
+                                    <th>{{ __('Last name') }}</th>
                                 @endif
                                 <th>{{ __('Stage location') }}</th>
                                 <th>{{ __('Stage ward') }}</th>

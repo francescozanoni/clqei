@@ -34,6 +34,36 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 Route::resource('compilations', 'CompilationsController')->middleware('auth');
 
+/*
+ * Verb        URI                               Action   Route Name
+ * ---------------------------------------------------------------------------
+ * GET         /locations                  index    locations.index
+ * GET         /locations/create           create   locations.create
+ * POST        /locations                  store    locations.store
+ * GET         /locations/{location}       show     locations.show
+ * GET         /locations/{location}/edit  edit     locations.edit
+ * PUT/PATCH   /locations/{location}       update   locations.update
+ * DELETE      /locations/{location}       destroy  locations.destroy
+ *
+ * @see https://laravel.com/docs/5.5/controllers#resource-controllers
+ */
+Route::resource('locations', 'LocationsController')->middleware('auth');
+
+/*
+ * Verb        URI                               Action   Route Name
+ * ---------------------------------------------------------------------------
+ * GET         /wards              index    wards.index
+ * GET         /wards/create       create   wards.create
+ * POST        /wards              store    wards.store
+ * GET         /wards/{ward}       show     wards.show
+ * GET         /wards/{ward}/edit  edit     wards.edit
+ * PUT/PATCH   /wards/{ward}       update   wards.update
+ * DELETE      /wards/{ward}       destroy  wards.destroy
+ *
+ * @see https://laravel.com/docs/5.5/controllers#resource-controllers
+ */
+Route::resource('wards', 'WardsController')->middleware('auth');
+
 if (App::environment() !== 'production') {
     Route::get('/test', function () {
         return 'test';
