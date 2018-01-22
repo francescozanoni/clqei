@@ -66,7 +66,7 @@ class WardsController extends Controller
      */
     public function edit(Ward $ward)
     {
-        //
+        return view('wards.edit', ['ward' => $ward]);
     }
 
     /**

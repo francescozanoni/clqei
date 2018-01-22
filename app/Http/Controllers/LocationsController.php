@@ -66,7 +66,7 @@ class LocationsController extends Controller
      */
     public function edit(Location $location)
     {
-        //
+        return view('locations.edit', ['location' => $location]);
     }
 
     /**

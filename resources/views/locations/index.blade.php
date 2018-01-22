@@ -5,6 +5,12 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
             
+                @if (session('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+            
                 <div class="panel panel-default">
 
                     <div class="panel-heading">{{ __('New location') }}</div>
@@ -59,7 +65,7 @@
                                 @foreach ($locations as $location)
                                     <tr>
                                         <td>{{ $location->name }}</td>
-                                        <td></td>
+                                        <td>{!! link_to_route('locations.edit', __('Edit'), ['location' => $location]) !!}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

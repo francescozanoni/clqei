@@ -5,6 +5,12 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
             
+                @if (session('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+            
                 <div class="panel panel-default">
 
                     <div class="panel-heading">{{ __('New ward') }}</div>
@@ -58,7 +64,7 @@
                                 @foreach ($wards as $ward)
                                     <tr>
                                         <td>{{ $ward->name }}</td>
-                                        <td></td>
+                                        <td>{!! link_to_route('wards.edit', __('Edit'), ['ward' => $ward]) !!}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
