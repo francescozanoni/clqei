@@ -18,7 +18,7 @@ class CompilationPolicy
      * @param  \App\Models\Compilation $compilation
      * @return bool
      */
-    public function view(User $user, Compilation $compilation)
+    public function view(User $user, Compilation $compilation) : bool
     {
         // Compilations can be viewed by administrators, viewers
         // and the student that created the compilation.
@@ -32,7 +32,7 @@ class CompilationPolicy
      * @param  \App\User $user
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user) : bool
     {
         return $user->role === 'student';
     }
@@ -44,7 +44,7 @@ class CompilationPolicy
      * @param  \App\Models\Compilation $compilation
      * @return bool
      */
-    public function update(User $user, Compilation $compilation)
+    public function update(User $user, Compilation $compilation) : bool
     {
         return false;
     }
@@ -56,7 +56,7 @@ class CompilationPolicy
      * @param  \App\Models\Compilation $compilation
      * @return bool
      */
-    public function delete(User $user, Compilation $compilation)
+    public function delete(User $user, Compilation $compilation) : bool
     {
         return false;
     }
@@ -67,8 +67,9 @@ class CompilationPolicy
      * @param  \App\User $user
      * @return bool
      */
-    public function viewAll(User $user)
+    public function viewAll(User $user) : bool
     {
-        return $user->role !== 'student';
+        return $user->role !== 'student' &&
+        Compilation::count() > 0;
     }
 }

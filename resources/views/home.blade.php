@@ -17,10 +17,10 @@
                         <ul>
                             @can('create', App\Models\Compilation::class)
                             <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
-                            <li>{!! link_to_route('compilations.index', __('My compilations')) !!}</li>
+                            <li>{!! link_to_route('compilations.index', __('My compilations') . ' (' . Auth::user()->student->compilations->count() . ')') !!}</li>
                             @endcan
                             @can('viewAll', App\Models\Compilation::class)
-                            <li>{!! link_to_route('compilations.index', __('All compilations')) !!}</li>
+                            <li>{!! link_to_route('compilations.index', __('All compilations') . ' (' . \App\Models\Compilation::count() . ')') !!}</li>
                             @endcan
                             @can('createViewer', App\User::class)
                             @if (Auth::user()->can('createAdministrator', App\User::class))

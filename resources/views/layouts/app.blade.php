@@ -65,12 +65,12 @@
                                     {!! link_to_route('compilations.create', __('New compilation')) !!}
                                 </li>
                                 <li>
-                                    {!! link_to_route('compilations.index', __('My compilations')) !!}
+                                    {!! link_to_route('compilations.index', __('My compilations') . ' (' . Auth::user()->student->compilations->count() . ')') !!}
                                 </li>
                                 @endcan
                                 @can('viewAll', App\Models\Compilation::class)
                                 <li>
-                                    {!! link_to_route('compilations.index', __('All compilations')) !!}
+                                    {!! link_to_route('compilations.index', __('All compilations') . ' (' . \App\Models\Compilation::count() . ')') !!}
                                 </li>
                                 @endcan
                             </ul>
