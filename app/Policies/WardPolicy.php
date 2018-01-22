@@ -36,15 +36,14 @@ class WardPolicy
     }
 
     /**
-     * Determine whether the user can update the ward.
+     * Determine whether the user can update wards.
      *
      * @param  \App\User $user
-     * @param  \App\Models\Ward $ward
      * @return bool
      */
-    public function update(User $user, Ward $ward) : bool
+    public function update(User $user) : bool
     {
-        return false;
+        return $user->role !== 'student';
     }
 
     /**
@@ -56,7 +55,7 @@ class WardPolicy
      */
     public function delete(User $user, Ward $ward) : bool
     {
-        return false;
+        return $user->role !== 'student';
     }
 
 }

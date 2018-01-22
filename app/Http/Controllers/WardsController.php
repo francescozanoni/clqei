@@ -72,13 +72,17 @@ class WardsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\StoreWardRequest  $request
      * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ward $ward)
+    public function update(StoreWardRequest $request, Ward $ward)
     {
-        //
+        $ward->name = $request->input('name');
+        $ward->save();
+
+        return \Redirect::route('wards.index')
+            ->with('message', __('The ward has been updated'));
     }
 
     /**

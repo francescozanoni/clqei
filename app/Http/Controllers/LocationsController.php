@@ -72,13 +72,17 @@ class LocationsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\StoreLocationRequest $request
      * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Location $location)
+    public function update(StoreLocationRequest $request, Location $location)
     {
-        //
+        $location->name = $request->input('name');
+        $location->save();
+
+        return \Redirect::route('locations.index')
+            ->with('message', __('The location has been updated'));
     }
 
     /**

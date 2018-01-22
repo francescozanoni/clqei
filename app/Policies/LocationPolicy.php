@@ -36,15 +36,14 @@ class LocationPolicy
     }
 
     /**
-     * Determine whether the user can update the location.
+     * Determine whether the user can update locations.
      *
      * @param  \App\User $user
-     * @param  \App\Models\Location $location
      * @return bool
      */
-    public function update(User $user, Location $location) : bool
+    public function update(User $user) : bool
     {
-        return false;
+        return $user->role !== 'student';
     }
 
     /**
@@ -56,7 +55,7 @@ class LocationPolicy
      */
     public function delete(User $user, Location $location) : bool
     {
-        return false;
+        return $user->role !== 'student';
     }
 
 }

@@ -18,7 +18,8 @@ class StoreWardRequest extends FormRequest
     public function authorize() : bool
     {
         $user = Auth::user();
-        return $user->can('create', Ward::class);
+        return $user->can('create', Ward::class) &&
+        $user->can('create', Ward::class);
     }
 
     /**
