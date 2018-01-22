@@ -18,7 +18,7 @@ class CreateCompilationItemsTable extends Migration
             $table->unsignedInteger('compilation_id')->nullable(false);
             $table->unsignedInteger('question_id')->nullable(false);
             // Answer ID or free text answer, according to question type.
-            $table->string('answer');
+            $table->string('answer')->nullable(true);
             $table->foreign('compilation_id')->references('id')->on('compilations');
             $table->foreign('question_id')->references('id')->on('questions');
             $table->timestamps();

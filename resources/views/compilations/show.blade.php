@@ -8,6 +8,7 @@
 
                     <div class="panel-heading">
 
+                        {{-- @todo localize date --}}
                         {{ __('Compilation') . ': ' . $compilation->created_at }}
 
                         @can('viewAll', App\Models\Compilation::class)
@@ -33,6 +34,7 @@
                             <dd>{{ $compilation->stage_end_date }}</dd>
                         </dl>
 
+                        {{-- @todo split questions by section and add section title --}}
                         <table class="table">
 
                             <thead>
@@ -55,8 +57,10 @@
                                                     <li>{{ $answer->text }}</li>
                                                 @endforeach
                                             </ul>
-                                        @else
+                                        @elseif ($item->the_answer !== null)
                                             {{ $item->the_answer }}
+                                        @else
+                                            
                                         @endif
                                     </td>
                                 </tr>

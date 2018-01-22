@@ -95,9 +95,7 @@ class CompilationsController extends Controller
             $compilation->save();
 
             foreach ($request->all() as $key => $value) {
-                if (preg_match('/^q\d+$/', $key) === 1 &&
-                    empty($value) === false
-                ) {
+                if (preg_match('/^q\d+$/', $key) === 1) {
                     // When a question has several answers,
                     // one compilation item is created for each answer.
                     if (is_array($value) === true) {

@@ -44,10 +44,17 @@ class CompilationItem extends Model
      * because an attribute with the same name exists
      * @see https://stackoverflow.com/questions/41937721/undefined-property-in-model#41939732
      *
-     * @return array|mixed
+     * @return mixed
      */
     public function getTheAnswerAttribute()
     {
+    
+        // If the question has no answer (i.e. "answer" attribute is null,
+        // null is returnd.
+        if ($this->attributes['answer'] === null) {
+            return null;
+        }
+        
         switch ($this->question->type) {
 
             case 'single_choice':
