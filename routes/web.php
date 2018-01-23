@@ -78,6 +78,20 @@ Route::resource(
     ['except' => ['create', 'show']]
 )->middleware('auth');
 
+/*
+ * Verb        URI                               Action   Route Name
+ * ---------------------------------------------------------------------------
+ * GET         /users                            index    users.index
+ * POST        /users                            store    users.store
+ * GET         /users/{user}/edit                edit     users.edit
+ * PUT/PATCH   /users/{user}                     update   users.update
+ * DELETE      /users/{user}                     destroy  users.destroy
+ */
+Route::resource(
+    'users',
+    'UsersController'
+)->middleware('auth');
+
 if (App::environment() !== 'production') {
     Route::get('/test', function () {
         return 'test';

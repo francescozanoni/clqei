@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -10,11 +11,40 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        // @todo add authorization filter (now enabled only on single models, on the view)
+
+        $users = null;
+        $viewPanelTitle = null;
+
+        switch ($request->get('role')) {
+            case 'administrator':
+                $users = User::administrators();
+                $viewPanelTitle = 'Administrators';
+                break;
+            case 'viewer':
+                $users = User::viewers();
+                $viewPanelTitle = 'Viewers';
+                break;
+            case 'student':
+                $users = User::students();
+                $viewPanelTitle = 'Students';
+                break;
+            default:
+        }
+
+        return view(
+            'users.index',
+            [
+                'users' => $users->get(),
+                'panel_title' => $viewPanelTitle
+            ]
+        );
     }
 
     /**

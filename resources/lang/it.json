@@ -70,5 +70,9 @@
   "Do you really want to delete this ward?": "Vuoi davvero eliminare questo reparto?",
   "The ward has been deleted": "Il reparto è stato eliminato",
   "Edit": "Modifica",
-  "Delete": "Elimina"
+  "Delete": "Elimina",
+
+  "Students": "Studenti",
+  "Viewers": "Visualizzatori",
+  "Administrators": "Amministratori"
 }

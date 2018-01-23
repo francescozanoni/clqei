@@ -19,16 +19,19 @@ class UserPolicy
      */
     public function view(User $user, User $model) : bool
     {
-        // A user can view itself and administrators can view any users.
-        if ($user->id === $model->id ||
-            $user->role === 'administrator'
-        ) {
+        // Any users can view their own data.
+        if ($user->id === $model->id) {
+            return true;
+        }
+
+        // Administrators can view any users.
+        if ($user->role === 'administrator') {
             return true;
         }
 
         // Viewers can view only viewers.
-        if ($user->role === $model->role &&
-            $user->role === 'viewer'
+        if ($user->role === 'viewer' &&
+            in_array($model->role, ['student', 'viewer']) === true
         ) {
             return true;
         }

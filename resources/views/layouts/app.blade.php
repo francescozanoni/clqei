@@ -85,14 +85,13 @@
                             </a>
                             <ul class="dropdown-menu">
                                 @if (Auth::user()->can('createAdministrator', App\User::class))
-                                    <li>
-                                        {!! link_to_route('register', __('Register new viewer or administrator')) !!}
-                                    </li>
+                                    <li>{!! link_to_route('register', __('Register new viewer or administrator')) !!}</li>
+                                    <li>{!! link_to_route('users.index', __('Administrators'), ['role' => 'administrator']) !!}</li>
                                 @else
-                                    <li>
-                                        {!! link_to_route('register', __('Register new viewer')) !!}
-                                    </li>
+                                    <li>{!! link_to_route('register', __('Register new viewer')) !!}</li>
                                 @endif
+                                <li>{!! link_to_route('users.index', __('Viewers'), ['role' => 'viewer']) !!}</li>
+                                <li>{!! link_to_route('users.index', __('Students'), ['role' => 'student']) !!}</li>
                             </ul>
                         </li>
                         @endcan

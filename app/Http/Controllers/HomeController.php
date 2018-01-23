@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers;
 
 use App\Models\Compilation;
+use App\User;
 use Auth;
 
 class HomeController extends Controller
@@ -30,6 +31,14 @@ class HomeController extends Controller
             $numberOfCompilations = Auth::user()->student->compilations->count();
         }
 
-        return view('home', ['number_of_compilations' => $numberOfCompilations]);
+        return view(
+            'home',
+            [
+                'number_of_compilations' => $numberOfCompilations,
+                'number_of_students' => User::students()->count(),
+                'number_of_viewers' => User::viewers()->count(),
+                'number_of_administrators' => User::administrators()->count(),
+            ]
+        );
     }
 }

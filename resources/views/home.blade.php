@@ -42,14 +42,30 @@
                         <h3>{{ __('Users') }}</h3>
                         <ul>
                             @if (Auth::user()->can('createAdministrator', App\User::class))
-                                <li>
-                                    {!! link_to_route('register', __('Register new viewer or administrator')) !!}
-                                </li>
+                                <li>{!! link_to_route('register', __('Register new viewer or administrator')) !!}</li>
                             @else
+                                <li>{!! link_to_route('register', __('Register new viewer')) !!}</li>
+                            @endif
+                            @if (Auth::user()->can('createAdministrator', App\User::class))
                                 <li>
-                                    {!! link_to_route('register', __('Register new viewer')) !!}
+                                    {!! link_to_route(
+                                    'users.index',
+                                    __('Administrators') . ' (' . $number_of_administrators . ')',
+                                    ['role' => 'administrator']) !!}
                                 </li>
                             @endif
+                            <li>
+                                {!! link_to_route(
+                                'users.index',
+                                __('Viewers') . ' (' . $number_of_viewers . ')',
+                                ['role' => 'viewer']) !!}
+                            </li>
+                            <li>
+                                {!! link_to_route(
+                                'users.index',
+                                __('Students') . ' (' . $number_of_students . ')',
+                                ['role' => 'student']) !!}
+                            </li>
                         </ul>
                         @endcan
 
