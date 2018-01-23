@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Section extends Model
@@ -20,8 +21,9 @@ class Section extends Model
 
     /**
      * Get the questions of this section
+     * @return HasMany
      */
-    public function questions()
+    public function questions() : HasMany
     {
         return $this->hasMany('App\Models\Question');
     }

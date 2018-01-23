@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLocationRequest;
 use App\Models\Location;
-use Illuminate\Http\Request;
 
 class LocationsController extends Controller
 {
@@ -20,19 +19,9 @@ class LocationsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreLocationRequest  $request
+     * @param  \App\Http\Requests\StoreLocationRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreLocationRequest $request)
@@ -48,20 +37,9 @@ class LocationsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Location  $location
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Location $location)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Location  $location
+     * @param  \App\Models\Location $location
      * @return \Illuminate\Http\Response
      */
     public function edit(Location $location)
@@ -73,7 +51,7 @@ class LocationsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\StoreLocationRequest $request
-     * @param  \App\Models\Location  $location
+     * @param  \App\Models\Location $location
      * @return \Illuminate\Http\Response
      */
     public function update(StoreLocationRequest $request, Location $location)
@@ -88,7 +66,7 @@ class LocationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Location  $location
+     * @param  \App\Models\Location $location
      * @return \Illuminate\Http\Response
      */
     public function destroy(Location $location)

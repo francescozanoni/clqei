@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWardRequest;
 use App\Models\Ward;
-use Illuminate\Http\Request;
 
 class WardsController extends Controller
 {
@@ -20,19 +19,9 @@ class WardsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreWardRequest  $request
+     * @param  \App\Http\Requests\StoreWardRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreWardRequest $request)
@@ -48,20 +37,9 @@ class WardsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ward  $ward
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ward $ward)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ward  $ward
+     * @param  \App\Models\Ward $ward
      * @return \Illuminate\Http\Response
      */
     public function edit(Ward $ward)
@@ -72,8 +50,8 @@ class WardsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StoreWardRequest  $request
-     * @param  \App\Models\Ward  $ward
+     * @param  \App\Http\Requests\StoreWardRequest $request
+     * @param  \App\Models\Ward $ward
      * @return \Illuminate\Http\Response
      */
     public function update(StoreWardRequest $request, Ward $ward)
@@ -88,7 +66,7 @@ class WardsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ward  $ward
+     * @param  \App\Models\Ward $ward
      * @return \Illuminate\Http\Response
      */
     public function destroy(Ward $ward)

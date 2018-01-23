@@ -17,7 +17,7 @@ class UserPolicy
      * @param  \App\User $model
      * @return bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model) : bool
     {
         // A user can view itself and administrators can view any users.
         if ($user->id === $model->id ||
@@ -42,7 +42,7 @@ class UserPolicy
      * @param  \App\User $user
      * @return bool
      */
-    public function createViewer(User $user)
+    public function createViewer(User $user) : bool
     {
         return
             $user->role === 'viewer' ||
@@ -55,7 +55,7 @@ class UserPolicy
      * @param  \App\User $user
      * @return bool
      */
-    public function createAdministrator(User $user)
+    public function createAdministrator(User $user) : bool
     {
         return $user->role === 'administrator';
     }
@@ -67,7 +67,7 @@ class UserPolicy
      * @param  \App\User $model
      * @return bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model) : bool
     {
         // A user can only update its own same user.
         return $user->id === $model->id;
@@ -80,7 +80,7 @@ class UserPolicy
      * @param  \App\User $model
      * @return bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, User $model) : bool
     {
         // Only administrators can delete users, but not themselves.
         return

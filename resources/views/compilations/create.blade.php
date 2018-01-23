@@ -10,7 +10,7 @@
 
                     <div class="panel-body">
 
-                        {!! BootForm::open(['store' => 'compilations.store']) !!}
+                        {!! BootForm::open(['route' => 'compilations.store', 'method' => 'post']) !!}
 
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
                         @if (count($errors) > 0)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompilationItem extends Model
@@ -20,16 +21,18 @@ class CompilationItem extends Model
 
     /**
      * Get the compilation to which this item belongs
+     * @return BelongsTo
      */
-    public function compilation()
+    public function compilation() : BelongsTo
     {
         return $this->belongsTo('App\Models\Compilation');
     }
 
     /**
      * Get the question to which this item answers
+     * @return BelongsTo
      */
-    public function question()
+    public function question() : BelongsTo
     {
         return $this->belongsTo('App\Models\Question');
     }
@@ -48,13 +51,13 @@ class CompilationItem extends Model
      */
     public function getTheAnswerAttribute()
     {
-    
+
         // If the question has no answer (i.e. "answer" attribute is null,
         // null is returnd.
         if ($this->attributes['answer'] === null) {
             return null;
         }
-        
+
         switch ($this->question->type) {
 
             case 'single_choice':
@@ -80,8 +83,9 @@ class CompilationItem extends Model
 
     /**
      * Get the related answer object (if any)
+     * @return BelongsTo
      */
-    public function answer()
+    public function answer() : BelongsTo
     {
         return $this->belongsTo('App\Models\Answer', 'answer', 'id');
     }

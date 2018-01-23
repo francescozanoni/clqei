@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Compilation;
+use Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -20,6 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $numberOfCompilations = null;
+        if (Auth::user()->can('viewAll', Compilation::class)) {
+            $numberOfCompilations = Compilation::count();
+        } else {
+            $numberOfCompilations = Auth::user()->student->compilations->count();
+        }
+
+        return view('home', ['number_of_compilations' => $numberOfCompilations]);
     }
 }

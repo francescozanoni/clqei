@@ -4,25 +4,43 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+
                 <div class="panel panel-default">
+
                     <div class="panel-heading">Dashboard</div>
 
                     <div class="panel-body">
+
                         @if (session('status'))
                             <div class="alert alert-success">
                                 {{ session('status') }}
                             </div>
                         @endif
 
+                        <h3>{{ __('Compilations') }}</h3>
                         <ul>
                             @can('create', App\Models\Compilation::class)
                             <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
-                            <li>{!! link_to_route('compilations.index', __('My compilations') . ' (' . Auth::user()->student->compilations->count() . ')') !!}</li>
+                            @if ($number_of_compilations > 0)
+                                <li>{!! link_to_route('compilations.index', __('My compilations') . ' (' . $number_of_compilations . ')') !!}</li>
+                            @endif
                             @endcan
                             @can('viewAll', App\Models\Compilation::class)
-                            <li>{!! link_to_route('compilations.index', __('All compilations') . ' (' . \App\Models\Compilation::count() . ')') !!}</li>
+                            <li>{!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}</li>
                             @endcan
-                            @can('createViewer', App\User::class)
+                        </ul>
+
+                        @can('create', App\Models\Location::class)
+                        <h3>{{ __('Stages') }}</h3>
+                        <ul>
+                            <li>{!! link_to_route('locations.index', __('Sedi')) !!}</li>
+                            <li>{!! link_to_route('wards.index', __('Reparti')) !!}</li>
+                        </ul>
+                        @endcan
+
+                        @can('createViewer', App\User::class)
+                        <h3>{{ __('Users') }}</h3>
+                        <ul>
                             @if (Auth::user()->can('createAdministrator', App\User::class))
                                 <li>
                                     {!! link_to_route('register', __('Register new viewer or administrator')) !!}
@@ -32,10 +50,13 @@
                                     {!! link_to_route('register', __('Register new viewer')) !!}
                                 </li>
                             @endif
-                            @endcan
                         </ul>
+                        @endcan
+
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>

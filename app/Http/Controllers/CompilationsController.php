@@ -29,9 +29,27 @@ class CompilationsController extends Controller
         if (request()->ajax()) {
 
             $compilationQuery = Compilation
-                ::with('stageLocation')
-                ->with('stageWard')
-                ->with('student.user')
+                // Deleted locations must be included
+                // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
+                ::with([
+                    'stageLocation' => function ($query) {
+                        $query->withTrashed();
+                    }
+                ])
+                // Deleted wards must be included
+                // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
+                ->with([
+                    'stageWard' => function ($query) {
+                        $query->withTrashed();
+                    }
+                ])
+                // Deleted students/users must be included
+                // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
+                ->with([
+                    'student.user' => function ($query) {
+                        $query->withTrashed();
+                    }
+                ])
                 ->select('compilations.*');
 
             if (Auth::user()->cannot('viewAll', Compilation::class)) {
@@ -71,7 +89,8 @@ class CompilationsController extends Controller
      * @param  StoreCompilationRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCompilationRequest $request) {
+    public function store(StoreCompilationRequest $request)
+    {
 
         // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
 
@@ -94,9 +113,9 @@ class CompilationsController extends Controller
 
             foreach ($request->all() as $key => $value) {
                 if (preg_match('/^q\d+$/', $key) === 1) {
-                    // When a question has several answers,
-                    // one compilation item is created for each answer.
                     if (is_array($value) === true) {
+                        // When a question has several answers,
+                        // one compilation item is created for each answer.
                         foreach ($value as $singleValue) {
                             $item = new CompilationItem;
                             $item->answer = $singleValue;
@@ -116,6 +135,23 @@ class CompilationsController extends Controller
                 }
             }
 
+            // When a question could have several answers but none is given,
+            // one compilation item is created with NULL answer.
+            // This logic is required because HTML array fields (e.g. set of checkboxes),
+            // are not sent if no value is selected (even "nullable"
+            // validation flag is useless in this case).
+            $compilationQuestionIds = collect($compilation->items)->pluck('question')->pluck('id');
+            $allCurrentQuestionIds = Question::all()->pluck('id');
+            $missingQuestionIds = $allCurrentQuestionIds->diff($compilationQuestionIds)->all();
+            foreach ($missingQuestionIds as $missingQuestionId) {
+                $item = new CompilationItem;
+                $item->answer = null;
+                $question = Question::find($missingQuestionId);
+                $item->question()->associate($question);
+                $item->compilation()->associate($compilation);
+                $item->save();
+            }
+
         });
 
         // Redirection does not work from within transaction block.
@@ -130,11 +166,30 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function show(
-        Compilation $compilation
-    ) {
-
+    public function show(Compilation $compilation)
+    {
         $compilation->load('items');
+        // Deleted students must be included
+        // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
+        $compilation->load([
+            'student' => function ($query) {
+                $query->withTrashed();
+            }
+        ]);
+        // Deleted locations must be included
+        // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
+        $compilation->load([
+            'stageLocation' => function ($query) {
+                $query->withTrashed();
+            }
+        ]);
+        // Deleted wards must be included
+        // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
+        $compilation->load([
+            'stageWard' => function ($query) {
+                $query->withTrashed();
+            }
+        ]);
 
         return view('compilations.show', ['compilation' => $compilation]);
     }
@@ -145,9 +200,8 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function edit(
-        Compilation $compilation
-    ) {
+    public function edit(Compilation $compilation)
+    {
         return view('compilations.edit');
     }
 
@@ -158,10 +212,8 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function update(
-        Request $request,
-        Compilation $compilation
-    ) {
+    public function update(Request $request, Compilation $compilation)
+    {
         //
     }
 
@@ -171,9 +223,8 @@ class CompilationsController extends Controller
      * @param  \App\Models\Compilation $compilation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(
-        Compilation $compilation
-    ) {
+    public function destroy(Compilation $compilation)
+    {
         //
     }
 }
