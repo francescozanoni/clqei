@@ -12,7 +12,6 @@ use App\Models\Section;
 use App\Models\Ward;
 use Auth;
 use DB;
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class CompilationsController extends Controller
@@ -169,23 +168,16 @@ class CompilationsController extends Controller
     public function show(Compilation $compilation)
     {
         $compilation->load('items');
-        // Deleted students must be included
+
+        // Deleted students, locations and wards must be included
         // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
         $compilation->load([
             'student' => function ($query) {
                 $query->withTrashed();
-            }
-        ]);
-        // Deleted locations must be included
-        // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-        $compilation->load([
+            },
             'stageLocation' => function ($query) {
                 $query->withTrashed();
-            }
-        ]);
-        // Deleted wards must be included
-        // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-        $compilation->load([
+            },
             'stageWard' => function ($query) {
                 $query->withTrashed();
             }

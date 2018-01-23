@@ -4,13 +4,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-            
+
                 @if (session('message'))
-                            <div class="alert alert-success">
-                                {{ session('message') }}
-                            </div>
-                        @endif
-                        
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
@@ -67,7 +67,7 @@
                                         @elseif ($item->the_answer !== null)
                                             {{ $item->the_answer }}
                                         @else
-                                            
+
                                         @endif
                                     </td>
                                 </tr>

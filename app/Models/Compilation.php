@@ -75,7 +75,9 @@ class Compilation extends Model
      */
     public function items() : HasMany
     {
-        return $this->hasMany('App\Models\CompilationItem');
+        return $this->hasMany('App\Models\CompilationItem')
+            // @todo item sorting must be based on section+question "position" attributes
+            ->orderBy('question_id');
     }
 
 }
