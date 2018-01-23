@@ -143,4 +143,6 @@ class RegisterController extends Controller
 
         return $user;
     }
+
+    // @todo add password change
 }
