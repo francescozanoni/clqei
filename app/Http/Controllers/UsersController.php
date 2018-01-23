@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use DB;
 
 class UsersController extends Controller
 {
@@ -110,6 +111,18 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $userRole = $user->role;
+
+        DB::transaction(function () use ($user) {
+
+            if ($user->role === 'student') {
+                $user->student()->delete();
+            }
+            $user->delete();
+
+        });
+
+        return \Redirect::route('users.index', ['role' => $userRole])
+            ->with('message', __('The ' . $userRole . ' has been deleted'));
     }
 }

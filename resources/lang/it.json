@@ -74,5 +74,11 @@
 
   "Students": "Studenti",
   "Viewers": "Visualizzatori",
-  "Administrators": "Amministratori"
+  "Administrators": "Amministratori",
+
+  "Do you really want to delete this student?": "Vuoi davvero eliminare questo studente?",
+  "The student has been deleted": "Lo studente è stato eliminato",
+  "No administrators found": "Nessun amministratore trovato",
+  "No viewers found": "Nessun visualizzatore trovato",
+  "No students found": "Nessuno studente trovato"
 }

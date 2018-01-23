@@ -72,8 +72,11 @@ class UserPolicy
      */
     public function update(User $user, User $model) : bool
     {
-        // A user can only update its own same user.
-        return $user->id === $model->id;
+        // A user can only update its own user
+        // or be modified by ad administrator.
+        return
+            $user->role === 'administrator' &&
+            $user->id === $model->id;
     }
 
     /**
@@ -85,9 +88,25 @@ class UserPolicy
      */
     public function delete(User $user, User $model) : bool
     {
-        // Only administrators can delete users, but not themselves.
-        return
-            $user->role === 'administrator' &&
-            $user->id === $model->id;
+
+        // Students can be deleted only by viewer and administrators.
+        if ($model->role === 'student') {
+            return in_array($user->role, ['administrator', 'viewer']);
+        }
+
+        // Viewers can be deleted only by administrators.
+        if ($model->role === 'viewer') {
+            return $user->role === 'administrator';
+        }
+
+        // Administrators can be deleted only by other administrators.
+        if ($model->role === 'administrator') {
+            return
+                $user->role === 'administrator' &&
+                $user->id !== $model->id;
+        }
+
+        return false;
+
     }
 }

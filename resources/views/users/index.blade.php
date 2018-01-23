@@ -28,6 +28,7 @@
                                     <th>{{ __('First name') }}</th>
                                     <th>{{ __('Last name') }}</th>
                                     <th>{{ __('E-mail address') }}</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
 
@@ -38,12 +39,32 @@
                                         <td>{{ $user->first_name }}</td>
                                         <td>{{ $user->last_name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>
+                                            @can('delete', $user)
+                                            {!! BootForm::open(['url' => 'users/' . $user->id, 'method' => 'delete']) !!}
+                                            <a href="{{ route('users.destroy', ['user' => $user]) }}"
+                                               onclick="
+                                                       event.preventDefault();
+                                                       if (confirm('{{ __('Do you really want to delete this ' . $user->role . '?') }}') !== true) {
+                                                       return;
+                                                       }
+                                                       this.parentElement.submit();
+                                                       ">
+                                                {{ __('Delete') }}
+                                            </a>
+                                            {!! BootForm::close() !!}
+                                            @endcan
+                                        </td>
                                     </tr>
                                     @endcan
                                 @endforeach
                                 </tbody>
 
                             </table>
+
+                        @else
+
+                            {{ __('No ' . strtolower($panel_title) . ' found') }}
 
                         @endif
 

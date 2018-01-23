@@ -28,23 +28,18 @@ class CompilationsController extends Controller
         if (request()->ajax()) {
 
             $compilationQuery = Compilation
-                // Deleted locations must be included
+                // Deleted locations, wards, students and users must be included
                 // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
                 ::with([
                     'stageLocation' => function ($query) {
                         $query->withTrashed();
-                    }
-                ])
-                // Deleted wards must be included
-                // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-                ->with([
+                    },
                     'stageWard' => function ($query) {
                         $query->withTrashed();
-                    }
-                ])
-                // Deleted students/users must be included
-                // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-                ->with([
+                    },
+                    'student' => function ($query) {
+                        $query->withTrashed();
+                    },
                     'student.user' => function ($query) {
                         $query->withTrashed();
                     }
@@ -169,10 +164,13 @@ class CompilationsController extends Controller
     {
         $compilation->load('items');
 
-        // Deleted students, locations and wards must be included
+        // Deleted students, users, locations and wards must be included
         // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
         $compilation->load([
             'student' => function ($query) {
+                $query->withTrashed();
+            },
+            'student.user' => function ($query) {
                 $query->withTrashed();
             },
             'stageLocation' => function ($query) {
