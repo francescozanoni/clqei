@@ -194,37 +194,4 @@ class CompilationsController extends Controller
         return view('compilations.show', ['compilation' => $compilation]);
     }
 
-    /**
-     * Show the form for editing the specified compilation.
-     *
-     * @param  \App\Models\Compilation $compilation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Compilation $compilation)
-    {
-        return view('compilations.edit');
-    }
-
-    /**
-     * Update the specified compilation in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\Compilation $compilation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Compilation $compilation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified compilation from storage.
-     *
-     * @param  \App\Models\Compilation $compilation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Compilation $compilation)
-    {
-        //
-    }
 }

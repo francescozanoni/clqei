@@ -19,7 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/*
+/* FULL ROUTE LIST OF A RESOURCE CONTROLLER
+ *
  * Verb        URI                               Action   Route Name
  * ---------------------------------------------------------------------------
  * GET         /compilations                     index    compilations.index
@@ -32,18 +33,29 @@ Route::get('/home', 'HomeController@index')->name('home');
  *
  * @see https://laravel.com/docs/5.5/controllers#resource-controllers
  */
-Route::resource('compilations', 'CompilationsController')->middleware('auth');
 
 /*
  * Verb        URI                               Action   Route Name
  * ---------------------------------------------------------------------------
- * GET         /locations                  index    locations.index
- * POST        /locations                  store    locations.store
- * GET         /locations/{location}/edit  edit     locations.edit
- * PUT/PATCH   /locations/{location}       update   locations.update
- * DELETE      /locations/{location}       destroy  locations.destroy
- *
- * @see https://laravel.com/docs/5.5/controllers#resource-controllers
+ * GET         /compilations                     index    compilations.index
+ * GET         /compilations/create              create   compilations.create
+ * POST        /compilations                     store    compilations.store
+ * GET         /compilations/{compilation}       show     compilations.show
+ */
+Route::resource(
+    'compilations',
+    'CompilationsController',
+    ['except' => ['edit', 'update', 'destroy']]
+)->middleware('auth');
+
+/*
+ * Verb        URI                               Action   Route Name
+ * ---------------------------------------------------------------------------
+ * GET         /locations                        index    locations.index
+ * POST        /locations                        store    locations.store
+ * GET         /locations/{location}/edit        edit     locations.edit
+ * PUT/PATCH   /locations/{location}             update   locations.update
+ * DELETE      /locations/{location}             destroy  locations.destroy
  */
 Route::resource(
     'locations',
@@ -54,13 +66,11 @@ Route::resource(
 /*
  * Verb        URI                               Action   Route Name
  * ---------------------------------------------------------------------------
- * GET         /wards              index    wards.index
- * POST        /wards              store    wards.store
- * GET         /wards/{ward}/edit  edit     wards.edit
- * PUT/PATCH   /wards/{ward}       update   wards.update
- * DELETE      /wards/{ward}       destroy  wards.destroy
- *
- * @see https://laravel.com/docs/5.5/controllers#resource-controllers
+ * GET         /wards                            index    wards.index
+ * POST        /wards                            store    wards.store
+ * GET         /wards/{ward}/edit                edit     wards.edit
+ * PUT/PATCH   /wards/{ward}                     update   wards.update
+ * DELETE      /wards/{ward}                     destroy  wards.destroy
  */
 Route::resource(
     'wards',
