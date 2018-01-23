@@ -4,20 +4,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-            
+
                 @if (session('message'))
-                            <div class="alert alert-success">
-                                {{ session('message') }}
-                            </div>
-                        @endif
-            
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
                 <div class="panel panel-default">
 
                     <div class="panel-heading">{{ __('New location') }}</div>
 
                     <div class="panel-body">
 
-                        {!! BootForm::open(['route' => 'locations.store', 'method' => 'post']) !!}
+                        {!! BootForm::inline(['store' => 'locations.store']) !!}
 
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
                         @if (count($errors) > 0)
@@ -39,9 +39,9 @@
                         {!! BootForm::close() !!}
 
                     </div>
-                    
+
                 </div>
-            
+
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
@@ -55,18 +55,31 @@
                             <table class="table">
 
                                 <thead>
-                                <tr>
-                                    <th>{{ __('Name') }}</th>
-                                    <th></th>
-                                </tr>
                                 </thead>
 
                                 <tbody>
                                 @foreach ($locations as $location)
                                     <tr>
-                                        <td>{{ $location->name }}</td>
-                                        <td>{!! link_to_route('locations.edit', __('Edit'), ['location' => $location]) !!}</td>
-                                        <td>{!! link_to_route('locations.destroy', __('Delete'), ['location' => $location]) !!}</td>
+                                        <td>
+                                            {{ $location->name }}
+                                        </td>
+                                        <td>
+                                            {!! link_to_route('locations.edit', __('Edit'), ['location' => $location]) !!}
+                                        </td>
+                                        <td>
+                                            {!! BootForm::open(['url' => 'locations/' . $location->id, 'method' => 'delete']) !!}
+                                            <a href="{{ route('locations.destroy', ['location' => $location]) }}"
+                                               onclick="
+                                                       event.preventDefault();
+                                                       if (confirm('{{ __('Do you really want to delete this location?') }}') !== true) {
+                                                       return;
+                                                       }
+                                                       this.parentElement.submit();
+                                                       ">
+                                                {{ __('Delete') }}
+                                            </a>
+                                            {!! BootForm::close() !!}
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

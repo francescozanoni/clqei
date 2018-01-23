@@ -31,7 +31,15 @@ class StoreWardRequest extends FormRequest
     {
 
         $rules = [
-            'name' => 'required|min:3|string|unique:wards',
+            'name' => [
+                'required',
+                'min:3',
+                'string',
+                Rule::unique('wards')
+                    ->where(function ($query) {
+                        return $query->whereNull('deleted_at');
+                    })
+            ],
         ];
 
         return $rules;

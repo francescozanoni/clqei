@@ -32,7 +32,7 @@ class WardsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\StoreWardRequest  $request
+     * @param  \App\Http\Requests\StoreWardRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreWardRequest $request)
@@ -72,7 +72,7 @@ class WardsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\StoreWardRequest  $request
+     * @param  \App\Http\Requests\StoreWardRequest  $request
      * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */

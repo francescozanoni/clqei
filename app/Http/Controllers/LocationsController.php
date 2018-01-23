@@ -32,7 +32,7 @@ class LocationsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\StoreLocationRequest  $request
+     * @param  \App\Http\Requests\StoreLocationRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreLocationRequest $request)
@@ -72,7 +72,7 @@ class LocationsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\StoreLocationRequest $request
+     * @param  \App\Http\Requests\StoreLocationRequest $request
      * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
      */

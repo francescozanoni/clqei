@@ -10,7 +10,7 @@
 
                     <div class="panel-body">
 
-                        {!! BootForm::open(['route' => 'compilations.store', 'method' => 'post']) !!}
+                        {!! BootForm::open(['store' => 'compilations.store']) !!}
 
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
                         @if (count($errors) > 0)
@@ -26,7 +26,7 @@
                         @endif
 
                         {!! BootForm::hidden('student_id', Auth::user()->student->id) !!}
-                        
+
                         {!! BootForm::select(
                                 'stage_location_id',
                                 __('Stage location'),

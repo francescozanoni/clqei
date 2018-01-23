@@ -4,20 +4,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-            
+
                 @if (session('message'))
-                            <div class="alert alert-success">
-                                {{ session('message') }}
-                            </div>
-                        @endif
-            
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
                 <div class="panel panel-default">
 
                     <div class="panel-heading">{{ __('New ward') }}</div>
 
                     <div class="panel-body">
 
-                        {!! BootForm::open(['route' => 'wards.store', 'method' => 'post']) !!}
+                        {!! BootForm::inline(['store' => 'wards.store']) !!}
 
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
                         @if (count($errors) > 0)
@@ -40,7 +40,7 @@
 
                     </div>
                 </div>
-                
+
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
@@ -54,19 +54,31 @@
                             <table class="table">
 
                                 <thead>
-                                <tr>
-                                    <th>{{ __('Name') }}</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
                                 </thead>
 
                                 <tbody>
                                 @foreach ($wards as $ward)
                                     <tr>
-                                        <td>{{ $ward->name }}</td>
-                                        <td>{!! link_to_route('wards.edit', __('Edit'), ['ward' => $ward]) !!}</td>
-                                        <td>{!! link_to_route('wards.destroy', __('Delete'), ['ward' => $ward]) !!}</td>
+                                        <td>
+                                            {{ $ward->name }}
+                                        </td>
+                                        <td>
+                                            {!! link_to_route('wards.edit', __('Edit'), ['ward' => $ward]) !!}
+                                        </td>
+                                        <td>
+                                            {!! BootForm::open(['url' => 'wards/' . $ward->id, 'method' => 'delete']) !!}
+                                            <a href="{{ route('wards.destroy', ['ward' => $ward]) }}"
+                                               onclick="
+                                                       event.preventDefault();
+                                                       if (confirm('{{ __('Do you really want to delete this ward?') }}') !== true) {
+                                                       return;
+                                                       }
+                                                       this.parentElement.submit();
+                                                       ">
+                                                {{ __('Delete') }}
+                                            </a>
+                                            {!! BootForm::close() !!}
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

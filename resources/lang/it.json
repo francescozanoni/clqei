@@ -56,5 +56,19 @@
   "Stage wards": "Reparti di tirocinio",
   "Name": "Nome",
   "Locations": "Sedi",
-  "Wards": "Reparti"
+  "Wards": "Reparti",
+  "New location": "Nuova sede",
+  "The new location has been created": "La nuova sede è stata creata",
+  "Edit location": "Modifica sede",
+  "The location has been updated": "La sede è stata modificata",
+  "Do you really want to delete this location?": "Vuoi davvero eliminare questa sede?",
+  "The location has been deleted": "La sede è stata eliminata",
+  "New ward": "Nuovo reparto",
+  "The new ward has been created": "Il nuovo reparto è stato creato",
+  "Edit ward": "Modifica reparto",
+  "The ward has been updated": "Il reparto è stato modificato",
+  "Do you really want to delete this ward?": "Vuoi davvero eliminare questo reparto?",
+  "The ward has been deleted": "Il reparto è stato eliminato",
+  "Edit": "Modifica",
+  "Delete": "Elimina"
 }

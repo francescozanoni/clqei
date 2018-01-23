@@ -31,7 +31,15 @@ class StoreLocationRequest extends FormRequest
     {
 
         $rules = [
-            'name' => 'required|min:3|string|unique:locations',
+            'name' => [
+                'required',
+                'min:3',
+                'string',
+                Rule::unique('locations')
+                    ->where(function ($query) {
+                        return $query->whereNull('deleted_at');
+                    })
+            ],
         ];
 
         return $rules;
