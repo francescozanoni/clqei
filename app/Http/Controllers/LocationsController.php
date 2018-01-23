@@ -93,6 +93,9 @@ class LocationsController extends Controller
      */
     public function destroy(Location $location)
     {
-        //
+        $location->delete();
+
+        return \Redirect::route('locations.index')
+            ->with('message', __('The location has been deleted'));
     }
 }

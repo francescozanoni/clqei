@@ -93,6 +93,9 @@ class WardsController extends Controller
      */
     public function destroy(Ward $ward)
     {
-        //
+        $ward->delete();
+
+        return \Redirect::route('wards.index')
+            ->with('message', __('The ward has been deleted'));
     }
 }

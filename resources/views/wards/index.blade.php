@@ -57,6 +57,7 @@
                                 <tr>
                                     <th>{{ __('Name') }}</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
 
@@ -65,6 +66,7 @@
                                     <tr>
                                         <td>{{ $ward->name }}</td>
                                         <td>{!! link_to_route('wards.edit', __('Edit'), ['ward' => $ward]) !!}</td>
+                                        <td>{!! link_to_route('wards.destroy', __('Delete'), ['ward' => $ward]) !!}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

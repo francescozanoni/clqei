@@ -66,6 +66,7 @@
                                     <tr>
                                         <td>{{ $location->name }}</td>
                                         <td>{!! link_to_route('locations.edit', __('Edit'), ['location' => $location]) !!}</td>
+                                        <td>{!! link_to_route('locations.destroy', __('Delete'), ['location' => $location]) !!}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
