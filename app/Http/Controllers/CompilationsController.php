@@ -16,6 +16,17 @@ use Yajra\DataTables\DataTables;
 
 class CompilationsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        // If compilations cannot be currently created,
+        // users are redirected.
+        $this->middleware('no_new_compilations')->only('create');
+    }
+
     /**
      * Display a listing of the compilations.
      *

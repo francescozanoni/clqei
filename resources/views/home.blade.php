@@ -1,3 +1,5 @@
+@inject('compilationService', 'App\Services\CompilationService')
+
 @extends('layouts.app')
 
 @section('content')
@@ -11,6 +13,8 @@
 
                     <div class="panel-body">
 
+                        {{-- @todo add alert about compilations not creatable --}}
+
                         @if (session('status'))
                             <div class="alert alert-success">
                                 {{ session('status') }}
@@ -20,7 +24,11 @@
                         <h3>{{ __('Compilations') }}</h3>
                         <ul>
                             @can('create', App\Models\Compilation::class)
-                            <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
+                            @if ($compilationService->isCompilationCreatable() === true)
+                                <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
+                            @else
+                                <li>{{ __('Compilation creation is currently disabled') }}</li>
+                            @endif
                             @if ($number_of_compilations > 0)
                                 <li>{!! link_to_route('compilations.index', __('My compilations') . ' (' . $number_of_compilations . ')') !!}</li>
                             @endif

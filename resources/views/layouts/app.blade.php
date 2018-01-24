@@ -1,3 +1,5 @@
+@inject('compilationService', 'App\Services\CompilationService')
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -61,9 +63,9 @@
 
                             <ul class="dropdown-menu">
                                 @can('create', App\Models\Compilation::class)
-                                <li>
-                                    {!! link_to_route('compilations.create', __('New compilation')) !!}
-                                </li>
+                                @if ($compilationService->isCompilationCreatable() === true)
+                                    <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
+                                @endif
                                 <li>
                                     {!! link_to_route('compilations.index', __('My compilations') . ' (' . Auth::user()->student->compilations->count() . ')') !!}
                                 </li>
