@@ -38,7 +38,13 @@
                         {!! BootForm::text('first_name', __('First name')) !!}
                         {!! BootForm::text('last_name', __('Last name')) !!}
                         @if (Auth::guest() === true)
-                            {!! BootForm::email('email', __('University e-mail address')) !!}
+                            {!! BootForm::email(
+                            'email',
+                            __('University e-mail address')/*,
+                            null,
+                            // @todo add student e-mail domain
+                            ['suffix' => BootForm::addonText(config('clqei.students.email.pattern'))]*/
+                            ) !!}
                         @else
                             {!! BootForm::email('email', __('E-mail address')) !!}
                         @endif

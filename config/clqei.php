@@ -15,7 +15,7 @@ return [
         ],
 
         'email' => [
-            'pattern' => env('CLQEI_STUDENT_EMAIL_PATTERN', '^\\d{8}@example\.com$'),
+            'pattern' => env('CLQEI_STUDENT_EMAIL_PATTERN', '^[\w\.\-]+@example\.com$'),
         ],
 
     ]

@@ -14,21 +14,13 @@ Clinical Learning Quality Environment Inventory
 
 #### Manual steps
 
-- add stage locations
-- add stage wards
-- add non-student users
+- add real stage locations
+- add real stage wards
+- add real administrators
+- add real viewers
+- disable example users
 
 
 ### Local deployment
 
     php artisan serve
-
-
-### Production deployment
-
-Change password of user administrator@example.com.
-
-
-### Test
-
-    cp phpunit.xml.example phpunit.xml

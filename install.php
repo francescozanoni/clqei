@@ -9,6 +9,8 @@ $filePathsToCheck = [
 
 	__DIR__ . '/.env',
 
+    __DIR__ . '/phpunit.xml',
+
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.php',
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.sample.php',
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.php',
@@ -72,6 +74,10 @@ copy(
 copy(
   __DIR__ . '/.env.example',
   __DIR__ . '/.env'
+);
+copy(
+    __DIR__ . '/phpunit.xml.example',
+    __DIR__ . '/phpunit.xml'
 );
 
 # Language files

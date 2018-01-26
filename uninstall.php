@@ -14,6 +14,8 @@ $filePathsToDelete = [
 
 	__DIR__ . '/.env',
 
+    __DIR__ . '/phpunit.xml',
+
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.php',
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.sample.php',
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.php',
