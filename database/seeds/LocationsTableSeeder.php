@@ -15,7 +15,7 @@ class LocationsTableSeeder extends Seeder
     {
     
         DB::table('locations')->insert([
-            'name' => 'Test location',
+            'name' => 'Example location',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         
