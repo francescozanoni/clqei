@@ -57,10 +57,13 @@ echo 'Setting up database...' . PHP_EOL;
 
 # Database files
 $db = new SQLite3(__DIR__ . '/database/database.sqlite');
-echo PHP_EOL;
+$db->close();
+$db = new SQLite3(__DIR__ . '/database/test_database.sqlite');
 $db->close();
 chmod(__DIR__ . '/database/database.sqlite', 0777);
+chmod(__DIR__ . '/database/test_database.sqlite', 0777);
 chmod(__DIR__ . '/database', 0777);
+echo PHP_EOL;
 
 echo 'Setting up files...' . PHP_EOL;
 
@@ -114,13 +117,16 @@ copy(
     __DIR__ . '/public/phpliteadmin/phpliteadmin.config.php'
 );
 
-# Base URL setting
+# Base URL and database file path setting
 echo 'Application URL? (e.g.: http://localhost/clqei) ';
 $applicationUrl = trim(fgets(STDIN));
 $file = file_get_contents(__DIR__ . '/.env');
 $file = preg_replace('#http://localhost#', $applicationUrl, $file);
-$file = preg_replace('#/absolute/path/to/database/database.sqlite#', realpath(__DIR__ . '/database/database.sqlite'), $file);
+$file = preg_replace('#/absolute/path/to/database#', realpath(__DIR__ . '/database'), $file);
 file_put_contents(__DIR__ . '/.env', $file);
+$file = file_get_contents(__DIR__ . '/phpunit.xml');
+$file = preg_replace('#/absolute/path/to/database#', realpath(__DIR__ . '/database'), $file);
+file_put_contents(__DIR__ . '/phpunit.xml', $file);
 echo PHP_EOL;
 echo 'Base URL? (e.g.: / or /clqei) ';
 $baseUrl = trim(fgets(STDIN));
