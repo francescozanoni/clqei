@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App;
 
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -84,6 +85,19 @@ class User extends Authenticatable
     public function scopeAdministrators(Builder $query) : Builder
     {
         return $query->where('role', 'administrator');
+    }
+
+    /**
+     * Send the password reset notification.
+     * This method is overridden in order to customize/localize the message.
+     *
+     * @param string $token
+     *
+     * @see https://laravel.com/docs/5.5/passwords#password-customization
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 
 }
