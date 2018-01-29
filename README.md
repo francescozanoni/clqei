@@ -6,6 +6,8 @@ Clinical Learning Quality Environment Inventory
 ### Installation
 
     composer install
+    npm install
+    npm run production
 
     php install.php
 
@@ -14,11 +16,16 @@ Clinical Learning Quality Environment Inventory
 
 #### Manual steps
 
-- add real stage locations
-- add real stage wards
-- add real administrators
-- add real viewers
+- add
+  - real stage locations
+  - real stage wards
+  - real administrators
+  - real viewers
 - disable example users
+- customize
+  - application title
+  - students' identification number pattern
+  - students' e-mail pattern
 
 
 ### Local deployment

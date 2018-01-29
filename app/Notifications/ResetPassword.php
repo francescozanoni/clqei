@@ -20,6 +20,7 @@ class ResetPassword extends ResetPasswordNotification
      */
     public function toMail($notifiable)
     {
+        // @todo customize also e-mail header and footer (still in English)
         return (new MailMessage)
             ->line(__('You are receiving this e-mail because we received a password reset request for your account.'))
             ->action(__('Reset password'), url(config('app.url') . route('password.reset', $this->token, false)))
