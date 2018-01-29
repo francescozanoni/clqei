@@ -115,12 +115,14 @@ class CompilationsController extends Controller
             $stageWard = Ward::find($request->input('stage_ward_id'));
             $stageStartDate = $request->input('stage_start_date');
             $stageEndDate = $request->input('stage_end_date');
+            $stageAcademicYear = $request->input('stage_academic_year');
 
             $compilation->student()->associate($student);
             $compilation->stageLocation()->associate($stageLocation);
             $compilation->stageWard()->associate($stageWard);
             $compilation->stage_start_date = $stageStartDate;
             $compilation->stage_end_date = $stageEndDate;
+            $compilation->stage_academic_year = $stageAcademicYear;
             $compilation->save();
 
             foreach ($request->all() as $key => $value) {

@@ -36,6 +36,7 @@ class StoreCompilationRequest extends FormRequest
             'stage_ward_id' => 'required|exists:wards,id',
             'stage_start_date' => 'required|date|before:today',
             'stage_end_date' => 'required|date|after:stage_start_date|before:today',
+            'stage_academic_year' => 'required|regex:/^\d{4}\/\d{4}$/'
         ];
 
         $questions = Question::all();

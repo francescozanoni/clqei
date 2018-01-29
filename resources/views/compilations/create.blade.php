@@ -43,6 +43,18 @@
                                 ) !!}
                         {!! BootForm::date('stage_start_date', __('Stage start date')) !!}
                         {!! BootForm::date('stage_end_date', __('Stage end date')) !!}
+                        {{-- @todo make academic year list dynamic --}}
+                        {!! BootForm::select(
+                                'stage_academic_year',
+                                __('Stage academic year'),
+                                [
+                                '2016/2017' => '2016/2017',
+                                '2017/2018' => '2017/2018',
+                                '2018/2019' => '2018/2019',
+                                ],
+                                null,
+                                ['placeholder' => __('Select') . '...']
+                                ) !!}
 
                         {{-- Nav tabs --}}
                         <ul class="nav nav-tabs" role="tablist" id="myTabs">

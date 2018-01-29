@@ -28,6 +28,7 @@ class CreateCompilationsTable extends Migration
             
             $table->date('stage_start_date')->nullable(false);
             $table->date('stage_end_date')->nullable(false);
+            $table->char('stage_academic_year', 9)->nullable(false);
             
             $table->timestamps();
             $table->softDeletes();

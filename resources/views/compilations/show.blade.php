@@ -41,6 +41,8 @@
                             <dt>{{ __('Stage end date') }}</dt>
                             {{-- @todo refactor date localization to a service --}}
                             <dd>{{ (new Carbon\Carbon($compilation->stage_end_date))->format('d/m/Y') }}</dd>
+                            <dt>{{ __('Stage academic year') }}</dt>
+                            <dd>{{ $compilation->stage_academic_year}}</dd>
                         </dl>
 
                         {{-- @todo split questions by section and add section title --}}
