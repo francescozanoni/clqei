@@ -5,15 +5,16 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <div class="panel-heading">{{ __('Reset password') }}</div>
 
                     <div class="panel-body">
-
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
 
                         {!! BootForm::open(['route' => 'password.email', 'method' => 'post']) !!}
                         {!! BootForm::email('email', __('E-mail address')) !!}

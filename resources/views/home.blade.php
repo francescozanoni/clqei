@@ -7,19 +7,19 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
 
+                {{-- @todo add alert about compilations not creatable --}}
+
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
                 <div class="panel panel-default">
 
                     <div class="panel-heading">Dashboard</div>
 
                     <div class="panel-body">
-
-                        {{-- @todo add alert about compilations not creatable --}}
-
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
 
                         <h3>{{ __('Compilations') }}</h3>
                         <ul>
