@@ -15,8 +15,8 @@
 
                     <div class="panel-heading">
 
-                        {{-- @todo localize date --}}
-                        {{ __('Compilation') . ': ' . $compilation->created_at }}
+                        {{-- @todo refactor date localization to a service --}}
+                        {{ __('Compilation') . ': ' . (new Carbon\Carbon($compilation->created_at))->format('d/m/Y') }}
 
                         @can('viewAll', App\Models\Compilation::class)
                         -
@@ -36,9 +36,11 @@
                             <dt>{{ __('Stage ward') }}</dt>
                             <dd>{{ $compilation->stageWard->name }}</dd>
                             <dt>{{ __('Stage start date') }}</dt>
-                            <dd>{{ $compilation->stage_start_date }}</dd>
+                            {{-- @todo refactor date localization to a service --}}
+                            <dd>{{ (new Carbon\Carbon($compilation->stage_start_date))->format('d/m/Y') }}</dd>
                             <dt>{{ __('Stage end date') }}</dt>
-                            <dd>{{ $compilation->stage_end_date }}</dd>
+                            {{-- @todo refactor date localization to a service --}}
+                            <dd>{{ (new Carbon\Carbon($compilation->stage_end_date))->format('d/m/Y') }}</dd>
                         </dl>
 
                         {{-- @todo split questions by section and add section title --}}

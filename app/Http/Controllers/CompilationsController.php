@@ -11,6 +11,7 @@ use App\Models\Question;
 use App\Models\Section;
 use App\Models\Ward;
 use Auth;
+use Carbon\Carbon;
 use DB;
 use Yajra\DataTables\DataTables;
 
@@ -64,7 +65,13 @@ class CompilationsController extends Controller
                     });
             }
 
-            return DataTables::of($compilationQuery)->make(true);
+            return DataTables::of($compilationQuery)
+                ->editColumn('created_at', function ($compilation) {
+                    // Date/times must be formatted to simple dates, in order to allow
+                    // DataTables plugin (datetimes) correctly format the value.
+                    return with(new Carbon($compilation->created_at))->format('Y-m-d');
+                })
+                ->make(true);
         }
 
         return view('compilations.index');

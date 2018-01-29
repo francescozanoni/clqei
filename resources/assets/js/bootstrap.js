@@ -11,12 +11,14 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap-sass');
-    
+
+    window.moment = require('moment');
+
     require('datatables.net');
     require('datatables.net-bs');
     require('datatables.net-buttons');
     require('datatables.net-buttons-bs');
-    
+
 } catch (e) {}
 
 /**

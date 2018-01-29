@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -24,9 +25,9 @@
                                     <th>{{ __('Last name') }}</th>
                                     <th>{{ __('First name') }}</th>
                                 @endif
+                                <th>{{ __('Date') }}</th>
                                 <th>{{ __('Stage location') }}</th>
                                 <th>{{ __('Stage ward') }}</th>
-                                <th>{{ __('Date') }}</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -38,62 +39,67 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @push('scripts')
 <script>
     $(function () {
-        $('#compilations-table').DataTable({
-            serverSide: true,
-            processing: true,
-            language: {
-                url: window.datatablesLocalizations.{{ config('app.locale') }}
-            },
-            ajax: '',
-            columns: [
-                    @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
-                {
-                    data: 'student.identification_number',
-                    name: 'student.identification_number'
+        $.getScript('//cdn.datatables.net/plug-ins/' + $.fn.dataTable.version + '/dataRender/datetime.js', function () {
+            // DataTables is instanced only after its datetime plugin is loaded.
+            $('#compilations-table').DataTable({
+                serverSide: true,
+                processing: true,
+                language: {
+                    url: window.datatablesLocalizations.{{ config('app.locale') }}
                 },
-                {
-                    {{-- @todo find how to make this column searchable for both first and last name --}}
-                    /*
-                    render: function (data, type, row) {
-                        return row['student']['user']['last_name'] + ' ' + row['student']['user']['first_name'];
+                ajax: '',
+                @if (Auth::user()->cannot('viewAll', App\Models\Compilation::class))
+                searching: false,
+                paging: false,
+                info: false,
+                @endif
+                columnDefs: [{
+                    targets: -4,
+                    render: $.fn.dataTable.render.moment('DD/MM/YYYY')
+                }],
+                columns: [
+                        @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
+                    {
+                        data: 'student.identification_number',
+                        name: 'student.identification_number'
                     },
-                    name: 'student.user.last_first_name'
-                    */
-                    data: 'student.user.last_name',
-                    name: 'student.user.last_name'
-                },
-                {
-                    data: 'student.user.first_name',
-                    name: 'student.user.first_name'
-                },
-                    @endif
-                {
-                    data: 'stage_location.name',
-                    name: 'stageLocation.name'
-                },
-                {
-                    data: 'stage_ward.name',
-                    name: 'stageWard.name'
-                },
-                {
-                    {{-- @todo format date --}}
-                    data: 'created_at',
-                    name: 'compilations.created_at'
-                },
-                {
-                    name: 'link_to_detail',
-                    render: function (data, type, row) {
-                        return '<a href="compilations/' + row['id'] + '">{{ __('View') }}</a>';
+                    {
+                        data: 'student.user.last_name',
+                        name: 'student.user.last_name'
                     },
-                    sortable: false,
-                    searchable: false
-                }
-            ]
+                    {
+                        data: 'student.user.first_name',
+                        name: 'student.user.first_name'
+                    },
+                        @endif
+                    {
+                        data: 'created_at',
+                        name: 'compilations.created_at'
+                    },
+                    {
+                        data: 'stage_location.name',
+                        name: 'stageLocation.name'
+                    },
+                    {
+                        data: 'stage_ward.name',
+                        name: 'stageWard.name'
+                    },
+                    {
+                        name: 'link_to_detail',
+                        render: function (data, type, row) {
+                            return '<a href="compilations/' + row['id'] + '">{{ __('View') }}</a>';
+                        },
+                        sortable: false,
+                        searchable: false
+                    }
+                ]
+            });
         });
     });
 </script>
