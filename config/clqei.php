@@ -11,7 +11,7 @@ return [
     'students' => [
 
         'identification_number' => [
-            'pattern' => env('CLQEI_STUDENT_IDENTIFICATION_NUMBER_PATTERN', '^\\d{8}$'),
+            'pattern' => env('CLQEI_STUDENT_IDENTIFICATION_NUMBER_PATTERN', '^\d{8}$'),
         ],
 
         'email' => [
