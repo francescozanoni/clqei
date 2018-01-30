@@ -45,13 +45,13 @@
 @push('scripts')
 <script>
     $(function () {
-        $.getScript('//cdn.datatables.net/plug-ins/' + $.fn.dataTable.version + '/dataRender/datetime.js', function () {
+        $.getScript(window.datatablesDatetimePluginUrl, function () {
             // DataTables is instanced only after its datetime plugin is loaded.
             $('#compilations-table').DataTable({
                 serverSide: true,
                 processing: true,
                 language: {
-                    url: window.datatablesLocalizations.{{ config('app.locale') }}
+                    url: window.datatablesLocalizationUrls.{{ config('app.locale') }}
                 },
                 ajax: '',
                 @if (Auth::user()->cannot('viewAll', App\Models\Compilation::class))

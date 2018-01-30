@@ -6,7 +6,9 @@
 
 require('./bootstrap');
 
-window.datatablesLocalizations = {
+window.datatablesDatetimePluginUrl = '//cdn.datatables.net/plug-ins/' + $.fn.dataTable.version + '/dataRender/datetime.js';
+
+window.datatablesLocalizationUrls = {
 
     // https://cdn.datatables.net/plug-ins/1.10.16/i18n/
     // 2017-08-31
