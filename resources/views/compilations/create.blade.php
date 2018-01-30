@@ -1,3 +1,5 @@
+@inject('academicYearService', 'App\Services\AcademicYearService')
+
 @extends('layouts.app')
 
 @section('content')
@@ -57,17 +59,15 @@
                             </div>
                         </div>
 
-                        {{-- @todo make academic year list dynamic --}}
                         {!! BootForm::select(
                                 'stage_academic_year',
                                 __('Stage academic year'),
                                 [
-                                '2016/2017' => '2016/2017',
-                                '2017/2018' => '2017/2018',
-                                '2018/2019' => '2018/2019',
+                                $academicYearService->getPrevious() => $academicYearService->getPrevious(),
+                                $academicYearService->getCurrent() => $academicYearService->getCurrent(),
+                                $academicYearService->getNext() => $academicYearService->getNext(),
                                 ],
-                                null,
-                                ['placeholder' => __('Select') . '...']
+                                $academicYearService->getCurrent()
                                 ) !!}
 
                         {{-- Nav tabs --}}

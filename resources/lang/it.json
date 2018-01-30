@@ -4,6 +4,8 @@
   "Logout": "Esci",
   "Forgot your password?": "Hai scordato la password?",
   "Reset password": "Reimposta password",
+  "Change password": "Modifica password",
+  "Currently password can be changed only by password reset procedure (login page)": "Al momento la password può essere modificata solo mediante la procedura di reimpostazione password (pagina di login)",
   "Send password reset link": "Invia link di reimpostazione password",
   "Compilations": "Compilazioni",
   "Questionnaire compilations": "Compilazioni del questionario",

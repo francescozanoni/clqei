@@ -128,13 +128,20 @@
 
                             <ul class="dropdown-menu">
                                 <li>
+                                    <a href="#"
+                                       onclick="event.preventDefault();
+                                                     alert('{{ __('Currently password can be changed only by password reset procedure (login page)') }}.');">
+                                        <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                        {{ __('Change password') }}
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                           style="display: none;">
                                         {{ csrf_field() }}

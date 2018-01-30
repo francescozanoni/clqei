@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
 
         // Administrator user
         DB::table('users')->insert([
-            'first_name' => 'Administrator',
+            'first_name' => 'Example',
             'last_name' => 'Administrator',
             'email' => 'administrator@example.com',
             'password' => bcrypt('administrator'),
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
 
         // Viewer user
         DB::table('users')->insert([
-            'first_name' => 'Viewer',
+            'first_name' => 'Example',
             'last_name' => 'Viewer',
             'email' => 'viewer@example.com',
             'password' => bcrypt('viewer'),
@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
 
         // Student user
         DB::table('users')->insert([
-            'first_name' => 'Student',
+            'first_name' => 'Example',
             'last_name' => 'Student',
             'email' => 'student@example.com',
             'password' => bcrypt('student'),
