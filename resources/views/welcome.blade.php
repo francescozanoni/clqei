@@ -63,6 +63,8 @@
             margin-bottom: 30px;
         }
     </style>
+
+    <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
 </head>
 <body>
 <div class="flex-center position-ref full-height">
