@@ -30,22 +30,33 @@
 
                         {!! BootForm::hidden('student_id', Auth::user()->student->id) !!}
 
-                        {!! BootForm::select(
-                                'stage_location_id',
-                                __('Stage location'),
-                                App\Models\Location::all()->pluck('name', 'id'),
-                                null,
-                                ['placeholder' => __('Select') . '...']
-                                ) !!}
-                        {!! BootForm::select(
-                                'stage_ward_id',
-                                __('Stage ward'),
-                                App\Models\Ward::all()->pluck('name', 'id'),
-                                null,
-                                ['placeholder' => __('Select') . '...']
-                                ) !!}
-                        {!! BootForm::date('stage_start_date', __('Stage start date')) !!}
-                        {!! BootForm::date('stage_end_date', __('Stage end date')) !!}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                {!! BootForm::select(
+                                        'stage_location_id',
+                                        __('Stage location'),
+                                        App\Models\Location::all()->pluck('name', 'id'),
+                                        null,
+                                        ['placeholder' => __('Select') . '...']
+                                        ) !!}
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                {!! BootForm::select(
+                                        'stage_ward_id',
+                                        __('Stage ward'),
+                                        App\Models\Ward::all()->pluck('name', 'id'),
+                                        null,
+                                        ['placeholder' => __('Select') . '...']
+                                        ) !!}
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                {!! BootForm::date('stage_start_date', __('Stage start date')) !!}
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                {!! BootForm::date('stage_end_date', __('Stage end date')) !!}
+                            </div>
+                        </div>
+
                         {{-- @todo make academic year list dynamic --}}
                         {!! BootForm::select(
                                 'stage_academic_year',
