@@ -93,7 +93,9 @@
                     {
                         name: 'link_to_detail',
                         render: function (data, type, row) {
-                            return '<a href="compilations/' + row['id'] + '">{{ __('View') }}</a>';
+                            return '<a href="compilations/' + row['id'] + '" title="{{ __('View') }}">' +
+                                    '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>' +
+                                    '</a>';
                         },
                         sortable: false,
                         searchable: false

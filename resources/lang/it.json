@@ -6,6 +6,7 @@
   "Reset password": "Reimposta password",
   "Send password reset link": "Invia link di reimpostazione password",
   "Compilations": "Compilazioni",
+  "Questionnaire compilations": "Compilazioni del questionario",
   "Users": "Utenti",
 
   "Register as student": "Registrati come studente",
@@ -30,6 +31,7 @@
   "There were some problems registering the user": "Alcuni problemi riscontrati durante la registrazione dell'utente",
 
   "New compilation": "Nuova compilazione",
+  "New questionnaire compilation": "Nuova compilazione del questionario",
   "My compilations": "Le mie compilazioni",
   "All compilations": "Tutte le compilazioni",
   "Compilation creation is currently disabled": "La creazione di compilazioni è al momento disabilitata",

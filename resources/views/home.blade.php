@@ -21,41 +21,59 @@
 
                     <div class="panel-body">
 
-                        <h3>{{ __('Compilations') }}</h3>
+                        <h3>{{ __('Questionnaire compilations') }}</h3>
                         <ul>
                             @can('create', App\Models\Compilation::class)
                             @if ($compilationService->isCompilationCreatable() === true)
-                                <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
+                                <li>
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    {!! link_to_route('compilations.create', __('New compilation')) !!}
+                                </li>
                             @else
                                 <li>{{ __('Compilation creation is currently disabled') }}</li>
                             @endif
                             @if ($number_of_compilations > 0)
-                                <li>{!! link_to_route('compilations.index', __('My compilations') . ' (' . $number_of_compilations . ')') !!}</li>
+                                <li>
+                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                    {!! link_to_route('compilations.index', __('My compilations') . ' (' . $number_of_compilations . ')') !!}
+                                </li>
                             @endif
                             @endcan
                             @can('viewAll', App\Models\Compilation::class)
-                            <li>{!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}</li>
+                            <li>
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                {!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}
+                            </li>
                             @endcan
                         </ul>
 
                         @can('create', App\Models\Location::class)
                         <h3>{{ __('Stages') }}</h3>
                         <ul>
-                            <li>{!! link_to_route('locations.index', __('Sedi')) !!}</li>
-                            <li>{!! link_to_route('wards.index', __('Reparti')) !!}</li>
+                            <li>
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                {!! link_to_route('locations.index', __('Sedi')) !!}
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                {!! link_to_route('wards.index', __('Reparti')) !!}
+                            </li>
                         </ul>
                         @endcan
 
                         @can('createViewer', App\User::class)
                         <h3>{{ __('Users') }}</h3>
-                        <ul>
+                        <ul><li>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             @if (Auth::user()->can('createAdministrator', App\User::class))
-                                <li>{!! link_to_route('register', __('Register new viewer or administrator')) !!}</li>
+                                {!! link_to_route('register', __('Register new viewer or administrator')) !!}
                             @else
-                                <li>{!! link_to_route('register', __('Register new viewer')) !!}</li>
+                                {!! link_to_route('register', __('Register new viewer')) !!}
                             @endif
+                                </li>
                             @if (Auth::user()->can('createAdministrator', App\User::class))
                                 <li>
+                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                                     {!! link_to_route(
                                     'users.index',
                                     __('Administrators') . ' (' . $number_of_administrators . ')',
@@ -63,12 +81,14 @@
                                 </li>
                             @endif
                             <li>
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                                 {!! link_to_route(
                                 'users.index',
                                 __('Viewers') . ' (' . $number_of_viewers . ')',
                                 ['role' => 'viewer']) !!}
                             </li>
                             <li>
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                                 {!! link_to_route(
                                 'users.index',
                                 __('Students') . ' (' . $number_of_students . ')',

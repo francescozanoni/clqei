@@ -121,6 +121,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false" aria-haspopup="true">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                 {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
                                 <span class="caret"></span>
                             </a>
@@ -130,6 +131,7 @@
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
+                                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                                         {{ __('Logout') }}
                                     </a>
 
