@@ -35,6 +35,10 @@
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
+                    -
+                    <small>
+                        {{ config('app.name_extended', 'Laravel-based application') }}
+                    </small>
                 </a>
             </div>
 
