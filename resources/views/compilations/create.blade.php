@@ -60,7 +60,7 @@
                                 ) !!}
 
                         {{-- Nav tabs --}}
-                        <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                        <ul class="nav nav-tabs nav-justified" role="tablist" id="myTabs">
                             @foreach ($sections as $index => $section)
                                 <li role="presentation"
                                     @if ($section->id === 1)
@@ -82,7 +82,7 @@
 
                         {{-- Tab panes --}}
                         <div class="tab-content">
-                            @foreach ($sections as $section)
+                            @foreach ($sections as $index => $section)
                                 <div role="tabpanel"
                                      @if ($section->id === 1)
                                      class="tab-pane active"
@@ -91,7 +91,7 @@
                                      @endif
                                      id="section_{{ $section->id }}">
 
-                                     <h3>{{ $section->text }}</h3>
+                                    <h3>{{ $section->text }}</h3>
 
                                     @foreach ($section->questions as $question)
 
@@ -152,11 +152,22 @@
 
                                     @endforeach
 
+                                    <div class="pull-right">
+                                        @if (isset($sections[$index + 1]) === true)
+                                            <a href="#section_{{ $sections[$index + 1]->id }}"
+                                               aria-controls="section_{{ $sections[$index + 1]->id }}" role="tab"
+                                               data-toggle="tab">
+                                                {{ __('Go to section') . ' ' . ($index + 2) }}
+                                                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                            </a>
+                                        @else
+                                            {!! BootForm::submit(__('Save')) !!}
+                                        @endif
+                                    </div>
+
                                 </div>
                             @endforeach
                         </div>
-
-                        {!! BootForm::submit(__('Create')) !!}
 
                         {!! BootForm::close() !!}
 
