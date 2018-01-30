@@ -59,7 +59,11 @@
         }
 
         .title {
-            font-size: 84px;
+            font-size: 15vh;
+        }
+
+        .subtitle {
+            font-size: 5vh;
         }
 
         .links > a {
@@ -67,12 +71,13 @@
             padding: 0 25px;
             font-size: 12px;
             font-weight: 600;
-            letter-spacing: .1rem;
             text-decoration: none;
         }
 
-        .m-b-md {
-            margin-bottom: 30px;
+        .my-body .links {
+            margin-top: 3rem;
+            text-transform: uppercase;
+            letter-spacing: .1rem;
         }
 
         #logo {
@@ -97,23 +102,12 @@
 
     <div class="content">
 
-        <div class="title m-b-md">
+        <div class="title">
             {{ config('app.name', 'Laravel') }}
+        </div>
 
-            {{-- @todo improve the following rendering code --}}
-            <br/>
-
-            <small>
-                <small>
-                    <small>
-                        <small>
-                            <small>
-                                {{ config('app.name_extended', 'Laravel-based application') }}
-                            </small>
-                        </small>
-                    </small>
-                </small>
-            </small>
+        <div class="subtitle">
+            {{ config('app.name_extended', 'Laravel-based application') }}
         </div>
 
         <div class="links">
