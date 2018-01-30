@@ -60,7 +60,7 @@
                                 ) !!}
 
                         {{-- Nav tabs --}}
-                        <ul class="nav nav-tabs nav-justified" role="tablist" id="myTabs">
+                        <ul class="nav nav-tabs" role="tablist" id="myTabs">
                             @foreach ($sections as $index => $section)
                                 <li role="presentation"
                                     @if ($section->id === 1)
@@ -154,13 +154,17 @@
 
                                     <div class="pull-right">
                                         @if (isset($sections[$index + 1]) === true)
+                                            {{-- If this is not the last tab, a link to the next tab is displayed --}}
                                             <a href="#section_{{ $sections[$index + 1]->id }}"
-                                               aria-controls="section_{{ $sections[$index + 1]->id }}" role="tab"
-                                               data-toggle="tab">
+                                               aria-controls="section_{{ $sections[$index + 1]->id }}"
+                                               role="tab"
+                                               data-toggle="tab"
+                                               onclick="$('#myTabs li:eq({{ ($index + 1) }}) a').tab('show')">
                                                 {{ __('Go to section') . ' ' . ($index + 2) }}
                                                 <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                                             </a>
                                         @else
+                                            {{-- Otherwise, the submit button is displayed --}}
                                             {!! BootForm::submit(__('Save')) !!}
                                         @endif
                                     </div>
