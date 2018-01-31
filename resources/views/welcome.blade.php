@@ -92,6 +92,7 @@
 
 <div class="flex-center position-ref my-header">
     <div class="content">
+        {{-- @todo add link --}}
         @if (file_exists(public_path('logo.svg')) === true)
             <img id="logo" src="{{ asset('logo.svg') }}"/>
         @endif
