@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         html, body {
             background-color: #fff;
@@ -74,10 +75,9 @@
             text-decoration: none;
         }
 
-        .my-body .links {
+        .my-body .links button {
             margin-top: 3rem;
-            text-transform: uppercase;
-            letter-spacing: .1rem;
+            width: 100px;
         }
 
         #logo {
@@ -113,10 +113,19 @@
 
         <div class="links">
             @if (Auth::guest())
-                {!! link_to_route('login', __('Login')) !!}
-                {!! link_to_route('register', __('Register')) !!}
+                <button class="btn btn-primary" onclick="location.href = '{{ route('login')}}'">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    {{ __('Login') }}
+                </button>
+                <button class="btn btn-primary" onclick="location.href = '{{ route('register') }}'">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    {{ __('Register') }}
+                </button>
             @else
-                {!! link_to('/home', __('Home')) !!}
+                <button class="btn btn-primary" onclick="location.href = '{{ url('/home') }}'">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    {{ __('Home') }}
+                </button>
             @endif
         </div>
 

@@ -55,9 +55,16 @@
   "The new compilation has been created": "La nuova compilazione è stata creata",
 
   "Compilation": "Compilazione",
+  "Compilation of": "Compilazione del",
   "Question": "Domanda",
   "Answer": "Risposta",
   "Print": "Stampa",
+  "Stage": "Tirocinio",
+  "Location": "Sede",
+  "Ward": "Reparto",
+  "Location and ward": "Sede e reparto",
+  "Period": "Periodo",
+  "Academic year": "Anno accademico",
 
   "Stages": "Tirocini",
   "Stage locations": "Sedi di tirocinio",

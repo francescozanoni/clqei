@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace App\Http\Controllers;
 
 use App\Models\Compilation;
+use App\Models\Location;
+use App\Models\Ward;
 use App\User;
 use Auth;
 
@@ -38,6 +40,8 @@ class HomeController extends Controller
                 'number_of_students' => User::students()->count(),
                 'number_of_viewers' => User::viewers()->count(),
                 'number_of_administrators' => User::administrators()->count(),
+                'number_of_locations' => Location::count(),
+                'number_of_wards' => Ward::count(),
             ]
         );
     }

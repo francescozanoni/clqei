@@ -14,6 +14,7 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
+                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                         {{ __($panel_title) }}
                     </div>
 

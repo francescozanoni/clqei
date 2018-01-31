@@ -17,8 +17,6 @@
 
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">Dashboard</div>
-
                     <div class="panel-body">
 
                         <h3>{{ __('Questionnaire compilations') }}</h3>
@@ -34,14 +32,14 @@
                             @endif
                             @if ($number_of_compilations > 0)
                                 <li>
-                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                     {!! link_to_route('compilations.index', __('My compilations') . ' (' . $number_of_compilations . ')') !!}
                                 </li>
                             @endif
                             @endcan
                             @can('viewAll', App\Models\Compilation::class)
                             <li>
-                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                 {!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}
                             </li>
                             @endcan
@@ -51,12 +49,12 @@
                         <h3>{{ __('Stages') }}</h3>
                         <ul>
                             <li>
-                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                {!! link_to_route('locations.index', __('Sedi')) !!}
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                {!! link_to_route('locations.index', __('Locations') . ' (' . $number_of_locations . ')') !!}
                             </li>
                             <li>
-                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                {!! link_to_route('wards.index', __('Reparti')) !!}
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                {!! link_to_route('wards.index', __('Wards') . ' (' . $number_of_wards . ')') !!}
                             </li>
                         </ul>
                         @endcan
@@ -73,7 +71,7 @@
                                 </li>
                             @if (Auth::user()->can('createAdministrator', App\User::class))
                                 <li>
-                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                     {!! link_to_route(
                                     'users.index',
                                     __('Administrators') . ' (' . $number_of_administrators . ')',
@@ -81,14 +79,14 @@
                                 </li>
                             @endif
                             <li>
-                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                 {!! link_to_route(
                                 'users.index',
                                 __('Viewers') . ' (' . $number_of_viewers . ')',
                                 ['role' => 'viewer']) !!}
                             </li>
                             <li>
-                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                 {!! link_to_route(
                                 'users.index',
                                 __('Students') . ' (' . $number_of_students . ')',

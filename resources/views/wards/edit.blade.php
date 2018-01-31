@@ -13,7 +13,10 @@
 
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">{{ __('Edit ward') }}</div>
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        {{ __('Edit ward') }}
+                    </div>
 
                     <div class="panel-body">
 

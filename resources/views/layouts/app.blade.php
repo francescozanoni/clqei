@@ -1,6 +1,6 @@
 @inject('compilationService', 'App\Services\CompilationService')
 
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -10,10 +10,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} - {{ config('app.name_extended', 'Laravel-based application') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/print.css') }}" rel="stylesheet">
 
     <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
 </head>
@@ -53,12 +54,25 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
+
                     <!-- Authentication Links -->
                     @if (Auth::guest())
 
-                        <li>{!! link_to_route('login', __('Login')) !!}</li>
+                        @if (\Request::is('login') === false)
+                            <li>
+                                <a href="{{ route('login') }}">
+                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                                    {{ __('Login') }}
+                                </a>
+                            </li>
+                        @endif
                         @if (\Request::is('register') === false)
-                            <li>{!! link_to_route('register', __('Register')) !!}</li>
+                            <li>
+                                <a href="{{ route('register') }}">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    {{ __('Register') }}
+                                </a>
+                            </li>
                         @endif
 
                     @else
@@ -73,15 +87,26 @@
                             <ul class="dropdown-menu">
                                 @can('create', App\Models\Compilation::class)
                                 @if ($compilationService->isCompilationCreatable() === true)
-                                    <li>{!! link_to_route('compilations.create', __('New compilation')) !!}</li>
+                                    <li>
+                                        <a href="{{ route('compilations.create') }}">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            {{ __('New compilation') . ' (' . \App\Models\Compilation::count() . ')' }}
+                                        </a>
+                                    </li>
                                 @endif
                                 <li>
-                                    {!! link_to_route('compilations.index', __('My compilations') . ' (' . Auth::user()->student->compilations->count() . ')') !!}
+                                    <a href="{{ route('compilations.index') }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        {{ __('My compilations') . ' (' . Auth::user()->student->compilations->count() . ')' }}
+                                    </a>
                                 </li>
                                 @endcan
                                 @can('viewAll', App\Models\Compilation::class)
                                 <li>
-                                    {!! link_to_route('compilations.index', __('All compilations') . ' (' . \App\Models\Compilation::count() . ')') !!}
+                                    <a href="{{ route('compilations.index') }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        {{ __('All compilations') . ' (' . \App\Models\Compilation::count() . ')' }}
+                                    </a>
                                 </li>
                                 @endcan
                             </ul>
@@ -96,13 +121,37 @@
                             </a>
                             <ul class="dropdown-menu">
                                 @if (Auth::user()->can('createAdministrator', App\User::class))
-                                    <li>{!! link_to_route('register', __('Register new viewer or administrator')) !!}</li>
-                                    <li>{!! link_to_route('users.index', __('Administrators'), ['role' => 'administrator']) !!}</li>
+                                    <li>
+                                        <a href="{{ route('register') }}">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            {{ __('Register new viewer or administrator') }}
+                                        </a>
+                                    <li>
+                                        <a href="{{ route('users.index', ['role' => 'administrator']) }}">
+                                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                            {{ __('Administrators') }}
+                                        </a>
+                                    </li>
                                 @else
-                                    <li>{!! link_to_route('register', __('Register new viewer')) !!}</li>
+                                    <li>
+                                        <a href="{{ route('register') }}">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            {{ __('Register new viewer') }}
+                                        </a>
+                                    </li>
                                 @endif
-                                <li>{!! link_to_route('users.index', __('Viewers'), ['role' => 'viewer']) !!}</li>
-                                <li>{!! link_to_route('users.index', __('Students'), ['role' => 'student']) !!}</li>
+                                <li>
+                                    <a href="{{ route('users.index', ['role' => 'viewer']) }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        {{ __('Viewers') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('users.index', ['role' => 'student']) }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        {{ __('Students') }}
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         @endcan
@@ -116,10 +165,16 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    {!! link_to_route('locations.index', __('Locations')) !!}
+                                    <a href="{{ route('locations.index') }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        {{ __('Locations') }}
+                                    </a>
                                 </li>
                                 <li>
-                                    {!! link_to_route('wards.index', __('Wards')) !!}
+                                    <a href="{{ route('wards.index') }}">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        {{ __('Wards') }}
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -137,7 +192,7 @@
                                 <li>
                                     <a href="#"
                                        onclick="event.preventDefault();
-                                                     alert('{{ __('Currently password can be changed only by password reset procedure (login page)') }}.');">
+                                               alert('{{ __('Currently password can be changed only by password reset procedure (login page)') }}.');">
                                         <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
                                         {{ __('Change password') }}
                                     </a>

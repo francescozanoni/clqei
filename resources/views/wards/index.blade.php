@@ -13,7 +13,10 @@
 
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">{{ __('New ward') }}</div>
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        {{ __('New ward') }}
+                    </div>
 
                     <div class="panel-body">
 
@@ -44,6 +47,7 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
+                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                         {{ __('Stage wards') }}
                     </div>
 
