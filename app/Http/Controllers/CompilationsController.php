@@ -182,7 +182,6 @@ class CompilationsController extends Controller
      */
     public function show(Compilation $compilation)
     {
-        $compilation->load('items');
 
         // Deleted students, users, locations and wards must be included
         // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
@@ -200,6 +199,8 @@ class CompilationsController extends Controller
                 $query->withTrashed();
             }
         ]);
+
+        $this->authorize('view', $compilation);
 
         return view('compilations.show', ['compilation' => $compilation]);
     }

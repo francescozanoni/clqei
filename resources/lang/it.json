@@ -41,6 +41,7 @@
   "Date": "Data",
   "Last and first name": "Cognome e nome",
   "View": "Visualizza",
+  "Currently no new compilations can be added: ensure at least one stage location and one stage ward are available": "Al momento nessuna nuova compilazione può essere creata: assicurarsi che almeno una sede di tirocinio ed un reparto di tirocinio siano disponibili",
 
   "Section": "Sezione",
   "Stage location": "Sede tirocinio",
@@ -90,6 +91,7 @@
   "Students": "Studenti",
   "Viewers": "Visualizzatori",
   "Administrators": "Amministratori",
+  "Invalid user role": "Ruolo non valido",
 
   "Do you really want to delete this student?": "Vuoi davvero eliminare questo studente?",
   "Do you really want to delete this viewer?": "Vuoi davvero eliminare questo visualizzatore?",

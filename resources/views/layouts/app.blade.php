@@ -90,7 +90,7 @@
                                     <li>
                                         <a href="{{ route('compilations.create') }}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            {{ __('New compilation') . ' (' . \App\Models\Compilation::count() . ')' }}
+                                            {{ __('New compilation') }}
                                         </a>
                                     </li>
                                 @endif
@@ -129,7 +129,7 @@
                                     <li>
                                         <a href="{{ route('users.index', ['role' => 'administrator']) }}">
                                             <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                            {{ __('Administrators') }}
+                                            {{ __('Administrators') . ' (' . \App\User::administrators()->count() . ')' }}
                                         </a>
                                     </li>
                                 @else
@@ -143,13 +143,13 @@
                                 <li>
                                     <a href="{{ route('users.index', ['role' => 'viewer']) }}">
                                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                        {{ __('Viewers') }}
+                                        {{ __('Viewers') . ' (' . \App\User::viewers()->count() . ')' }}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('users.index', ['role' => 'student']) }}">
                                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                        {{ __('Students') }}
+                                        {{ __('Students') . ' (' . \App\User::students()->count() . ')'  }}
                                     </a>
                                 </li>
                             </ul>
@@ -167,13 +167,13 @@
                                 <li>
                                     <a href="{{ route('locations.index') }}">
                                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                        {{ __('Locations') }}
+                                        {{ __('Locations') . ' (' . \App\Models\Location::count() . ')' }}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('wards.index') }}">
                                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                        {{ __('Wards') }}
+                                        {{ __('Wards') . ' (' . \App\Models\Ward::count() . ')' }}
                                     </a>
                                 </li>
                             </ul>

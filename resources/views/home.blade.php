@@ -7,7 +7,15 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
 
-                {{-- @todo add alert about compilations not creatable --}}
+                @if ($compilationService->isCompilationCreatable() === false)
+                    @cannot('create', App\Models\Compilation::class)
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{ __('Currently no new compilations can be added: ensure at least one stage location and one stage ward are available') }}
+                    </div>
+                    @endcan
+                @endif
 
                 @if (session('status'))
                     <div class="alert alert-success">
@@ -61,14 +69,15 @@
 
                         @can('createViewer', App\User::class)
                         <h3>{{ __('Users') }}</h3>
-                        <ul><li>
+                        <ul>
+                            <li>
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            @if (Auth::user()->can('createAdministrator', App\User::class))
-                                {!! link_to_route('register', __('Register new viewer or administrator')) !!}
-                            @else
-                                {!! link_to_route('register', __('Register new viewer')) !!}
-                            @endif
-                                </li>
+                                @if (Auth::user()->can('createAdministrator', App\User::class))
+                                    {!! link_to_route('register', __('Register new viewer or administrator')) !!}
+                                @else
+                                    {!! link_to_route('register', __('Register new viewer')) !!}
+                                @endif
+                            </li>
                             @if (Auth::user()->can('createAdministrator', App\User::class))
                                 <li>
                                     <span class="glyphicon glyphicon-list" aria-hidden="true"></span>

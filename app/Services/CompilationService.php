@@ -5,7 +5,6 @@ namespace App\Services;
 
 use App\Models\Location;
 use App\Models\Ward;
-use App\User;
 
 class CompilationService
 {
@@ -19,7 +18,6 @@ class CompilationService
     public function isCompilationCreatable() : bool
     {
         return
-            User::students()->count() > 0 &&
             Location::count() > 0 &&
             Ward::count() > 0;
     }

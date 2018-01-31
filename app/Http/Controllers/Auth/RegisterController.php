@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Controllers\Auth;
 
@@ -79,7 +79,13 @@ class RegisterController extends Controller
         $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users'
+            ],
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required',
         ];
@@ -90,15 +96,13 @@ class RegisterController extends Controller
             $rules['role'] .= '|in:student';
             $rules['identification_number'] = [
                 'required',
-                // stripcslashes() is required because values loaded from .env
-                // are autonmatically escaped, but regex validator required unescaped strings
-                'regex:/' . stripcslashes(config('clqei.students.identification_number.pattern')) . '/',
+                'regex:/' . config('clqei.students.identification_number.pattern') . '/',
                 'unique:students'
             ];
             $rules['gender'] = 'required|in:male,female';
             $countryCodes = App::make('App\Services\CountryService')->getCountryCodes();
             $rules['nationality'] = 'required|in:' . implode(',', $countryCodes);
-            $rules['email'] .= '|regex:/' . config('clqei.students.email.pattern') . '/';
+            $rules['email'][] = 'regex:/' . config('clqei.students.email.pattern') . '/';
         } else {
             $rules['role'] .= '|in:viewer';
             if (Auth::user()->can('createAdministrator', User::class)) {

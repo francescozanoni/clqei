@@ -9,6 +9,15 @@ use DB;
 
 class UsersController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('not_student');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,25 +27,27 @@ class UsersController extends Controller
     public function index(Request $request)
     {
 
-        // @todo add authorization filter (now enabled only on single models, on the view)
-
         $users = null;
         $viewPanelTitle = null;
 
         switch ($request->get('role')) {
             case 'administrator':
+                $this->authorize('createAdministrator', User::class);
                 $users = User::administrators();
                 $viewPanelTitle = 'Administrators';
                 break;
             case 'viewer':
+                $this->authorize('createViewer', User::class);
                 $users = User::viewers();
                 $viewPanelTitle = 'Viewers';
                 break;
             case 'student':
+                $this->authorize('createViewer', User::class);
                 $users = User::students();
                 $viewPanelTitle = 'Students';
                 break;
             default:
+                throw new \InvalidArgumentException(__('Invalid user role'));
         }
 
         return view(

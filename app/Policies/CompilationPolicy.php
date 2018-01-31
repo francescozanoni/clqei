@@ -22,8 +22,9 @@ class CompilationPolicy
     {
         // Compilations can be viewed by administrators, viewers
         // and the student that created the compilation.
-        return $user->role !== 'student' ||
-        $user->student->id === $compilation->student->id;
+        return
+            $user->role !== 'student' ||
+            $user->student->id === $compilation->student->id;
     }
 
     /**

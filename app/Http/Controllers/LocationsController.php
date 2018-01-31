@@ -8,6 +8,15 @@ use App\Models\Location;
 
 class LocationsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('not_student');
+    }
+
     /**
      * Display a listing of the resource.
      *
