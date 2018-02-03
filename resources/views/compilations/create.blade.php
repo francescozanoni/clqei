@@ -125,7 +125,7 @@
                                             {!! BootForm::checkboxes(
                                             'q' . $question->id . '[]',
                                             $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text,
-                                            $question->answers->pluck('text', 'id')
+                                            $question->answers->sortBy('position')->pluck('text', 'id')
                                             ) !!}
 
                                         @endif
@@ -138,7 +138,7 @@
                                                 {!! BootForm::radios(
                                                 'q' . $question->id,
                                                 $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text,
-                                                $question->answers->pluck('text', 'id')
+                                                $question->answers->sortBy('position')->pluck('text', 'id')
                                                 ) !!}
 
                                             @else
@@ -147,7 +147,7 @@
                                                 {!! BootForm::select(
                                                 'q' . $question->id,
                                                 $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text,
-                                                $question->answers->pluck('text', 'id'),
+                                                $question->answers->sortBy('position')->pluck('text', 'id'),
                                                 null,
                                                 ['placeholder' => __('Select') . '...']
                                                 ) !!}
