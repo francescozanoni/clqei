@@ -138,7 +138,9 @@
                                                 {!! BootForm::radios(
                                                 'q' . $question->id,
                                                 $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text,
-                                                $question->answers->sortBy('position')->pluck('text', 'id')
+                                                $question->answers->sortBy('position')->pluck('text', 'id'),
+                                                null,
+                                                ['class' => 'radio-inline']
                                                 ) !!}
 
                                             @else
