@@ -36,7 +36,7 @@
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
-                    <span class="hidden-xs">
+                    <span class="hidden-xs hidden-sm">
                         -
                         <small>
                             {{ config('app.name_extended', 'Laravel-based application') }}

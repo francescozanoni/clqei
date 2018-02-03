@@ -45,6 +45,12 @@
                                 </li>
                             @endif
                             @endcan
+                            @cannot('create', App\Models\Compilation::class)
+                                <li>
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    {!! link_to_route('compilations.create', __('Compilation form')) !!}
+                                </li>
+                            @endcannot
                             @can('viewAll', App\Models\Compilation::class)
                             <li>
                                 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>

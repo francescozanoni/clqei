@@ -15,6 +15,8 @@
 
                     <div class="panel-body">
 
+                        @can('create', App\Models\Compilation::class)
+                        
                         {!! BootForm::open(['route' => 'compilations.store', 'method' => 'post']) !!}
 
                         {{-- http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/ --}}
@@ -31,6 +33,8 @@
                         @endif
 
                         {!! BootForm::hidden('student_id', Auth::user()->student->id) !!}
+                        
+                        @endcan
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -176,7 +180,15 @@
                                             </a>
                                         @else
                                             {{-- Otherwise, the submit button is displayed --}}
-                                            {!! BootForm::submit(__('Save')) !!}
+                                            @can('create', App\Models\Compilation::class)
+                                                {!! BootForm::submit(__('Save')) !!}
+                                            @endcan
+                                            @cannot('create', App\Models\Compilation::class)
+                                                {!! BootForm::submit(
+                                                    __('Save'),
+                                                    ['disabled' => 'disabled']
+                                                ) !!}
+                                            @endcannot
                                         @endif
                                     </div>
 
@@ -184,7 +196,9 @@
                             @endforeach
                         </div>
 
-                        {!! BootForm::close() !!}
+                        @can('create', App\Models\Compilation::class)
+                            {!! BootForm::close() !!}
+                        @endcan
 
                     </div>
                 </div>

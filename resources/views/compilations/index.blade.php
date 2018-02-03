@@ -21,11 +21,11 @@
                         <table id="compilations-table" class="table">
                             <thead>
                             <tr>
-                                @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
+                                @can('viewAll', App\Models\Compilation::class)
                                     <th>{{ __('Identification number') }}</th>
                                     <th>{{ __('Last name') }}</th>
                                     <th>{{ __('First name') }}</th>
-                                @endif
+                                @endcan
                                 <th>{{ __('Date') }}</th>
                                 <th>{{ __('Stage location') }}</th>
                                 <th>{{ __('Stage ward') }}</th>
