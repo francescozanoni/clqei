@@ -18,8 +18,9 @@ class StoreLocationRequest extends FormRequest
     public function authorize() : bool
     {
         $user = Auth::user();
-        return $user->can('create', Location::class) &&
-        $user->can('update', Location::class);
+        return
+            $user->can('create', Location::class) &&
+            $user->can('update', Location::class);
     }
 
     /**
