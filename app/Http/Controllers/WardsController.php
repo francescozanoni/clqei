@@ -24,7 +24,7 @@ class WardsController extends Controller
      */
     public function index()
     {
-        $wards = Ward::all();
+        $wards = Ward::all()->sortBy('name');
         return view('wards.index', ['wards' => $wards]);
     }
 

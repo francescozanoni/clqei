@@ -24,7 +24,7 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::all();
+        $locations = Location::all()->sortBy('name');
         return view('locations.index', ['locations' => $locations]);
     }
 

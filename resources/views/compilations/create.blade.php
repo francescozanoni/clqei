@@ -41,7 +41,7 @@
                                 {!! BootForm::select(
                                         'stage_location_id',
                                         __('Stage location'),
-                                        App\Models\Location::all()->pluck('name', 'id'),
+                                        App\Models\Location::all()->sortBy('name')->pluck('name', 'id'),
                                         null,
                                         ['placeholder' => __('Select') . '...']
                                         ) !!}
@@ -50,7 +50,7 @@
                                 {!! BootForm::select(
                                         'stage_ward_id',
                                         __('Stage ward'),
-                                        App\Models\Ward::all()->pluck('name', 'id'),
+                                        App\Models\Ward::all()->sortBy('name')->pluck('name', 'id'),
                                         null,
                                         ['placeholder' => __('Select') . '...']
                                         ) !!}
