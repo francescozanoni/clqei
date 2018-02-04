@@ -26,9 +26,13 @@
 
                                 <thead>
                                 <tr>
+                                    @if ($users->first()->role === 'student')
+                                        <th>{{ __('Identification number') }}</th>
+                                    @endif
                                     <th>{{ __('First name') }}</th>
                                     <th>{{ __('Last name') }}</th>
-                                    <th>{{ __('E-mail address') }}</th>
+                                    <th class="hidden-xs">{{ __('E-mail address') }}</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -37,13 +41,22 @@
                                 @foreach ($users as $user)
                                     @can('view', $user)
                                     <tr>
+                                        @if ($user->role === 'student')
+                                            <td>{{ $user->student->identification_number }}</td>
+                                        @endif
                                         <td>{{ $user->first_name }}</td>
                                         <td>{{ $user->last_name }}</td>
-                                        <td>{{ $user->email }}</td>
+                                        <td class="hidden-xs">{{ $user->email }}</td>
+                                        <td>
+                                            <a href="{{ route('users.show', ['user' => $user]) }}">
+                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                            </a>
+                                        </td>
                                         <td>
                                             @can('delete', $user)
                                             {!! BootForm::open(['url' => 'users/' . $user->id, 'method' => 'delete']) !!}
                                             <a href="{{ route('users.destroy', ['user' => $user]) }}"
+                                               title="{{ __('Delete') }}"
                                                onclick="
                                                        event.preventDefault();
                                                        if (confirm('{{ __('Do you really want to delete this ' . $user->role . '?') }}') !== true) {
@@ -51,7 +64,7 @@
                                                        }
                                                        this.parentElement.submit();
                                                        ">
-                                                {{ __('Delete') }}
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   
                                             </a>
                                             {!! BootForm::close() !!}
                                             @endcan

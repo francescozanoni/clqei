@@ -11,14 +11,6 @@ class UsersController extends Controller
 {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('not_student');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @param Request $request
@@ -26,6 +18,8 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+    
+        $this->middleware('not_student');
 
         $users = null;
         $viewPanelTitle = null;
@@ -43,7 +37,7 @@ class UsersController extends Controller
                 break;
             case 'student':
                 $this->authorize('createViewer', User::class);
-                $users = User::students();
+                $users = User::students()->with('student');
                 $viewPanelTitle = 'Students';
                 break;
             default:
@@ -60,27 +54,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\User  $user
@@ -88,7 +61,16 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $this->authorize('view', $user);
+        
+        if ($user->role === 'student') {
+            $user->load('student');
+        }
+        
+        return view(
+            'users.show',
+            ['user' => $user]
+        );
     }
 
     /**
@@ -99,7 +81,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $this->authorize('update', $user);
     }
 
     /**
@@ -111,7 +93,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->authorize('update', $user);
     }
 
     /**
@@ -122,6 +104,9 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+    
+        $this->authorize('destroy', $user);
+        
         $userRole = $user->role;
 
         DB::transaction(function () use ($user) {

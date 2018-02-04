@@ -18,7 +18,7 @@ class StudentsTableSeeder extends Seeder
             'user_id' => DB::table('users')->where('role', 'student')->first()->id,
             'identification_number' => '12345678',
             'gender' => 'male',
-            'nationality' => 'Italian',
+            'nationality' => 'IT',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 

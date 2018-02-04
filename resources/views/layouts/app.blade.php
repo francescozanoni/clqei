@@ -190,6 +190,12 @@
 
                             <ul class="dropdown-menu">
                                 <li>
+                                    <a href="{{ route('users.show', ['user' => Auth::user()]) }}">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                        {{ __('Profile') }}
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="#"
                                        onclick="event.preventDefault();
                                                alert('{{ __('Currently password can be changed only by password reset procedure (login page)') }}.');">
