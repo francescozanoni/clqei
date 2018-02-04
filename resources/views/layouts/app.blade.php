@@ -101,6 +101,14 @@
                                     </a>
                                 </li>
                                 @endcan
+                                @cannot('create', App\Models\Compilation::class)
+                                <li>
+                                    <a href="{{ route('compilations.create') }}">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        {{ __('Compilation form') }}
+                                    </a>
+                                </li>
+                                @endcannot
                                 @can('viewAll', App\Models\Compilation::class)
                                 <li>
                                     <a href="{{ route('compilations.index') }}">
