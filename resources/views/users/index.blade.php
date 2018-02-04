@@ -31,7 +31,9 @@
                                     @endif
                                     <th>{{ __('First name') }}</th>
                                     <th>{{ __('Last name') }}</th>
-                                    <th class="hidden-xs">{{ __('E-mail address') }}</th>
+                                    @if ($users->first()->role !== 'student')
+                                        <th class="hidden-xs">{{ __('E-mail address') }}</th>
+                                    @endif
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -46,13 +48,15 @@
                                         @endif
                                         <td>{{ $user->first_name }}</td>
                                         <td>{{ $user->last_name }}</td>
-                                        <td class="hidden-xs">{{ $user->email }}</td>
-                                        <td>
+                                        @if ($users->first()->role !== 'student')
+                                            <td class="hidden-xs">{{ $user->email }}</td>
+                                        @endif
+                                        <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                             <a href="{{ route('users.show', ['user' => $user]) }}">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </a>
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                             @can('delete', $user)
                                             {!! BootForm::open(['url' => 'users/' . $user->id, 'method' => 'delete']) !!}
                                             <a href="{{ route('users.destroy', ['user' => $user]) }}"

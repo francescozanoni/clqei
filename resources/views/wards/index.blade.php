@@ -66,12 +66,16 @@
                                         <td>
                                             {{ $ward->name }}
                                         </td>
-                                        <td>
-                                            {!! link_to_route('wards.edit', __('Edit'), ['ward' => $ward]) !!}
+                                        <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                            <a href="{{ route('wards.edit', ['ward' => $ward]) }}"
+                                               title="{{ __('Edit') }}">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            </a>
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                             {!! BootForm::open(['url' => 'wards/' . $ward->id, 'method' => 'delete']) !!}
                                             <a href="{{ route('wards.destroy', ['ward' => $ward]) }}"
+                                               title="{{ __('Delete') }}"
                                                onclick="
                                                        event.preventDefault();
                                                        if (confirm('{{ __('Do you really want to delete this ward?') }}') !== true) {
@@ -79,7 +83,7 @@
                                                        }
                                                        this.parentElement.submit();
                                                        ">
-                                                {{ __('Delete') }}
+                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </a>
                                             {!! BootForm::close() !!}
                                         </td>
