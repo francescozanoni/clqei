@@ -60,7 +60,7 @@
         }
 
         .title {
-            font-size: 15vh;
+            font-size: 10vh;
         }
 
         .subtitle {
