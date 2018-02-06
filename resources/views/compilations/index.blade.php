@@ -52,7 +52,7 @@
                 serverSide: true,
                 processing: true,
                 language: {
-                    url: window.datatablesLocalizationUrls.{{ config('app.locale') }}
+                    url: '{{ route('datatables-language', ['country' => config('app.locale')]) }}'
                 },
                 ajax: '',
                 @if (Auth::user()->cannot('viewAll', App\Models\Compilation::class))
@@ -94,7 +94,7 @@
                     {
                         name: 'link_to_detail',
                         render: function (data, type, row) {
-                            return '<a href="{{ url('/') }}compilations/' + row['id'] + '" title="{{ __('View') }}">' +
+                            return '<a href="{{ url('/') }}/compilations/' + row['id'] + '" title="{{ __('View') }}">' +
                                     '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>' +
                                     '</a>';
                         },

@@ -93,6 +93,13 @@ Route::resource(
     ['except' => ['create', 'store']]
 )->middleware('auth');
 
+Route::get('/datatables/languages/{country}.json', function ($countryCode) {
+    return App::make('App\Services\DataTablesPluginService')->getLanguage($countryCode);
+})
+    ->where('country', '[a-zA-Z]{2}')
+    ->middleware('auth')
+    ->name('datatables-language');
+
 if (App::environment() !== 'production') {
     Route::get('/test', function () {
         return 'test';
