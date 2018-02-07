@@ -93,12 +93,21 @@ Route::resource(
     ['except' => ['create', 'store']]
 )->middleware('auth');
 
+// ---------------------------------------------------------------------------
+// These routes are the entry points that provide frontend assets
+// located within the private part of the application.
 Route::get('/datatables/languages/{country}.json', function ($countryCode) {
     return App::make('App\Services\DataTablesPluginService')->getLanguage($countryCode);
 })
     ->where('country', '[a-zA-Z]{2}')
     ->middleware('auth')
     ->name('datatables-language');
+Route::get('/datatables/datetime.js', function () {
+    return App::make('App\Services\DataTablesPluginService')->getDateTime();
+})
+    ->middleware('auth')
+    ->name('datatables-datetime');
+// ---------------------------------------------------------------------------
 
 if (App::environment() !== 'production') {
     Route::get('/test', function () {

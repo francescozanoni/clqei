@@ -3,15 +3,34 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+/**
+ * Class DataTablesPluginService
+ *
+ * This class provides frontend assets located within the private part of the application.
+ * It's reached via specific routes.
+ *
+ * @package App\Services
+ */
 class DataTablesPluginService
 {
 
+    private $pluginBasePath;
     private $defaultLanguage = 'en';
     private $i18nRelativePath = 'i18n';
+    private $dateTimeRelativePath = 'dataRender/datetime.js';
     private $languageFilePaths;
 
     public function __construct(string $pluginBasePath)
     {
+
+        if (file_exists($pluginBasePath) === false ||
+            is_dir($pluginBasePath) === false ||
+            is_readable($pluginBasePath) === false
+        ) {
+            throw new \InvalidArgumentException('Invalid plugin base path: ' . $pluginBasePath);
+        }
+
+        $this->pluginBasePath = $pluginBasePath;
 
         // @todo improve logic and complete list
         $this->languageFilePaths = [
@@ -89,10 +108,12 @@ class DataTablesPluginService
     }
 
     /**
-     * Get language as JSON string, from country code
+     * Get translation as JSON string, from country code
      *
      * @param string $countryCode
      * @return string
+     *
+     * @see https://datatables.net/plug-ins/i18n/
      */
     public function getLanguage(string $countryCode) : string
     {
@@ -110,6 +131,20 @@ class DataTablesPluginService
         $languageFileContent = trim(preg_replace('#/\*.*?\*/#s', '', file_get_contents($languageFileContent)));
 
         return $languageFileContent;
+
+    }
+
+    /**
+     * Get dateTime plugin
+     *
+     * @return string
+     *
+     * @see https://datatables.net/plug-ins/dataRender/datetime
+     */
+    public function getDateTime() : string
+    {
+
+        return file_get_contents($this->pluginBasePath . '/' . $this->dateTimeRelativePath);
 
     }
 

@@ -5,5 +5,3 @@
  */
 
 require('./bootstrap');
-
-window.datatablesDatetimePluginUrl = '//cdn.datatables.net/plug-ins/' + $.fn.dataTable.version + '/dataRender/datetime.js';

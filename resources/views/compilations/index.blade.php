@@ -46,7 +46,7 @@
 @push('scripts')
 <script>
     $(function () {
-        $.getScript(window.datatablesDatetimePluginUrl, function () {
+        $.getScript('{{ route('datatables-datetime') }}', function () {
             // DataTables is instanced only after its datetime plugin is loaded.
             $('#compilations-table').DataTable({
                 serverSide: true,
