@@ -35,6 +35,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/home') }}">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     {{ config('app.name', 'Laravel') }}
                     <span class="hidden-xs hidden-sm">
                         -

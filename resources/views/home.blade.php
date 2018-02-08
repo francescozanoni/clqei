@@ -25,10 +25,16 @@
 
                 <div class="panel panel-default">
 
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        Home
+                    </div>
+
                     <div class="panel-body">
 
                         <h3>{{ __('Questionnaire compilations') }}</h3>
                         <ul>
+                            {{-- Student --}}
                             @can('create', App\Models\Compilation::class)
                             @if ($compilationService->isCompilationCreatable() === true)
                                 <li>
@@ -45,11 +51,16 @@
                                 </li>
                             @endif
                             @endcan
+                            {{-- Viewer/administrator --}}
                             @cannot('create', App\Models\Compilation::class)
+                            @if ($compilationService->isCompilationCreatable() === true)
                                 <li>
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                     {!! link_to_route('compilations.create', __('Compilation form')) !!}
                                 </li>
+                            @else
+                                <li>{{ __('Compilation creation is currently disabled') }}</li>
+                            @endif
                             @endcannot
                             @can('viewAll', App\Models\Compilation::class)
                             <li>
