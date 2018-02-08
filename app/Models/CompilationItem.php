@@ -25,7 +25,7 @@ class CompilationItem extends Model
      */
     public function compilation() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Compilation');
+        return $this->belongsTo('App\Models\Compilation')->withTrashed();
     }
 
     /**
@@ -34,7 +34,7 @@ class CompilationItem extends Model
      */
     public function question() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Question');
+        return $this->belongsTo('App\Models\Question')->withTrashed();
     }
 
     /**

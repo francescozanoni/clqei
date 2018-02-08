@@ -88,7 +88,7 @@ class CompilationsController extends Controller
         // Fetch all active sections,
         // with their active questions and active answers.
         $sections = Section::with('questions.answers')->get();
-        
+
         // @todo sort sections and questions by position
 
         return view('compilations.create', ['sections' => $sections]);
@@ -102,7 +102,7 @@ class CompilationsController extends Controller
      */
     public function store(StoreCompilationRequest $request)
     {
-    
+
         // Only students can create compilations.
         $this->authorize('create', Compilation::class);
 

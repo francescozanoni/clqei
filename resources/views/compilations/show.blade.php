@@ -80,9 +80,9 @@
                             </thead>
 
                             <tbody>
-                            @foreach ($compilation->items as $item)
+                            @foreach ($compilation->items as $index => $item)
                                 <tr>
-                                    <td>{{ $item->question->id }}</td>
+                                    <td>{{ ($index + 1) /* . ' [q' . $item->question->id . '].' */ }}</td>
                                     <td>{{ $item->question->text }}</td>
                                     <td>
                                         @if (is_array($item->the_answer) === true)
