@@ -22,7 +22,6 @@
       "studenti di altre professioni sanitarie",
       "studenti di medicina/specializzandi"
     ],
-    "Se sì, quali studenti erano presenti?": "",
     "È stata condotta la valutazione finale delle competenze raggiunte?": ["sì", "no"],
     "Se sì, con quale esito (in trentesimi)?": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
     "Quale era il modello tutoriale prevalente con cui sei stato/a seguito/a in tirocinio?": [
@@ -32,7 +31,6 @@
       "ero affidato/a al coordinatore che a sua volta mi assegnava ad un infermiere",
       "il mio tutor universitario veniva in reparto con me"
     ],
-    "Il tutor clinico a cui sono stato/a affidato/a era (è opzionale indicare il nominativo)": "",
     "Quanto è stata efficace questa esperienza di tirocinio per apprendere le competenze cliniche attese?": [
       "per nulla", "abbastanza", "molto", "moltissimo"
     ]
