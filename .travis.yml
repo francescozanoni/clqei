@@ -1,0 +1,9 @@
+language: php
+php:
+  - '7.0'
+  - '7.1'
+install:
+  - composer install
+  - npm install
+  - php install.php --application_url=http://localhost
+script: vendor/bin/phpunit tests
