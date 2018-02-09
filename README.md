@@ -1,4 +1,4 @@
-# CLQEI
+# CLQEI [![Build Status](https://travis-ci.org/francescozanoni/clqei.svg?branch=master)](https://travis-ci.org/francescozanoni/clqei)
 
 Clinical Learning Quality Environment Inventory
 
