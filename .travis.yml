@@ -6,4 +6,5 @@ install:
   - composer install
   - npm install
   - php install.php --application_url=http://localhost
+  - php artisan key:generate
 script: vendor/bin/phpunit tests
