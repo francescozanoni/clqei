@@ -15,12 +15,33 @@
 
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                        {{ __($panel_title) }}
+                        {{ __($panel_title ?? 'Users') }}
                     </div>
 
                     <div class="panel-body">
 
-                        @if ($users->isEmpty() === false)
+                        @if ($users === null)
+
+                            <ul>
+                                @can('createAdministrator', App\User::class)
+                                <li>
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                    {{ link_to_route('users.index', __('Administrators'), ['role' => 'administrator']) }}
+                                </li>
+                                @endcan
+                                @can('createViewer', App\User::class)
+                                <li>
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                    {{ link_to_route('users.index', __('Viewers'), ['role' => 'viewer']) }}
+                                </li>
+                                <li>
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                    {{ link_to_route('users.index', __('Students'), ['role' => 'student']) }}
+                                </li>
+                                @endcan
+                            </ul>
+
+                        @elseif ($users->isEmpty() === false)
 
                             <table class="table">
 
@@ -68,7 +89,7 @@
                                                        }
                                                        this.parentElement.submit();
                                                        ">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </a>
                                             {!! BootForm::close() !!}
                                             @endcan
