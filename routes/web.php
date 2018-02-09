@@ -61,7 +61,7 @@ Route::resource(
     'locations',
     'LocationsController',
     ['except' => ['create', 'show']]
-)->middleware('auth');
+)->middleware(['auth', 'not_student']);
 
 /*
  * Verb        URI                               Action   Route Name
@@ -76,7 +76,7 @@ Route::resource(
     'wards',
     'WardsController',
     ['except' => ['create', 'show']]
-)->middleware('auth');
+)->middleware(['auth', 'not_student']);
 
 /*
  * Verb        URI                               Action   Route Name
@@ -100,13 +100,13 @@ Route::get('/datatables/languages/{country}.json', function ($countryCode) {
     return App::make('App\Services\DataTablesPluginService')->getLanguage($countryCode);
 })
     ->where('country', '[a-zA-Z]{2}')
-    ->middleware('auth')
+    ->middleware(['auth', 'not_student'])
     ->name('datatables-language');
 
 Route::get('/datatables/datetime.js', function () {
     return App::make('App\Services\DataTablesPluginService')->getDateTime();
 })
-    ->middleware('auth')
+    ->middleware(['auth', 'not_student'])
     ->name('datatables-datetime');
 // ---------------------------------------------------------------------------
 

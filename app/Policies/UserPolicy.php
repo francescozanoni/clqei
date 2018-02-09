@@ -73,9 +73,9 @@ class UserPolicy
     public function update(User $user, User $model) : bool
     {
         // A user can only update its own user
-        // or be modified by ad administrator.
+        // or be modified by an administrator.
         return
-            $user->role === 'administrator' &&
+            $user->role === 'administrator' ||
             $user->id === $model->id;
     }
 
