@@ -23,13 +23,13 @@ Route::get('/home', 'HomeController@index')->name('home');
  *
  * Verb        URI                               Action   Route Name
  * ---------------------------------------------------------------------------
- * GET         /compilations                     index    compilations.index
- * GET         /compilations/create              create   compilations.create
- * POST        /compilations                     store    compilations.store
- * GET         /compilations/{compilation}       show     compilations.show
- * GET         /compilations/{compilation}/edit  edit     compilations.edit
- * PUT/PATCH   /compilations/{compilation}       update   compilations.update
- * DELETE      /compilations/{compilation}       destroy  compilations.destroy
+ * GET         /resources                     index    resources.index
+ * GET         /resources/create              create   resources.create
+ * POST        /resources                     store    resources.store
+ * GET         /resources/{resource}          show     resources.show
+ * GET         /resources/{resource}/edit     edit     resources.edit
+ * PUT/PATCH   /resources/{resource}          update   resources.update
+ * DELETE      /resources/{resource}          destroy  resources.destroy
  *
  * @see https://laravel.com/docs/5.5/controllers#resource-controllers
  */
@@ -102,6 +102,7 @@ Route::get('/datatables/languages/{country}.json', function ($countryCode) {
     ->where('country', '[a-zA-Z]{2}')
     ->middleware('auth')
     ->name('datatables-language');
+
 Route::get('/datatables/datetime.js', function () {
     return App::make('App\Services\DataTablesPluginService')->getDateTime();
 })

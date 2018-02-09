@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // @todo ensure $countries population can stay here or must be moved to boot() method
-        $countries = require_once(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
+        $countries = require(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
 
         $this->app->when('App\Services\CountryService')
             ->needs('$countries')
