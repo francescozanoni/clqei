@@ -87,7 +87,9 @@
                                  [
                                      'male' => __('male'),
                                      'female' => __('female')
-                                 ]
+                                 ],
+                                null,
+                                ['class' => 'radio-inline']
                                 ) !!}
                         @endif
 
