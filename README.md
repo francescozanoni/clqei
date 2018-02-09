@@ -9,7 +9,7 @@ Clinical Learning Quality Environment Inventory
     npm install
     npm run production
 
-    php install.php
+    php install.php --application_url=<APPLICATION_URL>
 
     php artisan key:generate
     php artisan migrate --seed
@@ -17,15 +17,16 @@ Clinical Learning Quality Environment Inventory
 #### Manual steps
 
 - add
-  - real stage locations
-  - real stage wards
-  - real administrators
-  - real viewers
-- disable example users
-- customize
-  - application title
+  - real administrators and viewers
+  - real stage locations and wards
+  - an image file **logo.svg** or **logo.png** or **logo.jpg** into **public** folder
+- disable
+  - example administrators and viewers
+  - example stage locations and wards
+- within file **.env** customize
   - students' identification number pattern
   - students' e-mail pattern
+  - educational institution URL
 
 
 ### Local deployment

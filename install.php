@@ -5,12 +5,14 @@
 # INSTALLATION OPTIONS
 
 $options = [
-    'application_url' => 'http://localhost',
+    'application_url' => 'http://localhost:8000', // Laravel's default
+
     'with_phpliteadmin' => false,
+    'phpliteadmin_url' => 'https://bitbucket.org/phpliteadmin/public/downloads/phpLiteAdmin_v1-9-7-1.zip',
+
     'locale' => 'it',
     'locale_source_path' => __DIR__ . '/vendor/caouecs/laravel-lang/src',
     'locale_destination_path' => __DIR__ . '/resources/lang',
-    'phpliteadmin_url' => 'https://bitbucket.org/phpliteadmin/public/downloads/phpLiteAdmin_v1-9-7-1.zip'
 ];
 
 $inputOptions = getopt('', ['application_url:', 'with_phpliteadmin', 'locale:']);
@@ -145,21 +147,25 @@ beliefmedia_recurse_copy($src, $dst);
 
 # #####################################################
 
-echo 'Setting up additional software...' . PHP_EOL;
+if ($options['with_phpliteadmin'] === true) {
 
-# phpLiteAdmin download
-$file = file_get_contents($options['phpliteadmin_url']);
-file_put_contents(sys_get_temp_dir() . '/phpliteadmin.zip', $file);
-$zip = new ZipArchive();
-if ($zip->open(sys_get_temp_dir() . '/phpliteadmin.zip') === true) {
-    $zip->extractTo(__DIR__ . '/public/phpliteadmin/');
-    $zip->close();
+    echo 'Setting up additional software...' . PHP_EOL;
+
+    # phpLiteAdmin download
+    $file = file_get_contents($options['phpliteadmin_url']);
+    file_put_contents(sys_get_temp_dir() . '/phpliteadmin.zip', $file);
+    $zip = new ZipArchive();
+    if ($zip->open(sys_get_temp_dir() . '/phpliteadmin.zip') === true) {
+        $zip->extractTo(__DIR__ . '/public/phpliteadmin/');
+        $zip->close();
+    }
+    unlink(sys_get_temp_dir() . '/phpliteadmin.zip');
+    copy(
+        __DIR__ . '/public/phpliteadmin/phpliteadmin.config.clqei.php',
+        __DIR__ . '/public/phpliteadmin/phpliteadmin.config.php'
+    );
+
 }
-unlink(sys_get_temp_dir() . '/phpliteadmin.zip');
-copy(
-    __DIR__ . '/public/phpliteadmin/phpliteadmin.config.clqei.php',
-    __DIR__ . '/public/phpliteadmin/phpliteadmin.config.php'
-);
 
 # #####################################################
 
