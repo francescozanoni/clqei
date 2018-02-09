@@ -92,9 +92,30 @@
 
 <div class="flex-center position-ref my-header">
     <div class="content">
-        {{-- @todo add link --}}
         @if (file_exists(public_path('logo.svg')) === true)
-            <img id="logo" src="{{ asset('logo.svg') }}"/>
+            @if (config('clqei.educational_institution.url') !== '')
+                <a href="{{ config('clqei.educational_institution.url') }}" target="_blank">
+                    <img id="logo" src="{{ asset('logo.svg') }}"/>
+                </a>
+            @else
+                <img id="logo" src="{{ asset('logo.svg') }}"/>
+            @endif
+        @elseif(file_exists(public_path('logo.png')) === true)
+            @if (config('clqei.educational_institution.url') !== '')
+                <a href="{{ config('clqei.educational_institution.url') }}" target="_blank">
+                    <img id="logo" src="{{ asset('logo.png') }}"/>
+                </a>
+            @else
+                <img id="logo" src="{{ asset('logo.png') }}"/>
+            @endif
+        @elseif(file_exists(public_path('logo.jpg')) === true)
+            @if (config('clqei.educational_institution.url') !== '')
+                <a href="{{ config('clqei.educational_institution.url') }}" target="_blank">
+                    <img id="logo" src="{{ asset('logo.jpg') }}"/>
+                </a>
+            @else
+                <img id="logo" src="{{ asset('logo.jpg') }}"/>
+            @endif
         @endif
     </div>
 </div>

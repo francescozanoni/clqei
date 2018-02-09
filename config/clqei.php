@@ -18,6 +18,12 @@ return [
             'pattern' => env('CLQEI_STUDENT_EMAIL_PATTERN', '^[\w\.\-]+@example\.com$'),
         ],
 
+    ],
+
+    'educational_institution' => [
+
+        'url' => env('CLQEI_EDUCATIONAL_INSTITUTION_URL', ''),
+
     ]
 
 ];
