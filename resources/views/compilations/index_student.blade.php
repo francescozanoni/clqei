@@ -13,7 +13,11 @@
 
                     <div class="panel-body">
 
-                        @if ($compilations->isEmpty() === false)
+                        @if ($compilations->isEmpty() === true)
+
+                            {{ __('No compilations found') }}
+
+                        @else
 
                             <table class="table">
 
