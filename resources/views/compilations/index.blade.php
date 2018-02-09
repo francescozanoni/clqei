@@ -55,17 +55,11 @@
                     url: '{{ route('datatables-language', ['country' => config('app.locale')]) }}'
                 },
                 ajax: '',
-                @if (Auth::user()->cannot('viewAll', App\Models\Compilation::class))
-                searching: false,
-                paging: false,
-                info: false,
-                @endif
                 columnDefs: [{
                     targets: -4,
                     render: $.fn.dataTable.render.moment('DD/MM/YYYY')
                 }],
                 columns: [
-                        @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
                     {
                         data: 'student.identification_number',
                         name: 'student.identification_number'
@@ -78,7 +72,6 @@
                         data: 'student.user.first_name',
                         name: 'student.user.first_name'
                     },
-                        @endif
                     {
                         data: 'created_at',
                         name: 'compilations.created_at'

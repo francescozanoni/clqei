@@ -36,7 +36,29 @@ class CompilationsController extends Controller
     public function index()
     {
 
-        // AJAX data call from DataDables.
+        // Student view of compilation list: no DataTables
+        if (Auth::user()->cannot('viewAll', Compilation::class)) {
+            $compilations =
+                Compilation
+                    ::with([
+                        'stageLocation' => function ($query) {
+                            $query->withTrashed();
+                        },
+                        'stageWard' => function ($query) {
+                            $query->withTrashed();
+                        }
+                    ])
+                    ->whereHas('student', function ($query) {
+                        $query->where('id', Auth::user()->student->id);
+                    })
+                    ->get();
+            return view('compilations.index_student', ['compilations' => $compilations]);
+        }
+
+
+        // Non-student view of compilation list: DataTables-based
+
+        // AJAX data call from DataTables.
         if (request()->ajax()) {
 
             $compilationQuery = Compilation
@@ -57,13 +79,6 @@ class CompilationsController extends Controller
                     }
                 ])
                 ->select('compilations.*');
-
-            if (Auth::user()->cannot('viewAll', Compilation::class)) {
-                $compilationQuery
-                    ->whereHas('student', function ($query) {
-                        $query->where('id', Auth::user()->student->id);
-                    });
-            }
 
             return DataTables::of($compilationQuery)
                 ->editColumn('created_at', function ($compilation) {
