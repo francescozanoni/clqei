@@ -14,7 +14,7 @@
     "Di quanti pazienti, in media, ti occupavi durante un turno?": [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     "C'erano altri studenti durante la tua esperienza di tirocinio nella sede che hai frequentato?": [
       "sì",
-      "no, ero l'unico/a studente (ignora le prossime due domande)"
+      "no, ero l'unico/a studente (ignora la prossima domanda)"
     ],
     "Se sì, che tipologia di studente?": [
       "studenti di infermieristica del mio stesso anno di corso",
