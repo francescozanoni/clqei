@@ -11,6 +11,14 @@ class UsersController extends Controller
 {
 
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('not_student')->only('index');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param Request $request
@@ -18,8 +26,6 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-    
-        $this->middleware('not_student');
 
         $users = null;
         $viewPanelTitle = null;
@@ -27,27 +33,27 @@ class UsersController extends Controller
         switch ($request->get('role')) {
             case 'administrator':
                 $this->authorize('createAdministrator', User::class);
-                $users = User::administrators();
+                $users = User::administrators()->get();
                 $viewPanelTitle = 'Administrators';
                 break;
             case 'viewer':
                 $this->authorize('createViewer', User::class);
-                $users = User::viewers();
+                $users = User::viewers()->get();
                 $viewPanelTitle = 'Viewers';
                 break;
             case 'student':
                 $this->authorize('createViewer', User::class);
-                $users = User::students()->with('student');
+                $users = User::students()->with('student')->get();
                 $viewPanelTitle = 'Students';
                 break;
             default:
-                throw new \InvalidArgumentException(__('Invalid user role'));
+                //throw new \InvalidArgumentException(__('Invalid user role'));
         }
 
         return view(
             'users.index',
             [
-                'users' => $users->get(),
+                'users' => $users,
                 'panel_title' => $viewPanelTitle
             ]
         );
@@ -62,11 +68,11 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $this->authorize('view', $user);
-        
+
         if ($user->role === 'student') {
             $user->load('student');
         }
-        
+
         return view(
             'users.show',
             ['user' => $user]
@@ -82,6 +88,9 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
+
+        // @todo implement edit logic
+        return redirect(route('home'));
     }
 
     /**
@@ -94,6 +103,9 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('update', $user);
+
+        // @todo implement edit logic
+        return redirect(route('home'));
     }
 
     /**
@@ -104,9 +116,9 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-    
+
         $this->authorize('destroy', $user);
-        
+
         $userRole = $user->role;
 
         DB::transaction(function () use ($user) {
