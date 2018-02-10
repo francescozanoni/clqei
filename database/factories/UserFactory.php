@@ -15,11 +15,33 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
+    
+    $firstName = $faker->firstName;
+    $lastName = $faker->lastName;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'first_name' => $firstName,
+        'last_name' => $lastName,
+        'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->state(App\User::class, 'administrator', [
+    'role' => 'administrator',
+]);
+
+$factory->state(App\User::class, 'viewer', [
+    'role' => 'viewer',
+]);
+
+$factory->state(App\User::class, 'student', [
+    'role' => 'student',
+]);
+
+/*
+'identification_number' => '12345678',
+'gender' => 'male',
+'nationality' => 'IT',
+*/
