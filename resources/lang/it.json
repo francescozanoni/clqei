@@ -2,7 +2,7 @@
   "Login": "Accedi",
   "Register": "Registrati",
   "Logout": "Esci",
-  "Forgot your password?": "Hai scordato la password?",
+  "Forgot your password?": "Scordato la password?",
   "Reset password": "Reimposta password",
   "Change password": "Modifica password",
   "Profile": "Profilo",
@@ -48,6 +48,7 @@
   "Currently no new compilations can be added: ensure at least one stage location and one stage ward are available": "Al momento nessuna nuova compilazione può essere creata: assicurarsi che almeno una sede di tirocinio ed un reparto di tirocinio siano disponibili",
 
   "Section": "Sezione",
+  "Sect.": "Sez.",
   "Stage location": "Sede tirocinio",
   "Stage ward": "Reparto tirocinio",
   "Stage start date": "Inizio tirocinio",

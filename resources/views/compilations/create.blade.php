@@ -84,7 +84,10 @@
                                 >
                                     <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
                                        role="tab"
-                                       data-toggle="tab">{{ __('Section') . ' ' . ($index + 1) }}</a>
+                                       data-toggle="tab">
+                                       <span class="hidden-xs">{{ __('Section') }}</span>
+<span class="visible-xs-inline">{{ __('Sect.') }}</span>
+                                       {{ ($index + 1) }}</a>
                                 </li>
                             @endforeach
                         </ul>
