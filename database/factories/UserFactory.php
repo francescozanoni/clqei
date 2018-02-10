@@ -40,8 +40,13 @@ $factory->state(App\User::class, 'student', [
     'role' => 'student',
 ]);
 
-/*
-'identification_number' => '12345678',
-'gender' => 'male',
-'nationality' => 'IT',
-*/
+$factory->state(App\User::class, 'male', function ($faker) {
+    return [
+        'first_name' => $faker->firstName('male'),
+    ];
+});
+$factory->state(App\User::class, 'female', function ($faker) {
+    return [
+        'first_name' => $faker->firstName('female'),
+    ];
+});
