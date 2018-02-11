@@ -24,7 +24,6 @@ $factory->define(App\User::class, function (Faker $faker) {
         'last_name' => $lastName,
         'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
         'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
     ];
 });
 
@@ -41,12 +40,30 @@ $factory->state(App\User::class, 'student', [
 ]);
 
 $factory->state(App\User::class, 'male', function ($faker) {
+    $firstName = $faker->firstName ('male');
+    $lastName = $faker->lastName;
     return [
-        'first_name' => $faker->firstName('male'),
+        'first_name' => $firstName,
+        'last_name' => $lastName,
+        'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
     ];
 });
 $factory->state(App\User::class, 'female', function ($faker) {
+    $firstName = $faker->firstName ('female');
+    $lastName = $faker->lastName;
     return [
-        'first_name' => $faker->firstName('female'),
+        'first_name' => $firstName,
+        'last_name' => $lastName,
+        'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
     ];
 });
+
+/*
+$student = factory(App\Models\Student::class)
+    ->make();
+$user = factory(App\User::class)
+    ->states('student', $student->gender)
+    ->create()
+    ->student()
+    ->save($student);
+ */
