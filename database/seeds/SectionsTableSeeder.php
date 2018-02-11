@@ -14,7 +14,7 @@ class SectionsTableSeeder extends Seeder
     public function run()
     {
 
-        $questionnaire = json_decode(file_get_contents(database_path('seeds/' . config('app.locale') . '.json')), true);
+        $questionnaire = json_decode(file_get_contents(database_path('seeds/questionnaire_texts_' . config('app.locale') . '.json')), true);
 
         foreach (array_keys($questionnaire) as $index => $section) {
             DB::table('sections')->insert([

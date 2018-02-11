@@ -14,9 +14,9 @@ class QuestionsTableSeeder extends Seeder
     public function run()
     {
 
-        $questionnaire = json_decode(file_get_contents(database_path('seeds/' . config('app.locale') . '.json')), true);
+        $questionnaire = json_decode(file_get_contents(database_path('seeds/questionnaire_texts_' . config('app.locale') . '.json')), true);
         
-        $metadata = json_decode(file_get_contents(database_path('seeds/metadata.json')), true);
+        $metadata = json_decode(file_get_contents(database_path('seeds/questionnaire_metadata.json')), true);
 
         $sectionId = 1;
         $questionId = 1;

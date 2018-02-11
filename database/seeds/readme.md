@@ -1,13 +1,12 @@
 # Section/question/answer seeder
 
-Files **it.json** and **metadata.json** contain all section/question/answer information.
-They share the same hierarchical structure: list of sections containing a list of questions
-containing a list of answers.
+Files **questionnaire_texts_it.json** and **questionnaire_metadata.json** contain all section/question/answer information.
+They share the same hierarchical structure: list of sections containing a list of questions containing a list of answers.
 
-**it.json** contains section/question/answer localized texts.
+**questionnaire_texts_it.json** contains section/question/answer localized texts.
 
-**metadata.json** contains other section/question/answer information, only question-related
-and used during validation, so far:
+**questionnaire_metadata.json** contains other section/question/answer information, only question-related
+and used during validation so far:
 
 - **type**: single_choice, multiple_choice, text
 - **required**
