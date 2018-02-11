@@ -171,6 +171,12 @@
                                         @endif
 
                                     @endforeach
+                                                                       
+                                    @if ($section->footer !== null)
+
+                                        <p>{{ $section->footer }}</p>
+
+                                    @endif
 
                                     <div class="pull-right">
                                         @if (isset($sections[$index + 1]) === true)
