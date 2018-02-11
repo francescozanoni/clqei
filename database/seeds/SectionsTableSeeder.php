@@ -19,7 +19,7 @@ class SectionsTableSeeder extends Seeder
         foreach (array_keys($questionnaire) as $index => $section) {
             DB::table('sections')->insert([
                 'id' => ($index + 1),
-                'text' => $section,
+                'title' => $section,
                 'position' => ($index + 1),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);

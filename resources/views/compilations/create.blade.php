@@ -109,7 +109,7 @@
                                      @endif
                                      id="section_{{ $section->id }}">
 
-                                    <h3>{{ $section->text }}</h3>
+                                    <h3>{{ $section->title }}</h3>
 
                                     @foreach ($section->questions as $question)
 
