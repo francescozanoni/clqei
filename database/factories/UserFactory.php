@@ -15,16 +15,14 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
-    
-    $firstName = $faker->firstName;
-    $lastName = $faker->lastName;
 
-    return [
-        'first_name' => $firstName,
-        'last_name' => $lastName,
-        'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
-        'password' => $password ?: $password = bcrypt('secret'),
-    ];
+    $data = firstNameLastNameEMail(
+        $faker->firstName,
+        $faker->lastName
+    );
+    $data['password'] = $password ?: $password = bcrypt('secret');
+
+    return $data;
 });
 
 $factory->state(App\User::class, 'administrator', [
@@ -39,23 +37,17 @@ $factory->state(App\User::class, 'student', [
     'role' => 'student',
 ]);
 
-$factory->state(App\User::class, 'male', function ($faker) {
-    $firstName = $faker->firstName ('male');
-    $lastName = $faker->lastName;
-    return [
-        'first_name' => $firstName,
-        'last_name' => $lastName,
-        'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
-    ];
+$factory->state(App\User::class, 'male', function (Faker $faker) {
+    return firstNameLastNameEMail(
+        $faker->firstName('male'),
+        $faker->lastName
+    );
 });
-$factory->state(App\User::class, 'female', function ($faker) {
-    $firstName = $faker->firstName ('female');
-    $lastName = $faker->lastName;
-    return [
-        'first_name' => $firstName,
-        'last_name' => $lastName,
-        'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
-    ];
+$factory->state(App\User::class, 'female', function (Faker $faker) {
+    return firstNameLastNameEMail(
+        $faker->firstName('female'),
+        $faker->lastName
+    );
 });
 
 /*
