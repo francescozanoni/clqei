@@ -19,7 +19,6 @@ class AnswersTableSeeder extends Seeder
         $currentDateTime = Carbon::now()->format('Y-m-d H:i:s');
         
         $questionId = 1;
-        $answerId = 1;
 
         $dataToInsert = [];
 
@@ -30,13 +29,11 @@ class AnswersTableSeeder extends Seeder
                 if (is_array($answers) === true) {
                     foreach ($answers as $index => $answer) {
                         $dataToInsert[] = [
-                            'id' => $answerId,
                             'text' => $answer,
                             'question_id' => $questionId,
                             'position' => ($index + 1),
                             'created_at' => $currentDateTime,
                         ];
-                        $answerId++;
                     }
                 }
                 $questionId++;
