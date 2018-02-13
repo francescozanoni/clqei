@@ -14,8 +14,10 @@ class AnswersTableSeeder extends Seeder
     public function run()
     {
 
-        $questionnaire = json_decode(file_get_contents(database_path('seeds/questionnaire_texts_' . config('app.locale') . '.json')), true);
-
+        $questionnaire = $this->getQuestionnaire();
+        
+        $currentDateTime = Carbon::now()->format('Y-m-d H:i:s');
+        
         $questionId = 1;
         $answerId = 1;
 
@@ -23,7 +25,8 @@ class AnswersTableSeeder extends Seeder
 
         foreach ($questionnaire as $section => $questions) {
             foreach ($questions as $question => $answers) {
-                // Answers other than arrays are free text
+                // Answers other than arrays are free text,
+                // therefore not listed on "answers" table.
                 if (is_array($answers) === true) {
                     foreach ($answers as $index => $answer) {
                         $dataToInsert[] = [
@@ -31,7 +34,7 @@ class AnswersTableSeeder extends Seeder
                             'text' => $answer,
                             'question_id' => $questionId,
                             'position' => ($index + 1),
-                            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                            'created_at' => $currentDateTime,
                         ];
                         $answerId++;
                     }
@@ -40,12 +43,23 @@ class AnswersTableSeeder extends Seeder
             }
         }
 
-        // If all records are inserted at once, the following error could occur:
-        // [PDOException]
-        // SQLSTATE[HY000]: General error: 1 too many SQL variables
-        foreach (array_chunk($dataToInsert, 10) as $dataChunkToInsert) {
-            DB::table('answers')->insert($dataChunkToInsert);
-        }
+        DB::table('answers')
+            ->insert($dataToInsert);
 
     }
+    
+    private function getQuestionnaire()
+    {
+        return
+            json_decode(
+                file_get_contents(
+                    database_path(
+                        'seeds/questionnaire_texts_' . config('app.locale') . '.json'
+                    )
+                ),
+                true
+            );
+
+    }
+    
 }
