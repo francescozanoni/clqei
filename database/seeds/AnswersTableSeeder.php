@@ -17,28 +17,30 @@ class AnswersTableSeeder extends Seeder
         $questionnaire = $this->getQuestionnaire();
         
         $currentDateTime = Carbon::now()->format('Y-m-d H:i:s');
-        
-        $questionId = 1;
+        $questions = [];
 
         $dataToInsert = [];
+        
+        foreach ($questionnaire as $section => $sectionQuestions) {
+            foreach ($sectionQuestions as $question => $answers) {
+                $questions[] = $answers;
+            }
+        }
 
-        foreach ($questionnaire as $section => $questions) {
-            foreach ($questions as $question => $answers) {
+            foreach ($questions as $questionIndex => $answers) {
                 // Answers other than arrays are free text,
                 // therefore not listed on "answers" table.
                 if (is_array($answers) === true) {
-                    foreach ($answers as $index => $answer) {
+                    foreach ($answers as $answerIndex => $answer) {
                         $dataToInsert[] = [
                             'text' => $answer,
-                            'question_id' => $questionId,
-                            'position' => ($index + 1),
+                            'question_id' => ($questionIndex + 1),
+                            'position' => ($answerIndex + 1),
                             'created_at' => $currentDateTime,
                         ];
                     }
                 }
-                $questionId++;
             }
-        }
 
         DB::table('answers')
             ->insert($dataToInsert);
