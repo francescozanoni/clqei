@@ -28,23 +28,20 @@ class UsersController extends Controller
     {
 
         $users = null;
-        $viewPanelTitle = null;
+        $viewPanelTitle = $request->has('role') ? ucfirst($request->get('role') . 's') : null;
 
         switch ($request->get('role')) {
             case 'administrator':
                 $this->authorize('createAdministrator', User::class);
                 $users = User::administrators()->get();
-                $viewPanelTitle = 'Administrators';
                 break;
             case 'viewer':
                 $this->authorize('createViewer', User::class);
                 $users = User::viewers()->get();
-                $viewPanelTitle = 'Viewers';
                 break;
             case 'student':
                 $this->authorize('createViewer', User::class);
                 $users = User::students()->with('student')->get();
-                $viewPanelTitle = 'Students';
                 break;
             default:
                 //throw new \InvalidArgumentException(__('Invalid user role'));
