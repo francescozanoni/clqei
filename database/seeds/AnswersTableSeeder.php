@@ -18,19 +18,17 @@ class AnswersTableSeeder extends Seeder
 
         $dataToInsert = [];
 
-        foreach ($this->getQuestionAnswers() as $questionId => $answers) {
-            // Answers other than arrays are free text,
-            // therefore not listed on "answers" table.
-            if (is_array($answers) === true) {
-                foreach ($answers as $answerIndex => $answer) {
-                    $dataToInsert[] = [
-                        'text' => $answer,
-                        'question_id' => $questionId,
-                        'position' => ($answerIndex + 1),
-                        'created_at' => $currentDateTime,
-                    ];
-                }
+        foreach ($this->getQuestionIdsAndAnswers() as $questionId => $answers) {
+
+            foreach ($answers as $answerIndex => $answer) {
+                $dataToInsert[] = [
+                    'text' => $answer,
+                    'question_id' => $questionId,
+                    'position' => ($answerIndex + 1),
+                    'created_at' => $currentDateTime,
+                ];
             }
+
         }
 
         DB::table('answers')
@@ -43,7 +41,7 @@ class AnswersTableSeeder extends Seeder
      *
      * @return Generator
      */
-    private function getQuestionAnswers()
+    private function getQuestionIdsAndAnswers()
     {
         $questionnaire =
             json_decode(
@@ -59,7 +57,15 @@ class AnswersTableSeeder extends Seeder
 
         foreach ($questionnaire as $section => $sectionQuestions) {
             foreach ($sectionQuestions as $question => $answers) {
-                yield $questionId++ => $answers;
+
+                // Answers other than arrays are free text,
+                // therefore not to be listed on "answers" table.
+                if (is_array($answers) === true) {
+                    yield $questionId => $answers;
+                }
+
+                $questionId++;
+
             }
         }
 
