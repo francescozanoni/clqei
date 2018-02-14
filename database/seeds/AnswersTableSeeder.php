@@ -54,21 +54,27 @@ class AnswersTableSeeder extends Seeder
             );
 
         $questionId = 1;
+        
+        $questions = [];
 
+        // First all questions/answers are retrieved.
         foreach ($questionnaire as $section => $sectionQuestions) {
-            foreach ($sectionQuestions as $question => $answers) {
-
-                // Answers other than arrays are free text,
-                // therefore not to be listed on "answers" table.
-                if (is_array($answers) === true) {
-                    yield $questionId => $answers;
-                }
-
-                $questionId++;
-
-            }
+            $questions = array_merge($questions, $sectionQuestions);
         }
+        
+        // Then returned with the correct question IDs.
+        foreach ($questions as $question => $answers) {
 
+            // Answers other than arrays are free text,
+            // therefore not to be listed on "answers" table.
+            if (is_array($answers) === true) {
+                yield $questionId => $answers;
+            }
+
+            $questionId++;
+
+        }
+        
     }
 
 }
