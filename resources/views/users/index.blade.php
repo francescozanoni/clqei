@@ -15,7 +15,7 @@
 
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                        {{ __($panel_title ?? 'Users') }}
+                        {{ __(ucfirst($user_role ?? 'user') . 's') }}
                     </div>
 
                     <div class="panel-body">

@@ -28,9 +28,9 @@ class UsersController extends Controller
     {
 
         $users = null;
-        $viewPanelTitle = $request->has('role') ? ucfirst($request->get('role') . 's') : null;
+        $userRole =$request->get('role');
 
-        switch ($request->get('role')) {
+        switch ($userRole) {
             case 'administrator':
                 $this->authorize('createAdministrator', User::class);
                 $users = User::administrators()->get();
@@ -44,14 +44,14 @@ class UsersController extends Controller
                 $users = User::students()->with('student')->get();
                 break;
             default:
-                //throw new \InvalidArgumentException(__('Invalid user role'));
+                $userRole = null;
         }
 
         return view(
             'users.index',
             [
                 'users' => $users,
-                'panel_title' => $viewPanelTitle
+                'user_role' => $userRole
             ]
         );
     }
