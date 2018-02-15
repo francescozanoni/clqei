@@ -76,37 +76,14 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $rules = [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                'unique:users'
-            ],
-            'password' => 'required|string|min:6|confirmed',
-            'role' => 'required',
-        ];
 
-        // Guest users can only register student users.
-        // Authenticated users can only register viewer users.
         if (Auth::guest()) {
-            $rules['role'] .= '|in:student';
-            $rules['identification_number'] = [
-                'required',
-                'regex:/' . config('clqei.students.identification_number.pattern') . '/',
-                'unique:students'
-            ];
-            $rules['gender'] = 'required|in:male,female';
-            $countryCodes = App::make('App\Services\CountryService')->getCountryCodes();
-            $rules['nationality'] = 'required|in:' . implode(',', $countryCodes);
-            $rules['email'][] = 'regex:/' . config('clqei.students.email.pattern') . '/';
+            $rules = App::make('App\Services\UserService')->getGuestValidationRules();
         } else {
-            $rules['role'] .= '|in:viewer';
             if (Auth::user()->can('createAdministrator', User::class)) {
-                $rules['role'] .= ',administrator';
+                $rules = App::make('App\Services\UserService')->getAdministratorValidationRules();
+            } else {
+                $rules = App::make('App\Services\UserService')->getViewerValidationRules();
             }
         }
 
