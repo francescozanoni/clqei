@@ -36,22 +36,31 @@ class CompilationsController extends Controller
     public function index()
     {
 
+        $compilationBaseQuery = Compilation
+            // Deleted locations, wards, students and users must be included
+            // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
+            ::with([
+                'stageLocation' => function ($query) {
+                    $query->withTrashed();
+                },
+                'stageWard' => function ($query) {
+                    $query->withTrashed();
+                },
+                'student' => function ($query) {
+                    $query->withTrashed();
+                },
+                'student.user' => function ($query) {
+                    $query->withTrashed();
+                }
+            ]);
+
         // Student view of compilation list: no DataTables
         if (Auth::user()->cannot('viewAll', Compilation::class)) {
-            $compilations =
-                Compilation
-                    ::with([
-                        'stageLocation' => function ($query) {
-                            $query->withTrashed();
-                        },
-                        'stageWard' => function ($query) {
-                            $query->withTrashed();
-                        }
-                    ])
-                    ->whereHas('student', function ($query) {
-                        $query->where('id', Auth::user()->student->id);
-                    })
-                    ->get();
+            $compilations = $compilationBaseQuery
+                ->whereHas('student', function ($query) {
+                    $query->where('id', Auth::user()->student->id);
+                })
+                ->get();
             return view('compilations.index_student', ['compilations' => $compilations]);
         }
 
@@ -61,23 +70,7 @@ class CompilationsController extends Controller
         // AJAX data call from DataTables.
         if (request()->ajax()) {
 
-            $compilationQuery = Compilation
-                // Deleted locations, wards, students and users must be included
-                // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-                ::with([
-                    'stageLocation' => function ($query) {
-                        $query->withTrashed();
-                    },
-                    'stageWard' => function ($query) {
-                        $query->withTrashed();
-                    },
-                    'student' => function ($query) {
-                        $query->withTrashed();
-                    },
-                    'student.user' => function ($query) {
-                        $query->withTrashed();
-                    }
-                ])
+            $compilationQuery = $compilationBaseQuery
                 ->select('compilations.*');
 
             return DataTables::of($compilationQuery)
@@ -127,60 +120,44 @@ class CompilationsController extends Controller
 
         DB::transaction(function () use ($request, $compilation) {
 
-            $student = Auth::user()->student;
-            $stageLocation = Location::find($request->input('stage_location_id'));
-            $stageWard = Ward::find($request->input('stage_ward_id'));
-            $stageStartDate = $request->input('stage_start_date');
-            $stageEndDate = $request->input('stage_end_date');
-            $stageAcademicYear = $request->input('stage_academic_year');
-
-            $compilation->student()->associate($student);
-            $compilation->stageLocation()->associate($stageLocation);
-            $compilation->stageWard()->associate($stageWard);
-            $compilation->stage_start_date = $stageStartDate;
-            $compilation->stage_end_date = $stageEndDate;
-            $compilation->stage_academic_year = $stageAcademicYear;
+            $compilation->student()->associate(Auth::user()->student);
+            $compilation->stageLocation()->associate(Location::find($request->input('stage_location_id')));
+            $compilation->stageWard()->associate(Ward::find($request->input('stage_ward_id')));
+            $compilation->stage_start_date = $request->input('stage_start_date');
+            $compilation->stage_end_date = $request->input('stage_end_date');
+            $compilation->stage_academic_year = $request->input('stage_academic_year');
             $compilation->save();
 
-            foreach ($request->all() as $key => $value) {
-                if (preg_match('/^q\d+$/', $key) === 1) {
-                    if (is_array($value) === true) {
-                        // When a question has several answers,
-                        // one compilation item is created for each answer.
-                        foreach ($value as $singleValue) {
-                            $item = new CompilationItem;
-                            $item->answer = $singleValue;
-                            $question = Question::find(substr($key, 1));
-                            $item->question()->associate($question);
-                            $item->compilation()->associate($compilation);
-                            $item->save();
-                        }
-                    } else {
-                        $item = new CompilationItem;
-                        $item->answer = $value;
-                        $question = Question::find(substr($key, 1));
-                        $item->question()->associate($question);
-                        $item->compilation()->associate($compilation);
-                        $item->save();
-                    }
-                }
-            }
-
+            $rawCompilationItems = collect($request->all())
+                // Only "qN" parameters are considered, to create compilation items.
+                ->filter(function ($answers, $questionKey) {
+                    return preg_match('/^q\d+$/', $questionKey) === 1;
+                })
+                // When a question has several answers,
+                // one compilation item is created for each answer.
+                // For ease of use, all answers are considered as arrays.
+                ->map(function ($answers, $questionKey) {
+                    return (is_array($answers) === true ? $answers : [$answers]);
+                });
             // When a question could have several answers but none is given,
             // one compilation item is created with NULL answer.
             // This logic is required because HTML array fields (e.g. set of checkboxes),
-            // are not sent if no value is selected (even "nullable"
+            // are not sent when no value is selected (even "nullable"
             // validation flag is useless in this case).
-            $compilationQuestionIds = collect($compilation->items)->pluck('question')->pluck('id');
-            $allCurrentQuestionIds = Question::all()->pluck('id');
-            $missingQuestionIds = $allCurrentQuestionIds->diff($compilationQuestionIds)->all();
-            foreach ($missingQuestionIds as $missingQuestionId) {
-                $item = new CompilationItem;
-                $item->answer = null;
-                $question = Question::find($missingQuestionId);
-                $item->question()->associate($question);
-                $item->compilation()->associate($compilation);
-                $item->save();
+            foreach (Question::all() as $question) {
+                if ($rawCompilationItems->has('q' . $question->id) === false) {
+                    $rawCompilationItems->put('q' . $question->id, [null]);
+                }
+            }
+
+            foreach ($rawCompilationItems as $questionKey => $answers) {
+                foreach ($answers as $answer) {
+                    $item = new CompilationItem;
+                    $item->answer = $answer;
+                    $item->question()->associate(Question::find(substr($questionKey, 1)));
+                    $item->compilation()->associate($compilation);
+                    $item->save();
+                }
             }
 
         });
