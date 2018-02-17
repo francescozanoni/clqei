@@ -14,10 +14,13 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Yajra\DataTables\DataTables;
+use App;
 
 class CompilationsController extends Controller
 {
 
+    private $compilationService;
+    
     /**
      * Create a new controller instance.
      */
@@ -28,6 +31,8 @@ class CompilationsController extends Controller
         $this->middleware('no_new_compilations')->only('create');
         
         $this->middleware('add_missing_questions')->only('store');
+        
+        $this->compilationService = App::make('App\Services\CompilationService');
     }
 
     /**
@@ -41,20 +46,7 @@ class CompilationsController extends Controller
         $compilationBaseQuery = Compilation
             // Deleted locations, wards, students and users must be included
             // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-            ::with([
-                'stageLocation' => function ($query) {
-                    $query->withTrashed();
-                },
-                'stageWard' => function ($query) {
-                    $query->withTrashed();
-                },
-                'student' => function ($query) {
-                    $query->withTrashed();
-                },
-                'student.user' => function ($query) {
-                    $query->withTrashed();
-                }
-            ]);
+            ::with($this->compilationService->allTrashedRelatedModels());
 
         // Student view of compilation list: no DataTables
         if (Auth::user()->cannot('viewAll', Compilation::class)) {
@@ -170,20 +162,7 @@ class CompilationsController extends Controller
 
         // Deleted students, users, locations and wards must be included
         // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-        $compilation->load([
-            'student' => function ($query) {
-                $query->withTrashed();
-            },
-            'student.user' => function ($query) {
-                $query->withTrashed();
-            },
-            'stageLocation' => function ($query) {
-                $query->withTrashed();
-            },
-            'stageWard' => function ($query) {
-                $query->withTrashed();
-            }
-        ]);
+        $compilation->load($this->compilationService->allTrashedRelatedModels());
 
         $this->authorize('view', $compilation);
 
