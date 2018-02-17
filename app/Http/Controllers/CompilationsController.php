@@ -127,27 +127,29 @@ class CompilationsController extends Controller
             $compilation->stage_academic_year = $request->input('stage_academic_year');
             $compilation->save();
 
-            $rawCompilationItems = collect($request->all())
+            collect($request->all())
+            
                 // Only "qN" parameters are considered, to create compilation items.
                 ->filter(function ($answers, $questionKey) {
                     return preg_match('/^q\d+$/', $questionKey) === 1;
                 })
+                
                 // When a question has several answers,
                 // one compilation item is created for each answer.
                 // For code shortness, all answers are considered as arrays.
-                ->map(function ($answers, $questionKey) {
-                    return (is_array($answers) === true ? $answers : [$answers]);
+                ->map(function ($answers, $questionKey) use ($compilation) {
+                
+                    $answers = (is_array($answers) === true ? $answers : [$answers]);
+                    
+                    foreach ($answers as $answer) {
+                        $item = new CompilationItem;
+                        $item->answer = $answer;
+                        $item->question()->associate(Question::find(substr($questionKey, 1)));
+                        $item->compilation()->associate($compilation);
+                        $item->save();
+                    }
+                
                 });
-
-            foreach ($rawCompilationItems as $questionKey => $answers) {
-                foreach ($answers as $answer) {
-                    $item = new CompilationItem;
-                    $item->answer = $answer;
-                    $item->question()->associate(Question::find(substr($questionKey, 1)));
-                    $item->compilation()->associate($compilation);
-                    $item->save();
-                }
-            }
 
         });
 
