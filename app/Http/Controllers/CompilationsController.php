@@ -26,6 +26,8 @@ class CompilationsController extends Controller
         // If compilations cannot be currently created,
         // users are redirected.
         $this->middleware('no_new_compilations')->only('create');
+        
+        $this->middleware('add_missing_questions')->only('store');
     }
 
     /**
@@ -111,9 +113,6 @@ class CompilationsController extends Controller
     public function store(StoreCompilationRequest $request)
     {
 
-        // Only students can create compilations.
-        $this->authorize('create', Compilation::class);
-
         // http://www.easylaravelbook.com/blog/creating-and-validating-a-laravel-5-form-the-definitive-guide/
 
         $compilation = new Compilation;
@@ -135,20 +134,10 @@ class CompilationsController extends Controller
                 })
                 // When a question has several answers,
                 // one compilation item is created for each answer.
-                // For ease of use, all answers are considered as arrays.
+                // For code shortness, all answers are considered as arrays.
                 ->map(function ($answers, $questionKey) {
                     return (is_array($answers) === true ? $answers : [$answers]);
                 });
-            // When a question could have several answers but none is given,
-            // one compilation item is created with NULL answer.
-            // This logic is required because HTML array fields (e.g. set of checkboxes),
-            // are not sent when no value is selected (even "nullable"
-            // validation flag is useless in this case).
-            foreach (Question::all() as $question) {
-                if ($rawCompilationItems->has('q' . $question->id) === false) {
-                    $rawCompilationItems->put('q' . $question->id, [null]);
-                }
-            }
 
             foreach ($rawCompilationItems as $questionKey => $answers) {
                 foreach ($answers as $answer) {
