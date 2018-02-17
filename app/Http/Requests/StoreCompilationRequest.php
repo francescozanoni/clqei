@@ -41,56 +41,57 @@ class StoreCompilationRequest extends FormRequest
 
         $questions = Question::all();
 
-        // Flag object reporting whether the current question must be
-        // required according to the value of a previous question.
-        $makesNextRequired = null;
+        // Queue array reporting whether the current question must
+        // set its mandatority according to it.
+        $requiredQueue = [];
 
         foreach ($questions as $question) {
-           
-            $singleQuestionRules = [];
 
             if ($question->required == true) {
-                $singleQuestionRules[] = 'required';
+                $rules['q' . $question->id][] = 'required';
             } else {
                 // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
-                $singleQuestionRules[] = 'nullable';
+                $rules['q' . $question->id][] = 'nullable';
             }
-
-            // Usage of the flag object reporting whether the current question must be
-            // required according to the value of a previous question.
-            if ($makesNextRequired !== null) {
-                $singleQuestionRules[] =
-                    'required_if:' .
-                    'q' . $makesNextRequired->question . ',' .
-                    $makesNextRequired->answer;
-                $makesNextRequired->next--;
-                if ($makesNextRequired->next === 0) {
-                    $makesNextRequired = null;
-                }
-            }
+            
             if (in_array($question->type, ['single_choice', 'multiple_choice']) === true) {
-                $singleQuestionRules[] = Rule::exists('answers', 'id')
+                $rules['q' . $question->id][] = Rule::exists('answers', 'id')
                     ->where(function ($query) use ($question) {
                         $query->where('question_id', $question->id);
                     });
             }
+            
             if ($question->type === 'date') {
-                $singleQuestionRules[] = 'date';
+                $rules['q' . $question->id][] = 'date';
             }
-            $rules['q' . $question->id] = $singleQuestionRules;
 
-            // Management of the flag reporting whether next question(s) must be
-            // required according to the value of the current question.
-            // This statement must stay here on the bottom,
-            // anyway after if ($makesNextRequired !== null) {} block.
-            if (isset($question->options) === true) {
-                $options = json_decode($question->options);
-                if (isset($options->makes_next_required) === true) {
-                    $makesNextRequired = $options->makes_next_required;
-                    $makesNextRequired->question = $question->id;
-                    $makesNextRequired->answer = $question->answers[$makesNextRequired->answer - 1]->id;
-                }
+            // Reading of the queue array reporting whether the current question must be
+            // required according to the value of a previous question.
+            if (($popped = array_pop($requiredQueue)) !== null) {
+                $rules['q' . $question->id][] = 'required_if:q' . $popped['question'] . ',' . $popped['answer'];
             }
+
+            // Writing of the queue array reporting whether next question(s) must be
+            // required according to the value of the current question.
+            // This statement must stay here on the bottom.
+            if (isset($question->options) === false) {
+                continue;
+            }
+            $options = json_decode($question->options);
+            if (isset($options->makes_next_required) === false) {
+                continue;
+            }
+                    for ($i = 0; $i < $options->makes_next_required->next; $i++) {
+                        array_push(
+                            $requiredQueue,
+                            [
+                                'question' => $question->id,
+                                'answer' => $question->answers[$options->makes_next_required->answer - 1]->id
+                            ]
+                        );
+                    }
+                
+            
         }
 
         return $rules;
