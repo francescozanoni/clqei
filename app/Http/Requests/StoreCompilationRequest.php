@@ -11,6 +11,11 @@ use Illuminate\Validation\Rule;
 
 class StoreCompilationRequest extends FormRequest
 {
+
+    // Queue array reporting whether the current question must
+    // set its mandatority according to it.
+    private $requiredQueue = [];
+    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -41,36 +46,13 @@ class StoreCompilationRequest extends FormRequest
 
         $questions = Question::all();
 
-        // Queue array reporting whether the current question must
-        // set its mandatority according to it.
-        $requiredQueue = [];
-
         foreach ($questions as $question) {
 
             foreach ($this->getItemRules($question) as $rule) {
                 $rules['q' . $question->id][] = $rule;
             }
-
-            // Writing of the queue array reporting whether next question(s) must be
-            // required according to the value of the current question.
-            // This statement must stay here on the bottom.
-            if (isset($question->options) === false) {
-                continue;
-            }
-            $options = json_decode($question->options);
-            if (isset($options->makes_next_required) === false) {
-                continue;
-            }
-                    for ($i = 0; $i < $options->makes_next_required->next; $i++) {
-                        array_push(
-                            $requiredQueue,
-                            [
-                                'question' => $question->id,
-                                'answer' => $question->answers[$options->makes_next_required->answer - 1]->id
-                            ]
-                        );
-                    }
-                
+$this->updateRequiredQueue($question);
+           
             
         }
 
@@ -99,9 +81,32 @@ class StoreCompilationRequest extends FormRequest
             
             // Reading of the queue array reporting whether the current question must be
             // required according to the value of a previous question.
-            if (($popped = array_pop($requiredQueue)) !== null) {
+            if (($popped = array_pop($this->requiredQueue)) !== null) {
                 yield 'required_if:q' . $popped['question'] . ',' . $popped['answer'];
             }
     }
     
+     // Writing of the queue array reporting whether next question(s) must be
+            // required according to the value of the current question.
+            // This statement must stay here on the bottom.        
+     private function updateRequiredQueue(Question $question)
+     {
+     if (isset($question->options) === false) {
+                return;
+            }
+            $options = json_decode($question->options);
+            if (isset($options->makes_next_required) === false) {
+                return;
+            }
+                    for ($i = 0; $i < $options->makes_next_required->next; $i++) {
+                        array_push(
+                            $this->requiredQueue,
+                            [
+                                'question' => $question->id,
+                                'answer' => $question->answers[$options->makes_next_required->answer - 1]->id
+                            ]
+                        );
+                    }
+                
+     }
 }
