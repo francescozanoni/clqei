@@ -46,7 +46,7 @@ class StoreCompilationRequest extends FormRequest
         $makesNextRequired = null;
 
         foreach ($questions as $question) {
-            $questionId = $question->id;
+           
             $singleQuestionRules = [];
 
             if ($question->required == true) {
@@ -68,18 +68,16 @@ class StoreCompilationRequest extends FormRequest
                     $makesNextRequired = null;
                 }
             }
-            if ($question->type === 'single_choice' ||
-                $question->type === 'multiple_choice'
-            ) {
+            if (in_array($question->type, ['single_choice', 'multiple_choice']) === true) {
                 $singleQuestionRules[] = Rule::exists('answers', 'id')
-                    ->where(function ($query) use ($questionId) {
-                        $query->where('question_id', $questionId);
+                    ->where(function ($query) use ($question) {
+                        $query->where('question_id', $question->id);
                     });
             }
             if ($question->type === 'date') {
                 $singleQuestionRules[] = 'date';
             }
-            $rules['q' . $questionId] = $singleQuestionRules;
+            $rules['q' . $question->id] = $singleQuestionRules;
 
             // Management of the flag reporting whether next question(s) must be
             // required according to the value of the current question.
