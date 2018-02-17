@@ -47,28 +47,8 @@ class StoreCompilationRequest extends FormRequest
 
         foreach ($questions as $question) {
 
-            if ($question->required == true) {
-                $rules['q' . $question->id][] = 'required';
-            } else {
-                // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
-                $rules['q' . $question->id][] = 'nullable';
-            }
-            
-            if (in_array($question->type, ['single_choice', 'multiple_choice']) === true) {
-                $rules['q' . $question->id][] = Rule::exists('answers', 'id')
-                    ->where(function ($query) use ($question) {
-                        $query->where('question_id', $question->id);
-                    });
-            }
-            
-            if ($question->type === 'date') {
-                $rules['q' . $question->id][] = 'date';
-            }
-
-            // Reading of the queue array reporting whether the current question must be
-            // required according to the value of a previous question.
-            if (($popped = array_pop($requiredQueue)) !== null) {
-                $rules['q' . $question->id][] = 'required_if:q' . $popped['question'] . ',' . $popped['answer'];
+            foreach ($this->getItemRules($question) as $rule) {
+                $rules['q' . $question->id][] = $rule;
             }
 
             // Writing of the queue array reporting whether next question(s) must be
@@ -96,4 +76,32 @@ class StoreCompilationRequest extends FormRequest
 
         return $rules;
     }
+    
+    private function getItemRules(Question $question)
+    {
+        if ($question->required == true) {
+                yield 'required';
+            } else {
+                // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
+                yield 'nullable';
+            }
+            
+            if (in_array($question->type, ['single_choice', 'multiple_choice']) === true) {
+                yield Rule::exists('answers', 'id')
+                    ->where(function ($query) use ($question) {
+                        $query->where('question_id', $question->id);
+                    });
+            }
+            
+            if ($question->type === 'date') {
+                yield 'date';
+            }
+            
+            // Reading of the queue array reporting whether the current question must be
+            // required according to the value of a previous question.
+            if (($popped = array_pop($requiredQueue)) !== null) {
+                yield 'required_if:q' . $popped['question'] . ',' . $popped['answer'];
+            }
+    }
+    
 }
