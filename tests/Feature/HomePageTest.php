@@ -22,7 +22,7 @@ class HomePageTest extends TestCase
 
         $user = User::administrators()->first();
 
-        $response = $this->actingAs($user)->get('/home');
+        $response = $this->actingAs($user)->get(route('home'));
 
         $response->assertSee('<h3>' . __('Questionnaire compilations') . '</h3>');
         $response->assertSeeText(__('Compilation form'));
@@ -53,7 +53,7 @@ class HomePageTest extends TestCase
 
         $user = User::viewers()->first();
 
-        $response = $this->actingAs($user)->get('/home');
+        $response = $this->actingAs($user)->get(route('home'));
 
         $response->assertSee('<h3>' . __('Questionnaire compilations') . '</h3>');
         $response->assertSeeText(__('Compilation form'));
