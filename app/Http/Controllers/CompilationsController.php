@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App;
 use App\Http\Requests\StoreCompilationRequest;
 use App\Models\Compilation;
 use App\Models\CompilationItem;
@@ -14,13 +15,12 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Yajra\DataTables\DataTables;
-use App;
 
 class CompilationsController extends Controller
 {
 
     private $compilationService;
-    
+
     /**
      * Create a new controller instance.
      */
@@ -29,9 +29,9 @@ class CompilationsController extends Controller
         // If compilations cannot be currently created,
         // users are redirected.
         $this->middleware('no_new_compilations')->only('create');
-        
+
         $this->middleware('add_missing_questions')->only('store');
-        
+
         $this->compilationService = App::make('App\Services\CompilationService');
     }
 
@@ -120,19 +120,17 @@ class CompilationsController extends Controller
             $compilation->save();
 
             collect($request->all())
-            
                 // Only "qN" parameters are considered, to create compilation items.
                 ->filter(function ($answers, $questionKey) {
                     return preg_match('/^q\d+$/', $questionKey) === 1;
                 })
-                
                 // When a question has several answers,
                 // one compilation item is created for each answer.
                 // For code shortness, all answers are considered as arrays.
                 ->map(function ($answers, $questionKey) use ($compilation) {
-                
+
                     $answers = (is_array($answers) === true ? $answers : [$answers]);
-                    
+
                     foreach ($answers as $answer) {
                         $item = new CompilationItem;
                         $item->answer = $answer;
@@ -140,7 +138,7 @@ class CompilationsController extends Controller
                         $item->compilation()->associate($compilation);
                         $item->save();
                     }
-                
+
                 });
 
         });
