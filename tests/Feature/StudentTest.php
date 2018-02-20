@@ -33,7 +33,7 @@ class StudentTest extends TestCase
         $response = $this->actingAs($user)->get(route('compilations.index'));
         $response->assertStatus(200);
         // Compilation list is not rendered by DataTables, for students.
-        $response->assertDontSee('dataTables');
+        $response->assertDontSee('datatables');
 
         $response = $this->actingAs($user)->get(route('users.show', ['user' => $user]));
         $response->assertStatus(200);
@@ -72,9 +72,9 @@ class StudentTest extends TestCase
         $response->assertRedirect(route('home'));
         $response = $this->actingAs($user)->post(route('wards.store'));
         $response->assertRedirect(route('home'));
-        $response = $this->actingAs($user)->put(route('wards.update', ['ward' => Location::first()]));
+        $response = $this->actingAs($user)->put(route('wards.update', ['ward' => Ward::first()]));
         $response->assertRedirect(route('home'));
-        $response = $this->actingAs($user)->delete(route('wards.destroy', ['ward' => Location::first()]));
+        $response = $this->actingAs($user)->delete(route('wards.destroy', ['ward' => Ward::first()]));
         $response->assertRedirect(route('home'));
 
         // Students cannot see the list of users.
@@ -99,11 +99,13 @@ class StudentTest extends TestCase
         // Pages available only to unauthenticated users.
         $response = $this->get(route('login'));
         $response->assertRedirect(route('home'));
-        $response = $this->get(route('register'));
-        $response->assertRedirect(route('home'));
         $response = $this->get(route('password.request'));
         $response->assertRedirect(route('home'));
         $response = $this->get(route('password.reset', ['token' => 'random']));
+        $response->assertRedirect(route('home'));
+
+        // Pages available only to unauthenticated users, viewers or administrators.
+        $response = $this->get(route('register'));
         $response->assertRedirect(route('home'));
 
     }
