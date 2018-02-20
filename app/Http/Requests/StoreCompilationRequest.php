@@ -13,9 +13,9 @@ class StoreCompilationRequest extends FormRequest
 {
 
     /**
-     * @var array Queue reporting current question mandatority.
+     * @var array Queue reporting question mandatority depending on the answer of a previous question
      */
-    private $requiredQueue = [];
+    private $mandatorityQueue = [];
 
     /**
      * Determine if the user is authorized to make this request.
@@ -49,11 +49,13 @@ class StoreCompilationRequest extends FormRequest
 
         foreach ($questions as $question) {
 
-            foreach ($this->getItemRules($question) as $rule) {
+            $rules['q' . $question->id] = [];
+
+            foreach ($this->getSingleQuestionRules($question) as $rule) {
                 $rules['q' . $question->id][] = $rule;
             }
 
-            $this->updateRequiredQueue($question);
+            $this->updateMandatorityQueue($question);
 
         }
 
@@ -61,13 +63,14 @@ class StoreCompilationRequest extends FormRequest
     }
 
     /**
-     * Get validation rules of a single question.
+     * Get validation rules of a single question (dynamic questions, with key "qN").
      *
      * @param Question $question
      * @return \Generator
      */
-    private function getItemRules(Question $question)
+    private function getSingleQuestionRules(Question $question)
     {
+
         if ($question->required == true) {
             yield 'required';
         } else {
@@ -86,21 +89,21 @@ class StoreCompilationRequest extends FormRequest
             yield 'date';
         }
 
-        // Reading of the queue reporting whether the current question must be
+        // Reading of the mandatority queue, in case the current question is
         // required according to the value of a previous question.
-        $requirement = array_pop($this->requiredQueue);
+        $requirement = array_pop($this->mandatorityQueue);
         if ($requirement !== null) {
             yield 'required_if:q' . $requirement['question'] . ',' . $requirement['answer'];
         }
     }
 
     /**
-     * Writing of the queue reporting whether next question(s) must be
-     * required according to the value of the current question.
+     * If a specific answer of the input question makes next question(s) mandatory,
+     * one or more items are added to mandatority queue.
      *
      * @param Question $question
      */
-    private function updateRequiredQueue(Question $question)
+    private function updateMandatorityQueue(Question $question)
     {
         if (isset($question->options) === false) {
             return;
@@ -112,7 +115,7 @@ class StoreCompilationRequest extends FormRequest
         }
         for ($i = 0; $i < $options->makes_next_required->next; $i++) {
             array_push(
-                $this->requiredQueue,
+                $this->mandatorityQueue,
                 [
                     'question' => $question->id,
                     'answer' => $question->answers[$options->makes_next_required->answer - 1]->id
@@ -121,4 +124,5 @@ class StoreCompilationRequest extends FormRequest
         }
 
     }
+
 }
