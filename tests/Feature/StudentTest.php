@@ -35,6 +35,7 @@ class StudentTest extends TestCase
         // Compilation list is not rendered by DataTables, for students.
         $response->assertDontSee('datatables');
 
+        // Students can see their own profile page.
         $response = $this->actingAs($user)->get(route('users.show', ['user' => $user]));
         $response->assertStatus(200);
 

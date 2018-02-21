@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Tests\Feature;
@@ -9,7 +10,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ViewerTest extends TestCase
+class AdministratorTest extends TestCase
 {
 
     use RefreshDatabase;
@@ -22,7 +23,7 @@ class ViewerTest extends TestCase
 
         $this->seed();
 
-        $user = User::viewers()->first();
+        $user = User::administrators()->first();
 
         $response = $this->actingAs($user)->get(route('home'));
         $response->assertStatus(200);
@@ -32,17 +33,17 @@ class ViewerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('compilations.index'));
         $response->assertStatus(200);
-        // Compilation list is rendered by DataTables, for viewers.
+        // Compilation list is rendered by DataTables, for administrators.
         $response->assertSee('datatables');
 
-        // Viewers can see their own profile page.
+        // Administrators can see their own profile page.
         $response = $this->actingAs($user)->get(route('users.show', ['user' => $user]));
         $response->assertStatus(200);
 
         $response = $this->actingAs($user)->post(route('logout'));
         $response->assertRedirect('/');
 
-        // Viewers can manage stage locations.
+        // Administrators can manage stage locations.
         $response = $this->actingAs($user)->get(route('locations.index'));
         $response->assertStatus(200);
         $response = $this->actingAs($user)->get(route('locations.edit', ['location' => Location::first()]));
@@ -56,7 +57,7 @@ class ViewerTest extends TestCase
         $response->assertStatus(302);
         $this->assertDatabaseMissing('locations', ['id' => 1, 'deleted_at' => null]);
 
-        // Viewers can manage stage wards.
+        // Administrators can manage stage wards.
         $response = $this->actingAs($user)->get(route('wards.index'));
         $response->assertStatus(200);
         $response = $this->actingAs($user)->get(route('wards.edit', ['ward' => Ward::first()]));
@@ -70,19 +71,25 @@ class ViewerTest extends TestCase
         $response->assertStatus(302);
         $this->assertDatabaseMissing('wards', ['id' => 1, 'deleted_at' => null]);
 
-        // Viewers can see the list of users.
+        // Administrators can see the list of users.
         $response = $this->actingAs($user)->get(route('users.index'));
         $response->assertStatus(200);
-        $response->assertDontSee(__('Administrators'));
+        $response->assertSee(__('Administrators'));
         $response = $this->actingAs($user)->get(route('users.index', ['role' => 'student']));
         $response->assertStatus(200);
         $response = $this->actingAs($user)->get(route('users.index', ['role' => 'viewer']));
         $response->assertStatus(200);
+        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'administrator']));
+        $response->assertStatus(200);
 
-        // @todo add test viewers can see other viewers profile page
+        // @todo add test administrators can see other administrators profile page
 
-        // Viewers can see students' profile page.
+        // Administrators can see students' profile page.
         $response = $this->actingAs($user)->get(route('users.show', ['user' => User::students()->first()]));
+        $response->assertStatus(200);
+
+        // Administrators can see viewers' profile page.
+        $response = $this->actingAs($user)->get(route('users.show', ['user' => User::viewers()->first()]));
         $response->assertStatus(200);
 
         // Pages available only to unauthenticated users, viewers or administrators.
@@ -99,19 +106,12 @@ class ViewerTest extends TestCase
 
         $this->seed();
 
-        $user = User::viewers()->first();
+        $user = User::administrators()->first();
 
-        // Viewers cannot see the list of administrators.
-        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'administrator']));
-        $response->assertStatus(403);
-
-        // Viewers cannot see administrators' profile page.
-        $response = $this->actingAs($user)->get(route('users.show', ['user' => User::administrators()->first()]));
-        $response->assertStatus(403);
-        // Viewers cannot delete themselves.
+        // Administrators cannot delete themselves.
         $response = $this->actingAs($user)->delete(route('users.destroy', ['user' => $user]));
         $response->assertStatus(403);
-        // @todo add test that viewers cannot delete other viewers
+        // @todo add test that administrators can delete other administrators
         // These two assertions are to be updated and moved to available pages method,
         // once user edit logic is implemented.
         $response = $this->actingAs($user)->get(route('users.edit', ['user' => $user]));
