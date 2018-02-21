@@ -122,28 +122,29 @@ copy(
 
 echo 'Setting up locale files...' . PHP_EOL;
 
-# Function taken from http://www.beliefmedia.com/copy-directory-php
-function beliefmedia_recurse_copy($src, $dst)
+# Function inspired by http://www.beliefmedia.com/copy-directory-php
+function recursiveCopy(string $source, string $destination)
 {
-    $dir = @opendir($src);
-    if (!file_exists($dst)) {
-        @mkdir($dst);
+    $dir = @opendir($source);
+    if (file_exists($destination) === false) {
+        @mkdir($destination);
     }
     while (false !== ($file = readdir($dir))) {
-        if (($file != '.') && ($file != '..')) {
-            if (is_dir($src . '/' . $file)) {
-                beliefmedia_recurse_copy($src . '/' . $file, $dst . '/' . $file);
-            } else {
-                copy($src . '/' . $file, $dst . '/' . $file);
-            }
+        if (in_array($file, ['.', '..']) === true) {
+            continue;
+        }
+        if (is_dir($source . '/' . $file) === true) {
+            recursiveCopy($source . '/' . $file, $destination . '/' . $file);
+        } else {
+            copy($source . '/' . $file, $destination . '/' . $file);
         }
     }
     closedir($dir);
 }
 
-$src = $options['locale_source_path'] . '/' . $options['locale'];
-$dst = $options['locale_destination_path'] . '/' . $options['locale'];
-beliefmedia_recurse_copy($src, $dst);
+$source = $options['locale_source_path'] . '/' . $options['locale'];
+$destination = $options['locale_destination_path'] . '/' . $options['locale'];
+recursiveCopy($source, $destination);
 
 # #####################################################
 
