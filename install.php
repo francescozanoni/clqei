@@ -1,5 +1,9 @@
 #!/usr/bin/env php
 <?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+use Illuminate\Filesystem\Filesystem;
+
 # #####################################################
 
 # INSTALLATION OPTIONS
@@ -122,29 +126,9 @@ copy(
 
 echo 'Setting up locale files...' . PHP_EOL;
 
-# Function inspired by http://www.beliefmedia.com/copy-directory-php
-function recursiveCopy(string $source, string $destination)
-{
-    $dir = @opendir($source);
-    if (file_exists($destination) === false) {
-        @mkdir($destination);
-    }
-    while (false !== ($file = readdir($dir))) {
-        if (in_array($file, ['.', '..']) === true) {
-            continue;
-        }
-        if (is_dir($source . '/' . $file) === true) {
-            recursiveCopy($source . '/' . $file, $destination . '/' . $file);
-        } else {
-            copy($source . '/' . $file, $destination . '/' . $file);
-        }
-    }
-    closedir($dir);
-}
-
 $source = $options['locale_source_path'] . '/' . $options['locale'];
 $destination = $options['locale_destination_path'] . '/' . $options['locale'];
-recursiveCopy($source, $destination);
+(new Filesystem)->copyDirectory($source, $destination);
 
 # #####################################################
 
