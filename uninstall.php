@@ -3,9 +3,9 @@
 
 $filePathsToDelete = [
 
-	__DIR__ . '/public/.htaccess',
+    __DIR__ . '/public/.htaccess',
 
-	__DIR__ . '/database/database.sqlite',
+    __DIR__ . '/database/database.sqlite',
     __DIR__ . '/database/test_database.sqlite',
 
     __DIR__ . '/resources/lang/it/auth.php',
@@ -13,9 +13,13 @@ $filePathsToDelete = [
     __DIR__ . '/resources/lang/it/passwords.php',
     __DIR__ . '/resources/lang/it/validation.php',
 
-	__DIR__ . '/.env',
+    __DIR__ . '/.env',
 
     __DIR__ . '/phpunit.xml',
+
+];
+
+$optionalFilePathsToDelete = [
 
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.php',
 	__DIR__ . '/public/phpliteadmin/phpliteadmin.config.sample.php',
@@ -24,7 +28,7 @@ $filePathsToDelete = [
 
 ];
 
-// Check all file paths are correct.
+// Check all mandatory file paths are correct.
 foreach ($filePathsToDelete as $filePath) {
     if (file_exists($filePath) === false) {
         die($filePath . ' does not exist' . PHP_EOL);
@@ -37,10 +41,31 @@ foreach ($filePathsToDelete as $filePath) {
     }
 }
 
+// Check optional file paths are correct (not blocking).
+foreach ($optionalFilePathsToDelete as $filePath) {
+    if (file_exists($filePath) === false) {
+        echo $filePath . ' does not exist' . PHP_EOL;
+        continue;
+    }
+    if (is_writable($filePath) === false) {
+        echo $filePath . ' is not writable' . PHP_EOL;
+        continue;
+    }
+    if (is_file($filePath) === false) {
+        echo $filePath . ' is not a file' . PHP_EOL;
+        continue;
+    }
+}
+
 // Delete file paths.
 foreach ($filePathsToDelete as $filePath) {
-    if (file_exists($filePath) === false) {
-        return;
+    unlink($filePath);
+}
+foreach ($optionalFilePathsToDelete as $filePath) {
+    if (file_exists($filePath) === false ||
+        is_writable($filePath) === false ||
+        is_file($filePath) === false) {
+        continue;
     }
     unlink($filePath);
 }
