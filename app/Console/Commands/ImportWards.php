@@ -6,22 +6,22 @@ namespace App\Console\Commands;
 use App\Models\Ward;
 use Illuminate\Console\Command;
 
-class LoadWards extends Command
+class ImportWards extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'load:wards
-                            {file_path : Path of file containing wards}';
+    protected $signature = 'import:wards
+                            {file_path : Path to file containing wards}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Load stage wards from file';
+    protected $description = 'Import stage wards from file';
 
     /**
      * Create a new command instance.

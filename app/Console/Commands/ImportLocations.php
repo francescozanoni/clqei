@@ -6,22 +6,22 @@ namespace App\Console\Commands;
 use App\Models\Location;
 use Illuminate\Console\Command;
 
-class LoadLocations extends Command
+class ImportLocations extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'load:locations
-                            {file_path : Path of file containing locations}';
+    protected $signature = 'import:locations
+                            {file_path : Path to file containing locations}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Load stage locations from file';
+    protected $description = 'Import stage locations from file';
 
     /**
      * Create a new command instance.
