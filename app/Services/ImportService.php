@@ -6,6 +6,31 @@ namespace App\Services;
 class ImportService
 {
 
+    public function validate(string $filePath) : array
+    {
+
+        if (file_exists($filePath) === false ||
+            is_readable($filePath) === false ||
+            is_file($filePath) === false
+        ) {
+            return ['Invalid file path'];
+        }
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $fileMimeType = finfo_file($finfo, $filePath);
+        finfo_close($finfo);
+        if ($fileMimeType !== 'text/plain') {
+            return ['Invalid file type'];
+        }
+
+        if (count(file($filePath)) === 0) {
+            return ['Empty file'];
+        }
+        
+        return [];
+
+    }
+
     public function import(string $filePath, string $class)
     {
 

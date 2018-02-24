@@ -38,40 +38,19 @@ class ImportWards extends Command
     {
         $filePath = $this->argument('file_path');
 
-        // @todo extract file check logic
-
-        if (file_exists($filePath) === false ||
-            is_readable($filePath) === false ||
-            is_file($filePath) === false
-        ) {
-
-            $this->error('Invalid file path');
-            return;
-
-        }
-
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        if (finfo_file($finfo, $filePath) !== 'text/plain') {
-
-            $this->error('Invalid file type');
-            finfo_close($finfo);
-            return;
-
-        }
-        finfo_close($finfo);
-
-        $wardNames = file($filePath);
-
-        if (count($wardNames) === 0) {
-
-            $this->error('Empty file');
-            return;
-
-        }
-
         $importService = App::make('App\Services\ImportService');
+        
+        $errors = $importService->validate($filePath);
+        
+        if (empty($errors) === false) {
+            foreach ($errors as $error) {
+                $this->error($error);
+            }
+            return;
+        }
+        
         $importService->import($filePath, App\Models\Ward::class);
 
     }
-
+    
 }
