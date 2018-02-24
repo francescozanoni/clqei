@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Console\Commands;
 
-use App\Models\Location;
 use Illuminate\Console\Command;
+use App;
 
 class ImportLocations extends Command
 {
@@ -69,28 +69,8 @@ class ImportLocations extends Command
 
         }
 
-        // @todo refactor by extracting to a job
-        // @todo add character check
-        // @todo add uniqueness check
-
-        // Data is cleaned.
-        $locationNames =
-            array_values(
-                array_unique(
-                    array_map(
-                        function ($locationName) {
-                            return trim($locationName);
-                        },
-                        $locationNames
-                    )
-                )
-            );
-
-        foreach ($locationNames as $locationName) {
-            $location = new Location();
-            $location->name = $locationName;
-            $location->save();
-        }
+        $importService = App::make('App\Services\ImportService');
+        $importService->import($filePath, App\Models\Location::class);
 
     }
 

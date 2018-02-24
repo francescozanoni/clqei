@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Console\Commands;
 
-use App\Models\Ward;
 use Illuminate\Console\Command;
+use App;
 
 class ImportWards extends Command
 {
@@ -69,28 +69,8 @@ class ImportWards extends Command
 
         }
 
-        // @todo refactor by extracting to a job
-        // @todo add character check
-        // @todo add uniqueness check
-
-        // Data is cleaned.
-        $wardNames =
-            array_values(
-                array_unique(
-                    array_map(
-                        function ($wardName) {
-                            return trim($wardName);
-                        },
-                        $wardNames
-                    )
-                )
-            );
-
-        foreach ($wardNames as $wardName) {
-            $ward = new Ward();
-            $ward->name = $wardName;
-            $ward->save();
-        }
+        $importService = App::make('App\Services\ImportService');
+        $importService->import($filePath, App\Models\Ward::class);
 
     }
 
