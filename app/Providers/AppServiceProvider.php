@@ -6,10 +6,12 @@ use App\Services\AcademicYearService;
 use App\Services\CompilationService;
 use App\Services\DataTablesPluginService;
 use App\Services\UserService;
+use App\Services\ImportService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * Bootstrap any application services.
      *
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+    
         // @todo ensure $countries population can stay here or must be moved to boot() method
         $countries = require(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
 
@@ -49,6 +52,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\UserService', function () {
             return new UserService();
         });
+        
+        $this->app->bind('App\Services\ImportService', function () {
+            return new ImportService();
+        });
 
     }
+    
 }
