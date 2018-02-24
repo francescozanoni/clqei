@@ -2,11 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\AcademicYearService;
-use App\Services\CompilationService;
 use App\Services\DataTablesPluginService;
-use App\Services\UserService;
-use App\Services\ImportService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,25 +33,21 @@ class AppServiceProvider extends ServiceProvider
             ->needs('$countries')
             ->give($countries);
 
-        $this->app->bind('App\Services\CompilationService', function () {
-            return new CompilationService();
-        });
-
-        $this->app->bind('App\Services\AcademicYearService', function () {
-            return new AcademicYearService();
-        });
-
         $this->app->bind('App\Services\DataTablesPluginService', function () {
             return new DataTablesPluginService(base_path('node_modules/datatables.net-plugins'));
         });
-
-        $this->app->bind('App\Services\UserService', function () {
-            return new UserService();
-        });
         
-        $this->app->bind('App\Services\ImportService', function () {
-            return new ImportService();
-        });
+        $simpleBindings = [
+            'App\Services\CompilationService',
+            'App\Services\AcademicYearService',
+            'App\Services\UserService',
+            'App\Services\ImportService',
+        ];
+        foreach ($simpleBindings as $class) {
+            $this->app->bind($class, function () use ($class) {
+                return new $class();
+            });
+        }
 
     }
     
