@@ -24,6 +24,9 @@ class ImportWards extends Command
      */
     protected $description = 'Import stage wards from file';
 
+    /**
+     * @var ImportService
+     */
     protected $importService;
 
     /**
@@ -32,8 +35,8 @@ class ImportWards extends Command
     public function __construct(ImportService $importService)
     {
 	    parent::__construct();
-            $this->importService = $importService;
-
+	    
+         $this->importService = $importService;
     }
 
     /**
@@ -41,9 +44,8 @@ class ImportWards extends Command
      */
     public function handle()
     {
+    
         $filePath = $this->argument('file_path');
-
-        // $importService = App::make('App\Services\ImportService');
         
         $errors = $this->importService->validate($filePath);
         
@@ -55,6 +57,8 @@ class ImportWards extends Command
         }
         
         $this->importService->import($filePath, App\Models\Ward::class);
+        
+        $this->info('Wards imported successfully');
 
     }
     

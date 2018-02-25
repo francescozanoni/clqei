@@ -24,6 +24,9 @@ class ImportLocations extends Command
      */
     protected $description = 'Import stage locations from file';
 
+    /**
+     * @var ImportService
+     */
     protected $importService;
 
     /**
@@ -32,6 +35,7 @@ class ImportLocations extends Command
     public function __construct(ImportService $importService)
     {
 	    parent::__construct();
+	    
 	    $this->importService = $importService;
     }
 
@@ -40,9 +44,8 @@ class ImportLocations extends Command
      */
     public function handle()
     {
+    
         $filePath = $this->argument('file_path');
-
-        // $importService = App::make('App\Services\ImportService');
         
         $errors = $this->importService->validate($filePath);
         
@@ -54,6 +57,8 @@ class ImportLocations extends Command
         }
         
         $this->importService->import($filePath, App\Models\Location::class);
+        
+        $this->info('Locations imported successfully');
 
     }
 

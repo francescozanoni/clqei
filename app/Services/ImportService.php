@@ -6,6 +6,12 @@ namespace App\Services;
 class ImportService
 {
 
+    /**
+     * Validate file to import
+     *
+     * @param string $filePath path to file to import
+     * @return array validation errors
+     */
     public function validate(string $filePath) : array
     {
 
@@ -31,6 +37,12 @@ class ImportService
 
     }
 
+    /**
+     * Import file
+     *
+     * @param string $filePath path to file to import
+     * @param string $class class of models to import
+     */
     public function import(string $filePath, string $class)
     {
 
@@ -42,6 +54,7 @@ class ImportService
 
         // @todo add character check
         // @todo add uniqueness check
+        // @todo add return of number of records imported
 
         // Data is cleaned.
         $records = array_unique(array_map('trim', $records));
