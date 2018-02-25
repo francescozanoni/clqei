@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use Illuminate\Filesystem\Filesystem;
+
 class ImportService
 {
 
@@ -22,9 +24,8 @@ class ImportService
             return ['Invalid file path'];
         }
 
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $fileMimeType = finfo_file($finfo, $filePath);
-        finfo_close($finfo);
+        $fileSystem = new Filesystem;
+        $fileMimeType = $fileSystem->mimeType($filePath);
         if ($fileMimeType !== 'text/plain') {
             return ['Invalid file type'];
         }
