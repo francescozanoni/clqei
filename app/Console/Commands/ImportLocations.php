@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\ImportService;
 use App;
 
 class ImportLocations extends Command
@@ -23,12 +24,15 @@ class ImportLocations extends Command
      */
     protected $description = 'Import stage locations from file';
 
+    protected $importService;
+
     /**
      * Create a new command instance.
      */
-    public function __construct()
+    public function __construct(ImportService $importService)
     {
-        parent::__construct();
+	    parent::__construct();
+	    $this->importService = $importService;
     }
 
     /**
@@ -38,9 +42,9 @@ class ImportLocations extends Command
     {
         $filePath = $this->argument('file_path');
 
-        $importService = App::make('App\Services\ImportService');
+        // $importService = App::make('App\Services\ImportService');
         
-        $errors = $importService->validate($filePath);
+        $errors = $this->importService->validate($filePath);
         
         if (empty($errors) === false) {
             foreach ($errors as $error) {
@@ -49,7 +53,7 @@ class ImportLocations extends Command
             return;
         }
         
-        $importService->import($filePath, App\Models\Location::class);
+        $this->importService->import($filePath, App\Models\Location::class);
 
     }
 
