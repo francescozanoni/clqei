@@ -5,9 +5,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Services\ImportService;
+use App\Console\Commands\Interfaces\WithIntegerExitCode;
 use App;
 
-class ImportWards extends Command
+class ImportWards extends Command implements WithIntegerExitCode
 {
     /**
      * The name and signature of the console command.
@@ -41,8 +42,10 @@ class ImportWards extends Command
 
     /**
      * Execute the console command.
+     *
+     * @return int exit code
      */
-    public function handle()
+    public function handle() : int
     {
     
         $filePath = $this->argument('file_path');
@@ -53,12 +56,14 @@ class ImportWards extends Command
             foreach ($errors as $error) {
                 $this->error($error);
             }
-            return;
+            return self::INVALID_INPUT;
         }
         
         $this->importService->import($filePath, App\Models\Ward::class);
         
         $this->info('Wards imported successfully');
+        
+        return self::SUCCESS;
 
     }
     
