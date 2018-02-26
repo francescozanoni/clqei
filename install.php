@@ -40,6 +40,15 @@ if (isset($inputOptions['locale']) === true) {
 
 # #####################################################
 
+# CONSTANTS
+
+define('HTACCESS_FILE_PATH', '');
+define('DATABASE_FILE_PATH', '');
+define('TEST_DATABASE_FILE_PATH', '');
+define('DOT_ENV_FILE_PATH', '');
+
+# #####################################################
+
 # FILE INEXISTENCE CHECK
 
 $filePathsToCheck = [
