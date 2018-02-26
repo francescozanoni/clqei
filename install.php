@@ -46,6 +46,8 @@ define('HTACCESS_FILE_PATH', '');
 define('DATABASE_FILE_PATH', '');
 define('TEST_DATABASE_FILE_PATH', '');
 define('DOT_ENV_FILE_PATH', '');
+define('PHPUNIT_XML_FILE_PATH', '');
+define('PHPLITEADMIN_FOLDER_PATH', '');
 
 # #####################################################
 
