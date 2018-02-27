@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -8,14 +9,12 @@ class QuestionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
 
         $questionnaire = json_decode(file_get_contents(database_path('seeds/questionnaire_texts_' . config('app.locale') . '.json')), true);
-        
+
         $metadata = json_decode(file_get_contents(database_path('seeds/questionnaire_metadata.json')), true);
 
         $sectionId = 1;

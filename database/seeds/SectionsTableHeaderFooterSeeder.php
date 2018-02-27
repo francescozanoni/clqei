@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -7,8 +8,6 @@ class SectionsTableHeaderFooterSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -23,7 +22,7 @@ class SectionsTableHeaderFooterSeeder extends Seeder
                 'footer' => $section['footer'],
             ]);
         }
-        
+
         // @todo ensure no problems derived from section order changed (via "position" field) or sections (soft-)deleted
 
     }

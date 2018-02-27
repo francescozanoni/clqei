@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -8,8 +9,6 @@ class StudentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {

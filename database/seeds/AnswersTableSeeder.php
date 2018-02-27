@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -8,8 +9,6 @@ class AnswersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -54,14 +53,14 @@ class AnswersTableSeeder extends Seeder
             );
 
         $questionId = 1;
-        
+
         $questions = [];
 
         // First all questions/answers are retrieved.
         foreach ($questionnaire as $section => $sectionQuestions) {
             $questions = array_merge($questions, $sectionQuestions);
         }
-        
+
         // Then returned with the correct question IDs.
         foreach ($questions as $question => $answers) {
 
@@ -74,7 +73,7 @@ class AnswersTableSeeder extends Seeder
             $questionId++;
 
         }
-        
+
     }
 
 }
