@@ -16,34 +16,23 @@ class UsersTableSeeder extends Seeder
         $now = Carbon::now()->format('Y-m-d H:i:s');
         $userDomain = 'example.com';
 
-        // Administrator user
-        DB::table('users')->insert([
+        foreach ($this->getUserRoles() as $role) {
+            DB::table('users')->insert([
             'first_name' => 'Example',
-            'last_name' => 'Administrator',
-            'email' => \App\User::ROLE_ADMINISTRATOR . '@' . $userDomain,
-            'password' => bcrypt(\App\User::ROLE_ADMINISTRATOR),
-            'role' => \App\User::ROLE_ADMINISTRATOR,
+            'last_name' => ucfirst($role),
+            'email' => $role . '@' . $userDomain,
+            'password' => bcrypt($role),
+            'role' => $role,
             'created_at' => $now,
         ]);
-
-        // Viewer user
-        DB::table('users')->insert([
-            'first_name' => 'Example',
-            'last_name' => 'Viewer',
-            'email' => \App\User::ROLE_VIEWER . '@' . $userDomain,
-            'password' => bcrypt(\App\User::ROLE_VIEWER),
-            'role' => \App\User::ROLE_VIEWER,
-            'created_at' => $now,
-        ]);
-
-        // Student user
-        DB::table('users')->insert([
-            'first_name' => 'Example',
-            'last_name' => 'Student',
-            'email' => \App\User::ROLE_STUDENT . '@' . $userDomain,
-            'password' => bcrypt(\App\User::ROLE_STUDENT),
-            'role' => \App\User::ROLE_STUDENT,
-            'created_at' => $now,
-        ]);
+        }
+      
+    }
+  
+    private function getUserRoles()
+    {
+      yield \App\User::ROLE_ADMINISTRATOR;
+      yield \App\User::ROLE_VIEWER;
+      yield \App\User::ROLE_STUDENT;
     }
 }
