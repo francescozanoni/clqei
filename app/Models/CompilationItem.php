@@ -52,16 +52,12 @@ class CompilationItem extends Model
     public function getTheAnswerAttribute()
     {
 
-        // If the question has no answer (i.e. "answer" attribute is null,
-        // null is returnd.
-        if ($this->attributes['answer'] === null) {
-            return null;
-        }
+        $answer = null;
 
         switch ($this->question->type) {
 
             case 'single_choice':
-                return $this->answer()->first()->text;
+                $answer = $this->answer()->first()->text;
 
             case 'multiple_choice':
                 $siblingItems =
@@ -72,11 +68,13 @@ class CompilationItem extends Model
                 foreach ($siblingItems as $siblingItem) {
                     $siblingItemAnswers[] = $siblingItem->answer()->first();
                 }
-                return $siblingItemAnswers;
+                $answer = $siblingItemAnswers;
 
             default:
-                return $this->attributes['answer'];
+                $answer = $this->attributes['answer'];
         }
+      
+        return $answer;
     }
 
     /**
