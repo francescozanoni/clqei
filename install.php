@@ -42,30 +42,30 @@ if (isset($inputOptions['locale']) === true) {
 
 # CONSTANTS
 
-define('HTACCESS_FILE_PATH', '');
-define('DATABASE_FILE_PATH', '');
-define('TEST_DATABASE_FILE_PATH', '');
-define('DOT_ENV_FILE_PATH', '');
-define('PHPUNIT_XML_FILE_PATH', '');
-define('PHPLITEADMIN_FOLDER_PATH', '');
+define('HTACCESS_FILE_PATH', __DIR__ . '/public/.htaccess');
+define('DATABASE_FILE_PATH', __DIR__ . '/database/database.sqlite');
+define('TEST_DATABASE_FILE_PATH', __DIR__ . '/database/test_database.sqlite');
+define('DOT_ENV_FILE_PATH', __DIR__ . '/.env');
+define('PHPUNIT_XML_FILE_PATH', __DIR__ . '/phpunit.xml');
+define('PHPLITEADMIN_FOLDER_PATH', __DIR__ . '/public/phpliteadmin');
 
 # #####################################################
 
 # FILE INEXISTENCE CHECK
 
 $filePathsToCheck = [
-    __DIR__ . '/public/.htaccess',
-    __DIR__ . '/database/database.sqlite',
-    __DIR__ . '/database/test_database.sqlite',
-    __DIR__ . '/.env',
-    __DIR__ . '/phpunit.xml',
+    HTACCESS_FILE_PATH,
+    DATABASE_FILE_PATH,
+    TEST_DATABASE_FILE_PATH,
+    DOT_ENV_FILE_PATH,
+    PHPUNIT_XML_FILE_PATH,
 ];
 
 if ($options['with_phpliteadmin'] === true) {
-    $filePathsToCheck[] = __DIR__ . '/public/phpliteadmin/phpliteadmin.config.php';
-    $filePathsToCheck[] = __DIR__ . '/public/phpliteadmin/phpliteadmin.config.sample.php';
-    $filePathsToCheck[] = __DIR__ . '/public/phpliteadmin/phpliteadmin.php';
-    $filePathsToCheck[] = __DIR__ . '/public/phpliteadmin/readme.md';
+    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.php';
+    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin/phpliteadmin.config.sample.php';
+    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin/phpliteadmin.php';
+    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin/readme.md';
 }
 
 foreach ($filePathsToCheck as $filePath) {
@@ -104,13 +104,13 @@ foreach ($iterator as $item) {
 echo 'Setting up database...' . PHP_EOL;
 
 # Database files
-$db = new SQLite3(__DIR__ . '/database/database.sqlite');
+$db = new SQLite3(DATABASE_FILE_PATH);
 $db->close();
-$db = new SQLite3(__DIR__ . '/database/test_database.sqlite');
+$db = new SQLite3(TEST_DATABASE_FILE_PATH);
 $db->close();
-chmod(__DIR__ . '/database/database.sqlite', 0777);
-chmod(__DIR__ . '/database/test_database.sqlite', 0777);
-chmod(__DIR__ . '/database', 0777);
+chmod(DATABASE_FILE_PATH, 0777);
+chmod(TEST_DATABASE_FILE_PATH, 0777);
+chmod(dirname(DATABASE_FILE_PATH), 0777);
 echo PHP_EOL;
 
 # #####################################################
@@ -118,20 +118,11 @@ echo PHP_EOL;
 echo 'Setting up configuration files...' . PHP_EOL;
 
 # Web server-related configuration
-copy(
-    __DIR__ . '/public/.htaccess.example',
-    __DIR__ . '/public/.htaccess'
-);
+copy(HTACCESS_FILE_PATH . '.example', HTACCESS_FILE_PATH);
 
 # Configuration files
-copy(
-    __DIR__ . '/.env.example',
-    __DIR__ . '/.env'
-);
-copy(
-    __DIR__ . '/phpunit.xml.example',
-    __DIR__ . '/phpunit.xml'
-);
+copy(DOT_ENV_FILE_PATH . '.example', DOT_ENV_FILE_PATH);
+copy(PHPUNIT_XML_FILE_PATH . '.example', PHPUNIT_XML_FILE_PATH);
 
 # #####################################################
 
@@ -152,13 +143,13 @@ if ($options['with_phpliteadmin'] === true) {
     file_put_contents(sys_get_temp_dir() . '/phpliteadmin.zip', $file);
     $zip = new ZipArchive();
     if ($zip->open(sys_get_temp_dir() . '/phpliteadmin.zip') === true) {
-        $zip->extractTo(__DIR__ . '/public/phpliteadmin/');
+        $zip->extractTo(PHPLITEADMIN_FOLDER_PATH . '/');
         $zip->close();
     }
     unlink(sys_get_temp_dir() . '/phpliteadmin.zip');
     copy(
-        __DIR__ . '/public/phpliteadmin/phpliteadmin.config.clqei.php',
-        __DIR__ . '/public/phpliteadmin/phpliteadmin.config.php'
+        PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.clqei.php',
+        PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.php'
     );
 
 }
@@ -166,22 +157,22 @@ if ($options['with_phpliteadmin'] === true) {
 # #####################################################
 
 # Base URL and database file path setting
-$file = file_get_contents(__DIR__ . '/.env');
+$file = file_get_contents(DOT_ENV_FILE_PATH);
 $file = preg_replace('#http://localhost#', $options['application_url'], $file);
-$file = preg_replace('#/absolute/path/to/database#', realpath(__DIR__ . '/database'), $file);
-file_put_contents(__DIR__ . '/.env', $file);
+$file = preg_replace('#/absolute/path/to/database#', realpath(dirname(DATABASE_FILE_PATH)), $file);
+file_put_contents(DOT_ENV_FILE_PATH, $file);
 
-$file = file_get_contents(__DIR__ . '/phpunit.xml');
-$file = preg_replace('#/absolute/path/to/database#', realpath(__DIR__ . '/database'), $file);
-file_put_contents(__DIR__ . '/phpunit.xml', $file);
+$file = file_get_contents(PHPUNIT_XML_FILE_PATH);
+$file = preg_replace('#/absolute/path/to/database#', realpath(dirname(DATABASE_FILE_PATH)), $file);
+file_put_contents(PHPUNIT_XML_FILE_PATH, $file);
 
 $baseUrl = parse_url($options['application_url'], PHP_URL_PATH);
 if ($baseUrl === '') {
     $baseUrl = '/';
 }
-$file = file_get_contents(__DIR__ . '/public/.htaccess');
+$file = file_get_contents(HTACCESS_FILE_PATH);
 $file = preg_replace('#RewriteBase\s/#', 'RewriteBase ' . $baseUrl, $file);
-file_put_contents(__DIR__ . '/public/.htaccess', $file);
+file_put_contents(HTACCESS_FILE_PATH, $file);
 
 # #####################################################
 
@@ -190,7 +181,7 @@ if ($options['with_phpliteadmin'] === true) {
     echo PHP_EOL;
     echo "Manual steps:" . PHP_EOL;
     echo PHP_EOL;
-    echo " - password and cookie name in public/phpliteadmin/phpliteadmin.config.php" . PHP_EOL;
+    echo " - password and cookie name in ' . PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.php" . PHP_EOL;
     echo "    - \$password = 'admin'" . PHP_EOL;
     echo "    - \$cookie_name = 'pla3412'" . PHP_EOL;
 }

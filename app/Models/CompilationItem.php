@@ -62,7 +62,6 @@ class CompilationItem extends Model
 
             case 'single_choice':
                 return $this->answer()->first()->text;
-                break;
 
             case 'multiple_choice':
                 $siblingItems =
@@ -74,7 +73,6 @@ class CompilationItem extends Model
                     $siblingItemAnswers[] = $siblingItem->answer()->first();
                 }
                 return $siblingItemAnswers;
-                break;
 
             default:
                 return $this->attributes['answer'];
