@@ -14,12 +14,13 @@ class UsersTableSeeder extends Seeder
     {
 
         $now = Carbon::now()->format('Y-m-d H:i:s');
+        $userDomain = 'example.com';
 
         // Administrator user
         DB::table('users')->insert([
             'first_name' => 'Example',
             'last_name' => 'Administrator',
-            'email' => \App\User::ROLE_ADMINISTRATOR . '@example.com',
+            'email' => \App\User::ROLE_ADMINISTRATOR . '@' . $userDomain,
             'password' => bcrypt(\App\User::ROLE_ADMINISTRATOR),
             'role' => \App\User::ROLE_ADMINISTRATOR,
             'created_at' => $now,
@@ -29,7 +30,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Example',
             'last_name' => 'Viewer',
-            'email' => \App\User::ROLE_VIEWER . '@example.com',
+            'email' => \App\User::ROLE_VIEWER . '@' . $userDomain,
             'password' => bcrypt(\App\User::ROLE_VIEWER),
             'role' => \App\User::ROLE_VIEWER,
             'created_at' => $now,
@@ -39,7 +40,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Example',
             'last_name' => 'Student',
-            'email' => \App\User::ROLE_STUDENT . '@example.com',
+            'email' => \App\User::ROLE_STUDENT . '@' . $userDomain,
             'password' => bcrypt(\App\User::ROLE_STUDENT),
             'role' => \App\User::ROLE_STUDENT,
             'created_at' => $now,
