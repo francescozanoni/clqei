@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 use App;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Services\UserService;
 use App\User;
 use Auth;
 use DB;
@@ -35,13 +36,20 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    
+    /**
+     * @var UserService
+     */
+    protected $userService;
 
     /**
      * Create a new controller instance.
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
         $this->middleware('not_student');
+        
+        $this->userService = $userService;
     }
 
     /**
@@ -78,12 +86,12 @@ class RegisterController extends Controller
     {
 
         if (Auth::guest()) {
-            $rules = App::make('App\Services\UserService')->getGuestValidationRules();
+            $rules = $this->userService->getGuestValidationRules();
         } else {
             if (Auth::user()->can('createAdministrator', User::class)) {
-                $rules = App::make('App\Services\UserService')->getAdministratorValidationRules();
+                $rules = $this->userService->getAdministratorValidationRules();
             } else {
-                $rules = App::make('App\Services\UserService')->getViewerValidationRules();
+                $rules = $this->userService->getViewerValidationRules();
             }
         }
 
