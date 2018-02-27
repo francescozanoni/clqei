@@ -19,9 +19,9 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Example',
             'last_name' => 'Administrator',
-            'email' => 'administrator@example.com',
-            'password' => bcrypt('administrator'),
-            'role' => 'administrator',
+            'email' => \App\User::ROLE_ADMINISTRATOR . '@example.com',
+            'password' => bcrypt(\App\User::ROLE_ADMINISTRATOR),
+            'role' => \App\User::ROLE_ADMINISTRATOR,
             'created_at' => $now,
         ]);
 
@@ -29,9 +29,9 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Example',
             'last_name' => 'Viewer',
-            'email' => 'viewer@example.com',
-            'password' => bcrypt('viewer'),
-            'role' => 'viewer',
+            'email' => \App\User::ROLE_VIEWER . '@example.com',
+            'password' => bcrypt(\App\User::ROLE_VIEWER),
+            'role' => \App\User::ROLE_VIEWER,
             'created_at' => $now,
         ]);
 
@@ -39,9 +39,9 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'Example',
             'last_name' => 'Student',
-            'email' => 'student@example.com',
-            'password' => bcrypt('student'),
-            'role' => 'student',
+            'email' => \App\User::ROLE_STUDENT . '@example.com',
+            'password' => bcrypt(\App\User::ROLE_STUDENT),
+            'role' => \App\User::ROLE_STUDENT,
             'created_at' => $now,
         ]);
     }

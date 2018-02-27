@@ -74,9 +74,9 @@ class ViewerTest extends TestCase
         $response = $this->actingAs($user)->get(route('users.index'));
         $response->assertStatus(200);
         $response->assertDontSee(__('Administrators'));
-        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'student']));
+        $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_STUDENT]));
         $response->assertStatus(200);
-        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'viewer']));
+        $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_VIEWER]));
         $response->assertStatus(200);
 
         // @todo add test viewers can see other viewers profile page
@@ -102,7 +102,7 @@ class ViewerTest extends TestCase
         $user = User::viewers()->first();
 
         // Viewers cannot see the list of administrators.
-        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'administrator']));
+        $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_ADMINISTRATOR]));
         $response->assertStatus(403);
 
         // Viewers cannot see administrators' profile page.

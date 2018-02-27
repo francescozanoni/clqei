@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Middleware;
 
+use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class RedirectIfStudent
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check() &&
-            Auth::guard($guard)->user()->role === 'student'
+            Auth::guard($guard)->user()->role === User::ROLE_STUDENT
         ) {
             return redirect(route('home'));
         }

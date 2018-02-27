@@ -136,7 +136,7 @@
                                             {{ __('Register new viewer or administrator') }}
                                         </a>
                                     <li>
-                                        <a href="{{ route('users.index', ['role' => 'administrator']) }}">
+                                        <a href="{{ route('users.index', ['role' => \App\User::ROLE_ADMINISTRATOR]) }}">
                                             <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                             {{ __('Administrators') . ' (' . \App\User::administrators()->count() . ')' }}
                                         </a>
@@ -150,13 +150,13 @@
                                     </li>
                                 @endif
                                 <li>
-                                    <a href="{{ route('users.index', ['role' => 'viewer']) }}">
+                                    <a href="{{ route('users.index', ['role' => \App\User::ROLE_VIEWER]) }}">
                                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                         {{ __('Viewers') . ' (' . \App\User::viewers()->count() . ')' }}
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('users.index', ['role' => 'student']) }}">
+                                    <a href="{{ route('users.index', ['role' => \App\User::ROLE_STUDENT]) }}">
                                         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                         {{ __('Students') . ' (' . \App\User::students()->count() . ')'  }}
                                     </a>

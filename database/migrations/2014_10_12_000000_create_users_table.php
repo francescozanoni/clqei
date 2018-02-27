@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable(false);
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['administrator', 'viewer', 'student'])->nullable(false);
+            $table->enum('role', [\App\User::ROLE_ADMINISTRATOR, \App\User::ROLE_VIEWER, \App\User::ROLE_STUDENT])->nullable(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

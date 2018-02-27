@@ -27,13 +27,13 @@ class UserPolicy
         }
 
         // Administrators can view any users.
-        if ($user->role === 'administrator') {
+        if ($user->role === User::ROLE_ADMINISTRATOR) {
             $return = true;
         }
 
         // Viewers can view only viewers.
-        if ($user->role === 'viewer' &&
-            in_array($model->role, ['student', 'viewer']) === true
+        if ($user->role === User::ROLE_VIEWER &&
+            in_array($model->role, [User::ROLE_STUDENT, User::ROLE_VIEWER]) === true
         ) {
             $return = true;
         }
@@ -50,8 +50,8 @@ class UserPolicy
     public function createViewer(User $user) : bool
     {
         return
-            $user->role === 'viewer' ||
-            $user->role === 'administrator';
+            $user->role === User::ROLE_VIEWER ||
+            $user->role === User::ROLE_ADMINISTRATOR;
     }
 
     /**
@@ -62,7 +62,7 @@ class UserPolicy
      */
     public function createAdministrator(User $user) : bool
     {
-        return $user->role === 'administrator';
+        return $user->role === User::ROLE_ADMINISTRATOR;
     }
 
     /**
@@ -77,7 +77,7 @@ class UserPolicy
         // A user can only update its own user
         // or be modified by an administrator.
         return
-            $user->role === 'administrator' ||
+            $user->role === User::ROLE_ADMINISTRATOR ||
             $user->id === $model->id;
     }
 
@@ -92,19 +92,19 @@ class UserPolicy
     {
 
         // Students can be deleted only by viewer and administrators.
-        if ($model->role === 'student') {
-            return in_array($user->role, ['administrator', 'viewer']);
+        if ($model->role === User::ROLE_STUDENT) {
+            return in_array($user->role, [User::ROLE_ADMINISTRATOR, User::ROLE_VIEWER]);
         }
 
         // Viewers can be deleted only by administrators.
-        if ($model->role === 'viewer') {
-            return $user->role === 'administrator';
+        if ($model->role === User::ROLE_VIEWER) {
+            return $user->role === User::ROLE_ADMINISTRATOR;
         }
 
         // Administrators can be deleted only by other administrators.
-        if ($model->role === 'administrator') {
+        if ($model->role === User::ROLE_ADMINISTRATOR) {
             return
-                $user->role === 'administrator' &&
+                $user->role === User::ROLE_ADMINISTRATOR &&
                 $user->id !== $model->id;
         }
 

@@ -21,7 +21,7 @@ class WardPolicy
     public function view(User $user, Ward $ward) : bool
     {
         // Wards can be viewed by administrators and viewers.
-        return $user->role !== 'student';
+        return $user->role !== User::ROLE_STUDENT;
     }
 
     /**
@@ -32,7 +32,7 @@ class WardPolicy
      */
     public function create(User $user) : bool
     {
-        return $user->role !== 'student';
+        return $user->role !== User::ROLE_STUDENT;
     }
 
     /**
@@ -43,7 +43,7 @@ class WardPolicy
      */
     public function update(User $user) : bool
     {
-        return $user->role !== 'student';
+        return $user->role !== User::ROLE_STUDENT;
     }
 
     /**
@@ -55,7 +55,7 @@ class WardPolicy
      */
     public function delete(User $user, Ward $ward) : bool
     {
-        return $user->role !== 'student';
+        return $user->role !== User::ROLE_STUDENT;
     }
 
 }

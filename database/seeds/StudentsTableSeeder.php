@@ -14,7 +14,7 @@ class StudentsTableSeeder extends Seeder
     {
 
         DB::table('students')->insert([
-            'user_id' => DB::table('users')->where('role', 'student')->first()->id,
+            'user_id' => DB::table('users')->where('role', \App\User::ROLE_STUDENT)->first()->id,
             'identification_number' => '12345678',
             'gender' => 'male',
             'nationality' => 'IT',

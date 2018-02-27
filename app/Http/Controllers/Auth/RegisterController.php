@@ -60,7 +60,7 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        if ($user->role === 'student') {
+        if ($user->role === User::ROLE_STUDENT) {
             $this->guard()->login($user);
         }
 
@@ -112,7 +112,7 @@ class RegisterController extends Controller
             ]);
 
             // If a student user is created, the related student model is created.
-            if ($user->role === 'student') {
+            if ($user->role === User::ROLE_STUDENT) {
                 $student = new Student;
                 $student->identification_number = $data['identification_number'];
                 $student->gender = $data['gender'];

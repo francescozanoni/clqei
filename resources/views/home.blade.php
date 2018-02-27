@@ -101,7 +101,7 @@
                                     {!! link_to_route(
                                     'users.index',
                                     __('Administrators') . ' (' . $number_of_administrators . ')',
-                                    ['role' => 'administrator']) !!}
+                                    ['role' => \App\User::ROLE_ADMINISTRATOR]) !!}
                                 </li>
                             @endif
                             <li>
@@ -109,14 +109,14 @@
                                 {!! link_to_route(
                                 'users.index',
                                 __('Viewers') . ' (' . $number_of_viewers . ')',
-                                ['role' => 'viewer']) !!}
+                                ['role' => \App\User::ROLE_VIEWER]) !!}
                             </li>
                             <li>
                                 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                 {!! link_to_route(
                                 'users.index',
                                 __('Students') . ' (' . $number_of_students . ')',
-                                ['role' => 'student']) !!}
+                                ['role' => \App\User::ROLE_STUDENT]) !!}
                             </li>
                         </ul>
                         @endcan

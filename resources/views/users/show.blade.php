@@ -24,7 +24,7 @@
 
                         <table class="table table-striped table-condensed">
                             <thead>
-                  
+
                             </thead>
                             <tbody>
                             <tr>
@@ -43,7 +43,7 @@
                                 <td>{{ __('Role') }}</td>
                                 <td>{{ __($user->role) }}</td>
                             </tr>
-                            @if ($user->role === 'student')
+                            @if ($user->role === \App\User::ROLE_STUDENT)
                                 <tr>
                                     <td>{{ __('Identification number') }}</td>
                                     <td>{{ $user->student->identification_number }}</td>

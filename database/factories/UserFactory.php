@@ -25,16 +25,16 @@ $factory->define(App\User::class, function (Faker $faker) {
     return $data;
 });
 
-$factory->state(App\User::class, 'administrator', [
-    'role' => 'administrator',
+$factory->state(App\User::class, \App\User::ROLE_ADMINISTRATOR, [
+    'role' => \App\User::ROLE_ADMINISTRATOR,
 ]);
 
-$factory->state(App\User::class, 'viewer', [
-    'role' => 'viewer',
+$factory->state(App\User::class, \App\User::ROLE_VIEWER, [
+    'role' => \App\User::ROLE_VIEWER,
 ]);
 
-$factory->state(App\User::class, 'student', [
-    'role' => 'student',
+$factory->state(App\User::class, \App\User::ROLE_STUDENT, [
+    'role' => \App\User::ROLE_STUDENT,
 ]);
 
 $factory->state(App\User::class, 'male', function (Faker $faker) {

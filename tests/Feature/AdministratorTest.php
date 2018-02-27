@@ -75,11 +75,11 @@ class AdministratorTest extends TestCase
         $response = $this->actingAs($user)->get(route('users.index'));
         $response->assertStatus(200);
         $response->assertSee(__('Administrators'));
-        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'student']));
+        $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_STUDENT]));
         $response->assertStatus(200);
-        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'viewer']));
+        $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_VIEWER]));
         $response->assertStatus(200);
-        $response = $this->actingAs($user)->get(route('users.index', ['role' => 'administrator']));
+        $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_ADMINISTRATOR]));
         $response->assertStatus(200);
 
         // @todo add test administrators can see other administrators profile page

@@ -15,6 +15,10 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
+    const ROLE_ADMINISTRATOR = 'administrator';
+    const ROLE_VIEWER = 'viewer';
+    const ROLE_STUDENT = 'student';
+
     /**
      * The attributes that should be mutated to dates.
      *
@@ -62,7 +66,7 @@ class User extends Authenticatable
      */
     public function scopeStudents(Builder $query) : Builder
     {
-        return $query->where('role', 'student');
+        return $query->where('role', self::ROLE_STUDENT);
     }
 
     /**
@@ -73,7 +77,7 @@ class User extends Authenticatable
      */
     public function scopeViewers(Builder $query) : Builder
     {
-        return $query->where('role', 'viewer');
+        return $query->where('role', self::ROLE_VIEWER);
     }
 
     /**
@@ -84,7 +88,7 @@ class User extends Authenticatable
      */
     public function scopeAdministrators(Builder $query) : Builder
     {
-        return $query->where('role', 'administrator');
+        return $query->where('role', self::ROLE_ADMINISTRATOR);
     }
 
     /**

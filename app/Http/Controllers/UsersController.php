@@ -31,15 +31,15 @@ class UsersController extends Controller
         $userRole =$request->get('role');
 
         switch ($userRole) {
-            case 'administrator':
+            case User::ROLE_ADMINISTRATOR:
                 $this->authorize('createAdministrator', User::class);
                 $users = User::administrators()->get();
                 break;
-            case 'viewer':
+            case User::ROLE_VIEWER:
                 $this->authorize('createViewer', User::class);
                 $users = User::viewers()->get();
                 break;
-            case 'student':
+            case User::ROLE_STUDENT:
                 $this->authorize('createViewer', User::class);
                 $users = User::students()->with('student')->get();
                 break;
@@ -66,8 +66,8 @@ class UsersController extends Controller
     {
         $this->authorize('view', $user);
 
-        if ($user->role === 'student') {
-            $user->load('student');
+        if ($user->role === User::ROLE_STUDENT) {
+            $user->load(User::ROLE_STUDENT);
         }
 
         return view(
@@ -120,7 +120,7 @@ class UsersController extends Controller
 
         DB::transaction(function () use ($user) {
 
-            if ($user->role === 'student') {
+            if ($user->role === User::ROLE_STUDENT) {
                 $user->student()->delete();
             }
             $user->delete();

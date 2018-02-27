@@ -23,7 +23,7 @@ class CompilationPolicy
         // Compilations can be viewed by administrators, viewers
         // and the student that created the compilation.
         return
-            $user->role !== 'student' ||
+            $user->role !== User::ROLE_STUDENT ||
             $user->student->id === $compilation->student->id;
     }
 
@@ -35,7 +35,7 @@ class CompilationPolicy
      */
     public function create(User $user) : bool
     {
-        return $user->role === 'student';
+        return $user->role === User::ROLE_STUDENT;
     }
 
     /**
@@ -71,6 +71,6 @@ class CompilationPolicy
     public function viewAll(User $user) : bool
     {
         return
-            $user->role !== 'student';
+            $user->role !== User::ROLE_STUDENT;
     }
 }

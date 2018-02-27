@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\User;
+
 class UserService
 {
 
@@ -18,7 +20,7 @@ class UserService
     {
         $rules = $this->getBaseValidationRules();
 
-        $rules['role'][] = 'in:student';
+        $rules['role'][] = 'in:' . User::ROLE_STUDENT;
         $rules['identification_number'] = [
             'required',
             'regex:/' . config('clqei.students.identification_number.pattern') . '/',
@@ -62,7 +64,7 @@ class UserService
     {
         $rules = $this->getBaseValidationRules();
 
-        $rules['role'][] = 'in:viewer';
+        $rules['role'][] = 'in:' . User::ROLE_VIEWER;
 
         return $rules;
     }
@@ -77,7 +79,7 @@ class UserService
     {
         $rules = $this->getBaseValidationRules();
 
-        $rules['role'][] = 'in:viewer,administrator';
+        $rules['role'][] = 'in:' . User::ROLE_VIEWER . ',' . User::ROLE_ADMINISTRATOR;
 
         return $rules;
     }

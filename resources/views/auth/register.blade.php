@@ -66,7 +66,7 @@
 
                         {{-- Guest users can only register student users. --}}
                         @if (Auth::guest() === true)
-                            {!! BootForm::hidden('role', 'student') !!}
+                            {!! BootForm::hidden('role', \App\User::ROLE_STUDENT) !!}
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     {!! BootForm::text('identification_number', __('Identification number')) !!}
@@ -102,12 +102,12 @@
                                'role',
                                 __('Role'),
                                 [
-                                    'viewer' => __('viewer'),
-                                    'administrator' => __('administrator')
+                                    \App\User::ROLE_VIEWER => __(\App\User::ROLE_VIEWER),
+                                    \App\User::ROLE_ADMINISTRATOR => __(\App\User::ROLE_ADMINISTRATOR)
                                 ]
                                ) !!}
                             @else
-                                {!! BootForm::hidden('role', 'viewer') !!}
+                                {!! BootForm::hidden('role', \App\User::ROLE_VIEWER) !!}
                             @endif
 
                         @endif
