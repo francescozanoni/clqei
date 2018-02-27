@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExampleTest extends TestCase
+class ImportCommandTest extends TestCase
 {
+
     /**
      * A basic test example.
      *
@@ -15,8 +15,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->assertTrue(true);
     }
+
 }

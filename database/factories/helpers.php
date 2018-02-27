@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Francesco.Zanoni
- * Date: 12/02/2018
- * Time: 14:17
- */
+declare(strict_types = 1);
 
 /**
  * First name, last name and e-mail address array from first name and last name

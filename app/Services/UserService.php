@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Francesco.Zanoni
- * Date: 15/02/2018
- * Time: 14:17
- */
 declare(strict_types = 1);
 
 namespace App\Services;
