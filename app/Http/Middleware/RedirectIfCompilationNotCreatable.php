@@ -4,10 +4,25 @@ declare(strict_types = 1);
 namespace App\Http\Middleware;
 
 use App;
+use App\Services\CompilationService;
 use Closure;
 
 class RedirectIfCompilationNotCreatable
 {
+
+    /**
+     * @var App\Services\CompilationService
+     */
+    private $compilationService;
+
+    /**
+     * @param App\Services\CompilationService $compilationService
+     */
+    public function __construct(App\Services\CompilationService $compilationService)
+    {
+        $this->compilationService = $compilationService;
+    }
+    
     /**
      * Handle an incoming request.
      *
@@ -18,7 +33,7 @@ class RedirectIfCompilationNotCreatable
     public function handle($request, Closure $next)
     {
 
-        if (App::make('App\Services\CompilationService')->isCompilationCreatable() === false) {
+        if ($this->compilationService->isCompilationCreatable() === false) {
             return redirect('/home');
         }
 

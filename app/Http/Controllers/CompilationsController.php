@@ -11,6 +11,7 @@ use App\Models\Location;
 use App\Models\Question;
 use App\Models\Section;
 use App\Models\Ward;
+use App\Services\CompilationService;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -19,12 +20,17 @@ use Yajra\DataTables\DataTables;
 class CompilationsController extends Controller
 {
 
+    /**
+     * @var App\Services\CompilationService
+     */
     private $compilationService;
 
     /**
      * Create a new controller instance.
+     *
+     * @param App\Services\CompilationService $compilationService
      */
-    public function __construct()
+    public function __construct(App\Services\CompilationService $compilationService)
     {
         // If compilations cannot be currently created,
         // users are redirected.
@@ -32,7 +38,7 @@ class CompilationsController extends Controller
 
         $this->middleware('add_missing_questions')->only('store');
 
-        $this->compilationService = App::make('App\Services\CompilationService');
+        $this->compilationService = $compilationService;
     }
 
     /**
