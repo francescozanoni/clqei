@@ -51,7 +51,11 @@ class CompilationItem extends Model
      */
     public function getTheAnswerAttribute()
     {
-
+        
+        if ($this->attributes['answer'] === null) {
+            return null;
+        }
+        
         $answer = null;
 
         switch ($this->question->type) {
