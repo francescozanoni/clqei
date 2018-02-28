@@ -10,8 +10,6 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -20,12 +18,10 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
-    
+
         // @todo ensure $countries population can stay here or must be moved to boot() method
         $countries = require(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
 
@@ -36,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\DataTablesPluginService', function () {
             return new DataTablesPluginService(base_path('node_modules/datatables.net-plugins'));
         });
-        
+
         $simpleBindings = [
             'App\Services\CompilationService',
             'App\Services\AcademicYearService',
@@ -50,5 +46,5 @@ class AppServiceProvider extends ServiceProvider
         }
 
     }
-    
+
 }
