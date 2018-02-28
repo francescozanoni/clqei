@@ -15,10 +15,9 @@ class WardPolicy
      * Determine whether the user can view the ward.
      *
      * @param  \App\User $user
-     * @param  \App\Models\Ward $ward
      * @return bool
      */
-    public function view(User $user, Ward $ward) : bool
+    public function view(User $user) : bool
     {
         // Wards can be viewed by administrators and viewers.
         return $user->role !== User::ROLE_STUDENT;
@@ -50,10 +49,9 @@ class WardPolicy
      * Determine whether the user can delete the ward.
      *
      * @param  \App\User $user
-     * @param  \App\Models\Ward $ward
      * @return bool
      */
-    public function delete(User $user, Ward $ward) : bool
+    public function delete(User $user) : bool
     {
         return $user->role !== User::ROLE_STUDENT;
     }

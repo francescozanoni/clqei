@@ -42,10 +42,9 @@ class CompilationPolicy
      * Determine whether the user can update the compilation.
      *
      * @param  \App\User $user
-     * @param  \App\Models\Compilation $compilation
      * @return bool
      */
-    public function update(User $user, Compilation $compilation) : bool
+    public function update(User $user) : bool
     {
         return false;
     }
@@ -54,10 +53,9 @@ class CompilationPolicy
      * Determine whether the user can delete the compilation.
      *
      * @param  \App\User $user
-     * @param  \App\Models\Compilation $compilation
      * @return bool
      */
-    public function delete(User $user, Compilation $compilation) : bool
+    public function delete(User $user) : bool
     {
         return false;
     }
