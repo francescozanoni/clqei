@@ -24,7 +24,7 @@ class UserPolicy
         // Any users can view their own data.
         if ($user->id === $model->id) {
             $return = true;
-        }
+        } else {
 
         // Administrators can view any users.
         if ($user->role === User::ROLE_ADMINISTRATOR) {
@@ -36,6 +36,8 @@ class UserPolicy
             in_array($model->role, [User::ROLE_STUDENT, User::ROLE_VIEWER]) === true
         ) {
             $return = true;
+        }
+        
         }
 
         return $return;
@@ -91,24 +93,26 @@ class UserPolicy
     public function delete(User $user, User $model) : bool
     {
 
+        $return = false;
+        
         // Students can be deleted only by viewer and administrators.
         if ($model->role === User::ROLE_STUDENT) {
-            return in_array($user->role, [User::ROLE_ADMINISTRATOR, User::ROLE_VIEWER]);
+            $return = in_array($user->role, [User::ROLE_ADMINISTRATOR, User::ROLE_VIEWER]);
         }
 
         // Viewers can be deleted only by administrators.
         if ($model->role === User::ROLE_VIEWER) {
-            return $user->role === User::ROLE_ADMINISTRATOR;
+            $return = $user->role === User::ROLE_ADMINISTRATOR;
         }
 
         // Administrators can be deleted only by other administrators.
         if ($model->role === User::ROLE_ADMINISTRATOR) {
-            return
+            $return =
                 $user->role === User::ROLE_ADMINISTRATOR &&
                 $user->id !== $model->id;
         }
 
-        return false;
+        return $return;
 
     }
 }
