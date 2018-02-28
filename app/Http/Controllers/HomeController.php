@@ -11,13 +11,6 @@ use Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -26,6 +19,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $numberOfCompilations = null;
         if (Auth::user()->can('viewAll', Compilation::class)) {
             $numberOfCompilations = Compilation::count();
@@ -44,5 +38,7 @@ class HomeController extends Controller
                 'number_of_wards' => Ward::count(),
             ]
         );
+
     }
+
 }
