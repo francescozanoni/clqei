@@ -36,7 +36,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
-    
+
     /**
      * @var UserService
      */
@@ -48,7 +48,7 @@ class RegisterController extends Controller
     public function __construct(UserService $userService)
     {
         $this->middleware('not_student');
-        
+
         $this->userService = $userService;
     }
 

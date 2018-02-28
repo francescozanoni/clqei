@@ -4,6 +4,7 @@ declare(strict_types = 1);
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class StudentsTableSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class StudentsTableSeeder extends Seeder
     {
 
         DB::table('students')->insert([
-            'user_id' => DB::table('users')->where('role', \App\User::ROLE_STUDENT)->first()->id,
+            'user_id' => DB::table('users')->where('role', User::ROLE_STUDENT)->first()->id,
             'identification_number' => '12345678',
             'gender' => 'male',
             'nationality' => 'IT',

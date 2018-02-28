@@ -4,6 +4,7 @@ declare(strict_types = 1);
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,26 +14,26 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
 
-        $now = Carbon::now()->format('Y-m-d H:i:s');
-        $userDomain = 'example.com';
-
         foreach ($this->getUserRoles() as $role) {
             DB::table('users')->insert([
-            'first_name' => 'Example',
-            'last_name' => ucfirst($role),
-            'email' => $role . '@' . $userDomain,
-            'password' => bcrypt($role),
-            'role' => $role,
-            'created_at' => $now,
-        ]);
+                'first_name' => 'Example',
+                'last_name' => ucfirst($role),
+                'email' => $role . '@example.com',
+                'password' => bcrypt($role),
+                'role' => $role,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
         }
-      
+
     }
-  
+
+    /**
+     * @return Generator
+     */
     private function getUserRoles()
     {
-      yield \App\User::ROLE_ADMINISTRATOR;
-      yield \App\User::ROLE_VIEWER;
-      yield \App\User::ROLE_STUDENT;
+        yield User::ROLE_ADMINISTRATOR;
+        yield User::ROLE_VIEWER;
+        yield User::ROLE_STUDENT;
     }
 }

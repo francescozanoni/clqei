@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     static $password;
 
     $data = firstNameLastNameEMail(
@@ -25,25 +26,25 @@ $factory->define(App\User::class, function (Faker $faker) {
     return $data;
 });
 
-$factory->state(App\User::class, \App\User::ROLE_ADMINISTRATOR, [
-    'role' => \App\User::ROLE_ADMINISTRATOR,
+$factory->state(User::class, User::ROLE_ADMINISTRATOR, [
+    'role' => User::ROLE_ADMINISTRATOR,
 ]);
 
-$factory->state(App\User::class, \App\User::ROLE_VIEWER, [
-    'role' => \App\User::ROLE_VIEWER,
+$factory->state(User::class, User::ROLE_VIEWER, [
+    'role' => User::ROLE_VIEWER,
 ]);
 
-$factory->state(App\User::class, \App\User::ROLE_STUDENT, [
-    'role' => \App\User::ROLE_STUDENT,
+$factory->state(User::class, User::ROLE_STUDENT, [
+    'role' => User::ROLE_STUDENT,
 ]);
 
-$factory->state(App\User::class, 'male', function (Faker $faker) {
+$factory->state(User::class, 'male', function (Faker $faker) {
     return firstNameLastNameEMail(
         $faker->firstName('male'),
         $faker->lastName
     );
 });
-$factory->state(App\User::class, 'female', function (Faker $faker) {
+$factory->state(User::class, 'female', function (Faker $faker) {
     return firstNameLastNameEMail(
         $faker->firstName('female'),
         $faker->lastName
@@ -51,9 +52,9 @@ $factory->state(App\User::class, 'female', function (Faker $faker) {
 });
 
 /*
-$student = factory(App\Models\Student::class)
+$student = factory(Models\Student::class)
     ->make();
-$user = factory(App\User::class)
+$user = factory(User::class)
     ->states('student', $student->gender)
     ->create()
     ->student()

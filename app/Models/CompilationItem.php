@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -58,6 +58,7 @@ class CompilationItem extends Model
 
             case 'single_choice':
                 $answer = $this->answer()->first()->text;
+                break;
 
             case 'multiple_choice':
                 $siblingItems =
@@ -69,11 +70,12 @@ class CompilationItem extends Model
                     $siblingItemAnswers[] = $siblingItem->answer()->first();
                 }
                 $answer = $siblingItemAnswers;
+                break;
 
             default:
                 $answer = $this->attributes['answer'];
         }
-      
+
         return $answer;
     }
 

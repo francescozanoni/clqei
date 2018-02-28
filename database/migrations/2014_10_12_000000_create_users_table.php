@@ -1,15 +1,15 @@
 <?php
+declare(strict_types = 1);
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\User;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable(false);
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', [\App\User::ROLE_ADMINISTRATOR, \App\User::ROLE_VIEWER, \App\User::ROLE_STUDENT])->nullable(false);
+            $table->enum('role', [User::ROLE_ADMINISTRATOR, User::ROLE_VIEWER, User::ROLE_STUDENT])->nullable(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -28,8 +28,6 @@ class CreateUsersTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

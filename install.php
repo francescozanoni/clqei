@@ -40,14 +40,18 @@ if (isset($inputOptions['locale']) === true) {
 
 # #####################################################
 
-# CONSTANTS
+# FILE/FOLDER PATH CONSTANTS
 
 define('HTACCESS_FILE_PATH', __DIR__ . '/public/.htaccess');
+define('HTACCESS_EXAMPLE_FILE_PATH', __DIR__ . '/public/.htaccess.example');
 define('DATABASE_FILE_PATH', __DIR__ . '/database/database.sqlite');
 define('TEST_DATABASE_FILE_PATH', __DIR__ . '/database/test_database.sqlite');
 define('DOT_ENV_FILE_PATH', __DIR__ . '/.env');
+define('DOT_ENV_EXAMPLE_FILE_PATH', __DIR__ . '/.env.example');
 define('PHPUNIT_XML_FILE_PATH', __DIR__ . '/phpunit.xml');
+define('PHPUNIT_XML_EXAMPLE_FILE_PATH', __DIR__ . '/phpunit.xml.example');
 define('PHPLITEADMIN_FOLDER_PATH', __DIR__ . '/public/phpliteadmin');
+define('PHPLITEADMIN_ZIP_FILE_PATH', sys_get_temp_dir() . '/phpliteadmin.zip');
 
 # #####################################################
 
@@ -63,9 +67,9 @@ $filePathsToCheck = [
 
 if ($options['with_phpliteadmin'] === true) {
     $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.php';
-    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin/phpliteadmin.config.sample.php';
-    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin/phpliteadmin.php';
-    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin/readme.md';
+    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.sample.php';
+    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.php';
+    $filePathsToCheck[] = PHPLITEADMIN_FOLDER_PATH . '/readme.md';
 }
 
 foreach ($filePathsToCheck as $filePath) {
@@ -118,11 +122,11 @@ echo PHP_EOL;
 echo 'Setting up configuration files...' . PHP_EOL;
 
 # Web server-related configuration
-copy(HTACCESS_FILE_PATH . '.example', HTACCESS_FILE_PATH);
+copy(HTACCESS_EXAMPLE_FILE_PATH, HTACCESS_FILE_PATH);
 
 # Configuration files
-copy(DOT_ENV_FILE_PATH . '.example', DOT_ENV_FILE_PATH);
-copy(PHPUNIT_XML_FILE_PATH . '.example', PHPUNIT_XML_FILE_PATH);
+copy(DOT_ENV_EXAMPLE_FILE_PATH, DOT_ENV_FILE_PATH);
+copy(PHPUNIT_XML_EXAMPLE_FILE_PATH, PHPUNIT_XML_FILE_PATH);
 
 # #####################################################
 
@@ -140,13 +144,13 @@ if ($options['with_phpliteadmin'] === true) {
 
     # phpLiteAdmin download
     $file = file_get_contents($options['phpliteadmin_url']);
-    file_put_contents(sys_get_temp_dir() . '/phpliteadmin.zip', $file);
+    file_put_contents(PHPLITEADMIN_ZIP_FILE_PATH, $file);
     $zip = new ZipArchive();
-    if ($zip->open(sys_get_temp_dir() . '/phpliteadmin.zip') === true) {
+    if ($zip->open(PHPLITEADMIN_ZIP_FILE_PATH) === true) {
         $zip->extractTo(PHPLITEADMIN_FOLDER_PATH . '/');
         $zip->close();
     }
-    unlink(sys_get_temp_dir() . '/phpliteadmin.zip');
+    unlink(PHPLITEADMIN_ZIP_FILE_PATH);
     copy(
         PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.clqei.php',
         PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.php'
@@ -181,7 +185,7 @@ if ($options['with_phpliteadmin'] === true) {
     echo PHP_EOL;
     echo "Manual steps:" . PHP_EOL;
     echo PHP_EOL;
-    echo " - password and cookie name in ' . PHPLITEADMIN_FOLDER_PATH . '/phpliteadmin.config.php" . PHP_EOL;
+    echo " - password and cookie name in " . PHPLITEADMIN_FOLDER_PATH . "/phpliteadmin.config.php" . PHP_EOL;
     echo "    - \$password = 'admin'" . PHP_EOL;
     echo "    - \$cookie_name = 'pla3412'" . PHP_EOL;
 }
