@@ -19,25 +19,28 @@ class UserPolicy
      */
     public function view(User $user, User $model) : bool
     {
-        $return = false;
-
         // Any users can view their own data.
         if ($user->id === $model->id) {
-            $return = true;
-        } else {
-
-        // Administrators can view any users.
-        if ($user->role === User::ROLE_ADMINISTRATOR) {
-            $return = true;
+            return true;
         }
 
-        // Viewers can view only viewers.
-        if ($user->role === User::ROLE_VIEWER &&
-            in_array($model->role, [User::ROLE_STUDENT, User::ROLE_VIEWER]) === true
-        ) {
-            $return = true;
-        }
-        
+        $return = null;
+
+        switch ($user->role) {
+
+            case User::ROLE_ADMINISTRATOR;
+                // Administrators can view any users.
+                $return = true;
+                break;
+
+            case User::ROLE_VIEWER;
+                // Viewers can view viewers and students.
+                $return = in_array($model->role, [User::ROLE_STUDENT, User::ROLE_VIEWER]);
+                break;
+
+            default:
+                $return = false;
+
         }
 
         return $return;
@@ -93,23 +96,30 @@ class UserPolicy
     public function delete(User $user, User $model) : bool
     {
 
-        $return = false;
-        
-        // Students can be deleted only by viewer and administrators.
-        if ($model->role === User::ROLE_STUDENT) {
-            $return = in_array($user->role, [User::ROLE_ADMINISTRATOR, User::ROLE_VIEWER]);
-        }
+        $return = null;
 
-        // Viewers can be deleted only by administrators.
-        if ($model->role === User::ROLE_VIEWER) {
-            $return = $user->role === User::ROLE_ADMINISTRATOR;
-        }
+        switch ($model->role) {
 
-        // Administrators can be deleted only by other administrators.
-        if ($model->role === User::ROLE_ADMINISTRATOR) {
-            $return =
-                $user->role === User::ROLE_ADMINISTRATOR &&
-                $user->id !== $model->id;
+            case User::ROLE_ADMINISTRATOR;
+                // Administrators can be deleted only by other administrators.
+                $return =
+                    $user->role === User::ROLE_ADMINISTRATOR &&
+                    $user->id !== $model->id;
+                break;
+
+            case User::ROLE_VIEWER;
+                // Viewers can be deleted only by administrators.
+                $return = $user->role === User::ROLE_ADMINISTRATOR;
+                break;
+
+            case User::ROLE_STUDENT;
+                // Students can be deleted only by viewer and administrators.
+                $return = in_array($user->role, [User::ROLE_ADMINISTRATOR, User::ROLE_VIEWER]);
+                break;
+
+            default:
+                $return = false;
+
         }
 
         return $return;
