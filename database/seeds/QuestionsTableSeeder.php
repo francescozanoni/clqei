@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use App\Models\Question;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +41,8 @@ class QuestionsTableSeeder extends Seeder
             $sectionId++;
         }
 
-        DB::table('questions')->insert($dataToInsert);
+        DB::table(Question::getTableName())
+            ->insert($dataToInsert);
 
     }
 }

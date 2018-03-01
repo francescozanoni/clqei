@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App;
 
+use App\Models\Traits\EloquentGetTableName;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -14,6 +15,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    use EloquentGetTableName;
 
     const ROLE_ADMINISTRATOR = 'administrator';
     const ROLE_VIEWER = 'viewer';

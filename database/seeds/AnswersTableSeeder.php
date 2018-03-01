@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use App\Models\Answer;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,7 @@ class AnswersTableSeeder extends Seeder
 
         }
 
-        DB::table('answers')
+        DB::table(Answer::getTableName())
             ->insert($dataToInsert);
 
     }

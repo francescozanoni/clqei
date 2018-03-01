@@ -47,7 +47,7 @@ class CompilationPolicy
     public function update(User $user) : bool
     {
         // Currently no users can update compilations.
-        return $user->id !== $user->id;
+        return $user->id < 0;
     }
 
     /**
@@ -59,7 +59,7 @@ class CompilationPolicy
     public function delete(User $user) : bool
     {
         // Currently no users can delete compilations.
-        return $user->id !== $user->id;
+        return $user->id < 0;
     }
 
     /**

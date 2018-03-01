@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
     {
 
         foreach ($this->getUserRoles() as $role) {
-            DB::table('users')->insert([
+            DB::table(User::getTableName())->insert([
                 'first_name' => 'Example',
                 'last_name' => ucfirst($role),
                 'email' => $role . '@example.com',
