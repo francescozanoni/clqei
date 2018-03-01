@@ -46,7 +46,8 @@ class CompilationPolicy
      */
     public function update(User $user) : bool
     {
-        return false;
+        // Currently no users can update compilations.
+        return $user->id !== $user->id;
     }
 
     /**
@@ -57,7 +58,8 @@ class CompilationPolicy
      */
     public function delete(User $user) : bool
     {
-        return false;
+        // Currently no users can delete compilations.
+        return $user->id !== $user->id;
     }
 
     /**
@@ -68,7 +70,6 @@ class CompilationPolicy
      */
     public function viewAll(User $user) : bool
     {
-        return
-            $user->role !== User::ROLE_STUDENT;
+        return $user->role !== User::ROLE_STUDENT;
     }
 }
