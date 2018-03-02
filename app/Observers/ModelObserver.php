@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Session;
 class ModelObserver
 {
 
+    const FLASH_MESSAGE_SESSION_KEY = 'message';
+
     /**
      * Listen to the model created event.
      *
@@ -17,7 +19,7 @@ class ModelObserver
     public function created(Model $model)
     {
         Session::flash(
-            'message',
+            self::FLASH_MESSAGE_SESSION_KEY,
             __('The new ' . rtrim($model->getTable(), 's') . ' has been created')
         );
     }
@@ -30,7 +32,7 @@ class ModelObserver
     public function updated(Model $model)
     {
         Session::flash(
-            'message',
+            self::FLASH_MESSAGE_SESSION_KEY,
             __('The ' . rtrim($model->getTable(), 's') . ' has been updated')
         );
     }
@@ -43,7 +45,7 @@ class ModelObserver
     public function deleted(Model $model)
     {
         Session::flash(
-            'message',
+            self::FLASH_MESSAGE_SESSION_KEY,
             __('The ' . rtrim($model->getTable(), 's') . ' has been deleted')
         );
     }

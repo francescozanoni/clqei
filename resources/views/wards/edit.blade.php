@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
 
-                @if (session('message'))
+                @if (session(\App\Observers\ModelObserver::FLASH_MESSAGE_SESSION_KEY))
                     <div class="alert alert-success">
-                        {{ session('message') }}
+                        {{ session(\App\Observers\ModelObserver::FLASH_MESSAGE_SESSION_KEY') }}
                     </div>
                 @endif
 
