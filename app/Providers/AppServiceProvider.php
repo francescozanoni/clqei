@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Compilation;
+use App\Models\Location;
+use App\Models\Ward;
+use App\Observers\ModelObserver;
 use App\Services\DataTablesPluginService;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // https://laravel.com/docs/5.5/eloquent#events
+        Compilation::observe(ModelObserver::class);
+        Ward::observe(ModelObserver::class);
+        Location::observe(ModelObserver::class);
     }
 
     /**

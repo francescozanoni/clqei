@@ -11,7 +11,6 @@ use App\Models\Location;
 use App\Models\Question;
 use App\Models\Section;
 use App\Models\Ward;
-use App\Services\CompilationService;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -150,8 +149,7 @@ class CompilationsController extends Controller
         });
 
         // Redirection does not work from within transaction block.
-        return \Redirect::route('compilations.show', [$compilation->id])
-            ->with('message', __('The new compilation has been created'));
+        return \Redirect::route('compilations.show', [$compilation->id]);
 
     }
 

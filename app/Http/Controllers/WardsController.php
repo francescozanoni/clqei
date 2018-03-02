@@ -33,9 +33,7 @@ class WardsController extends Controller
         $ward->name = $request->input('name');
         $ward->save();
 
-        return \Redirect::route('wards.index')
-            ->with('message', __('The new ward has been created'));
-
+        return \Redirect::route('wards.index');
     }
 
     /**
@@ -61,8 +59,7 @@ class WardsController extends Controller
         $ward->name = $request->input('name');
         $ward->save();
 
-        return \Redirect::route('wards.index')
-            ->with('message', __('The ward has been updated'));
+        return \Redirect::route('wards.index');
     }
 
     /**
@@ -75,7 +72,6 @@ class WardsController extends Controller
     {
         $ward->delete();
 
-        return \Redirect::route('wards.index')
-            ->with('message', __('The ward has been deleted'));
+        return \Redirect::route('wards.index');
     }
 }

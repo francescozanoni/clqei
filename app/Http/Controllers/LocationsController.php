@@ -33,9 +33,7 @@ class LocationsController extends Controller
         $location->name = $request->input('name');
         $location->save();
 
-        return \Redirect::route('locations.index')
-            ->with('message', __('The new location has been created'));
-
+        return \Redirect::route('locations.index');
     }
 
     /**
@@ -61,8 +59,7 @@ class LocationsController extends Controller
         $location->name = $request->input('name');
         $location->save();
 
-        return \Redirect::route('locations.index')
-            ->with('message', __('The location has been updated'));
+        return \Redirect::route('locations.index');
     }
 
     /**
@@ -75,7 +72,6 @@ class LocationsController extends Controller
     {
         $location->delete();
 
-        return \Redirect::route('locations.index')
-            ->with('message', __('The location has been deleted'));
+        return \Redirect::route('locations.index');
     }
 }
