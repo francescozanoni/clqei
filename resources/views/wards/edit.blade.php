@@ -7,7 +7,7 @@
 
                 @if (session(\App\Observers\ModelObserver::FLASH_MESSAGE_SESSION_KEY))
                     <div class="alert alert-success">
-                        {{ session(\App\Observers\ModelObserver::FLASH_MESSAGE_SESSION_KEY') }}
+                        {{ session(\App\Observers\ModelObserver::FLASH_MESSAGE_SESSION_KEY) }}
                     </div>
                 @endif
 
