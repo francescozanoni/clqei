@@ -65,8 +65,6 @@ Route::middleware(['auth'])->group(function () {
         ['except' => ['create', 'store']]
     );
 
-    Route::middleware(['not_student'])->group(function () {
-
         /*
          * Verb        URI                               Action   Route Name
          * ---------------------------------------------------------------------------
@@ -80,7 +78,8 @@ Route::middleware(['auth'])->group(function () {
             'locations',
             'LocationsController',
             ['except' => ['create', 'show']]
-        );
+        )
+            ->middleware('can:create,App\Models\Location');
 
         /*
          * Verb        URI                               Action   Route Name
@@ -95,8 +94,12 @@ Route::middleware(['auth'])->group(function () {
             'wards',
             'WardsController',
             ['except' => ['create', 'show']]
-        );
+        )
+            ->middleware('can:create,App\Models\Ward');
 
+    Route::middleware('can:viewAll,App\Models\Compilation')
+        ->group(function () {
+    
         // ---------------------------------------------------------------------------
         // These routes are the entry points that provide frontend assets
         // located within the private part of the application.

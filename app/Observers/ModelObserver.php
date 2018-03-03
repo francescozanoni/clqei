@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Observers;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
 
@@ -20,7 +21,7 @@ class ModelObserver
     {
         Session::flash(
             self::FLASH_MESSAGE_SESSION_KEY,
-            __('The new ' . rtrim($model->getTable(), 's') . ' has been created')
+            __('The new ' . $this->getModelName($model) . ' has been created')
         );
     }
 
@@ -33,7 +34,7 @@ class ModelObserver
     {
         Session::flash(
             self::FLASH_MESSAGE_SESSION_KEY,
-            __('The ' . rtrim($model->getTable(), 's') . ' has been updated')
+            __('The ' . $this->getModelName($model) . ' has been updated')
         );
     }
 
@@ -46,8 +47,24 @@ class ModelObserver
     {
         Session::flash(
             self::FLASH_MESSAGE_SESSION_KEY,
-            __('The ' . rtrim($model->getTable(), 's') . ' has been deleted')
+            __('The ' . $this->getModelName($model) . ' has been deleted')
         );
+    }
+    
+    /**
+     * Get a human readable string representation of the model class.
+     *
+     * @param Model $model
+     * @return string
+     */
+    private function getModelName(Model $model) : string
+    {
+        switch (get_class($model)) {
+            case User::class:
+                return $model->role;
+            default:
+                return rtrim($model->getTable(), 's');
+        }
     }
 
 }

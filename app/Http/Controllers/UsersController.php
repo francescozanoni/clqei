@@ -28,7 +28,7 @@ class UsersController extends Controller
     {
 
         $users = null;
-        $userRole =$request->get('role');
+        $userRole = $request->get('role');
 
         switch ($userRole) {
             case User::ROLE_ADMINISTRATOR:
@@ -114,7 +114,7 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
 
-        $this->authorize('destroy', $user);
+        $this->authorize('delete', $user);
 
         $userRole = $user->role;
 
@@ -127,7 +127,6 @@ class UsersController extends Controller
 
         });
 
-        return \Redirect::route('users.index', ['role' => $userRole])
-            ->with('message', __('The ' . $userRole . ' has been deleted'));
+        return \Redirect::route('users.index', ['role' => $userRole]);
     }
 }

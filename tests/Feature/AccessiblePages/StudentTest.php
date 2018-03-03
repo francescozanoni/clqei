@@ -56,27 +56,27 @@ class StudentTest extends TestCase
 
         // Students cannot do anything with stage locations.
         $response = $this->actingAs($user)->get(route('locations.index'));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->get(route('locations.edit', ['location' => Location::first()]));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->post(route('locations.store'));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->put(route('locations.update', ['location' => Location::first()]));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->delete(route('locations.destroy', ['location' => Location::first()]));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
 
         // Students cannot do anything with stage wards.
         $response = $this->actingAs($user)->get(route('wards.index'));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->get(route('wards.edit', ['ward' => Ward::first()]));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->post(route('wards.store'));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->put(route('wards.update', ['ward' => Ward::first()]));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->delete(route('wards.destroy', ['ward' => Ward::first()]));
-        $response->assertRedirect(route('home'));
+        $response->assertStatus(403);
 
         // Students cannot see the list of users.
         $response = $this->actingAs($user)->get(route('users.index'));
