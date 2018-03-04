@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Feature;
 
 use App;
+use App\Observers\ModelObserver;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,7 +38,7 @@ class CompilationTest extends TestCase
                     route('compilations.store',
                     json_decode(
                         '{
-                          "student_id": "1",
+                          "student_id": "' . $user->student->id . '",
                           "stage_location_id": "1",
                           "stage_ward_id": "1",
                           "stage_start_date": "' . $stageStartDate . '",
@@ -86,8 +87,14 @@ class CompilationTest extends TestCase
                     )
                 )
             );
-        $response->assertStatus(302);
+            
+        $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
+        $response->assertSessionHas(ModelObserver::FLASH_MESSAGE_SESSION_KEY, __('The new compilation has been created'));
         $this->assertDatabaseHas('compilations', ['id' => 1]);
+        $this->assertDatabaseMissing('compilations', ['id' => 2]);
+        $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
+        $this->assertDatabaseHas('compilation_items', ['id' => 36, 'compilation_id' => 1]);
+        $this->assertDatabaseMissing('compilation_items', ['id' => 37]);
         
     }
     
@@ -108,7 +115,7 @@ class CompilationTest extends TestCase
                     route('compilations.store',
                     json_decode(
                         '{
-                          "student_id": "1",
+                          "student_id": "' . $user->student->id . '",
                           "stage_location_id": "1",
                           "stage_ward_id": "1",
                           "stage_start_date": "' . $stageStartDate . '",
@@ -152,8 +159,18 @@ class CompilationTest extends TestCase
                     )
                 )
             );
-        $response->assertStatus(302);
+            
+        $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
+        $response->assertSessionHas(ModelObserver::FLASH_MESSAGE_SESSION_KEY, __('The new compilation has been created'));
         $this->assertDatabaseHas('compilations', ['id' => 1]);
+        $this->assertDatabaseMissing('compilations', ['id' => 2]);
+        $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
+        $this->assertDatabaseHas('compilation_items', ['id' => 33, 'compilation_id' => 1]);
+        // Empty optional select box field is stored as NULL.
+        $this->assertDatabaseHas('compilation_items', ['compilation_id' => 1, 'question_id' => 7, 'answer' => null]);
+        // Empty optional checkbox field is stored as NULL.
+        $this->assertDatabaseHas('compilation_items', ['compilation_id' => 1, 'question_id' => 9, 'answer' => null]);
+        $this->assertDatabaseMissing('compilation_items', ['id' => 34]);
         
     }
 
