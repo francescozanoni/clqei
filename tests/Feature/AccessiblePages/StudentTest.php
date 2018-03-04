@@ -13,14 +13,18 @@ class StudentTest extends TestCase
 {
 
     use RefreshDatabase;
+    
+    public function setUp()
+    {
+        parent::setUp();
+        $this->seed();
+    }
 
     /**
      * Pages available to students.
      */
     public function testAvailablePages()
     {
-
-        $this->seed();
 
         $user = User::students()->first();
 
@@ -49,8 +53,6 @@ class StudentTest extends TestCase
      */
     public function testUnavailablePages()
     {
-
-        $this->seed();
 
         $user = User::students()->first();
 

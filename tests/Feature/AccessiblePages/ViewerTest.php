@@ -13,14 +13,18 @@ class ViewerTest extends TestCase
 {
 
     use RefreshDatabase;
+    
+    public function setUp()
+    {
+        parent::setUp();
+        $this->seed();
+    }
 
     /**
      * Pages available to students.
      */
     public function testAvailablePages()
     {
-
-        $this->seed();
 
         $user = User::viewers()->first();
 
@@ -96,8 +100,6 @@ class ViewerTest extends TestCase
      */
     public function testUnavailablePages()
     {
-
-        $this->seed();
 
         $user = User::viewers()->first();
 

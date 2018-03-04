@@ -37,7 +37,20 @@ class AcademicYearService
      */
     public function getCurrent() : string
     {
-        $time = strtotime('now');
+        return $this->getFromDate(date('Y-m-d'));
+    }
+    
+    /**
+     * Get the academic year of a specified date
+     *
+     * @param string $date date in 'Y-m-d' format
+     * @return string e.g. '2017/2018'
+     */
+    public function getFromDate(string $date) : string
+    {
+        // @todo add date validation
+        
+        $time = strtotime($date);
         $year = date('Y', $time);
 
         if (date('n', $time) < 10) {

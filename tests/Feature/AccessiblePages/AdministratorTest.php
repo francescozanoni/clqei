@@ -14,14 +14,18 @@ class AdministratorTest extends TestCase
 {
 
     use RefreshDatabase;
+    
+    public function setUp()
+    {
+        parent::setUp();
+        $this->seed();
+    }
 
     /**
      * Pages available to students.
      */
     public function testAvailablePages()
     {
-
-        $this->seed();
 
         $user = User::administrators()->first();
 
@@ -103,8 +107,6 @@ class AdministratorTest extends TestCase
      */
     public function testUnavailablePages()
     {
-
-        $this->seed();
 
         $user = User::administrators()->first();
 

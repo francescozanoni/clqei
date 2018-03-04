@@ -11,14 +11,18 @@ class HomePageTest extends TestCase
 {
 
     use RefreshDatabase;
+    
+    public function setUp()
+    {
+        parent::setUp();
+        $this->seed();
+    }
 
     /**
      * What administrators can see on home page.
      */
     public function testAdministrator()
     {
-
-        $this->seed();
 
         $user = User::administrators()->first();
 
@@ -49,8 +53,6 @@ class HomePageTest extends TestCase
     public function testViewer()
     {
 
-        $this->seed();
-
         $user = User::viewers()->first();
 
         $response = $this->actingAs($user)->get(route('home'));
@@ -79,8 +81,6 @@ class HomePageTest extends TestCase
      */
     public function testStudent()
     {
-
-        $this->seed();
 
         $user = User::students()->first();
 
