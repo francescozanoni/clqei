@@ -171,7 +171,7 @@ $file = preg_replace('#/absolute/path/to/database#', realpath(dirname(DATABASE_F
 file_put_contents(PHPUNIT_XML_FILE_PATH, $file);
 
 $baseUrl = parse_url($options['application_url'], PHP_URL_PATH);
-if ($baseUrl === '') {
+if (empty($baseUrl) === true) {
     $baseUrl = '/';
 }
 $file = file_get_contents(HTACCESS_FILE_PATH);
