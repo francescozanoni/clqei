@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 class ModelObserver
 {
 
-    const FLASH_MESSAGE_SESSION_KEY = 'message';
+    const FLASH_MESSAGE_KEY = 'message';
 
     /**
      * Listen to the model created event.
@@ -20,7 +20,7 @@ class ModelObserver
     public function created(Model $model)
     {
         Session::flash(
-            self::FLASH_MESSAGE_SESSION_KEY,
+            self::FLASH_MESSAGE_KEY,
             __('The new ' . $this->getModelName($model) . ' has been created')
         );
     }
@@ -33,7 +33,7 @@ class ModelObserver
     public function updated(Model $model)
     {
         Session::flash(
-            self::FLASH_MESSAGE_SESSION_KEY,
+            self::FLASH_MESSAGE_KEY,
             __('The ' . $this->getModelName($model) . ' has been updated')
         );
     }
@@ -46,11 +46,11 @@ class ModelObserver
     public function deleted(Model $model)
     {
         Session::flash(
-            self::FLASH_MESSAGE_SESSION_KEY,
+            self::FLASH_MESSAGE_KEY,
             __('The ' . $this->getModelName($model) . ' has been deleted')
         );
     }
-    
+
     /**
      * Get a human readable string representation of the model class.
      *

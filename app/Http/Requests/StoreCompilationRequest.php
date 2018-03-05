@@ -40,6 +40,7 @@ class StoreCompilationRequest extends FormRequest
             'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
             'stage_location_id' => 'required|exists:locations,id',
             'stage_ward_id' => 'required|exists:wards,id',
+            // @todo add start/end date validation against academic year
             'stage_start_date' => 'required|date|before:today',
             'stage_end_date' => 'required|date|after:stage_start_date|before:today',
             'stage_academic_year' => 'required|regex:/^\d{4}\/\d{4}$/'
