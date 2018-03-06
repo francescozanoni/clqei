@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -80,6 +80,26 @@ class Compilation extends Model
         return $this->hasMany('App\Models\CompilationItem')
             // @todo item sorting must be based on section+question "position" attributes
             ->orderBy('question_id');
+    }
+
+    /**
+     * Get the number of stage weeks.
+     *
+     * @return int
+     */
+    public function getStageWeeks() : int
+    {
+        return (int)round($this->getStageDays() / 7);
+    }
+
+    /**
+     * Get the number of stage days.
+     *
+     * @return int
+     */
+    public function getStageDays() : int
+    {
+        return ((strtotime($this->stage_end_date) - strtotime($this->stage_start_date)) / 60 / 60 / 24) + 1;
     }
 
 }

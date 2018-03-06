@@ -62,6 +62,10 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>{{ __('Weeks') }}</td>
+                                <td>{{ $compilation->getStageWeeks() }}</td>
+                            </tr>
+                            <tr>
                                 <td>{{ __('Academic year') }}</td>
                                 <td>{{ $compilation->stage_academic_year}}</td>
                             </tr>
