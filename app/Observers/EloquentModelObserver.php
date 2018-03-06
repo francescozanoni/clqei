@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
 
-class ModelObserver
+class EloquentModelObserver
 {
 
     const FLASH_MESSAGE_KEY = 'message';

@@ -6,7 +6,7 @@ namespace Tests\Feature;
 use App;
 use App\Models\Location;
 use App\Models\Ward;
-use App\Observers\ModelObserver;
+use App\Observers\EloquentModelObserver;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -93,7 +93,7 @@ class CompilationTest extends TestCase
                 );
 
         $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
-        $response->assertSessionHas(ModelObserver::FLASH_MESSAGE_KEY, __('The new compilation has been created'));
+        $response->assertSessionHas(EloquentModelObserver::FLASH_MESSAGE_KEY, __('The new compilation has been created'));
         $this->assertDatabaseHas('compilations', ['id' => 1]);
         $this->assertDatabaseMissing('compilations', ['id' => 2]);
         $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
@@ -168,7 +168,7 @@ class CompilationTest extends TestCase
                 );
 
         $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
-        $response->assertSessionHas(ModelObserver::FLASH_MESSAGE_KEY, __('The new compilation has been created'));
+        $response->assertSessionHas(EloquentModelObserver::FLASH_MESSAGE_KEY, __('The new compilation has been created'));
         $this->assertDatabaseHas('compilations', ['id' => 1]);
         $this->assertDatabaseMissing('compilations', ['id' => 2]);
         $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
