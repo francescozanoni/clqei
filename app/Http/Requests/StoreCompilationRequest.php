@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Requests;
 
+use App;
 use App\Models\Compilation;
 use App\Models\Question;
 use Auth;
@@ -36,6 +37,7 @@ class StoreCompilationRequest extends FormRequest
     public function rules()
     {
 
+        $academicYearService = App::make('App\Services\AcademicYearService');
         $rules = [
             'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
             'stage_location_id' => 'required|exists:locations,id',
@@ -43,7 +45,11 @@ class StoreCompilationRequest extends FormRequest
             // @todo add start/end date validation against academic year
             'stage_start_date' => 'required|date|before:today',
             'stage_end_date' => 'required|date|after:stage_start_date|before:today',
-            'stage_academic_year' => 'required|regex:/^\d{4}\/\d{4}$/'
+            'stage_academic_year' => 'required|in:' . implode(',', [
+            $academicYearService->getPrevious(),
+            $academicYearService->getCurrent(),
+            $academicYearService->getNext()
+            ])
         ];
 
         $questions = Question::all();
