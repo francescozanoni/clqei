@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace App\Notifications;
 
-use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
+use Illuminate\Auth\Notifications\ResetPassword as OriginalResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPassword extends ResetPasswordNotification
+class ResetPassword extends OriginalResetPassword
 {
 
     /**
