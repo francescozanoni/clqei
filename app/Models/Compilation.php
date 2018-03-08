@@ -22,6 +22,10 @@ class Compilation extends Model
      */
     protected $dates = ['deleted_at'];
 
+    protected $appends = [
+        'stage_weeks'
+    ];
+
     /**
      * Get the student who created this compilation
      * @return BelongsTo
@@ -87,7 +91,7 @@ class Compilation extends Model
      *
      * @return int
      */
-    public function getStageWeeks() : int
+    public function getStageWeeksAttribute() : int
     {
         return (int)round($this->getStageDays() / 7);
     }

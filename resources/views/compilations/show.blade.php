@@ -63,7 +63,7 @@
                             </tr>
                             <tr>
                                 <td>{{ __('Weeks') }}</td>
-                                <td>{{ $compilation->getStageWeeks() }}</td>
+                                <td>{{ $compilation->stage_weeks }}</td>
                             </tr>
                             <tr>
                                 <td>{{ __('Academic year') }}</td>

@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-2 col-lg-12 col-lg-offset-0">
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
@@ -21,14 +21,13 @@
                         <table id="compilations-table" class="table">
                             <thead>
                             <tr>
-                                @can('viewAll', App\Models\Compilation::class)
-                                    <th>{{ __('Identification number') }}</th>
-                                    <th>{{ __('Last name') }}</th>
-                                    <th>{{ __('First name') }}</th>
-                                @endcan
+                                <th>{{ __('Identification number') }}</th>
+                                <th>{{ __('Last name') }}</th>
+                                <th>{{ __('First name') }}</th>
                                 <th>{{ __('Date') }}</th>
                                 <th>{{ __('Stage location') }}</th>
                                 <th>{{ __('Stage ward') }}</th>
+                                <th class="hidden-xs hidden-sm">{{ __('Weeks') }}</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -83,6 +82,10 @@
                     {
                         data: 'stage_ward.name',
                         name: 'stageWard.name'
+                    },
+                    {
+                        data: 'stage_weeks',
+                        name: 'compilations.stage_weeks'
                     },
                     {
                         name: 'link_to_detail',
