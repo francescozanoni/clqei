@@ -2,42 +2,36 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 col-lg-12 col-lg-offset-0">
-                <div class="panel panel-default">
+    <div class="panel panel-default">
 
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                        @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
-                            {{ __('All compilations') }}
-                        @else
-                            {{ __('My compilations') }}
-                        @endif
-                    </div>
-
-                    <div class="panel-body">
-
-                        <table id="compilations-table" class="table">
-                            <thead>
-                            <tr>
-                                <th>{{ __('Identification number') }}</th>
-                                <th>{{ __('Last name') }}</th>
-                                <th>{{ __('First name') }}</th>
-                                <th>{{ __('Date') }}</th>
-                                <th>{{ __('Stage location') }}</th>
-                                <th>{{ __('Stage ward') }}</th>
-                                <th class="hidden-xs hidden-sm">{{ __('Weeks') }}</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                        </table>
-
-                    </div>
-
-                </div>
-            </div>
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
+                {{ __('All compilations') }}
+            @else
+                {{ __('My compilations') }}
+            @endif
         </div>
+
+        <div class="panel-body">
+
+            <table id="compilations-table" class="table">
+                <thead>
+                <tr>
+                    <th>{{ __('Identification number') }}</th>
+                    <th>{{ __('Last name') }}</th>
+                    <th>{{ __('First name') }}</th>
+                    <th>{{ __('Date') }}</th>
+                    <th>{{ __('Stage location') }}</th>
+                    <th>{{ __('Stage ward') }}</th>
+                    <th>{{ __('Weeks') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+
+        </div>
+
     </div>
 
 @endsection
@@ -55,7 +49,7 @@
                 },
                 ajax: '',
                 columnDefs: [{
-                    targets: -4,
+                    targets: -5,
                     render: $.fn.dataTable.render.moment('DD/MM/YYYY')
                 }],
                 columns: [

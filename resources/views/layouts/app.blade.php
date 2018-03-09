@@ -232,7 +232,43 @@
         </div>
     </nav>
 
-    @yield('content')
+    <div class="container">
+        <div class="row">
+            <div class="
+            col-xs-12 col-xs-offset-0
+            col-sm-12 col-sm-offset-0
+            col-md-10 col-md-offset-1
+            col-lg-10 col-lg-offset-1
+            ">
+
+                @if ($compilationService->isCompilationCreatable() === false)
+                    @cannot('create', App\Models\Compilation::class)
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{ __('Currently no new compilations can be added: ensure at least one stage location and one stage ward are available') }}
+                    </div>
+                    @endcan
+                @endif
+
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                @if (session(\App\Observers\EloquentModelObserver::FLASH_MESSAGE_KEY))
+                    <div class="alert alert-success">
+                        {{ session(\App\Observers\EloquentModelObserver::FLASH_MESSAGE_KEY) }}
+                    </div>
+                @endif
+
+                @yield('content')
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- Scripts -->
