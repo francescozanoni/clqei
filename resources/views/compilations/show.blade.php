@@ -13,7 +13,7 @@
                 &nbsp;
                 &nbsp;
                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                {{ __('Print') }}
+              <span class="hidden-xs">{{ __('Print') }}</span>
             </div>
 
             <div class="pull-right{{ Auth::user()->can('viewAll', App\Models\Compilation::class) ? '' : ' visible-print-block' }}">
