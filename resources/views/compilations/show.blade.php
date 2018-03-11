@@ -95,7 +95,7 @@
                 <tr>
                     <td>
                     <span class="hidden-xs"> {{ __('Academic year') }} </span>
-                    <span class="visible-xs-inline"> {{ __('A. Y.') }} </span>
+                    <span class="visible-xs-inline"> {{ __('Acad. year') }} </span>
                    
                     </td>
                     <td>{{ $compilation->stage_academic_year}}</td>
