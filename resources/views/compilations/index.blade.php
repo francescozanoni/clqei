@@ -48,10 +48,16 @@
                     url: '{{ route('datatables-language', ['country' => config('app.locale')]) }}'
                 },
                 ajax: '',
-                columnDefs: [{
-                    targets: -5,
+                columnDefs: [
+                  {
+                    targets: 3,
                     render: $.fn.dataTable.render.moment('DD/MM/YYYY')
-                }],
+                  },
+                  {
+                    targets: [0, 2, 4, 5, 6],
+                    className: "hidden-xs"
+                  }
+                ],
                 columns: [
                     {
                         data: 'student.identification_number',
