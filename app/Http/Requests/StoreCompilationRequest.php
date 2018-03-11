@@ -58,8 +58,7 @@ class StoreCompilationRequest extends FormRequest
             'stage_end_date' => 'required|date|after:stage_start_date|before:' . $maxEndDate,
             'stage_academic_year' => 'required|in:' . implode(',', [
             $academicYearService->getPrevious(),
-            $academicYearService->getCurrent(),
-            $academicYearService->getNext()
+            $academicYearService->getCurrent()
             ])
         ];
 

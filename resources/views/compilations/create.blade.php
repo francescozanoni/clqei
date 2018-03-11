@@ -66,8 +66,7 @@
                     __('Stage academic year'),
                     [
                     $academicYearService->getPrevious() => $academicYearService->getPrevious(),
-                    $academicYearService->getCurrent() => $academicYearService->getCurrent(),
-                    $academicYearService->getNext() => $academicYearService->getNext(),
+                    $academicYearService->getCurrent() => $academicYearService->getCurrent()
                     ],
                     $academicYearService->getCurrent()
                     ) !!}
