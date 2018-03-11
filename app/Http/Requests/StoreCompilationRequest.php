@@ -7,6 +7,7 @@ use App;
 use App\Models\Compilation;
 use App\Models\Question;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -38,13 +39,23 @@ class StoreCompilationRequest extends FormRequest
     {
 
         $academicYearService = App::make('App\Services\AcademicYearService');
+        
+        // Stage end date must be before today or before 18 weeks after stage start date.
+        // @todo move week number to configuration
+        $maxEndDate = Carbon::parse($this->stage_start_date)->addWeeks(18);
+        if (Carbon::today() < $maxEndDate) {
+            $maxEndDate = Carbon::today()->format('Y-m-d');
+        } else {
+            $maxEndDate = $maxEndDate->format('Y-m-d');
+        }
+        
         $rules = [
             'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
             'stage_location_id' => 'required|exists:locations,id',
             'stage_ward_id' => 'required|exists:wards,id',
             // @todo add start/end date validation against academic year
             'stage_start_date' => 'required|date|before:today',
-            'stage_end_date' => 'required|date|after:stage_start_date|before:today',
+            'stage_end_date' => 'required|date|after:stage_start_date|before:' . $maxEndDate,
             'stage_academic_year' => 'required|in:' . implode(',', [
             $academicYearService->getPrevious(),
             $academicYearService->getCurrent(),
