@@ -33,7 +33,14 @@
                         <tr>
                             <td>{{ $compilation->stageLocation->name }}</td>
                             <td>{{ $compilation->stageWard->name }}</td>
-                            <td>{{ (new Carbon\Carbon($compilation->created_at))->format('d/m/Y') }}</td>
+                            <td>
+                            <span class="hidden-xs"> {{ (new Carbon\Carbon($compilation->created_at))->format('d/m/Y') }}
+                            </span>
+                        <span class="visible-xs-inline">
+                        
+                            {{ (new Carbon\Carbon($compilation->created_at))->format('d/m/y') }}
+                            </span>
+                            </td>
                             <td>
                                 <a href="{{ route('compilations.show', ['compilation' => $compilation]) }}"
                                    title="{{ __('View') }}">

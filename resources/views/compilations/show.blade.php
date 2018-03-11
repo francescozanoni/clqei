@@ -27,6 +27,7 @@
 
         <div class="panel-body">
         
+        @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
         <div class="visible-xs-block">
             <table class="table table-striped table-condensed">
                 <thead>
@@ -53,6 +54,7 @@
                 </tbody>
             </table>
             </div>
+            @endif
                 
             <table class="table table-striped table-condensed">
                 <thead>
