@@ -20,6 +20,8 @@ class User extends Authenticatable
     const ROLE_ADMINISTRATOR = 'administrator';
     const ROLE_VIEWER = 'viewer';
     const ROLE_STUDENT = 'student';
+    
+    const EXAMPLE_DOMAIN = 'example.com';
 
     /**
      * The attributes that should be mutated to dates.
@@ -95,7 +97,8 @@ class User extends Authenticatable
 
     /**
      * Send the password reset notification.
-     * This method is overridden in order to customize/localize the message.
+     * This method is overridden in order to customize/localize the message
+     * and prevent e-mail delivery related to example users.
      *
      * @param string $token
      *
@@ -103,7 +106,15 @@ class User extends Authenticatable
      */
     public function sendPasswordResetNotification($token)
     {
+        if ($this->isExampleUser() === true) {
+            return;
+        }
         $this->notify(new ResetPasswordNotification($token));
+    }
+    
+    public function isExampleUser() : bool
+    {
+        return substr($this->email, -strlen('@' . self::EXAMPLE_DOMAIN)) === '@' . self::EXAMPLE_DOMAIN;
     }
 
 }

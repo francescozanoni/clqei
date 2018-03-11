@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             DB::table(User::getTableName())->insert([
                 'first_name' => 'Example',
                 'last_name' => ucfirst($role),
-                'email' => $role . '@example.com',
+                'email' => $role . '@' . User::EXAMPLE_DOMAIN,
                 'password' => bcrypt($role),
                 'role' => $role,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
