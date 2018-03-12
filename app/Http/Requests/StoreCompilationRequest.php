@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 use App;
 use App\Models\Compilation;
 use App\Models\Question;
+use App\Services\AcademicYearService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -18,6 +19,36 @@ class StoreCompilationRequest extends FormRequest
      * @var array Queue reporting question mandatority depending on the answer of a previous question
      */
     private $mandatorityQueue = [];
+
+    /**
+     * @var AcademicYearService
+     */
+    private $academicYearService;
+
+    /**
+     * StoreCompilationRequest constructor.
+     * @param array $query
+     * @param array $request
+     * @param array $attributes
+     * @param array $cookies
+     * @param array $files
+     * @param array $server
+     * @param null|resource|string $content
+     * @param AcademicYearService $academicYearService
+     */
+    public function __construct(
+        array $query,
+        array $request,
+        array $attributes,
+        array $cookies,
+        array $files,
+        array $server,
+        $content,
+        AcademicYearService $academicYearService
+    ) {
+        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+        $this->academicYearService = $academicYearService;
+    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -38,8 +69,6 @@ class StoreCompilationRequest extends FormRequest
     public function rules()
     {
 
-        $academicYearService = App::make('App\Services\AcademicYearService');
-        
         // Stage end date must be before today or before 18 weeks after stage start date.
         // @todo move week number to configuration
         $maxEndDate = Carbon::parse($this->stage_start_date)->addWeeks(18);
@@ -48,7 +77,7 @@ class StoreCompilationRequest extends FormRequest
         } else {
             $maxEndDate = $maxEndDate->format('Y-m-d');
         }
-        
+
         $rules = [
             'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
             'stage_location_id' => 'required|exists:locations,id',
@@ -57,9 +86,9 @@ class StoreCompilationRequest extends FormRequest
             'stage_start_date' => 'required|date|before:today',
             'stage_end_date' => 'required|date|after:stage_start_date|before:' . $maxEndDate,
             'stage_academic_year' => 'required|in:' . implode(',', [
-            $academicYearService->getPrevious(),
-            $academicYearService->getCurrent()
-            ])
+                    $this->academicYearService->getPrevious(),
+                    $this->academicYearService->getCurrent()
+                ])
         ];
 
         $questions = Question::all();
@@ -88,12 +117,8 @@ class StoreCompilationRequest extends FormRequest
     private function getSingleQuestionRules(Question $question)
     {
 
-        if ($question->required == true) {
-            yield 'required';
-        } else {
-            // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
-            yield 'nullable';
-        }
+        // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
+        yield ($question->required == true ? 'required' : 'nullable');
 
         if (in_array($question->type, ['single_choice', 'multiple_choice']) === true) {
             yield Rule::exists('answers', 'id')

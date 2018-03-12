@@ -234,12 +234,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="
-            col-xs-12 col-xs-offset-0
-            col-sm-12 col-sm-offset-0
-            col-md-10 col-md-offset-1
-            col-lg-10 col-lg-offset-1
-            ">
+            <div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
 
                 @if ($compilationService->isCompilationCreatable() === false)
                     @cannot('create', App\Models\Compilation::class)
