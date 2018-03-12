@@ -8,11 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Services\UserService;
 use App\User;
-use Auth;
-use DB;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -85,14 +85,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
 
+        $rules = [];
+
         if (Auth::guest()) {
             $rules = $this->userService->getGuestValidationRules();
-        } else {
-            if (Auth::user()->can('createAdministrator', User::class)) {
-                $rules = $this->userService->getAdministratorValidationRules();
-            } else {
-                $rules = $this->userService->getViewerValidationRules();
-            }
+        }
+        if (Auth::user()->role === User::ROLE_ADMINISTRATOR) {
+            $rules = $this->userService->getAdministratorValidationRules();
+        }
+        if (Auth::user()->role === User::ROLE_VIEWER) {
+            $rules = $this->userService->getViewerValidationRules();
         }
 
         return Validator::make($data, $rules);

@@ -7,7 +7,7 @@ use App\Models\Compilation;
 use App\Models\Location;
 use App\Models\Ward;
 use App\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -20,10 +20,9 @@ class HomeController extends Controller
     public function index()
     {
 
-        $numberOfCompilations = null;
-        if (Auth::user()->can('viewAll', Compilation::class)) {
-            $numberOfCompilations = Compilation::count();
-        } else {
+        $numberOfCompilations = Compilation::count();
+
+        if (Auth::user()->cannot('viewAll', Compilation::class)) {
             $numberOfCompilations = Auth::user()->student->compilations->count();
         }
 

@@ -63,7 +63,7 @@ class AnswersTableSeeder extends Seeder
         }
 
         // Then returned with the correct question IDs.
-        foreach ($questions as $question => $answers) {
+        foreach ($questions as /* $question => */ $answers) {
 
             // Answers other than arrays are free text,
             // therefore not to be listed on "answers" table.

@@ -37,13 +37,13 @@ class StoreCompilationRequest extends FormRequest
      * @param AcademicYearService $academicYearService
      */
     public function __construct(
-        array $query,
-        array $request,
-        array $attributes,
-        array $cookies,
-        array $files,
-        array $server,
-        $content,
+        array $query = [],
+        array $request = [],
+        array $attributes = [],
+        array $cookies = [],
+        array $files = [],
+        array $server = [],
+        $content = null,
         AcademicYearService $academicYearService
     ) {
         parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
@@ -71,11 +71,9 @@ class StoreCompilationRequest extends FormRequest
 
         // Stage end date must be before today or before 18 weeks after stage start date.
         // @todo move week number to configuration
-        $maxEndDate = Carbon::parse($this->stage_start_date)->addWeeks(18);
-        if (Carbon::today() < $maxEndDate) {
-            $maxEndDate = Carbon::today()->format('Y-m-d');
-        } else {
-            $maxEndDate = $maxEndDate->format('Y-m-d');
+        $maxStageEndDate = Carbon::parse($this->stage_start_date)->addWeeks(18);
+        if (Carbon::today() < $maxStageEndDate) {
+            $maxStageEndDate = Carbon::today();
         }
 
         $rules = [
@@ -84,7 +82,7 @@ class StoreCompilationRequest extends FormRequest
             'stage_ward_id' => 'required|exists:wards,id',
             // @todo add start/end date validation against academic year
             'stage_start_date' => 'required|date|before:today',
-            'stage_end_date' => 'required|date|after:stage_start_date|before:' . $maxEndDate,
+            'stage_end_date' => 'required|date|after:stage_start_date|before:' . $maxStageEndDate->format('Y-m-d'),
             'stage_academic_year' => 'required|in:' . implode(',', [
                     $this->academicYearService->getPrevious(),
                     $this->academicYearService->getCurrent()

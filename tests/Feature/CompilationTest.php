@@ -647,7 +647,7 @@ class CompilationTest extends TestCase
         $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
 
     }
-    
+
     /**
      * Failed creation: stage of too many weeks.
      */
@@ -797,5 +797,5 @@ class CompilationTest extends TestCase
         $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
 
     }
-    
+
 }
