@@ -32,11 +32,13 @@ class ImportLocations extends Command implements WithIntegerExitCode
 
     /**
      * Create a new command instance.
+     *
+     * @param ImportService $importService
      */
     public function __construct(ImportService $importService)
     {
 	    parent::__construct();
-	    
+
 	    $this->importService = $importService;
     }
 
@@ -47,22 +49,22 @@ class ImportLocations extends Command implements WithIntegerExitCode
      */
     public function handle() : int
     {
-    
+
         $filePath = $this->argument('file_path');
-        
+
         $errors = $this->importService->validate($filePath);
-        
+
         if (empty($errors) === false) {
             foreach ($errors as $error) {
                 $this->error($error);
             }
             return self::INVALID_INPUT;
         }
-        
+
         $this->importService->import($filePath, App\Models\Location::class);
-        
+
         $this->info('Locations imported successfully');
-        
+
         return self::SUCCESS;
 
     }

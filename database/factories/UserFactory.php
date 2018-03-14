@@ -50,13 +50,3 @@ $factory->state(User::class, 'female', function (Faker $faker) {
         $faker->lastName
     );
 });
-
-/*
-$student = factory(Models\Student::class)
-    ->make();
-$user = factory(User::class)
-    ->states('student', $student->gender)
-    ->create()
-    ->student()
-    ->save($student);
- */
