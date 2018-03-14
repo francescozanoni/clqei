@@ -21,36 +21,6 @@ class StoreCompilationRequest extends FormRequest
     private $mandatorityQueue = [];
 
     /**
-     * @var AcademicYearService
-     */
-    private $academicYearService;
-
-    /**
-     * StoreCompilationRequest constructor.
-     * @param array $query
-     * @param array $request
-     * @param array $attributes
-     * @param array $cookies
-     * @param array $files
-     * @param array $server
-     * @param null|resource|string $content
-     * @param AcademicYearService $academicYearService
-     */
-    public function __construct(
-        array $query = [],
-        array $request = [],
-        array $attributes = [],
-        array $cookies = [],
-        array $files = [],
-        array $server = [],
-        $content = null,
-        AcademicYearService $academicYearService
-    ) {
-        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
-        $this->academicYearService = $academicYearService;
-    }
-
-    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -64,9 +34,10 @@ class StoreCompilationRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param AcademicYearService $academicYearService
      * @return array
      */
-    public function rules()
+    public function rules(AcademicYearService $academicYearService)
     {
 
         // Stage end date must be before today or before 18 weeks after stage start date.
@@ -84,8 +55,8 @@ class StoreCompilationRequest extends FormRequest
             'stage_start_date' => 'required|date|before:today',
             'stage_end_date' => 'required|date|after:stage_start_date|before:' . $maxStageEndDate->format('Y-m-d'),
             'stage_academic_year' => 'required|in:' . implode(',', [
-                    $this->academicYearService->getPrevious(),
-                    $this->academicYearService->getCurrent()
+                    $academicYearService->getPrevious(),
+                    $academicYearService->getCurrent()
                 ])
         ];
 

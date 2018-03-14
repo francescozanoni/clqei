@@ -69,8 +69,7 @@ class CompilationsController extends Controller
         // AJAX data call from DataTables.
         if (request()->ajax()) {
 
-            $compilationQuery = $compilationBaseQuery
-                ->select('compilations.*');
+            $compilationQuery = $compilationBaseQuery->select('compilations.*');
 
             return DataTables::of($compilationQuery)
                 ->editColumn('created_at', function ($compilation) {
@@ -86,9 +85,7 @@ class CompilationsController extends Controller
                     // @todo make column index dynamic
                     if ($order['column'] === 6) {
                         // @todo check whether this SQL string is compatible with other database engines
-                        $query->orderByRaw(
-                            '(strftime("%J", stage_end_date) - strftime("%J", stage_start_date)) ' . $order['dir']
-                        );
+                        $query->orderByRaw('(strftime("%J", stage_end_date) - strftime("%J", stage_start_date)) ' . $order['dir']);
                     }
                 })
                 ->make(true);
