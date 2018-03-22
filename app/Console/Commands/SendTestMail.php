@@ -43,6 +43,13 @@ class SendTestMail extends Command implements WithIntegerExitCode
 
         $recipient = $this->argument('recipient');
 
+        if (!filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            
+            $this->error('Invalid recipient e-mail address');
+            return self::INVALID_INPUT;
+          
+        }
+      
         try {
 
             Mail::to($recipient)
