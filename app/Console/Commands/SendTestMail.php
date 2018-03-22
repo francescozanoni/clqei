@@ -50,7 +50,7 @@ class SendTestMail extends Command implements WithIntegerExitCode
 
         } catch (\Throwable $e) {
 
-            $this->info('E-mail delivery failed: ' . $e->getMessage());
+            $this->error('E-mail delivery failed: ' . $e->getMessage());
             return self::UNEXPECTED_ERROR;
 
         }
