@@ -16,7 +16,7 @@ class SendTestMail extends Command implements WithIntegerExitCode
      * @var string
      */
     protected $signature = 'send:mail
-                            {recipient: recipient e-mail address}';
+                            {recipient : recipient e-mail address}';
 
     /**
      * The console command description.
