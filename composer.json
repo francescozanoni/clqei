@@ -16,6 +16,7 @@
         "squareboat/sneaker": "^4.0",
         "umpirsky/country-list": "^2.0",
         "watson/bootstrap-form": "^1.1",
+        "yadahan/laravel-authentication-log": "^1.1",
         "yajra/laravel-datatables": "^1.0"
     },
     "require-dev": {

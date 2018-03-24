@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Yadahan\AuthenticationLog\AuthenticationLogable;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
     use EloquentGetTableName;
+    use AuthenticationLogable;
 
     const ROLE_ADMINISTRATOR = 'administrator';
     const ROLE_VIEWER = 'viewer';
