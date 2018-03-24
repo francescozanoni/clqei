@@ -24,7 +24,8 @@ return [
     |
     */
     'capture' => [
-        Symfony\Component\Debug\Exception\FatalErrorException::class,
+        // Symfony\Component\Debug\Exception\FatalErrorException::class,
+        '*'
     ],
 
     /*
