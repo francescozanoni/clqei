@@ -66,14 +66,15 @@ class GenerateUsers extends Command implements WithIntegerExitCode
                 break;
 
             case User::ROLE_STUDENT:
-                for ($i = 0; $i < $number; $i++) {
-                    $student = factory(Student::class)->make();
-                    factory(User::class)
-                        ->states($role, $student->gender)
-                        ->create()
-                        ->student()
-                        ->save($student);
-                }
+                factory(Student::class, $number)
+                    ->make()
+                    ->each(function ($student) use ($role) {
+                        factory(User::class)
+                            ->states($role, $student->gender)
+                            ->create()
+                            ->student()
+                            ->save($student);
+                    });
                 break;
 
             default:
