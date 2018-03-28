@@ -89,11 +89,9 @@ class RegisterController extends Controller
 
         if (Auth::guest()) {
             $rules = $this->userService->getGuestValidationRules();
-        }
-        if (Auth::user()->role === User::ROLE_ADMINISTRATOR) {
+        } else if (Auth::user()->role === User::ROLE_ADMINISTRATOR) {
             $rules = $this->userService->getAdministratorValidationRules();
-        }
-        if (Auth::user()->role === User::ROLE_VIEWER) {
+        } else if (Auth::user()->role === User::ROLE_VIEWER) {
             $rules = $this->userService->getViewerValidationRules();
         }
 
