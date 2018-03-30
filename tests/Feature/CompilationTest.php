@@ -31,7 +31,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -141,7 +141,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate(Carbon::parse($stageStartDate)->subYear()->format('Y-m-d'));
@@ -182,7 +182,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -266,7 +266,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -313,7 +313,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -347,7 +347,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -381,7 +381,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -415,7 +415,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -449,7 +449,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subYear()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
@@ -483,7 +483,7 @@ class CompilationTest extends TestCase
 
         $user = User::students()->first();
         $stageLocation = Location::first();
-        $stageWard = ward::first();
+        $stageWard = Ward::first();
         $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
         $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
         $stageAcademicYear = App::make('App\Services\AcademicYearService')->getOther(-10);
