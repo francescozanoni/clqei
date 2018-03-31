@@ -52,8 +52,10 @@ class CompilationTest extends TestCase
                 );
 
         $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
-        $response->assertSessionHas(EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created'));
+        $response->assertSessionHas(
+            EloquentModelObserver::FLASH_MESSAGE_KEY,
+            __('The new compilation has been created')
+        );
         $this->assertDatabaseHas('compilations', ['id' => 1]);
         $this->assertDatabaseMissing('compilations', ['id' => 2]);
         $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
