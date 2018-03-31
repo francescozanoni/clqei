@@ -40,14 +40,18 @@ class RegistrationTest extends TestCase
                 );
 
         $response->assertRedirect(route('home'));
-        /*
-        $response->assertSessionHas(EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created'));
-            */
+        $response->assertSessionHas(
+            EloquentModelObserver::FLASH_MESSAGE_KEY,
+            __('The new student has been created')
+        );
+        
         $this->assertDatabaseHas('users', ['id' => 1]);
         $this->assertDatabaseMissing('users', ['id' => 2]);
         $this->assertDatabaseHas('students', ['id' => 1]);
         $this->assertDatabaseMissing('students', ['id' => 2]);
+        
+        $user = User::first();
+        $this->assertAuthenticatedAs($user);
 
     }
     
