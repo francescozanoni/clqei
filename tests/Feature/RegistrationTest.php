@@ -20,13 +20,9 @@ class RegistrationTest extends TestCase
     public function testSuccess()
     {
 
-        $response =
-            $this->post(
-                route(
-                    'register',
-                    $this->getPayload()
-                )
-            );
+        $payload = $this->getPayload();
+        
+        $response = $this->post(route('register', $payload));
 
         $response->assertRedirect(route('home'));
         $response->assertSessionHas(
@@ -111,11 +107,9 @@ class RegistrationTest extends TestCase
         $basePayload = [
                         'first_name' => 'Example',
                         'last_name' => 'Student',
-                        'email' => 'student@example.com',
                         'password' => 'student',
                         'password_confirmation' => 'student',
                         'role' => User::ROLE_STUDENT,
-                        'identification_number' => '12345678',
                         'nationality' => 'IT',
                         'gender' => 'male',
                     ];
@@ -167,27 +161,20 @@ class RegistrationTest extends TestCase
     public function testInvalidFirstName()
     {
 
-        $payload = $this->getPayload();
-        $payload['first_name'] = 'F';
-        $response = $this->post(route('register', $payload));
-
-        $response->assertSessionHasErrors(['first_name']);
-
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
-
-        $this->assertGuest();
+        foreach (['F', ''] as $fieldValue) {
         
-        $payload = $this->getPayload();
-        $payload['first_name'] = '';
-        $response = $this->post(route('register', $payload));
+            $payload = $this->getPayload();
+            $payload['first_name'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['first_name']);
+            $response->assertSessionHasErrors(['first_name']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
 
-        $this->assertGuest();
+            $this->assertGuest();
+            
+        }
 
     }
     
@@ -197,27 +184,20 @@ class RegistrationTest extends TestCase
     public function testInvalidLastName()
     {
         
-        $payload = $this->getPayload();
-        $payload['last_name'] = 'B';
-        $response = $this->post(route('register', $payload));
-
-        $response->assertSessionHasErrors(['last_name']);
-
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
-
-        $this->assertGuest();
+        foreach (['B', ''] as $fieldValue) {
         
-        $payload = $this->getPayload();
-        $payload['last_name'] = '';
-        $response = $this->post(route('register', $payload));
+            $payload = $this->getPayload();
+            $payload['last_name'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['last_name']);
+            $response->assertSessionHasErrors(['last_name']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
 
-        $this->assertGuest();
+            $this->assertGuest();
+            
+        }
 
     }
     
@@ -227,36 +207,64 @@ class RegistrationTest extends TestCase
     public function testInvalidEMail()
     {
 
-        // Unallowed domain.
+        foreach (['student@another.domain.com', 'example.com', ''] as $fieldValue) {
+        
+            $payload = $this->getPayload();
+            $payload['email'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
+
+            $response->assertSessionHasErrors(['email']);
+
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
+
+            $this->assertGuest();
+            
+        }
+
+    }
+    
+    /**
+     * Failed registration: invalid password.
+     */
+    public function testInvalidPassword()
+    {
+
+        foreach (['pwd', ''] as $fieldValue) {
+        
+            $payload = $this->getPayload();
+            $payload['password'] = $fieldValue;
+            $payload['password_confirmation'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
+
+            $response->assertSessionHasErrors(['password']);
+
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
+
+            $this->assertGuest();
+            
+        }
+        
+        // Unmatched password.
         $payload = $this->getPayload();
-        $payload['email'] = 'student@another.domain.com';
+        $payload['password'] = 'password1';
+        $payload['password_confirmation'] = 'password2';
         $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors(['password']);
 
         $this->assertDatabaseMissing('users', ['id' => 4]);
         $this->assertDatabaseMissing('students', ['id' => 2]);
 
         $this->assertGuest();
         
-        // Invalid e-mail.
+        // Missing confirmation.
         $payload = $this->getPayload();
-        $payload['email'] = 'example.com';
+        unset($payload['password_confirmation']);
         $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['email']);
-
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
-
-        $this->assertGuest();
-        
-        // Empty value.
-        $payload = $this->getPayload();
-        $payload['email'] = '';
-        $response = $this->post(route('register', $payload));
-
-        $response->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors(['password']);
 
         $this->assertDatabaseMissing('users', ['id' => 4]);
         $this->assertDatabaseMissing('students', ['id' => 2]);
@@ -271,29 +279,20 @@ class RegistrationTest extends TestCase
     public function testInvalidRole()
     {
 
-        // Unallowed value.
-        $payload = $this->getPayload();
-        $payload['role'] = 'abc';
-        $response = $this->post(route('register', $payload));
-
-        $response->assertSessionHasErrors(['role']);
-
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
-
-        $this->assertGuest();
+        foreach (['abc', 'STUDENT', User::ROLE_VIEWER, User::ROLE_ADMINISTRATOR, ''] as $fieldValue) {
         
-        // Empty value.
-        $payload = $this->getPayload();
-        $payload['role'] = '';
-        $response = $this->post(route('register', $payload));
+            $payload = $this->getPayload();
+            $payload['role'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['role']);
+            $response->assertSessionHasErrors(['role']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
 
-        $this->assertGuest();
+            $this->assertGuest();
+            
+        }
 
     }
     
@@ -303,29 +302,20 @@ class RegistrationTest extends TestCase
     public function testInvalidIdentificationNumber()
     {
 
-        // Unallowed format.
-        $payload = $this->getPayload();
-        $payload['identification_number'] = 'abcd1234';
-        $response = $this->post(route('register', $payload));
-
-        $response->assertSessionHasErrors(['identification_number']);
-
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
-
-        $this->assertGuest();
+        foreach (['abcd1234', '123456', ''] as $fieldValue) {
         
-        // Empty value.
-        $payload = $this->getPayload();
-        $payload['identification_number'] = '';
-        $response = $this->post(route('register', $payload));
+            $payload = $this->getPayload();
+            $payload['identification_number'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['identification_number']);
+            $response->assertSessionHasErrors(['identification_number']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
 
-        $this->assertGuest();
+            $this->assertGuest();
+            
+        }
 
     }
     
@@ -335,29 +325,20 @@ class RegistrationTest extends TestCase
     public function testInvalidNationality()
     {
 
-        // Unallowed value.
-        $payload = $this->getPayload();
-        $payload['nationality'] = 'XX';
-        $response = $this->post(route('register', $payload));
-
-        $response->assertSessionHasErrors(['nationality']);
-
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
-
-        $this->assertGuest();
+        foreach (['XX', 'it', ''] as $fieldValue) {
         
-        // Empty value.
-        $payload = $this->getPayload();
-        $payload['nationality'] = '';
-        $response = $this->post(route('register', $payload));
+            $payload = $this->getPayload();
+            $payload['nationality'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['nationality']);
+            $response->assertSessionHasErrors(['nationality']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
 
-        $this->assertGuest();
+            $this->assertGuest();
+            
+        }
 
     }
     
@@ -367,29 +348,20 @@ class RegistrationTest extends TestCase
     public function testInvalidGender()
     {
 
-        // Unallowed value.
-        $payload = $this->getPayload();
-        $payload['gender'] = 'abc';
-        $response = $this->post(route('register', $payload));
-
-        $response->assertSessionHasErrors(['gender']);
-
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
-
-        $this->assertGuest();
+        foreach (['abc', 'MALE', ''] as $fieldValue) {
         
-        // Empty value.
-        $payload = $this->getPayload();
-        $payload['gender'] = '';
-        $response = $this->post(route('register', $payload));
+            $payload = $this->getPayload();
+            $payload['gender'] = $fieldValue;
+            $response = $this->post(route('register', $payload));
 
-        $response->assertSessionHasErrors(['gender']);
+            $response->assertSessionHasErrors(['gender']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 4]);
+            $this->assertDatabaseMissing('students', ['id' => 2]);
 
-        $this->assertGuest();
+            $this->assertGuest();
+            
+        }
 
     }
 
