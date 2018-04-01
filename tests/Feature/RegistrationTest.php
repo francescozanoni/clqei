@@ -107,13 +107,8 @@ class RegistrationTest extends TestCase
     {
 
         $this->seed();
-
-        // Both e-mail and identification number duplicate.
-        $response =
-            $this->post(
-                route(
-                    'register',
-                    [
+        
+        $basePayload = [
                         'first_name' => 'Example',
                         'last_name' => 'Student',
                         'email' => 'student@example.com',
@@ -123,9 +118,13 @@ class RegistrationTest extends TestCase
                         'identification_number' => '12345678',
                         'nationality' => 'IT',
                         'gender' => 'male',
-                    ]
-                )
-            );
+                    ];
+
+        // Both e-mail and identification number duplicate.
+        $payload = $basePayload;
+        $payload['email'] = 'student@example.com';
+        $payload['identification_number'] = '12345678';
+        $response = $this->post(route('register', $payload));
 
         $response->assertSessionHasErrors(['email', 'identification_number']);
 
@@ -135,23 +134,10 @@ class RegistrationTest extends TestCase
         $this->assertGuest();
 
         // Duplicate e-mail.
-        $response =
-            $this->post(
-                route(
-                    'register',
-                    [
-                        'first_name' => 'Example',
-                        'last_name' => 'Student',
-                        'email' => 'student@example.com',
-                        'password' => 'student',
-                        'password_confirmation' => 'student',
-                        'role' => User::ROLE_STUDENT,
-                        'identification_number' => '12121212',
-                        'nationality' => 'IT',
-                        'gender' => 'male',
-                    ]
-                )
-            );
+        $payload = $basePayload;
+        $payload['email'] = 'student@example.com';
+        $payload['identification_number'] = '12121212';
+        $response = $this->post(route('register', $payload));
 
         $response->assertSessionHasErrors(['email']);
 
@@ -161,25 +147,76 @@ class RegistrationTest extends TestCase
         $this->assertGuest();
 
         // Duplicate identification number.
-        $response =
-            $this->post(
-                route(
-                    'register',
-                    [
-                        'first_name' => 'Example',
-                        'last_name' => 'Student',
-                        'email' => 'another.student@example.com',
-                        'password' => 'student',
-                        'password_confirmation' => 'student',
-                        'role' => User::ROLE_STUDENT,
-                        'identification_number' => '12345678',
-                        'nationality' => 'IT',
-                        'gender' => 'male',
-                    ]
-                )
-            );
+        $payload = $basePayload;
+        $payload['email'] = 'another.student@example.com';
+        $payload['identification_number'] = '12345678';
+        $response = $this->post(route('register', $payload));
 
         $response->assertSessionHasErrors(['identification_number']);
+
+        $this->assertDatabaseMissing('users', ['id' => 4]);
+        $this->assertDatabaseMissing('students', ['id' => 2]);
+
+        $this->assertGuest();
+
+    }
+    
+    /**
+     * Failed registration: invalid first name.
+     */
+    public function testInvalidFirstName()
+    {
+        
+        $basePayload = $this->getPayload();
+
+        $payload = $basePayload;
+        $payload['first_name'] = 'F';
+        $response = $this->post(route('register', $payload));
+
+        $response->assertSessionHasErrors(['first_name']);
+
+        $this->assertDatabaseMissing('users', ['id' => 4]);
+        $this->assertDatabaseMissing('students', ['id' => 2]);
+
+        $this->assertGuest();
+        
+        $payload = $basePayload;
+        $payload['first_name'] = '';
+        $response = $this->post(route('register', $payload));
+
+        $response->assertSessionHasErrors(['first_name']);
+
+        $this->assertDatabaseMissing('users', ['id' => 4]);
+        $this->assertDatabaseMissing('students', ['id' => 2]);
+
+        $this->assertGuest();
+
+    }
+    
+    /**
+     * Failed registration: invalid last name.
+     */
+    public function testInvalidLastName()
+    {
+        
+        $basePayload = $this->getPayload();
+
+        $payload = $basePayload;
+        $payload['last_name'] = 'B';
+        $response = $this->post(route('register', $payload));
+
+        $response->assertSessionHasErrors(['last_name']);
+
+        $this->assertDatabaseMissing('users', ['id' => 4]);
+        $this->assertDatabaseMissing('students', ['id' => 2]);
+
+        $this->assertGuest();
+        
+        $payload = $basePayload;
+        $payload['last_name'] = '';
+        $response = $this->post(route('register', $payload));
+
+        $response->assertSessionHasErrors(['last_name']);
 
         $this->assertDatabaseMissing('users', ['id' => 4]);
         $this->assertDatabaseMissing('students', ['id' => 2]);
