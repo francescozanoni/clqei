@@ -28,8 +28,10 @@ class AdministratorCreationTest extends TestCase
 
         $payload = $this->getPayload();
         
-        $response = $this->post(route('register', $payload));
-/*
+        $user = User::administrators()->first();
+      
+        $response = $this->actingAs($user)->post(route('register', $payload));
+
         $response->assertRedirect(route('home'));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
@@ -38,7 +40,7 @@ class AdministratorCreationTest extends TestCase
 
         $this->assertDatabaseHas('users', ['id' => 4]);
         $this->assertDatabaseMissing('users', ['id' => 5]);
-*/
+
     }
 
     private function getPayload() : array

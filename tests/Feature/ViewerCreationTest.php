@@ -12,4 +12,47 @@ use Tests\TestCase;
 class ViewerCreationTest extends TestCase
 {
 
+  use RefreshDatabase;
+  
+    public function setUp()
+    {
+        parent::setUp();
+        $this->seed();
+    }
+  
+    /**
+     * Successful creation.
+     */
+    public function testSuccess()
+    {
+
+        $payload = $this->getPayload();
+        
+        $user = User::administrators()->first();
+      
+        $response = $this->actingAs($user)->post(route('register', $payload));
+
+        $response->assertRedirect(route('home'));
+        $response->assertSessionHas(
+            EloquentModelObserver::FLASH_MESSAGE_KEY,
+            __('The new viewer has been created')
+        );
+
+        $this->assertDatabaseHas('users', ['id' => 4]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+
+    }
+  
+    private function getPayload() : array
+    {
+        return [
+            'first_name' => 'Foo',
+            'last_name' => 'Bar',
+            'email' => 'foo.bar@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'role' => User::ROLE_VIEWER,
+        ];
+    }
+  
 }
