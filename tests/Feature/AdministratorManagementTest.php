@@ -9,21 +9,21 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ViewerCreationTest extends TestCase
+class AdministratorManagementTest extends TestCase
 {
-
-  use RefreshDatabase;
+  
+    use RefreshDatabase;
   
     public function setUp()
     {
         parent::setUp();
         $this->seed();
     }
-  
+
     /**
      * Successful creation.
      */
-    public function testSuccess()
+    public function testCreationSuccess()
     {
 
         $payload = $this->getPayload();
@@ -35,14 +35,14 @@ class ViewerCreationTest extends TestCase
         $response->assertRedirect(route('home'));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new viewer has been created')
+            __('The new administrator has been created')
         );
 
         $this->assertDatabaseHas('users', ['id' => 4]);
         $this->assertDatabaseMissing('users', ['id' => 5]);
 
     }
-  
+
     private function getPayload() : array
     {
         return [
@@ -51,7 +51,7 @@ class ViewerCreationTest extends TestCase
             'email' => 'foo.bar@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
-            'role' => User::ROLE_VIEWER,
+            'role' => User::ROLE_ADMINISTRATOR,
         ];
     }
   

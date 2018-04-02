@@ -9,21 +9,21 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AdministratorCreationTest extends TestCase
+class ViewerManagementTest extends TestCase
 {
-  
-    use RefreshDatabase;
+
+  use RefreshDatabase;
   
     public function setUp()
     {
         parent::setUp();
         $this->seed();
     }
-
+  
     /**
-     * Successful creation.
+     * Successful creation by administrator.
      */
-    public function testSuccess()
+    public function testCreationSuccessByAdministrator()
     {
 
         $payload = $this->getPayload();
@@ -35,14 +35,38 @@ class AdministratorCreationTest extends TestCase
         $response->assertRedirect(route('home'));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new administrator has been created')
+            __('The new viewer has been created')
         );
 
         $this->assertDatabaseHas('users', ['id' => 4]);
         $this->assertDatabaseMissing('users', ['id' => 5]);
 
     }
+    
+    /**
+     * Successful creation by viewer.
+     */
+    public function testCreationSuccessByViewer()
+    {
 
+        $payload = $this->getPayload();
+        
+        $user = User::viewers()->first();
+      
+        $response = $this->actingAs($user)->post(route('register', $payload));
+
+        $response->assertRedirect(route('home'));
+        $response->assertSessionHas(
+            EloquentModelObserver::FLASH_MESSAGE_KEY,
+            __('The new viewer has been created')
+        );
+
+        $this->assertDatabaseHas('users', ['id' => 4]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+
+    }
+  
+  
     private function getPayload() : array
     {
         return [
@@ -51,7 +75,7 @@ class AdministratorCreationTest extends TestCase
             'email' => 'foo.bar@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
-            'role' => User::ROLE_ADMINISTRATOR,
+            'role' => User::ROLE_VIEWER,
         ];
     }
   
