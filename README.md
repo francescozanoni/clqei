@@ -1,26 +1,3 @@
-## CLQEI (Clinical learning quality environment inventory)
-
-### User roles
-
-- student
-  - can create questionnaire compilations
-  - can see his/her own compilations
-- viewer
-  - can view all questionnaire compilations
-  - can manage stage locations
-  - can manage stage wards
-  - can create other viewers
-  - can delete students
-- administrator
-  - can view all questionnaire compilations
-  - can manage stage locations
-  - can manage stage wards
-  - can manage viewers
-  - can delete students
-  - can create other administrators
-
-----
-
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/francescozanoni/clqei/edit/gh-pages/README.md) to maintain and preview the content for your website in Markdown files.
