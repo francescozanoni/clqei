@@ -11,9 +11,9 @@ use App\Models\Location;
 use App\Models\Question;
 use App\Models\Section;
 use App\Models\Ward;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class CompilationsController extends Controller
@@ -51,7 +51,20 @@ class CompilationsController extends Controller
         $compilationBaseQuery = Compilation
             // Deleted locations, wards, students and users must be included
             // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-            ::with($this->compilationService->allTrashedRelatedModels());
+            ::with([
+                'stageLocation' => function ($query) {
+                    $query->withTrashed();
+                },
+                'stageWard' => function ($query) {
+                    $query->withTrashed();
+                },
+                'student' => function ($query) {
+                    $query->withTrashed();
+                },
+                'student.user' => function ($query) {
+                    $query->withTrashed();
+                }
+            ]);
 
         // Student view of compilation list: no DataTables
         if (Auth::user()->cannot('viewAll', Compilation::class)) {
@@ -174,7 +187,20 @@ class CompilationsController extends Controller
 
         // Deleted students, users, locations and wards must be included
         // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-        $compilation->load($this->compilationService->allTrashedRelatedModels());
+        $compilation->load([
+            'stageLocation' => function ($query) {
+                $query->withTrashed();
+            },
+            'stageWard' => function ($query) {
+                $query->withTrashed();
+            },
+            'student' => function ($query) {
+                $query->withTrashed();
+            },
+            'student.user' => function ($query) {
+                $query->withTrashed();
+            }
+        ]);
 
         $this->authorize('view', $compilation);
 

@@ -12,14 +12,14 @@ use Tests\TestCase;
 class ViewerManagementTest extends TestCase
 {
 
-  use RefreshDatabase;
-  
+    use RefreshDatabase;
+
     public function setUp()
     {
         parent::setUp();
         $this->seed();
     }
-  
+
     /**
      * Successful creation by administrator.
      */
@@ -27,9 +27,9 @@ class ViewerManagementTest extends TestCase
     {
 
         $payload = $this->getPayload();
-        
+
         $user = User::administrators()->first();
-      
+
         $response = $this->actingAs($user)->post(route('register', $payload));
 
         $response->assertRedirect(route('home'));
@@ -42,31 +42,7 @@ class ViewerManagementTest extends TestCase
         $this->assertDatabaseMissing('users', ['id' => 5]);
 
     }
-    
-    /**
-     * Successful creation by viewer.
-     */
-    public function testCreationSuccessByViewer()
-    {
 
-        $payload = $this->getPayload();
-        
-        $user = User::viewers()->first();
-      
-        $response = $this->actingAs($user)->post(route('register', $payload));
-
-        $response->assertRedirect(route('home'));
-        $response->assertSessionHas(
-            EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new viewer has been created')
-        );
-
-        $this->assertDatabaseHas('users', ['id' => 4]);
-        $this->assertDatabaseMissing('users', ['id' => 5]);
-
-    }
-  
-  
     private function getPayload() : array
     {
         return [
@@ -78,5 +54,28 @@ class ViewerManagementTest extends TestCase
             'role' => User::ROLE_VIEWER,
         ];
     }
-  
+
+    /**
+     * Successful creation by viewer.
+     */
+    public function testCreationSuccessByViewer()
+    {
+
+        $payload = $this->getPayload();
+
+        $user = User::viewers()->first();
+
+        $response = $this->actingAs($user)->post(route('register', $payload));
+
+        $response->assertRedirect(route('home'));
+        $response->assertSessionHas(
+            EloquentModelObserver::FLASH_MESSAGE_KEY,
+            __('The new viewer has been created')
+        );
+
+        $this->assertDatabaseHas('users', ['id' => 4]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+
+    }
+
 }

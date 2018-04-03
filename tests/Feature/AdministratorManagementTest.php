@@ -11,9 +11,9 @@ use Tests\TestCase;
 
 class AdministratorManagementTest extends TestCase
 {
-  
+
     use RefreshDatabase;
-  
+
     public function setUp()
     {
         parent::setUp();
@@ -27,9 +27,9 @@ class AdministratorManagementTest extends TestCase
     {
 
         $payload = $this->getPayload();
-        
+
         $user = User::administrators()->first();
-      
+
         $response = $this->actingAs($user)->post(route('register', $payload));
 
         $response->assertRedirect(route('home'));
@@ -54,5 +54,5 @@ class AdministratorManagementTest extends TestCase
             'role' => User::ROLE_ADMINISTRATOR,
         ];
     }
-  
+
 }
