@@ -1,4 +1,6 @@
-## CLQEI (Clinical learning quality environment inventory)
+---
+title: CLQEI
+---
 
 ### User roles
 
