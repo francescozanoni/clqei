@@ -85,7 +85,8 @@
                     },
                     {
                         data: 'stage_weeks',
-                        name: 'compilations.stage_weeks'
+                        name: 'compilations.stage_weeks',
+                        searchable: false
                     },
                     {
                         name: 'link_to_detail',
