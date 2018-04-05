@@ -17,7 +17,7 @@
         "umpirsky/country-list": "^2.0",
         "watson/bootstrap-form": "^1.1",
         "yadahan/laravel-authentication-log": "^1.1",
-        "yajra/laravel-datatables": "^1.0"
+        "yajra/laravel-datatables-oracle": "^8.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
