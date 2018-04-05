@@ -52,8 +52,23 @@ class StoreCompilationRequest extends FormRequest
             'stage_location_id' => 'required|exists:locations,id',
             'stage_ward_id' => 'required|exists:wards,id',
             // @todo add start/end date validation against academic year
-            'stage_start_date' => 'required|date|before:today',
-            'stage_end_date' => 'required|date|after:stage_start_date|before:' . $maxStageEndDate->format('Y-m-d'),
+            'stage_start_date' => [
+                'required',
+                'date',
+                'before:today',
+                Rule::unique('compilations')->where(function ($query) {
+                    return $query->where('student_id', Auth::user()->student->id);
+                })
+            ],
+            'stage_end_date' => [
+                'required',
+                'date',
+                'after:stage_start_date',
+                'before:' . $maxStageEndDate->format('Y-m-d'),
+                Rule::unique('compilations')->where(function ($query) {
+                    return $query->where('student_id', Auth::user()->student->id);
+                })
+            ],
             'stage_academic_year' => 'required|in:' . implode(',', [
                     $academicYearService->getPrevious(),
                     $academicYearService->getCurrent()
