@@ -59,7 +59,7 @@
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
-                    <th class="col-xs-5">{{ __('Stage') }}</th>
+                    <th class="col-xs-5 col-sm-8">{{ __('Stage') }}</th>
                     <th class="col-sm-4 col-md-4 col-lg-4"></th>
                 </tr>
                 </thead>
@@ -121,11 +121,9 @@
                         <td>{{ $item->question->text }}</td>
                         <td>
                             @if (is_array($item->the_answer) === true)
-                                <ul>
-                                    @foreach ($item->the_answer as $answer)
-                                        <li>{{ $answer->text }}</li>
-                                    @endforeach
-                                </ul>
+                                @foreach ($item->the_answer as $answer)
+                                    <p>{{ $answer->text }}</p>
+                                @endforeach
                             @elseif ($item->the_answer !== null)
                                 {{ $item->the_answer }}
                             @else
