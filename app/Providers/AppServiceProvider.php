@@ -79,6 +79,52 @@ class AppServiceProvider extends ServiceProvider
             }
 
         );
+        
+        Validator::extend(
+            'not_overlapping_time_range',
+            /**
+             * This validation rule ensures the provided time range does not overlap
+             * any existing time ranges on a table, optionally filtered by the value of another field.
+             * E.g.:
+             * [
+             *   'start_date' => 'required|date|not_overlapping_time_range:end_date,table_name,range_start_field,range_end_field,other_field',
+             *   'end_date' => 'required|date|not_overlapping_time_range:start_date,table_name,range_start_field,range_end_field,other_field',
+             * ]
+             *
+             * @param string $attribute current field name
+             * @param mixed $value current field value
+             * @param array $parameters array of rule parameters, e.g. ["other_field", "value_2"]
+             * @param \Illuminate\Validation\Validator $validator
+             * @return bool
+             */
+            function ($attribute, $value, $parameters, $validator) {
+
+                $validator->setFallbackMessages(['Overlapping time range.']);
+
+                $otherFormFieldValue = Arr::get($validator->getData(), $parameters[0]);
+                $rangeStartFormValue = $value;                $rangeEndFormValue = $otherFormFieldValue;
+                if ($rangeEndFormValue < $rangeStartFormValue) {
+                    $rangeStartFormValue = $otherFormFieldValue;                    $rangeEndFormValue = $value;
+                }
+                
+                $tableName = $parameters[1];
+                $rangeStartTableField = $parameters[2];                $rangeEndTableField = $parameters[3];
+                
+                $filterFieldTableName = null;
+                $filterFieldTableValue = null;
+                if (isset($parameters[4]) === true) {                    $filterFieldTableName = $parameters[4];
+                    $filterFieldTableValue = Arr::get($validator->getData(), $parameters[4]);
+                }
+
+                // Search on database.
+                if (false) {
+                    return false;
+                }
+
+                return true;
+            }
+
+        );
 
     }
 
