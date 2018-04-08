@@ -298,7 +298,7 @@ class CompilationTest extends TestCase
                             )
                         )
                     );
-
+//if ($keyToRemove === 'stage_start_date') {dd(\Session::all());};
             $response->assertSessionHasErrors([$keyToRemove]);
             $this->assertDatabaseMissing('compilations', ['id' => 1]);
             $this->assertDatabaseMissing('compilation_items', ['id' => 1]);

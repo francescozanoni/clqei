@@ -89,8 +89,11 @@ class ValidationServiceProvider extends ServiceProvider
              */
             function ($attribute, $value, $parameters, $validator) {
 
-                // @todo refactor validation message localization
-                $validator->setFallbackMessages([__('Overlapping time range.')]);
+                // If the other range field is not available,
+                // there's no time range to validate.
+                if (Arr::has($validator->getData(), $parameters[0]) === false) {
+                    return true;
+                }
 
                 // Form date range fields are retrieved and values suitably stored into variables.
                 $otherFormFieldValue = Arr::get($validator->getData(), $parameters[0]);
@@ -119,11 +122,13 @@ class ValidationServiceProvider extends ServiceProvider
                     ->where($rangeStartTableField, '<=', $rangeEndFormValue)
                     ->where($rangeEndTableField, '>=', $rangeStartFormValue);
                 if ($filterTableFieldName !== null) {
-                    $query->where($filterTableFieldName, $filterTableFieldValue);
+                    $query = $query->where($filterTableFieldName, $filterTableFieldValue);
                 }
                 return $query->exists() === false;
                               
-            }
+            },
+            // @todo refactor validation message localization
+            [__('Overlapping time range.')]
 
         );
 
