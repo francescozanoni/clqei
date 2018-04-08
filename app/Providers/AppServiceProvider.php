@@ -87,8 +87,8 @@ class AppServiceProvider extends ServiceProvider
              * any existing time ranges on a table, optionally filtered by the value of another field.
              * E.g.:
              * [
-             *   'start_date' => 'required|date|not_overlapping_time_range:end_date,table_name,range_start_field,range_end_field,other_field',
-             *   'end_date' => 'required|date|not_overlapping_time_range:start_date,table_name,range_start_field,range_end_field,other_field',
+             *   'start_date' => 'required|date|not_overlapping_time_range:end_date,table,start_field,end_field,other_field',
+             *   'end_date' => 'required|date|not_overlapping_time_range:start_date,table,start_field,end_field,other_field',
              * ]
              *
              * @param string $attribute current field name
@@ -117,11 +117,16 @@ class AppServiceProvider extends ServiceProvider
                 }
 
                 // Search on database.
-                if (false) {
-                    return false;
+                // http://salman-w.blogspot.it/2012/06/sql-query-overlapping-date-ranges.html
+                $query = DB::table($tableName)
+                    ->where($rangeStartTableField, '<', $rangeEndFormValue)
+                    ->where($rangeEndTableField, '>', $rangeStartFormValue);
+                if ($filterFieldTableName !== null) {
+                    $query->where($filterFieldTableName, $filterFieldTableValue);
                 }
-
-                return true;
+                return $query->exists();
+                    
+                
             }
 
         );
