@@ -56,18 +56,14 @@ class StoreCompilationRequest extends FormRequest
                 'required',
                 'date',
                 'before:today',
-                Rule::unique('compilations')->where(function ($query) {
-                    return $query->where('student_id', Auth::user()->student->id);
-                })
+                'not_overlapping_time_range:stage_end_date,compilations,stage_start_date,stage_end_date,student_id',
             ],
             'stage_end_date' => [
                 'required',
                 'date',
                 'after:stage_start_date',
                 'before:' . $maxStageEndDate->format('Y-m-d'),
-                Rule::unique('compilations')->where(function ($query) {
-                    return $query->where('student_id', Auth::user()->student->id);
-                })
+                'not_overlapping_time_range:stage_start_date,compilations,stage_start_date,stage_end_date,student_id',
             ],
             'stage_academic_year' => 'required|in:' . implode(',', [
                     $academicYearService->getPrevious(),

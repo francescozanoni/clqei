@@ -116,5 +116,7 @@
   
   "The new student has been created": "Il nuovo studente è stato creato",
   "The new viewer has been created": "Il nuovo visualizzatore è stato creato",
-  "The new administrator has been created": "Il nuovo amministratore è stato creato"
+  "The new administrator has been created": "Il nuovo amministratore è stato creato",
+  
+  "Overlapping time range.": "Intervallo temporale parzialmente o interamente già utilizzato."
 }
