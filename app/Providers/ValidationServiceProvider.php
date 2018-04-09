@@ -69,7 +69,7 @@ class ValidationServiceProvider extends ServiceProvider
             }
 
         );
-        
+
         Validator::extend(
             'not_overlapping_time_range',
             /**
@@ -97,18 +97,22 @@ class ValidationServiceProvider extends ServiceProvider
 
                 // Form date range fields are retrieved and values suitably stored into variables.
                 $otherFormFieldValue = Arr::get($validator->getData(), $parameters[0]);
-                $rangeStartFormValue = $value;                $rangeEndFormValue = $otherFormFieldValue;
+                $rangeStartFormValue = $value;
+                $rangeEndFormValue = $otherFormFieldValue;
                 if ($rangeEndFormValue < $rangeStartFormValue) {
-                    $rangeStartFormValue = $otherFormFieldValue;                    $rangeEndFormValue = $value;
+                    $rangeStartFormValue = $otherFormFieldValue;
+                    $rangeEndFormValue = $value;
                 }
-                
+
                 $tableName = $parameters[1];
-                $rangeStartTableField = $parameters[2];                $rangeEndTableField = $parameters[3];
-                
+                $rangeStartTableField = $parameters[2];
+                $rangeEndTableField = $parameters[3];
+
                 // Filter field is optional.
                 $filterTableFieldName = null;
                 $filterTableFieldValue = null;
-                if (isset($parameters[4]) === true) {                    $filterTableFieldName = $parameters[4];
+                if (isset($parameters[4]) === true) {
+                    $filterTableFieldName = $parameters[4];
                     $filterTableFieldValue = Arr::get($validator->getData(), $parameters[4]);
                 }
 
@@ -125,12 +129,12 @@ class ValidationServiceProvider extends ServiceProvider
                     $query = $query->where($filterTableFieldName, $filterTableFieldValue);
                 }
                 return $query->exists() === false;
-                              
+
             },
             // @todo refactor validation message localization
-            [__('Overlapping time range.')]
+            __('Overlapping time range.')
+        );
 
-        );
 
     }
 
@@ -143,8 +147,3 @@ class ValidationServiceProvider extends ServiceProvider
     }
 
 }
-
-
-            
-        
-    
