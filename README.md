@@ -1,4 +1,4 @@
-# CLQEI [![Build Status](https://travis-ci.org/francescozanoni/clqei.svg?branch=master)](https://travis-ci.org/francescozanoni/clqei) [![Maintainability](https://api.codeclimate.com/v1/badges/f5aca4caee1adc796924/maintainability)](https://codeclimate.com/github/francescozanoni/clqei/maintainability)
+# CLQEI [![Build Status](https://travis-ci.org/francescozanoni/clqei.svg?branch=master)](https://travis-ci.org/francescozanoni/clqei) [![Maintainability](https://api.codeclimate.com/v1/badges/f5aca4caee1adc796924/maintainability)](https://codeclimate.com/github/francescozanoni/clqei/maintainability) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/de2b5d0b4f8f49aba6ea695f3f20ad07)](https://www.codacy.com/app/francescozanoni/clqei?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=francescozanoni/clqei&amp;utm_campaign=Badge_Grade)
 
 
 Clinical Learning Quality Environment Inventory
