@@ -50,10 +50,6 @@
                 ajax: '',
                 columnDefs: [
                   {
-                    targets: 3,
-                    render: $.fn.dataTable.render.moment('DD/MM/YYYY')
-                  },
-                  {
                     targets: [0, 2, 4, 5, 6],
                     className: "hidden-xs"
                   }
@@ -73,7 +69,8 @@
                     },
                     {
                         data: 'created_at',
-                        name: 'compilations.created_at'
+                        name: 'compilations.created_at',
+                        render: $.fn.dataTable.render.moment('DD/MM/YYYY')
                     },
                     {
                         data: 'stage_location.name',
