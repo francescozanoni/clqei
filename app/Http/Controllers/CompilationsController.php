@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use App\Charts\CompilationChart;
 
 class CompilationsController extends Controller
 {
@@ -212,5 +213,19 @@ class CompilationsController extends Controller
 
         return view('compilations.show', ['compilation' => $compilation]);
     }
+    
+    /**
+     * Display compilation statistics.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function statistics()
+    {
+        $chart = new CompilationChart();
+        $chart->dataset('Sample', 'line', [100, 65, 84, 45, 90]);
+        return view('compilations.statistics', ['chart' => $chart]);
+    }
+    
+    
 
 }
