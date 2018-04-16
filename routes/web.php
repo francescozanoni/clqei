@@ -69,6 +69,10 @@ Route::middleware(['auth'])->group(function () {
         ['except' => ['create', 'store']]
     );
 
+        Route::post('locations/{location_id}/restore', 'LocationsController@restore')
+            ->middleware('can:create,App\Models\Location')
+            ->name('locations.restore');
+        
         /*
          * Verb        URI                               Action   Route Name
          * ---------------------------------------------------------------------------

@@ -17,7 +17,8 @@ class LocationsController extends Controller
     public function index()
     {
         $locations = Location::all()->sortBy('name');
-        return view('locations.index', ['locations' => $locations]);
+        $deletedLocations = Location::onlyTrashed()->get();
+        return view('locations.index', ['locations' => $locations, 'deleted_locations' => $deletedLocations]);
     }
 
     /**
@@ -71,6 +72,20 @@ class LocationsController extends Controller
     public function destroy(Location $location)
     {
         $location->delete();
+
+        return \Redirect::route('locations.index');
+    }
+    
+    /**
+     * Restore the specified resource.
+     *
+     * @param  int $locationId
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(int $locationId)
+    {
+        $location = Location::onlyTrashed()->where('id', $locationId)->get()->first();
+        $location->restore();
 
         return \Redirect::route('locations.index');
     }

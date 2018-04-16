@@ -90,5 +90,54 @@
         </div>
 
     </div>
+    
+    @if ($deleted_locations->isEmpty() === false)
+    
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            {{ __('Deleted stage locations') }}
+        </div>
+
+        <div class="panel-body">
+
+                <table class="table">
+
+                    <thead>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($deleted_locations as $location)
+                        <tr>
+                            <td>
+                                {{ $location->name }}
+                            </td>
+                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                {!! BootForm::open(['url' => 'locations/' . $location->id . '/restore', 'method' => 'post']) !!}
+                                <a href="{{ route('locations.restore', ['location' => $location]) }}"
+                                   title="{{ __('Restore') }}"
+                                   onclick="
+                                           event.preventDefault();
+                                           if (confirm('{{ __('Do you really want to restore this location?') }}') !== true) {
+                                           return;
+                                           }
+                                           this.parentElement.submit();
+                                           ">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </a>
+                                {!! BootForm::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+
+                </table>
+
+        </div>
+
+    </div>
+    
+    @endif
 
 @endsection
