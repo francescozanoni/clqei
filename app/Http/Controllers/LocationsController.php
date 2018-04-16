@@ -18,7 +18,13 @@ class LocationsController extends Controller
     {
         $locations = Location::all()->sortBy('name');
         $deletedLocations = Location::onlyTrashed()->get();
-        return view('locations.index', ['locations' => $locations, 'deleted_locations' => $deletedLocations]);
+        return view(
+            'locations.index',
+            [
+                'locations' => $locations,
+                'deleted_locations' => $deletedLocations
+            ]
+        );
     }
 
     /**
@@ -89,4 +95,5 @@ class LocationsController extends Controller
 
         return \Redirect::route('locations.index');
     }
+
 }

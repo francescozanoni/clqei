@@ -17,7 +17,14 @@ class WardsController extends Controller
     public function index()
     {
         $wards = Ward::all()->sortBy('name');
-        return view('wards.index', ['wards' => $wards]);
+        $deletedWards = Ward::onlyTrashed()->get();
+        return view(
+            'wards.index',
+            [
+                'wards' => $wards,
+                'deleted_wards' => $deletedWards
+            ]
+        );
     }
 
     /**
@@ -74,4 +81,19 @@ class WardsController extends Controller
 
         return \Redirect::route('wards.index');
     }
+
+    /**
+     * Restore the specified resource.
+     *
+     * @param  int $wardId
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(int $wardId)
+    {
+        $ward = Ward::onlyTrashed()->where('id', $wardId)->get()->first();
+        $ward->restore();
+
+        return \Redirect::route('wards.index');
+    }
+
 }

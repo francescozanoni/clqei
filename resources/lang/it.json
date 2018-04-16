@@ -76,7 +76,9 @@
 
   "Stages": "Tirocini",
   "Stage locations": "Sedi di tirocinio",
+  "Deleted stage locations": "Sedi di tirocinio eliminate",
   "Stage wards": "Reparti di tirocinio",
+  "Deleted stage wards": "Reparti di tirocinio eliminati",
   "Name": "Nome",
   "Locations": "Sedi",
   "Wards": "Reparti",
@@ -92,6 +94,7 @@
   "Edit ward": "Modifica reparto",
   "The ward has been updated": "Il reparto è stato modificato",
   "Do you really want to delete this ward?": "Vuoi davvero eliminare questo reparto?",
+  "Do you really want to restore this ward?": "Vuoi davvero ripristinare questo reparto?",
   "The ward has been deleted": "Il reparto è stato eliminato",
   "Edit": "Modifica",
   "Delete": "Elimina",

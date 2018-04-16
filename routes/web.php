@@ -89,6 +89,9 @@ Route::middleware(['auth'])->group(function () {
         )
             ->middleware('can:create,App\Models\Location');
 
+        Route::post('wards/{ward_id}/restore', 'WardsController@restore')
+            ->middleware('can:create,App\Models\Ward')
+            ->name('wards.restore');
         /*
          * Verb        URI                               Action   Route Name
          * ---------------------------------------------------------------------------
