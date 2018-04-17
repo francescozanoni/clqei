@@ -5,6 +5,7 @@ namespace App\Models;
 
 use App\Models\Traits\EloquentGetTableName;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Interfaces\Importable;
 
@@ -20,5 +21,14 @@ class Location extends Model implements Importable
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Get the compilations of this student
+     * @return HasMany
+     */
+    public function compilations() : HasMany
+    {
+        return $this->hasMany('App\Models\Compilation', 'stage_location_id');
+    }
 
 }

@@ -16,8 +16,8 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::all()->sortBy('name');
-        $deletedLocations = Location::onlyTrashed()->get();
+        $locations = Location::with('compilations')->get()->sortBy('name');
+        $deletedLocations = Location::with('compilations')->onlyTrashed()->get();
         return view(
             'locations.index',
             [
@@ -81,7 +81,7 @@ class LocationsController extends Controller
 
         return \Redirect::route('locations.index');
     }
-    
+
     /**
      * Restore the specified resource.
      *

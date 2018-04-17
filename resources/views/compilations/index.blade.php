@@ -55,10 +55,10 @@
                 },
                 ajax: '',
                 columnDefs: [
-                  {
-                    targets: [0, 2, 4, 5, 6],
-                    className: "hidden-xs"
-                  }
+                    {
+                        targets: [0, 2, 4, 5, 6],
+                        className: "hidden-xs"
+                    }
                 ],
                 columns: [
                     {

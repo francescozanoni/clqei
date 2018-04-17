@@ -52,6 +52,19 @@ class EloquentModelObserver
     }
 
     /**
+     * Listen to the model restored event.
+     *
+     * @param Model $model
+     */
+    public function restored(Model $model)
+    {
+        Session::flash(
+            self::FLASH_MESSAGE_KEY,
+            __('The ' . $this->getModelName($model) . ' has been restored')
+        );
+    }
+
+    /**
      * Get a human readable string representation of the model class.
      *
      * @param Model $model

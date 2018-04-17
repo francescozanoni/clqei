@@ -80,6 +80,7 @@
   "Stage wards": "Reparti di tirocinio",
   "Deleted stage wards": "Reparti di tirocinio eliminati",
   "Name": "Nome",
+  "N. of compilations": "N. di compilazioni",
   "Locations": "Sedi",
   "Wards": "Reparti",
   "New location": "Nuova sede",
@@ -89,6 +90,7 @@
   "Do you really want to delete this location?": "Vuoi davvero eliminare questa sede?",
   "Do you really want to restore this location?": "Vuoi davvero ripristinare questa sede?",
   "The location has been deleted": "La sede è stata eliminata",
+  "The location has been restored": "La sede è stata ripristinata",
   "New ward": "Nuovo reparto",
   "The new ward has been created": "Il nuovo reparto è stato creato",
   "Edit ward": "Modifica reparto",
@@ -96,8 +98,10 @@
   "Do you really want to delete this ward?": "Vuoi davvero eliminare questo reparto?",
   "Do you really want to restore this ward?": "Vuoi davvero ripristinare questo reparto?",
   "The ward has been deleted": "Il reparto è stato eliminato",
+  "The ward has been restored": "Il reparto è stato ripristinato",
   "Edit": "Modifica",
   "Delete": "Elimina",
+  "Restore": "Ripristina",
 
   "Student": "Studente",
   "Students": "Studenti",
@@ -117,10 +121,10 @@
 
   "You are receiving this e-mail because we received a password reset request for your account.": "Stai ricevendo questa e-mail a seguito di una richiesta di reimpostazione password per il tuo account.",
   "If you did not request a password reset, no further action is required.": "Se non hai richiesto alcuna reimpostazione della password, puoi ignorare questo messaggio.",
-  
+
   "The new student has been created": "Il nuovo studente è stato creato",
   "The new viewer has been created": "Il nuovo visualizzatore è stato creato",
   "The new administrator has been created": "Il nuovo amministratore è stato creato",
-  
+
   "Overlapping time range.": "Intervallo temporale parzialmente o interamente già utilizzato."
 }

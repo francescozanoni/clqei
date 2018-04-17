@@ -16,8 +16,8 @@ class WardsController extends Controller
      */
     public function index()
     {
-        $wards = Ward::all()->sortBy('name');
-        $deletedWards = Ward::onlyTrashed()->get();
+        $wards = Ward::with('compilations')->get()->sortBy('name');
+        $deletedWards = Ward::with('compilations')->onlyTrashed()->get();
         return view(
             'wards.index',
             [

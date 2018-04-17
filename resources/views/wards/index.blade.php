@@ -49,6 +49,12 @@
                 <table class="table">
 
                     <thead>
+                    <tr>
+                        <th class="col-xs-4">{{ __('Name') }}</th>
+                        <th>{{ __('N. of compilations') }}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
 
                     <tbody>
@@ -56,6 +62,9 @@
                         <tr>
                             <td>
                                 {{ $ward->name }}
+                            </td>
+                            <td>
+                                {{ count($ward->compilations) }}
                             </td>
                             <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                 <a href="{{ route('wards.edit', ['ward' => $ward]) }}"
@@ -89,5 +98,62 @@
         </div>
 
     </div>
+
+    @if ($deleted_wards->isEmpty() === false)
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                {{ __('Deleted stage wards') }}
+            </div>
+
+            <div class="panel-body">
+
+                <table class="table">
+
+                    <thead>
+                    <tr>
+                        <th class="col-xs-4">{{ __('Name') }}</th>
+                        <th>{{ __('N. of compilations') }}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($deleted_wards as $ward)
+                        <tr>
+                            <td>
+                                {{ $ward->name }}
+                            </td>
+                            <td>
+                                {{ count($ward->compilations) }}
+                            </td>
+                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                {!! BootForm::open(['url' => 'wards/' . $ward->id . '/restore', 'method' => 'post']) !!}
+                                <a href="{{ route('wards.restore', ['ward' => $ward]) }}"
+                                   title="{{ __('Restore') }}"
+                                   onclick="
+                                           event.preventDefault();
+                                           if (confirm('{{ __('Do you really want to restore this ward?') }}') !== true) {
+                                           return;
+                                           }
+                                           this.parentElement.submit();
+                                           ">
+                                    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                                </a>
+                                {!! BootForm::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    @endif
 
 @endsection
