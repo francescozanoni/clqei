@@ -19,7 +19,7 @@ try {
     require('datatables.net-buttons');
     require('datatables.net-buttons-bs');
 
-    window.Chart = require('chartjs');
+    window.Chart = require('chart.js');
 
 } catch (e) {}
 
