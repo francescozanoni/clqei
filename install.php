@@ -108,10 +108,8 @@ foreach ($iterator as $item) {
 echo 'Setting up database...' . PHP_EOL;
 
 # Database files
-$db = new SQLite3(DATABASE_FILE_PATH);
-$db->close();
-$db = new SQLite3(TEST_DATABASE_FILE_PATH);
-$db->close();
+touch(DATABASE_FILE_PATH);
+touch(TEST_DATABASE_FILE_PATH);
 chmod(DATABASE_FILE_PATH, 0777);
 chmod(TEST_DATABASE_FILE_PATH, 0777);
 chmod(dirname(DATABASE_FILE_PATH), 0777);
@@ -179,6 +177,8 @@ $file = preg_replace('#RewriteBase\s/#', 'RewriteBase ' . $baseUrl, $file);
 file_put_contents(HTACCESS_FILE_PATH, $file);
 
 # #####################################################
+
+exec('php artisan key:generate');
 
 # Post-install instructions
 if ($options['with_phpliteadmin'] === true) {

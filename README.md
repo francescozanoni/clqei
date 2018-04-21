@@ -8,11 +8,11 @@ Clinical Learning Quality Environment Inventory
 
     composer install
     npm install
-    npm run production
 
-    php install.php --application_url=<APPLICATION_URL>
+    php install.php --application_url=<APPLICATION_URL> # if not provided, URL is http://localhost:8000
+    # To install phpLiteAdmin as well
+    # php install.php --application_url=<APPLICATION_URL> --with_phpliteadmin
 
-    php artisan key:generate
     php artisan migrate --seed
 
 #### Manual steps
