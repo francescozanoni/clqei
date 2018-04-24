@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
      */
 
     Route::get('compilations/statistics', 'CompilationsController@statistics')
-        ->middleware('can:viewAll,App\Models\Compilation')
+        ->middleware(['can:viewAll,App\Models\Compilation', 'adapt_javascript'])
         ->name('compilations.statistics');
 
     /*
