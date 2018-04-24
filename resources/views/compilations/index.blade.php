@@ -30,7 +30,7 @@
                         <span class="hidden-xs hidden-sm">{{ __('Stage ward') }}</span>
                         <span class="hidden-md hidden-lg">{{ __('Ward') }}</span>
                     </th>
-                    <th>{{ __('Weeks') }}</th>
+                    <th class="hidden-xs hidden-sm">{{ __('Weeks') }}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -56,8 +56,12 @@
                 ajax: '',
                 columnDefs: [
                     {
-                        targets: [0, 2, 4, 5, 6],
+                        targets: [0, 2, 4, 5],
                         className: "hidden-xs"
+                    },
+                    {
+                        targets: [6],
+                        className: "hidden-xs hidden-sm"
                     }
                 ],
                 columns: [
