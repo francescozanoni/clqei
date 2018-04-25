@@ -10,10 +10,13 @@ Clinical Learning Quality Environment Inventory
 composer install
 npm install
 
-php install.php # default URL is http://localhost:8000
-# To customize URL
+# To install with default URL http://localhost:8000
+php install.php
+
+# To install with custom URL
 # php install.php --application_url=<APPLICATION_URL>
-# To install phpLiteAdmin as well
+
+# To install with phpLiteAdmin, available at <APPLICATION_URL>/phpliteadmin
 # php install.php --with_phpliteadmin
 
 php artisan migrate --seed
