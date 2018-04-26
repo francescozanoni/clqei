@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers;
 
 use App;
+use App\Charts\CompilationChart;
 use App\Http\Requests\StoreCompilationRequest;
 use App\Models\Compilation;
 use App\Models\CompilationItem;
@@ -11,11 +12,10 @@ use App\Models\Location;
 use App\Models\Question;
 use App\Models\Section;
 use App\Models\Ward;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
-use App\Charts\CompilationChart;
 
 class CompilationsController extends Controller
 {
@@ -91,7 +91,7 @@ class CompilationsController extends Controller
                     // DataTables plugin (datetimes) correctly format the value.
                     return with(new Carbon($compilation->created_at))->format('Y-m-d');
                 });
-                
+
             // @todo refactor by extracting all order parameter usage and sanitization logic
             $order = request()->get('order')[0];
             $order['column'] = (int)$order['column'];
@@ -106,9 +106,9 @@ class CompilationsController extends Controller
                     );
                 });
             }
-            
+
             return $toReturn->make(true);
-            
+
         }
 
         return view('compilations.index');
@@ -213,7 +213,7 @@ class CompilationsController extends Controller
 
         return view('compilations.show', ['compilation' => $compilation]);
     }
-    
+
     /**
      * Display compilation statistics.
      *
@@ -222,10 +222,40 @@ class CompilationsController extends Controller
     public function statistics()
     {
         $chart = new CompilationChart();
-        $chart->dataset('Sample', 'line', [100, 65, 84, 45, 90]);
+        $chart->labels(['a', 'b', 'c', 'd', 'e']);
+        $chart->dataset(
+            'Sample 1',
+            'bar',
+            [120, 65, 84, 45, 90]
+        );
+        $chart->dataset(
+            'Sample 2',
+            'bar',
+            [45, 47, 23, 32, 11]
+        );
+        /*
+        $chart->options(json_decode('{
+            title: {
+                display: true,
+                text: "Chart.js Bar Chart - Stacked"
+            },
+            tooltips: {
+                mode: "index",
+                intersect: false
+            },
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }', true));
+        */
         return view('compilations.statistics', ['chart' => $chart]);
     }
-    
-    
+
 
 }
