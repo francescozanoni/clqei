@@ -18,10 +18,11 @@
             <table id="compilations-table" class="table">
                 <thead>
                 <tr>
+                    <th>{{ __('Date') }}</th>
+                    <th>{{ __('Date') }}</th>
                     <th>{{ __('Identification number') }}</th>
                     <th>{{ __('Last name') }}</th>
                     <th>{{ __('First name') }}</th>
-                    <th>{{ __('Date') }}</th>
                     <th>
                         <span class="hidden-xs hidden-sm">{{ __('Stage location') }}</span>
                         <span class="hidden-md hidden-lg">{{ __('Location') }}</span>
@@ -30,7 +31,7 @@
                         <span class="hidden-xs hidden-sm">{{ __('Stage ward') }}</span>
                         <span class="hidden-md hidden-lg">{{ __('Ward') }}</span>
                     </th>
-                    <th class="hidden-xs hidden-sm">{{ __('Weeks') }}</th>
+                    <th>{{ __('Weeks') }}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -54,20 +55,25 @@
                     url: '{{ route('datatables-language', ['country' => config('app.locale')]) }}'
                 },
                 ajax: '',
-                columnDefs: [
+                columns: [
+                    // short date
                     {
-                        targets: [0, 2, 4, 5],
-                        className: "hidden-xs"
+                        data: 'created_at',
+                        name: 'compilations.created_at',
+                        render: $.fn.dataTable.render.moment('DD/MM/YY'),
+                        className: "hidden-md hidden-lg"
+                    },
+                    // long date
+                    {
+                        data: 'created_at',
+                        name: 'compilations.created_at',
+                        render: $.fn.dataTable.render.moment('DD/MM/YYYY'),
+                        className: "hidden-xs hidden-sm"
                     },
                     {
-                        targets: [6],
-                        className: "hidden-xs hidden-sm"
-                    }
-                ],
-                columns: [
-                    {
                         data: 'student.identification_number',
-                        name: 'student.identification_number'
+                        name: 'student.identification_number',
+                        className: "hidden-xs"
                     },
                     {
                         data: 'student.user.last_name',
@@ -75,25 +81,24 @@
                     },
                     {
                         data: 'student.user.first_name',
-                        name: 'student.user.first_name'
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'compilations.created_at',
-                        render: $.fn.dataTable.render.moment('DD/MM/YYYY')
+                        name: 'student.user.first_name',
+                        className: "hidden-xs"
                     },
                     {
                         data: 'stage_location.name',
-                        name: 'stageLocation.name'
+                        name: 'stageLocation.name',
+                        className: "hidden-xs"
                     },
                     {
                         data: 'stage_ward.name',
-                        name: 'stageWard.name'
+                        name: 'stageWard.name',
+                        className: "hidden-xs"
                     },
                     {
                         data: 'stage_weeks',
                         name: 'compilations.stage_weeks',
-                        searchable: false
+                        searchable: false,
+                        className: "hidden-xs hidden-sm"
                     },
                     {
                         name: 'link_to_detail',
