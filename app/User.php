@@ -54,6 +54,28 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    
+    /**
+     * Set the user's first name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucwords(strtolower($value), '\t\r\n\f\v\'- ');
+    }
+    
+    /**
+     * Set the user's last name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucwords(strtolower($value), '\t\r\n\f\v\'- ');
+    }
 
     /**
      * Get the student of this user
