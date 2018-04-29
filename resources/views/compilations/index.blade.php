@@ -55,6 +55,7 @@
                     url: '{{ route('datatables-language', ['country' => config('app.locale')]) }}'
                 },
                 ajax: '',
+                order: [[0, "desc"]],
                 columns: [
                     // short date
                     {
