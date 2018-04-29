@@ -74,7 +74,7 @@
                     {
                         data: 'student.identification_number',
                         name: 'student.identification_number',
-                        className: "hidden-xs"
+                        className: "hidden-xs hidden-sm"
                     },
                     {
                         data: 'student.user.last_name',
