@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use DB;
 
 class UsersController extends Controller
@@ -27,7 +28,11 @@ class UsersController extends Controller
     public function index(Request $request)
     {
 
-        $users = null;
+        if ($request->has('role') === false) {
+            return view('users.index_no_role');
+        }
+        
+        $users = new Collection();
         $userRole = $request->get('role');
 
         switch ($userRole) {
@@ -44,7 +49,7 @@ class UsersController extends Controller
                 $users = User::students()->with('student')->get();
                 break;
             default:
-                $userRole = null;
+               $userRole = null;
         }
 
         return view(
