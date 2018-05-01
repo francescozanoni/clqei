@@ -63,7 +63,7 @@ class User extends Authenticatable
      */
     public function setFirstNameAttribute($value)
     {
-        $this->attributes['first_name'] = ucwords(strtolower($value), '\t\r\n\f\v\'- ');
+        $this->attributes['first_name'] = ucwords(strtolower($value), '\'- ');
     }
     
     /**
@@ -74,7 +74,7 @@ class User extends Authenticatable
      */
     public function setLastNameAttribute($value)
     {
-        $this->attributes['last_name'] = ucwords(strtolower($value), '\t\r\n\f\v\'- ');
+        $this->attributes['last_name'] = ucwords(strtolower($value), '\'- ');
     }
 
     /**
