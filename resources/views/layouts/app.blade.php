@@ -118,6 +118,15 @@
                                     </a>
                                 </li>
                                 @endcan
+                                {{-- Compilation statistics temporarily accessible only to administrators --}}
+                                @if (Auth::user()->can('createAdministrator', App\User::class))
+                                <li>
+                                    <a href="{{ route('compilations.statistics') }}">
+                                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                                        {{ __('Statistics') }}
+                                    </a>
+                                </li>
+                                @endif
                             </ul>
                         </li>
 

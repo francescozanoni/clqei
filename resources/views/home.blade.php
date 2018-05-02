@@ -43,12 +43,21 @@
                     <li>{{ __('Compilation creation is currently disabled') }}</li>
                 @endif
                 @endcannot
+                @if ($number_of_compilations > 0)
                 @can('viewAll', App\Models\Compilation::class)
                 <li>
                     <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                     {!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}
                 </li>
                 @endcan
+                {{-- Compilation statistics temporarily accessible only to administrators --}}
+                @if (Auth::user()->can('createAdministrator', App\User::class))
+                    <li>
+                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                        {!! link_to_route('compilations.statistics', __('Statistics')) !!}
+                    </li>
+                @endif
+                @endif
             </ul>
 
             @can('create', App\Models\Location::class)
