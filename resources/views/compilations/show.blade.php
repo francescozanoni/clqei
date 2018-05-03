@@ -28,7 +28,7 @@
         <div class="panel-body">
         
         @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
-        <div class="visible-xs-block">
+            <div class="visible-xs-block">
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
@@ -54,28 +54,30 @@
                 </tbody>
             </table>
             </div>
-            @endif
+        @endif
                 
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
-                    <th class="col-xs-5 col-sm-8">{{ __('Stage') }}</th>
-                    <th class="col-sm-4 col-md-4 col-lg-4"></th>
+                    <th colspan="3">{{ __('Stage') }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ __('Location') }}</td>
-                    <td>{{ $compilation->stageLocation->name }}</td>
+                    <td></td>
+                    <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Location') }}</td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stageLocation->name }}</td>
                 </tr>
                 <tr>
-                    <td>{{ __('Ward') }}</td>
-                    <td>{{ $compilation->stageWard->name }}</td>
+                    <td></td>
+                    <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Ward') }}</td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stageWard->name }}</td>
                 </tr>
                 <tr>
-                    <td>{{ __('Period') }}</td>
+                    <td></td>
+                    <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Period') }}</td>
                     {{-- @todo refactor date localization to a service --}}
-                    <td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">
                         <span class="hidden-xs">
                         {{ (new Carbon\Carbon($compilation->stage_start_date))->format('d/m/Y') }}
                         -
@@ -89,37 +91,46 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ __('Weeks') }}</td>
-                    <td>{{ $compilation->stage_weeks }}</td>
+                    <td></td>
+                    <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Weeks') }}</td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stage_weeks }}</td>
                 </tr>
                 <tr>
-                    <td>
-                    <span class="hidden-xs"> {{ __('Academic year') }} </span>
-                    <span class="visible-xs-inline"> {{ __('Acad. year') }} </span>
-                   
+                    <td></td>
+                    <td class="col-sm-8 col-md-8 col-lg-8">
+                        <span class="hidden-xs"> {{ __('Academic year') }} </span>
+                        <span class="visible-xs-inline"> {{ __('Acad. year') }} </span>
                     </td>
-                    <td>{{ $compilation->stage_academic_year}}</td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stage_academic_year}}</td>
                 </tr>
                 </tbody>
             </table>
-
-            {{-- @todo split questions by section and add section title --}}
-            <table class="table table-striped table-condensed">
-
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>{{ __('Question') }}</th>
-                    <th class="col-sm-4 col-md-4 col-lg-4">{{ __('Answer') }}</th>
-                </tr>
-                </thead>
-
-                <tbody>
+            
                 @foreach ($compilation->items as $index => $item)
+                
+                    @if (isset($compilation->items[$index - 1]) === false ||
+                        $item->question->section->id !== $compilation->items[$index - 1]->question->section->id)
+                         <table class="table table-striped table-condensed">
+                         <thead>
+                         <tr>
+                         <th colspan="3">
+                             <span class="hidden-xs">{{ __('Section') }}</span>
+                             <span class="visible-xs-inline">{{ __('Sect.') }}</span>
+                             {{ $item->question->section->id }}
+                             -
+                             {{ $item->question->section->title }}
+                         </th>
+                         </tr>
+                         </thead>
+                         <tbody>
+                    @endif
+                    
                     <tr>
-                        <td>{{ ($index + 1) /* . ' [q' . $item->question->id . '].' */ }}</td>
-                        <td>{{ $item->question->text }}</td>
-                        <td>
+                        <td>{{ ($index + 1) }}</td>
+                        <td class="col-sm-8 col-md-8 col-lg-8">
+                            {{ $item->question->text }}
+                        </td>
+                        <td class="col-sm-4 col-md-4 col-lg-4">
                             @if (is_array($item->the_answer) === true)
                                 @foreach ($item->the_answer as $answer)
                                     <p>{{ $answer->text }}</p>
@@ -131,10 +142,22 @@
                             @endif
                         </td>
                     </tr>
+                    
+                    @if (isset($compilation->items[$index + 1]) === false ||
+                        $item->question->section->id !== $compilation->items[$index + 1]->question->section->id)
+                        </tbody>
+                        </table>
+                        
+                        {{--
+                        @todo improve visualization, in order to add section footer
+                        @if ($item->question->section->footer !== null)
+                            <p>{{ $item->question->section->footer }}</p>
+                        @endif
+                        --}}
+                        
+                    @endif
+                    
                 @endforeach
-                </tbody>
-
-            </table>
 
         </div>
 

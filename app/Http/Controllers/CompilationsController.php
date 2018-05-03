@@ -208,9 +208,8 @@ class CompilationsController extends Controller
                 $query->withTrashed();
             },
             'items',
-            'items.question' => function ($query) {
-                $query->withTrashed();
-            },
+            'items.question',
+            'items.question.section',
         ]);
 
         $this->authorize('view', $compilation);
