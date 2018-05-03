@@ -7,6 +7,7 @@ use App\Models\Traits\EloquentGetTableName;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class CompilationItem extends Model
 {
@@ -54,6 +55,12 @@ class CompilationItem extends Model
     public function getTheAnswerAttribute()
     {
 
+        // Quick-and-dirty optimization of the huge amount of queries triggered by this method.
+        // @todo refactor
+        if (Cache::has('compilation_' . $this->compilation->id . '_item_' . $this->id) === true) {
+            return Cache::get('compilation_' . $this->compilation->id . '_item_' . $this->id);
+        }
+
         if ($this->attributes['answer'] === null) {
             return null;
         }
@@ -81,6 +88,8 @@ class CompilationItem extends Model
             default:
                 $answer = $this->attributes['answer'];
         }
+
+        Cache::put('compilation_' . $this->compilation->id . '_item_' . $this->id, $answer, (new \DateTime())->add(\DateInterval::createFromDateString('1 seconds')));
 
         return $answer;
     }
