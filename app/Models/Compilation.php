@@ -54,34 +54,15 @@ class Compilation extends Model
     }
 
     /**
-     * Get the items of this compilation
-     *
-     * @return array
-     */
-    public function getItemsAttribute() : array
-    {
-        $itemsToReturn = [];
-
-        // Compilation items are returned only once, although items related
-        // to "multiple_choice" are stored as several records/models.
-        $questionIdsAlreadyUsed = [];
-        foreach ($this->items()->get() as $item) {
-            if (in_array($item->question_id, $questionIdsAlreadyUsed) === false) {
-                $itemsToReturn[] = $item;
-                $questionIdsAlreadyUsed[] = $item->question_id;
-            }
-        }
-
-        return $itemsToReturn;
-    }
-
-    /**
      * Get the items of this compilation (as relationship)
      * @return HasMany
      */
     public function items() : HasMany
     {
         return $this->hasMany('App\Models\CompilationItem')
+            // Compilation items are returned only once, although items related
+            // to "multiple_choice" are stored as several records/models.
+            ->groupBy('question_id')
             // @todo item sorting must be based on section+question "position" attributes
             ->orderBy('question_id');
     }

@@ -206,7 +206,11 @@ class CompilationsController extends Controller
             },
             'student.user' => function ($query) {
                 $query->withTrashed();
-            }
+            },
+            'items',
+            'items.question' => function ($query) {
+                $query->withTrashed();
+            },
         ]);
 
         $this->authorize('view', $compilation);
