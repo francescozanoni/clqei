@@ -208,6 +208,7 @@ class CompilationsController extends Controller
                 $query->withTrashed();
             },
             'items',
+            'items.aanswer',
             'items.question',
             'items.question.section',
         ]);

@@ -55,12 +55,6 @@ class CompilationItem extends Model
     public function getTheAnswerAttribute()
     {
 
-        // Quick-and-dirty optimization of the huge amount of queries triggered by this method.
-        // @todo refactor
-        if (Cache::has('compilation_' . $this->compilation->id . '_item_' . $this->id) === true) {
-            return Cache::get('compilation_' . $this->compilation->id . '_item_' . $this->id);
-        }
-
         if ($this->attributes['answer'] === null) {
             return null;
         }
@@ -70,17 +64,18 @@ class CompilationItem extends Model
         switch ($this->question->type) {
 
             case 'single_choice':
-                $answer = $this->answer()->first()->text;
+                $answer = $this->aanswer->text;
                 break;
 
             case 'multiple_choice':
                 $siblingItems =
-                    CompilationItem::where('compilation_id', $this->compilation_id)
+                    CompilationItem
+                        ::where('compilation_id', $this->compilation_id)
                         ->where('question_id', $this->question_id)
                         ->get();
                 $siblingItemAnswers = [];
                 foreach ($siblingItems as $siblingItem) {
-                    $siblingItemAnswers[] = $siblingItem->answer()->first();
+                    $siblingItemAnswers[] = $siblingItem->aanswer;
                 }
                 $answer = $siblingItemAnswers;
                 break;
@@ -89,16 +84,17 @@ class CompilationItem extends Model
                 $answer = $this->attributes['answer'];
         }
 
-        Cache::put('compilation_' . $this->compilation->id . '_item_' . $this->id, $answer, (new \DateTime())->add(\DateInterval::createFromDateString('1 seconds')));
-
         return $answer;
     }
 
     /**
      * Get the related answer object (if any)
      * @return BelongsTo
+     *
+     * THIS ODD NAME IS REQUIRED BECAUSE
+     * THE DATABASE FIELD IS "answer"
      */
-    public function answer() : BelongsTo
+    public function aanswer() : BelongsTo
     {
         return $this->belongsTo('App\Models\Answer', 'answer', 'id');
     }
