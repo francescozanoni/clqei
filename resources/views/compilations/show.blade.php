@@ -32,24 +32,24 @@
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
-                  <th class="col-xs-5">
+                  <th>
                   {{ __('Student') }}
                   </th>
-                  <th class="col-xs-7"></th>
+                  <th  class="col-sm-4 col-md-4 col-lg-4"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>{{ __('First name') }}</td>
-                    <td>{{ $compilation->student->user->first_name }}</td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->student->user->first_name }}</td>
                 </tr>
                 <tr>
                     <td>{{ __('Last name') }}</td>
-                    <td>{{ $compilation->student->user->last_name }}</td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->student->user->last_name }}</td>
                 </tr>
                 <tr>
                     <td>{{ __('Identification number') }}</td>
-                    <td>{{ $compilation->student->identification_number }}</td>
+                    <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->student->identification_number }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -59,22 +59,24 @@
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
-                    <th colspan="3">{{ __('Stage') }}</th>
+                    <th colspan="2">
+                        <h3>{{ __('Stage') }}</h3>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td></td>
+                    
                     <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Location') }}</td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stageLocation->name }}</td>
                 </tr>
                 <tr>
-                    <td></td>
+                    
                     <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Ward') }}</td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stageWard->name }}</td>
                 </tr>
                 <tr>
-                    <td></td>
+                    
                     <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Period') }}</td>
                     {{-- @todo refactor date localization to a service --}}
                     <td class="col-sm-4 col-md-4 col-lg-4">
@@ -83,7 +85,7 @@
                         -
                         {{ (new Carbon\Carbon($compilation->stage_end_date))->format('d/m/Y') }}
                         </span>
-                        <span class="visible-xs-inline">
+                        <span class="visible-xs-inline hidden-print">
                         {{ (new Carbon\Carbon($compilation->stage_start_date))->format('d/m/y') }}
                         -
                         {{ (new Carbon\Carbon($compilation->stage_end_date))->format('d/m/y') }}
@@ -91,15 +93,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
+          
                     <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Weeks') }}</td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stage_weeks }}</td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td class="col-sm-8 col-md-8 col-lg-8">
                         <span class="hidden-xs"> {{ __('Academic year') }} </span>
-                        <span class="visible-xs-inline"> {{ __('Acad. year') }} </span>
+                        <span class="visible-xs-inline hidden-print"> {{ __('Acad. year') }} </span>
                     </td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stage_academic_year}}</td>
                 </tr>
@@ -114,11 +115,15 @@
                          <thead>
                          <tr>
                          <th colspan="3">
-                             <span class="hidden-xs">{{ __('Section') }}</span>
-                             <span class="visible-xs-inline">{{ __('Sect.') }}</span>
-                             {{ $item->question->section->id }}
-                             -
-                             {{ $item->question->section->title }}
+                             <h3 class="hidden-xs hidden-print">
+                             {{ __('Section') . ' ' . $item->question->section->id . ' - ' . $item->question->section->title }}
+                             </h3>
+                             <h3 class="visible-xs-inline hidden-print">
+                             {{ __('Sect.') . ' ' . $item->question->section->id . ' - ' . $item->question->section->title }}
+                             </h3>
+                             <h3 class="visible-print-inline">
+                             {{ __('Section') . ' ' . $item->question->section->id . ' - ' . $item->question->section->title }}
+                             </h3>
                          </th>
                          </tr>
                          </thead>

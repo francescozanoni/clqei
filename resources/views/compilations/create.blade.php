@@ -35,10 +35,11 @@
             @endcan
 
             <div class="row">
+                <div><h3 class="col-xs-12">{{ __('Stage') }}</h3></div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     {!! BootForm::select(
                             'stage_location_id',
-                            __('Stage location'),
+                            __('Location'),
                             App\Models\Location::all()->sortBy('name')->pluck('name', 'id'),
                             null,
                             ['placeholder' => __('Select') . '...']
@@ -47,23 +48,23 @@
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     {!! BootForm::select(
                             'stage_ward_id',
-                            __('Stage ward'),
+                            __('Ward'),
                             App\Models\Ward::all()->sortBy('name')->pluck('name', 'id'),
                             null,
                             ['placeholder' => __('Select') . '...']
                             ) !!}
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    {!! BootForm::date('stage_start_date', __('Stage start date')) !!}
+                    {!! BootForm::date('stage_start_date', __('Start date')) !!}
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    {!! BootForm::date('stage_end_date', __('Stage end date')) !!}
+                    {!! BootForm::date('stage_end_date', __('End date')) !!}
                 </div>
             </div>
 
             {!! BootForm::select(
                     'stage_academic_year',
-                    __('Stage academic year'),
+                    __('Academic year'),
                     [
                     $academicYearService->getPrevious() => $academicYearService->getPrevious(),
                     $academicYearService->getCurrent() => $academicYearService->getCurrent()
