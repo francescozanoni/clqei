@@ -256,13 +256,13 @@
                 @endif
 
                 @if (session('status'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success hidden-print">
                         {{ session('status') }}
                     </div>
                 @endif
 
                 @if (session(\App\Observers\EloquentModelObserver::FLASH_MESSAGE_KEY))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success hidden-print">
                         {{ session(\App\Observers\EloquentModelObserver::FLASH_MESSAGE_KEY) }}
                     </div>
                 @endif

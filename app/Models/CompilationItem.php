@@ -7,7 +7,6 @@ use App\Models\Traits\EloquentGetTableName;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Cache;
 
 class CompilationItem extends Model
 {

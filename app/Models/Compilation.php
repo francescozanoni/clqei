@@ -32,7 +32,7 @@ class Compilation extends Model
      */
     public function student() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Student');
+        return $this->belongsTo('App\Models\Student')->withTrashed();
     }
 
     /**
@@ -41,7 +41,7 @@ class Compilation extends Model
      */
     public function stageLocation() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Location', 'stage_location_id', 'id');
+        return $this->belongsTo('App\Models\Location', 'stage_location_id', 'id')->withTrashed();
     }
 
     /**
@@ -50,7 +50,7 @@ class Compilation extends Model
      */
     public function stageWard() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Ward', 'stage_ward_id', 'id');
+        return $this->belongsTo('App\Models\Ward', 'stage_ward_id', 'id')->withTrashed();
     }
 
     /**

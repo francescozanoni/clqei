@@ -53,15 +53,9 @@ class CompilationsController extends Controller
             // Deleted locations, wards, students and users must be included
             // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
             ::with([
-                'stageLocation' => function ($query) {
-                    $query->withTrashed();
-                },
-                'stageWard' => function ($query) {
-                    $query->withTrashed();
-                },
-                'student' => function ($query) {
-                    $query->withTrashed();
-                },
+                'stageLocation',
+                'stageWard',
+                'student',
                 'student.user' => function ($query) {
                     $query->withTrashed();
                 }
@@ -195,15 +189,9 @@ class CompilationsController extends Controller
         // Deleted students, users, locations and wards must be included
         // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
         $compilation->load([
-            'stageLocation' => function ($query) {
-                $query->withTrashed();
-            },
-            'stageWard' => function ($query) {
-                $query->withTrashed();
-            },
-            'student' => function ($query) {
-                $query->withTrashed();
-            },
+            'stageLocation',
+            'stageWard',
+            'student',
             'student.user' => function ($query) {
                 $query->withTrashed();
             },
