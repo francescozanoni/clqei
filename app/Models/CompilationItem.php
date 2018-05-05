@@ -27,7 +27,7 @@ class CompilationItem extends Model
      */
     public function compilation() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Compilation')->withTrashed();
+        return $this->belongsTo('App\Models\Compilation');
     }
 
     /**
@@ -95,7 +95,7 @@ class CompilationItem extends Model
      */
     public function aanswer() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Answer', 'answer', 'id');
+        return $this->belongsTo('App\Models\Answer', 'answer', 'id')->withTrashed();
     }
 
 }
