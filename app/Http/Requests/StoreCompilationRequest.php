@@ -40,29 +40,20 @@ class StoreCompilationRequest extends FormRequest
     public function rules(AcademicYearService $academicYearService)
     {
 
-        // Stage end date must be before today or before 18 weeks after stage start date.
-        // @todo move week number to configuration
-        $maxStageEndDate = Carbon::parse($this->stage_start_date)->addWeeks(18);
-        if (Carbon::today() < $maxStageEndDate) {
-            $maxStageEndDate = Carbon::today();
-        }
-
         $rules = [
             'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
             'stage_location_id' => 'required|exists:locations,id',
             'stage_ward_id' => 'required|exists:wards,id',
             // @todo add start/end date validation against academic year
             'stage_start_date' => [
-                'required',
-                'date',
+                'bail', 'required', 'date',
                 'before:today',
                 'not_overlapping_time_range:stage_end_date,compilations,stage_start_date,stage_end_date,student_id',
             ],
             'stage_end_date' => [
-                'required',
-                'date',
+                'bail', 'required', 'date',
                 'after:stage_start_date',
-                'before:' . $maxStageEndDate->format('Y-m-d'),
+                'before:' . $this->getMaxStageEndDate($this->stage_start_date ?? ''),
                 'not_overlapping_time_range:stage_start_date,compilations,stage_start_date,stage_end_date,student_id',
             ],
             'stage_academic_year' => 'required|in:' . implode(',', [
@@ -86,6 +77,27 @@ class StoreCompilationRequest extends FormRequest
         }
 
         return $rules;
+    }
+    
+    /**
+     * Stage end date must be before today and before 18 weeks after stage start date.
+     *
+     * @param string $stageStartDate
+     * @return string
+     */
+    private function getMaxStageEndDate(string $stageStartDate) : string
+    {
+        if ($stageStartDate === '') {
+            return Carbon::today()->format('Y-m-d');
+        }
+        
+        // @todo move week number to configuration
+        $maxStageEndDate = Carbon::parse($stageStartDate)->addWeeks(18);
+        if (Carbon::today() < $maxStageEndDate) {
+            $maxStageEndDate = Carbon::today();
+        }
+        
+        return $maxStageEndDate->format('Y-m-d');
     }
 
     /**
