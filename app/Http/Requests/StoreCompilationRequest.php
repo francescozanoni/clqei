@@ -40,6 +40,7 @@ class StoreCompilationRequest extends FormRequest
     public function rules(AcademicYearService $academicYearService)
     {
 
+        // Fixed question rules.
         $rules = [
             'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
             'stage_location_id' => 'required|exists:locations,id',
@@ -62,6 +63,7 @@ class StoreCompilationRequest extends FormRequest
                 ])
         ];
 
+        // Variable question rules.
         $questions = Question::all();
 
         foreach ($questions as $question) {

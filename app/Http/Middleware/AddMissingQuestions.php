@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Question;
+use App\Events\CompilationCreationAttempted;
 
 class AddMissingQuestions
 {
@@ -18,6 +19,9 @@ class AddMissingQuestions
      */
     public function handle($request, Closure $next)
     {
+    
+        // @todo move this event to a more suitable location
+        event(new CompilationCreationAttempted($request->all()));
     
         // When a question could have several answers but none is given,
         // one compilation item is created with NULL answer.
