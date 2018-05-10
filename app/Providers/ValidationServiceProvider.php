@@ -91,7 +91,8 @@ class ValidationServiceProvider extends ServiceProvider
 
                 // If the other range field is not available,
                 // there's no time range to validate.
-                if (Arr::has($validator->getData(), $parameters[0]) === false) {
+                if (Arr::has($validator->getData(), $parameters[0]) === false ||
+                    empty(Arr::get($validator->getData(), $parameters[0])) === true) {
                     return true;
                 }
 
