@@ -47,12 +47,12 @@ class StoreCompilationRequest extends FormRequest
             'stage_ward_id' => 'required|exists:wards,id',
             // @todo add start/end date validation against academic year
             'stage_start_date' => [
-                'bail', 'required', 'date',
+                'bail', 'required', 'date_format:Y-m-d',
                 'before:today',
                 'not_overlapping_time_range:stage_end_date,compilations,stage_start_date,stage_end_date,student_id',
             ],
             'stage_end_date' => [
-                'bail', 'required', 'date',
+                'bail', 'required', 'date_format:Y-m-d',
                 'after:stage_start_date',
                 'before:' . $this->getMaxStageEndDate($this->stage_start_date ?? ''),
                 'not_overlapping_time_range:stage_start_date,compilations,stage_start_date,stage_end_date,student_id',
