@@ -24,6 +24,7 @@
         "barryvdh/laravel-debugbar": "^3.1",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
+        "infection/infection": "^0.8.2",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~6.0"
     },
