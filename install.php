@@ -165,6 +165,7 @@ $file = preg_replace('#/absolute/path/to/database#', realpath(dirname(DATABASE_F
 file_put_contents(DOT_ENV_FILE_PATH, $file);
 
 $file = file_get_contents(PHPUNIT_XML_FILE_PATH);
+$file = preg_replace('#http://localhost#', $options['application_url'], $file);
 $file = preg_replace('#/absolute/path/to/database#', realpath(dirname(DATABASE_FILE_PATH)), $file);
 file_put_contents(PHPUNIT_XML_FILE_PATH, $file);
 
