@@ -6,7 +6,6 @@ $filePathsToDelete = [
     __DIR__ . '/public/.htaccess',
 
     __DIR__ . '/database/database.sqlite',
-    __DIR__ . '/database/test_database.sqlite',
 
     __DIR__ . '/resources/lang/it/auth.php',
     __DIR__ . '/resources/lang/it/pagination.php',

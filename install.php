@@ -45,7 +45,6 @@ if (isset($inputOptions['locale']) === true) {
 define('HTACCESS_FILE_PATH', __DIR__ . '/public/.htaccess');
 define('HTACCESS_EXAMPLE_FILE_PATH', __DIR__ . '/public/.htaccess.example');
 define('DATABASE_FILE_PATH', __DIR__ . '/database/database.sqlite');
-define('TEST_DATABASE_FILE_PATH', __DIR__ . '/database/test_database.sqlite');
 define('DOT_ENV_FILE_PATH', __DIR__ . '/.env');
 define('DOT_ENV_EXAMPLE_FILE_PATH', __DIR__ . '/.env.example');
 define('PHPUNIT_XML_FILE_PATH', __DIR__ . '/phpunit.xml');
@@ -60,7 +59,6 @@ define('PHPLITEADMIN_ZIP_FILE_PATH', sys_get_temp_dir() . '/phpliteadmin.zip');
 $filePathsToCheck = [
     HTACCESS_FILE_PATH,
     DATABASE_FILE_PATH,
-    TEST_DATABASE_FILE_PATH,
     DOT_ENV_FILE_PATH,
     PHPUNIT_XML_FILE_PATH,
 ];
@@ -109,9 +107,7 @@ echo 'Setting up database...' . PHP_EOL;
 
 # Database files
 touch(DATABASE_FILE_PATH);
-touch(TEST_DATABASE_FILE_PATH);
 chmod(DATABASE_FILE_PATH, 0777);
-chmod(TEST_DATABASE_FILE_PATH, 0777);
 chmod(dirname(DATABASE_FILE_PATH), 0777);
 echo PHP_EOL;
 
