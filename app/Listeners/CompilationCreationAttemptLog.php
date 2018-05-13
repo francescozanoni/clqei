@@ -27,6 +27,11 @@ class CompilationCreationAttemptLog
      */
     public function handle(CompilationCreationAttempted $event)
     {
+        // During test executions, no request is logged.
+        if (app('env') === 'testing') {
+            return;
+        }
+        
         file_put_contents(
             storage_path('logs/compilation_attemp_' . date('YmdHis') . '.json'),
             json_encode($event->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
