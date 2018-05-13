@@ -23,13 +23,21 @@
         </whitelist>
     </filter>
     <php>
+    
         <env name="APP_ENV" value="testing"/>
-        <!-- APP_URL cannot end with a domain subfolder -->
+        <!-- APP_URL cannot end with a subfolder -->
         <env name="APP_URL" value="http://localhost"/>
+        
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
+        
+        <!-- The following two parameters cannot be changed -->
+        <env name="CLQEI_STUDENT_IDENTIFICATION_NUMBER_PATTERN" value="^\d{8}$"/>
+        <env name="CLQEI_STUDENT_EMAIL_PATTERN" value="^[\w\.\-]+@example\.com$"/>
+        
     </php>
 </phpunit>
