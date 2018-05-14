@@ -25,6 +25,7 @@
     <php>
     
         <env name="APP_ENV" value="testing"/>
+        
         <!-- APP_URL cannot end with a subfolder -->
         <env name="APP_URL" value="http://localhost"/>
         
@@ -35,9 +36,10 @@
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
         
-        <!-- The following two parameters cannot be changed -->
+        <!-- The following parameters must not be changed -->
         <env name="CLQEI_STUDENT_IDENTIFICATION_NUMBER_PATTERN" value="^\d{8}$"/>
         <env name="CLQEI_STUDENT_EMAIL_PATTERN" value="^[\w\.\-]+@example\.com$"/>
+        <env name="SNEAKER_SILENT" value="true"/>
         
     </php>
 </phpunit>
