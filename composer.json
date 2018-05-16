@@ -1,13 +1,12 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "francescozanoni/clqei",
+    "description": "Clinical learning quality environment inventory",
+    "keywords": ["questionnaire", "nursing", "stage", "clinical"],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=7.0.0",
         "caouecs/laravel-lang": "^3.0",
-        "consoletvs/charts": "^6.1",
         "doctrine/dbal": "^2.5",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",

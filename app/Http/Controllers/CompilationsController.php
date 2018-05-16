@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace App\Http\Controllers;
 
 use App;
-use App\Charts\CompilationChart;
 use App\Http\Requests\StoreCompilationRequest;
 use App\Models\Compilation;
 use App\Models\CompilationItem;
@@ -215,40 +214,7 @@ class CompilationsController extends Controller
      */
     public function statistics()
     {
-        $chart = new CompilationChart();
-        $chart->labels(['a', 'b', 'c', 'd', 'e']);
-        $chart->dataset(
-            'Sample 1',
-            'bar',
-            [120, 65, 84, 45, 90]
-        );
-        $chart->dataset(
-            'Sample 2',
-            'bar',
-            [45, 47, 23, 32, 11]
-        );
-        /*
-        $chart->options(json_decode('{
-            title: {
-                display: true,
-                text: "Chart.js Bar Chart - Stacked"
-            },
-            tooltips: {
-                mode: "index",
-                intersect: false
-            },
-            responsive: true,
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            }
-        }', true));
-        */
-        return view('compilations.statistics', ['chart' => $chart]);
+        return view('compilations.statistics');
     }
 
 
