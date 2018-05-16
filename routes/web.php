@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
      */
 
     Route::get('compilations/statistics', 'CompilationsController@statistics')
-        ->middleware(['can:viewAll,App\Models\Compilation', 'adapt_javascript'])
+        ->middleware(['can:viewAll,App\Models\Compilation'])
         ->name('compilations.statistics');
 
     /*
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('locations/{location_id}/restore', 'LocationsController@restore')
             ->middleware('can:create,App\Models\Location')
             ->name('locations.restore');
-        
+
         /*
          * Verb        URI                               Action   Route Name
          * ---------------------------------------------------------------------------
@@ -110,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('can:viewAll,App\Models\Compilation')
         ->group(function () {
-    
+
         // ---------------------------------------------------------------------------
         // These routes are the entry points that provide frontend assets
         // located within the private part of the application.
