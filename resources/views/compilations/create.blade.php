@@ -55,10 +55,10 @@
                             ) !!}
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    {!! BootForm::date('stage_start_date', __('Start date')) !!}
+                    {!! BootForm::date('stage_start_date', __('Start date'), null, ['placeholder' => __('YYYY-MM-DD')]) !!}
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    {!! BootForm::date('stage_end_date', __('End date')) !!}
+                    {!! BootForm::date('stage_end_date', __('End date'), null, ['placeholder' => __('YYYY-MM-DD')]) !!}
                 </div>
             </div>
 
