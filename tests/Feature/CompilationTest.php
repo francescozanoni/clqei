@@ -581,6 +581,40 @@ class CompilationTest extends TestCase
         $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
 
     }
+    
+    /**
+     * Failed creation: invalid start date format.
+     */
+    public function testInvalidStartDateFormat()
+    {
+
+        $user = User::students()->first();
+        $stageLocation = Location::first();
+        $stageWard = Ward::first();
+        $stageStartDate = 'dffggfg';
+        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
+        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageEndDate);
+
+        $response =
+            $this->actingAs($user)
+                ->post(
+                    route('compilations.store',
+                        $this->getPayloadWithAllFields(
+                            $user->student->id,
+                            $stageLocation->id,
+                            $stageWard->id,
+                            $stageStartDate,
+                            $stageEndDate,
+                            $stageAcademicYear
+                        )
+                    )
+                );
+
+        $response->assertSessionHasErrors(['stage_start_date']);
+        $this->assertDatabaseMissing('compilations', ['id' => 1]);
+        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+
+    }
 
     /**
      * Failed creation: invalid academic year.

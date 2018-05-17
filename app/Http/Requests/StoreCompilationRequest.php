@@ -93,6 +93,11 @@ class StoreCompilationRequest extends FormRequest
             return Carbon::today()->format('Y-m-d');
         }
         
+        $date = \DateTime::createFromFormat('Y-m-d', $stageStartDate);
+        if ($date === false) {
+            return '';
+        }
+
         // @todo move week number to configuration
         $maxStageEndDate = Carbon::parse($stageStartDate)->addWeeks(18);
         if (Carbon::today() < $maxStageEndDate) {
