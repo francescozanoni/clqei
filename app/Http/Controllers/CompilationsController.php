@@ -204,6 +204,10 @@ class CompilationsController extends Controller
 
         $this->authorize('view', $compilation);
 
+        if (request()->has('receipt')) {
+            return view('compilations.receipt', ['compilation' => $compilation]);
+        }
+        
         return view('compilations.show', ['compilation' => $compilation]);
     }
 
