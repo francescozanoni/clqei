@@ -28,7 +28,7 @@
         <div class="panel-body">
         
         @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
-            <div class="visible-xs-block">
+            <div class="visible-xs-block hidden-print">
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
