@@ -32,10 +32,9 @@
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
-                  <th>
-                  {{ __('Student') }}
-                  </th>
-                  <th  class="col-sm-4 col-md-4 col-lg-4"></th>
+                    <th colspan="2">
+                        <h3>{{ __('Student') }}</h3>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
