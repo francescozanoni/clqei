@@ -21,8 +21,14 @@
 
                     <thead>
                     <tr>
-                        <th>{{ __('Stage location') }}</th>
-                        <th>{{ __('Stage ward') }}</th>
+                        <th>
+                        <span class="hidden-xs hidden-sm">{{ __('Stage location') }}</span>
+                        <span class="hidden-md hidden-lg">{{ __('Location') }}</span>
+                    </th>
+                    <th>
+                        <span class="hidden-xs hidden-sm">{{ __('Stage ward') }}</span>
+                        <span class="hidden-md hidden-lg">{{ __('Ward') }}</span>
+                    </th>
                         <th>{{ __('Date') }}</th>
                         <th></th>
                     </tr>
