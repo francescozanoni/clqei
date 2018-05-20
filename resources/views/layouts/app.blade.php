@@ -10,11 +10,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - {{ config('app.name_extended', 'Laravel-based application') }}</title>
+    <title>
+        {{ config('app.name') }}
+        -
+        {{ config('app.name_extended') }}
+    </title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/print.css') }}" rel="stylesheet">
 
     <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
 </head>

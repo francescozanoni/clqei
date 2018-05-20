@@ -31,6 +31,7 @@
                     </th>
                         <th>{{ __('Date') }}</th>
                         <th></th>
+                        <th class="hidden-xs"></th>
                     </tr>
                     </thead>
 
@@ -51,6 +52,13 @@
                                 <a href="{{ route('compilations.show', ['compilation' => $compilation]) }}"
                                    title="{{ __('View') }}">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                            <td class="hidden-xs">
+                                <a href="{{ route('compilations.show', ['compilation' => $compilation]) }}?receipt"
+                                   title="{{ __('Print compilation receipt') }}"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                                 </a>
                             </td>
                         </tr>

@@ -5,7 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Laravel') }} - {{ config('app.name_extended', 'Laravel-based application') }}</title>
+    <title>
+        {{ config('app.name') }}
+        -
+        {{ config('app.name_extended') }}
+    </title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -18,11 +22,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-
-                @yield('content')
-
-            </div>
+            @yield('content')
         </div>
     </div>
 
@@ -30,6 +30,16 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+$(document).ready(function() {
+    // https://stackoverflow.com/questions/18325025/how-to-detect-window-print-finish
+    // Print of a printable page is achieved by a link to a new window containing the printable page,
+    // which triggers the print itself and then closes its new window.
+    // This seems to be the most cross-browser-compatible solution.
+    window.print();
+    setTimeout(function() { window.close(); }, 100);
+});
+</script>
 @stack('scripts')
 </body>
 </html>

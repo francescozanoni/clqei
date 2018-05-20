@@ -9,18 +9,13 @@
             {{-- @todo refactor date localization to a service --}}
             {{ __('Compilation of') . ' ' . (new Carbon\Carbon($compilation->created_at))->format('d/m/Y') }}
 
-            <div class="pull-right hidden-print" style="cursor:pointer">
-                &nbsp;
-                &nbsp;
+            <div class="pull-right hidden-print"
+                 style="cursor:pointer"
+                 {{-- @todo switch to server-generated URL --}}
+                 onclick="window.open(window.location.href + '?receipt', '_blank')"
+                 title="{{ __('Print compilation receipt') }}">
                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-              <span class="hidden-xs">{{ __('Print') }}</span>
-            </div>
-
-            <div class="hidden-xs pull-right{{ Auth::user()->can('viewAll', App\Models\Compilation::class) ? '' : ' visible-print-block' }}">
-                {{ $compilation->student->user->first_name }}
-                {{ $compilation->student->user->last_name }}
-                -
-                {{ $compilation->student->identification_number }}
+                <span class="hidden-xs">{{ __('Receipt') }}</span>
             </div>
 
         </div>
@@ -28,7 +23,6 @@
         <div class="panel-body">
         
         @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
-          <span class="visible-xs-block hidden-print">
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
@@ -52,7 +46,6 @@
                 </tr>
                 </tbody>
             </table>
-          </span>
         @endif
                 
             <table class="table table-striped table-condensed">
