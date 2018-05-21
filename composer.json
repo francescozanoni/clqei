@@ -13,6 +13,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.5",
         "nesbot/carbon": "^1.22",
+        "simplesoftwareio/simple-qrcode": "^2.0",
         "squareboat/sneaker": "^4.0",
         "umpirsky/country-list": "^2.0",
         "watson/bootstrap-form": "^1.1",

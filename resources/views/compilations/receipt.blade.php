@@ -22,7 +22,7 @@
     
     <div class="clearfix visible-xs-block visible-sm-block visible-md-block visible-lg-block">
         <hr />
-        <br /><br /><br /><br /><br />
+        <br /><br /><br />
     </div>
     
     <div class="panel panel-default col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
@@ -99,6 +99,15 @@
                 </tbody>
             </table>
             
+        </div>
+        
+        <div class="panel-footer">
+        
+            <div class="text-center">
+                {!! QrCode::size(200)->generate(Request::url()); !!}
+                <p>{!! Request::url(); !!}</p>
+            </div>
+        
         </div>
 
     </div>
