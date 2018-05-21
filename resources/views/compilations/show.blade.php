@@ -27,7 +27,15 @@
                 <thead>
                 <tr>
                     <th colspan="2">
-                        <h3>{{ __('Student') }}</h3>
+                        <h3>
+                            {{ __('Student') }}
+                            <small>
+                            (<a href="{{ route('users.show', ['user' => $compilation->student->user]) }}">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                {{ __('Profile') }}
+                            </a>)
+                            </small>
+                        </h3>
                     </th>
                 </tr>
                 </thead>
