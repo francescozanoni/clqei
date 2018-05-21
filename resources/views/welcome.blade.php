@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -125,11 +125,11 @@
     <div class="content">
 
         <div class="title">
-            {{ config('app.name', 'Laravel') }}
+            {{ config('app.name') }}
         </div>
 
         <div class="subtitle">
-            {{ config('app.name_extended', 'Laravel-based application') }}
+            {{ config('app.name_extended') }}
         </div>
 
         <div class="links">
