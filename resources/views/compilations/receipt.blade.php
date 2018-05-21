@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-        <h1 style="margin: 0">
+        <h1 style="margin-top: 1mm">
             {{ config('app.name') }}
             <br />
             <small>{{ config('app.name_extended') }}</small>

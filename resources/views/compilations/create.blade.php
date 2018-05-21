@@ -171,9 +171,7 @@
                         @endforeach
 
                         @if ($section->footer !== null)
-
-                            <p>{{ $section->footer }}</p>
-
+                            <em>{{ $section->footer }}</em>
                         @endif
 
                         <div class="pull-right">

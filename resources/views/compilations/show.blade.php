@@ -145,12 +145,9 @@
                         </tbody>
                         </table>
                         
-                        {{--
-                        @todo improve visualization, in order to add section footer
                         @if ($item->question->section->footer !== null)
-                            <p>{{ $item->question->section->footer }}</p>
+                            <em>{{ $item->question->section->footer }}</em>
                         @endif
-                        --}}
                         
                     @endif
                     
