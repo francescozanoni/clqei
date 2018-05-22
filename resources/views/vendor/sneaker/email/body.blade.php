@@ -24,10 +24,19 @@
     <body>
         {!! $content !!}
         <div class="extra-info">
-            Requested Url - {{ request()->url() }}
+            URL: {{ request()->url() }}
         </div>
         <div class="extra-info">
-            &#128336; &nbsp;{{ date('l, jS \of F Y h:i:s a') }} {{ date_default_timezone_get() }}
+            HTTP method: {{ request()->method() }}
+        </div>
+        <div class="extra-info">
+            Parameters: <pre>{{ json_encode(request()->all(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
+        </div>
+        <div class="extra-info">
+            User: <pre>{{ json_encode(Auth::user(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
+        </div>
+        <div class="extra-info">
+            Date/time: {{ date('Y-m-d H:i:s') }} {{ date_default_timezone_get() }}
         </div>
     </body>
 </html>
