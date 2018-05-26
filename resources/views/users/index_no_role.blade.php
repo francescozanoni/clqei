@@ -11,8 +11,6 @@
 
         <div class="panel-body">
 
-            
-
                 <ul>
                     @can('createAdministrator', App\User::class)
                     <li>
@@ -31,7 +29,6 @@
                     </li>
                     @endcan
                 </ul>
-
             
         </div>
 

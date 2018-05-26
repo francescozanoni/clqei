@@ -47,6 +47,8 @@ class UsersController extends Controller
             case User::ROLE_STUDENT:
                 $this->authorize('createViewer', User::class);
                 $users = User::students()->with('student')->get();
+                // Students have a dedicate view.
+                return view('users.index_students', ['users' => $users]);
                 break;
             default:
                $userRole = null;
