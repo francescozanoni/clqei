@@ -11,9 +11,7 @@
 
         <div class="panel-body">
 
-            @if ($users->isEmpty() === false)
-
-                <table class="table">
+                <table id="users-table" class="table">
 
                     <thead>
                     <tr>
@@ -25,50 +23,69 @@
                     </tr>
                     </thead>
 
-                    <tbody>
-                    @foreach ($users as $user)
-                        @can('view', $user)
-                        <tr>
-                            <td class="hidden-xs">{{ $user->student->identification_number }}</td>
-                            <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->last_name }}</td>
-                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                                <a href="{{ route('users.show', ['user' => $user]) }}">
-                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                                @can('delete', $user)
-                                {!! BootForm::open(['url' => 'users/' . $user->id, 'method' => 'delete']) !!}
-                                <a href="{{ route('users.destroy', ['user' => $user]) }}"
-                                   title="{{ __('Delete') }}"
-                                   onclick="
-                                           event.preventDefault();
-                                           if (confirm('{{ __('Do you really want to delete this student?') }}') !== true) {
-                                           return;
-                                           }
-                                           this.parentElement.submit();
-                                           ">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </a>
-                                {!! BootForm::close() !!}
-                                @endcan
-                            </td>
-                        </tr>
-                        @endcan
-                    @endforeach
-                    </tbody>
-
                 </table>
-
-            @else
-
-                {{ __('No students found') }}
-
-            @endif
 
         </div>
 
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    $(function () {
+        
+            $('#users-table').DataTable({
+                serverSide: true,
+                processing: true,
+                language: {
+                    url: '{{ route('datatables-language', ['country' => config('app.locale')]) }}'
+                },
+                ajax: '',
+                order: [[0, "desc"]],
+                columns: [
+                    {
+                        data: 'student.identification_number',
+                        name: 'student.identification_number',
+                        className: "hidden-xs"
+                    },
+                    {
+                        data: 'first_name',
+                        name: 'first_name'
+                    },
+                    {
+                        data: 'last_name',
+                        name: 'last_name'
+                    },
+                    {
+                        name: 'link_to_detail',
+                        render: function (data, type, row) {
+                            return '<a href="{{ url('/') }}/users/' + row['id'] + '" title="{{ __('View') }}">' +
+                                    '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>' +
+                                    '</a>';
+                        },
+                        sortable: false,
+                        searchable: false
+                    },
+                    {
+                        name: 'link_to_deletion',
+                        render: function (data, type, row) {
+                            return '<form action="{{ url('/') }}/users/' + row['id'] + '" method="POST">' +
+                                    '<a href="{{ url('/') }}/users/' + row['id'] + '" ' +
+                                    'title="{{ __('Delete') }}" ' +
+                                    'onclick="event.preventDefault(); if (confirm(\'{{ __('Do you really want to delete this student?') }}\') !== true) { return; } this.parentElement.submit();" ' +
+                                    '>' +
+                                    '<!--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>-->' +
+                                    '</a>' +
+                                    '<input name="_method" type="hidden" value="DELETE">' +
+                                    '</form>';
+                        },
+                        sortable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        
+    });
+</script>
+@endpush

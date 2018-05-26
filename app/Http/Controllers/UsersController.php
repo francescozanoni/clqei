@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use DB;
+use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
 {
@@ -46,9 +47,12 @@ class UsersController extends Controller
                 break;
             case User::ROLE_STUDENT:
                 $this->authorize('createViewer', User::class);
-                $users = User::students()->with('student')->get();
-                // Students have a dedicate view.
-                return view('users.index_students', ['users' => $users]);
+                if (request()->ajax()) {
+                    $userQuery = User::students()->with(['student'])->select('users.*');
+                    $toReturn = DataTables::of($userQuery);
+                    return $toReturn->make(true);
+                }
+                return view('users.index_students');
                 break;
             default:
                $userRole = null;

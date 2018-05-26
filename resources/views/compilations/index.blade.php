@@ -113,7 +113,7 @@
                         searchable: false
                     },
                     {
-                        name: 'link_to_rceipt',
+                        name: 'link_to_receipt',
                         render: function (data, type, row) {
                             return '<a href="{{ url('/') }}/compilations/' + row['id'] + '?receipt" title="{{ __('Print compilation receipt') }}" target="_blank">' +
                                     '<span class="glyphicon glyphicon-print" aria-hidden="true"></span>' +
