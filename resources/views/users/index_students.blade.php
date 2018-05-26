@@ -15,9 +15,9 @@
 
                     <thead>
                     <tr>
-                        <th class="hidden-xs">{{ __('Identification number') }}</th>
-                        <th>{{ __('First name') }}</th>
                         <th>{{ __('Last name') }}</th>
+                        <th>{{ __('First name') }}</th>
+                        <th class="hidden-xs">{{ __('Identification number') }}</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -42,20 +42,20 @@
                     url: '{{ route('datatables-language', ['country' => config('app.locale')]) }}'
                 },
                 ajax: '',
-                order: [[0, "desc"]],
+                order: [[0, "asc"]],
                 columns: [
                     {
-                        data: 'student.identification_number',
-                        name: 'student.identification_number',
-                        className: "hidden-xs"
+                        data: 'last_name',
+                        name: 'last_name'
                     },
                     {
                         data: 'first_name',
                         name: 'first_name'
                     },
                     {
-                        data: 'last_name',
-                        name: 'last_name'
+                        data: 'student.identification_number',
+                        name: 'student.identification_number',
+                        className: "hidden-xs"
                     },
                     {
                         name: 'link_to_detail',
@@ -75,9 +75,10 @@
                                     'title="{{ __('Delete') }}" ' +
                                     'onclick="event.preventDefault(); if (confirm(\'{{ __('Do you really want to delete this student?') }}\') !== true) { return; } this.parentElement.submit();" ' +
                                     '>' +
-                                    '<!--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>-->' +
+                                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
                                     '</a>' +
-                                    '<input name="_method" type="hidden" value="DELETE">' +
+                                    '<input type="hidden" name="_method" value="DELETE">' +
+                                    '<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
                                     '</form>';
                         },
                         sortable: false,
