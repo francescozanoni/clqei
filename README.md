@@ -3,6 +3,16 @@
 
 Clinical Learning Quality Environment Inventory
 
+A validated instrument measuring the clinical learning quality as experience by nursing students, according to five factors:
+
+- quality of the tutorial strategies,
+- learning opportunities,
+- safety and nursing care quality,
+- self-direct learning,
+- quality of the learning environment.
+
+Source: https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/
+
 
 ### Installation
 
