@@ -232,6 +232,15 @@
             $('.panel-body form input[type=radio][name=' + radioName + ']')[Math.floor(Math.random() * $('.panel-body form input[type=radio][name=' + radioName + ']').length)].checked = true;
         }
         
+        var c = $('.panel-body form input[type=checkbox]');
+        for (var i = 0; i < c.length; i++) {
+            c[i].checked = false;
+        }
+        for (var i = 0; i < c.length; i++) {
+            var checkboxName = $(c[i]).attr('name');
+            $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]')[Math.floor(Math.random() * $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]').length)].checked = true;
+        }
+        
         
         } catch (e) {
             alert(e);
