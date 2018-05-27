@@ -229,7 +229,8 @@
         var r = $('.panel-body form input[type=radio]');
         for (var i = 0; i < r.length; i++) {
             var radioName = $(r[i]).attr('name');
-            $('.panel-body form input[type=radio][name=' + radioName + ']')[Math.floor(Math.random() * $('.panel-body form input[type=radio][name=' + radioName + ']').length)].checked = true;
+            var randomIndex = Math.floor(Math.random() * $('.panel-body form input[type=radio][name=' + radioName + ']').length);
+            $('.panel-body form input[type=radio][name=' + radioName + ']')[randomIndex].checked = true;
         }
         
         var c = $('.panel-body form input[type=checkbox]');
@@ -238,7 +239,8 @@
         }
         for (var i = 0; i < c.length; i++) {
             var checkboxName = $(c[i]).attr('name');
-            $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]')[Math.floor(Math.random() * $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]').length)].checked = true;
+            var randomIndex = Math.floor(Math.random() * $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]').length);
+            $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]')[randomIndex].checked = true;
         }
         
         
