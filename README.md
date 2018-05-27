@@ -1,9 +1,7 @@
 # CLQEI [![Build Status](https://travis-ci.org/francescozanoni/clqei.svg?branch=master)](https://travis-ci.org/francescozanoni/clqei) [![Maintainability](https://api.codeclimate.com/v1/badges/f5aca4caee1adc796924/maintainability)](https://codeclimate.com/github/francescozanoni/clqei/maintainability) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/de2b5d0b4f8f49aba6ea695f3f20ad07)](https://www.codacy.com/app/francescozanoni/clqei?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=francescozanoni/clqei&amp;utm_campaign=Badge_Grade)
 
 
-Clinical Learning Quality Environment Inventory
-
-A validated instrument measuring the clinical learning quality as experience by nursing students, according to five factors:
+The **C**linical **L**earning **Q**uality **E**nvironment **I**nventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors:
 
 - quality of the tutorial strategies,
 - learning opportunities,
@@ -11,7 +9,7 @@ A validated instrument measuring the clinical learning quality as experience by 
 - self-direct learning,
 - quality of the learning environment.
 
-Source: https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/
+More details at URL https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/ .
 
 
 ### Installation
@@ -26,7 +24,7 @@ php install.php
 # To install with custom URL
 # php install.php --application_url=<APPLICATION_URL>
 
-# To install with phpLiteAdmin, available at <APPLICATION_URL>/phpliteadmin
+# To install with phpLiteAdmin, available at <APPLICATION_URL>/phpliteadmin/phpliteadmin.php
 # php install.php --with_phpliteadmin
 
 php artisan migrate --seed
