@@ -216,14 +216,16 @@
 <script>
     function a() {
         try {
+        
         var s = $('.panel-body form select');
         for (var i = 0; i < s.length; i++) {
             var selectValue = '';
-            while (selectValue === '') {
-                selectValue = $(s[i]).find('option:nth-child(' + (Math.floor(Math.random() * $(s[i]).find('option').length) + 1) + ')').val();
+            while (typeof selectValue === 'undefined' || selectValue === '') {
+                selectValue = $($(s[i]).find('option')[Math.floor(Math.random() * $(s[i]).find('option').length)]).val();
             }
             $(s[i]).val(selectValue).change();
         }
+        
         } catch (e) {
             alert(e);
         }
