@@ -226,6 +226,13 @@
             $(s[i]).val(selectValue).change();
         }
         
+        var r = $('.panel-body form input[type=radio]');
+        for (var i = 0; i < r.length; i++) {
+            var radioName = $(r[i]).attr('name');
+            $('.panel-body form input[type=radio][name=' + radioName + ']')[Math.floor(Math.random() * $('.panel-body form input[type=radio][name=' + radioName + ']').length)].checked = true;
+        }
+        
+        
         } catch (e) {
             alert(e);
         }
