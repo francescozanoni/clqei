@@ -211,3 +211,25 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    function a() {
+        try {
+        var s = $('.panel-body form select');
+        for (var i = 0; i < s.length; i++) {
+            var selectValue = '';
+            while (selectValue === '') {
+                selectValue = $(s[i]).find('option:nth-child(' + (Math.floor(Math.random() * $(s[i]).find('option').length) + 1) + ')').val();
+            }
+            $(s[i]).val(selectValue).change();
+        }
+        } catch (e) {
+            alert(e);
+        }
+    }
+    $(function () {
+        $('.panel-heading').append('<button class="btn btn-primary pull-right" onclick="a()">COMPILA</button>');
+    });
+</script>
+@endpush
