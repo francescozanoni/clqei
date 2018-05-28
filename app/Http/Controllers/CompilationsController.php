@@ -219,7 +219,7 @@ class CompilationsController extends Controller
     public function statistics()
     {
 
-        $statistics = $this->compilationService->getStatistics();
+        $statistics = $this->compilationService->getStatistics(/*'highcharts'*/);
 
         return view('compilations.statistics', ['statistics' => $statistics]);
     }

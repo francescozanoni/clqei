@@ -8,6 +8,7 @@ window._ = require('lodash');
  */
 
 try {
+
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap-sass');
@@ -19,9 +20,13 @@ try {
     require('datatables.net-buttons');
     require('datatables.net-buttons-bs');
 
-    window.Chart = require('chart.js');
+    window.Highcharts = require('highcharts');
 
-} catch (e) {}
+} catch (e) {
+
+    alert(e);
+
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

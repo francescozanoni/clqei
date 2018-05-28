@@ -50,7 +50,7 @@ class CompilationService
      *                      )
      *                    )
      */
-    public function getStatistics() : array
+    public function getStatistics(string $format = '') : array
     {
 
         $compilations =
@@ -104,9 +104,24 @@ class CompilationService
             }
             $statistics['studentNationalities'][$compilation->student->nationality]++;
         }
+/*
+        if (method_exists($this, 'format' . ucfirst($format)) === true) {
+            $statistics = call_user_func([$this, 'format' . ucfirst($format)], $statistics);
+        }
+*/
+        //dd($statistics);
 
         return $statistics;
 
+    }
+
+    private function formatHighcharts(array $data) : array
+    {
+        $temp = [];
+        foreach ($data['stageLocations'] as $key => $value) {
+            $temp[] = ['name' => $key, 'data' => [$value]];
+        }
+        return $temp;
     }
 
 }
