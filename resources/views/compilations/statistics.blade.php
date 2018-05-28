@@ -14,6 +14,8 @@
 
         <div class="panel-body">
 
+            <pre>{{ print_r($statistics, true) }}</pre>
+
         </div>
 
     </div>

@@ -50,7 +50,7 @@ class CompilationsController extends Controller
 
         $compilationBaseQuery = Compilation
             ::with([
-                // Deleted locations, wards and students are already included by default by model relatioships
+                // Deleted locations, wards and students are included by default via model relatioships
                 'stageLocation',
                 'stageWard',
                 'student',
@@ -187,7 +187,7 @@ class CompilationsController extends Controller
     {
 
         $compilation->load([
-            // Deleted locations, wards and students are already included by default by model relatioships
+            // Deleted locations, wards and students are included by default via model relatioships
             'stageLocation',
             'stageWard',
             'student',
@@ -207,7 +207,7 @@ class CompilationsController extends Controller
         if (request()->has('receipt')) {
             return view('compilations.receipt', ['compilation' => $compilation]);
         }
-        
+
         return view('compilations.show', ['compilation' => $compilation]);
     }
 
@@ -218,7 +218,10 @@ class CompilationsController extends Controller
      */
     public function statistics()
     {
-        return view('compilations.statistics');
+
+        $statistics = $this->compilationService->getStatistics();
+
+        return view('compilations.statistics', ['statistics' => $statistics]);
     }
 
 
