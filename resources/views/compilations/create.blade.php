@@ -7,8 +7,18 @@
     <div class="panel panel-default">
 
         <div class="panel-heading">
+
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             {{ __('New questionnaire compilation') }}
+
+            {{-- On development environment, automatic form fill button is provided --}}
+            @if(app('env') === 'local')
+                <button class="btn btn-primary btn-xs pull-right" onclick="fillForm()"
+                        title="{{ __('Compilation form is filled with random values, except date fields') }}">
+                    {{ __('Automatic compilation') }}
+                </button>
+            @endif
+
         </div>
 
         <div class="panel-body">
@@ -212,44 +222,9 @@
 
 @endsection
 
-@push('scripts')
-<script>
-    function a() {
-        try {
-        
-        var s = $('.panel-body form select');
-        for (var i = 0; i < s.length; i++) {
-            var selectValue = '';
-            while (typeof selectValue === 'undefined' || selectValue === '') {
-                selectValue = $($(s[i]).find('option')[Math.floor(Math.random() * $(s[i]).find('option').length)]).val();
-            }
-            $(s[i]).val(selectValue).change();
-        }
-        
-        var r = $('.panel-body form input[type=radio]');
-        for (var i = 0; i < r.length; i++) {
-            var radioName = $(r[i]).attr('name');
-            var randomIndex = Math.floor(Math.random() * $('.panel-body form input[type=radio][name=' + radioName + ']').length);
-            $('.panel-body form input[type=radio][name=' + radioName + ']')[randomIndex].checked = true;
-        }
-        
-        var c = $('.panel-body form input[type=checkbox]');
-        for (var i = 0; i < c.length; i++) {
-            c[i].checked = false;
-        }
-        for (var i = 0; i < c.length; i++) {
-            var checkboxName = $(c[i]).attr('name');
-            var randomIndex = Math.floor(Math.random() * $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]').length);
-            $('.panel-body form input[type=checkbox][name="' + checkboxName + '"]')[randomIndex].checked = true;
-        }
-        
-        
-        } catch (e) {
-            alert(e);
-        }
-    }
-    $(function () {
-        $('.panel-heading').append('<button class="btn btn-primary pull-right" onclick="a()">COMPILA</button>');
-    });
-</script>
-@endpush
+{{-- On development environment, automatic form fill button is provided --}}
+@if(app('env') === 'local')
+    @push('scripts')
+    <script src="{{ asset('js/compilation_form_filler.js') }}"></script>
+    @endpush
+@endif

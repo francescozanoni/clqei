@@ -136,5 +136,8 @@
   "The new viewer has been created": "Il nuovo visualizzatore è stato creato",
   "The new administrator has been created": "Il nuovo amministratore è stato creato",
 
-  "Overlapping time range.": "Intervallo temporale parzialmente o interamente già utilizzato."
+  "Overlapping time range.": "Intervallo temporale parzialmente o interamente già utilizzato.",
+
+  "Automatic compilation": "Compilazione automatica",
+  "Compilation form is filled with random values, except date fields": "Il modulo viene compilato con valori casuali, tranne i campi data"
 }
