@@ -28,7 +28,9 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/statistics.js') }}"></script>
 <script>
+
     // https://www.highcharts.com/maps-demo/bar-stacked
     // https://www.highcharts.com/maps-demo/column-stacked-percent
     $(function () {

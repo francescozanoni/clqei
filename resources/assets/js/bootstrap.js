@@ -13,15 +13,6 @@ try {
 
     require('bootstrap-sass');
 
-    window.moment = require('moment');
-
-    require('datatables.net');
-    require('datatables.net-bs');
-    require('datatables.net-buttons');
-    require('datatables.net-buttons-bs');
-
-    window.Highcharts = require('highcharts');
-
 } catch (e) {
 
     alert(e);

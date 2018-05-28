@@ -44,7 +44,12 @@
 
 @endsection
 
+@push('styles')
+<link href="{{ asset('css/lists.css') }}" rel="stylesheet">
+@endpush
+
 @push('scripts')
+<script src="{{ asset('js/lists.js') }}"></script>
 <script>
     $(function () {
         $.getScript('{{ route('datatables-datetime') }}', function () {
