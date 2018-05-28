@@ -14,17 +14,12 @@
 
         <div class="panel-body">
 
-            <!--
-            <div id="container_1" style="width: 100%; height: 200px;"></div>
-            <div id="container_1_data" class="hidden"></div>
-            <div id="container_2" style="width: 100%; height: 200px;"></div>
-            <div id="container_3" style="width: 100%; height: 200px;"></div>
-            <div id="container_4" style="width: 100%; height: 200px;"></div>
-            <div id="container_5" style="width: 100%; height: 200px;"></div>
-            <div id="container_6" style="width: 100%; height: 200px;"></div>
-            -->
-
-            <pre>{{ print_r($statistics, true) }}</pre>
+            @foreach ($statistics as $question => $answers)
+                <div id="container_{{ $question }}" style="width: 80%; height: 200px;"></div>
+                <span id="container_{{ $question }}_data" class="hidden">
+                    {!! json_encode($answers, JSON_UNESCAPED_SLASHES) !!}
+                </span>
+            @endforeach
 
         </div>
 
@@ -36,19 +31,32 @@
 <script>
     // https://www.highcharts.com/maps-demo/bar-stacked
     // https://www.highcharts.com/maps-demo/column-stacked-percent
-    /*
     $(function () {
-        Highcharts.chart(
-                'container_1',
+        @foreach ($statistics as $question => $answers)
+            Highcharts.chart(
+                'container_{{ $question }}',
                 {
                     chart: {type: 'bar'},
-                    title: {text: 'Stage locations'},
-                    legend: {reversed: true},
+                    title: {
+                        text: '{{ $question }} (%)',
+                        align: 'left'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        width: 100
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        }
+                    },
                     plotOptions: {series: {stacking: 'percent'}},
-                    series: JSON.parse($('#container_1_data').html())
+                    series: JSON.parse($('#container_{{ $question }}_data').html())
                 }
-        );
+            );
+        @endforeach
     });
-    */
 </script>
 @endpush

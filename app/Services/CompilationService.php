@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Models\Compilation;
 use App\Models\Location;
 use App\Models\Ward;
+use Illuminate\Support\Facades\App;
 
 class CompilationService
 {
@@ -26,6 +27,7 @@ class CompilationService
     /**
      * Get compilation statistics.
      *
+     * @param callable $formatter output formatter
      * @return array e.g. Array (
      *                      [stageLocations] => Array (
      *                        [sede 2] => 1
@@ -50,7 +52,7 @@ class CompilationService
      *                      )
      *                    )
      */
-    public function getStatistics(string $format = '') : array
+    public function getStatistics(callable $formatter = null) : array
     {
 
         $compilations =
@@ -94,34 +96,24 @@ class CompilationService
             }
             $statistics['stageWeeks'][$compilation->stage_weeks]++;
 
-            if (isset($statistics['studentGenders'][$compilation->student->gender]) === false) {
-                $statistics['studentGenders'][$compilation->student->gender] = 0;
+            if (isset($statistics['studentGenders'][__($compilation->student->gender)]) === false) {
+                $statistics['studentGenders'][__($compilation->student->gender)] = 0;
             }
-            $statistics['studentGenders'][$compilation->student->gender]++;
+            $statistics['studentGenders'][__($compilation->student->gender)]++;
 
-            if (isset($statistics['studentNationalities'][$compilation->student->nationality]) === false) {
-                $statistics['studentNationalities'][$compilation->student->nationality] = 0;
+            $countries = App::make('App\Services\CountryService')->getCountries();
+            if (isset($statistics['studentNationalities'][$countries[$compilation->student->nationality]]) === false) {
+                $statistics['studentNationalities'][$countries[$compilation->student->nationality]] = 0;
             }
-            $statistics['studentNationalities'][$compilation->student->nationality]++;
+            $statistics['studentNationalities'][$countries[$compilation->student->nationality]]++;
         }
-/*
-        if (method_exists($this, 'format' . ucfirst($format)) === true) {
-            $statistics = call_user_func([$this, 'format' . ucfirst($format)], $statistics);
+
+        if ($formatter !== null) {
+            $statistics = $formatter($statistics);
         }
-*/
-        //dd($statistics);
 
         return $statistics;
 
-    }
-
-    private function formatHighcharts(array $data) : array
-    {
-        $temp = [];
-        foreach ($data['stageLocations'] as $key => $value) {
-            $temp[] = ['name' => $key, 'data' => [$value]];
-        }
-        return $temp;
     }
 
 }
