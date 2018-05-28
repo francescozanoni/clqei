@@ -108,6 +108,13 @@ class CompilationService
             $statistics['studentNationalities'][$countries[$compilation->student->nationality]]++;
         }
 
+        ksort($statistics['stageLocations'], SORT_NATURAL);
+        ksort($statistics['stageWards'], SORT_NATURAL);
+        ksort($statistics['stageAcademicYears'], SORT_NATURAL);
+        ksort($statistics['stageWeeks'], SORT_NATURAL);
+        ksort($statistics['studentGenders'], SORT_NATURAL);
+        ksort($statistics['studentNationalities'], SORT_NATURAL);
+
         if ($formatter !== null) {
             $statistics = $formatter($statistics);
         }
