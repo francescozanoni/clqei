@@ -13,6 +13,15 @@
 
         <div class="panel-body">
 
+            {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}:
+            <ul>
+                <li>{{ __('quality of tutorial strategies') }},</li>
+                <li>{{ __('learning opportunities') }},</li>
+                <li>{{ __('safety and nursing care quality') }},</li>
+                <li>{{ __('self-direct learning') }},</li>
+                <li>{{ __('quality of the learning environment') }}.</li>
+            </ul>
+
             <h3>{{ __('Questionnaire compilations') }}</h3>
             <ul>
                 {{-- Student --}}
