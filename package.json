@@ -20,8 +20,6 @@
     "dependencies": {
         "datatables.net": "^1.10.16",
         "datatables.net-bs": "^1.10.16",
-        "datatables.net-buttons": "^1.5.1",
-        "datatables.net-buttons-bs": "^1.5.1",
         "datatables.net-plugins": "^1.10.15",
         "highcharts": "^6.1.0",
         "hoek": "^5.0.3",
