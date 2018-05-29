@@ -38,15 +38,15 @@ class UsersController extends Controller
 
         switch ($userRole) {
             case User::ROLE_ADMINISTRATOR:
-                $this->authorize('createAdministrator', User::class);
+                $this->authorize('viewAdministrators', User::class);
                 $users = User::administrators()->get();
                 break;
             case User::ROLE_VIEWER:
-                $this->authorize('createViewer', User::class);
+                $this->authorize('viewViewers', User::class);
                 $users = User::viewers()->get();
                 break;
             case User::ROLE_STUDENT:
-                $this->authorize('createViewer', User::class);
+                $this->authorize('viewStudents', User::class);
                 if (request()->ajax()) {
                     $userQuery = User::students()->with(['student'])->select('users.*');
                     $toReturn = DataTables::of($userQuery);
