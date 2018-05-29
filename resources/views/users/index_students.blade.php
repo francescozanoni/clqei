@@ -75,12 +75,10 @@
                 {
                     name: 'link_to_deletion',
                     render: function (data, type, row) {
-                        var token = document.head.querySelector('meta[name="csrf-token"]');
-                        return '<form action="{{ url('/') }}/users/' + row['id'] + '" method="POST">' +
-                                '<a href="{{ url('/') }}/users/' + row['id'] + '" ' +
-                                'title="{{ __('Delete') }}" ' +
-                                'onclick="event.preventDefault(); if (confirm(\'{{ __('Do you really want to delete this student?') }}\') !== true) { return; } this.parentElement.submit();" ' +
-                                '>' +
+                        var token = document.head.querySelector('meta[name="csrf-token"]').content;
+                        var url = '{{ url('/') }}/users/' + row['id'];
+                        return '<form action="' + url + '" method="POST">' +
+                                '<a href="' + url + '" title="{{ __('Delete') }}" onclick="event.preventDefault(); if (confirm(\'{{ __('Do you really want to delete this student?') }}\') !== true) { return; } this.parentElement.submit();" >' +
                                 '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
                                 '</a>' +
                                 '<input type="hidden" name="_method" value="DELETE">' +
