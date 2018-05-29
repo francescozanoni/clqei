@@ -30,10 +30,13 @@
                     <td>{{ __('E-mail address') }}</td>
                     <td>{{ $user->email }}</td>
                 </tr>
+                {{-- Only users allowed to create viewers can see users' role --}}
+                @can('createViewer', App\User::class)
                 <tr>
                     <td>{{ __('Role') }}</td>
                     <td>{{ __($user->role) }}</td>
                 </tr>
+                @endcan
                 @if ($user->role === \App\User::ROLE_STUDENT)
                     <tr>
                         <td>{{ __('Identification number') }}</td>
