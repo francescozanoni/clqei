@@ -280,6 +280,10 @@
 </div>
 
 <!-- Scripts -->
+@if(app('env') === 'local')
+    {{-- On development environment, JavaScript errors are reported via alert box --}}
+    <script src="{{ asset('js/error_handler.js') }}"></script>
+@endif
 <script src="{{ asset('js/app.js') }}"></script>
 @stack('scripts')
 </body>
