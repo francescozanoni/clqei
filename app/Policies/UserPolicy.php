@@ -47,12 +47,38 @@ class UserPolicy
     }
 
     /**
+     * Determine whether the user can view all models with student role.
+     *
+     * @param  \App\User $user
+     * @return bool
+     */
+    public function viewStudents(User $user) : bool
+    {
+        return
+            $user->role === User::ROLE_VIEWER ||
+            $user->role === User::ROLE_ADMINISTRATOR;
+    }
+  
+    /**
      * Determine whether the user can create models with viewer role.
      *
      * @param  \App\User $user
      * @return bool
      */
     public function createViewer(User $user) : bool
+    {
+        return
+            $user->role === User::ROLE_VIEWER ||
+            $user->role === User::ROLE_ADMINISTRATOR;
+    }
+  
+    /**
+     * Determine whether the user can view all models with viewer role.
+     *
+     * @param  \App\User $user
+     * @return bool
+     */
+    public function viewViewers(User $user) : bool
     {
         return
             $user->role === User::ROLE_VIEWER ||
@@ -66,6 +92,17 @@ class UserPolicy
      * @return bool
      */
     public function createAdministrator(User $user) : bool
+    {
+        return $user->role === User::ROLE_ADMINISTRATOR;
+    }
+  
+    /**
+     * Determine whether the user can view all models with administrator role.
+     *
+     * @param  \App\User $user
+     * @return bool
+     */
+    public function viewAdministrators(User $user) : bool
     {
         return $user->role === User::ROLE_ADMINISTRATOR;
     }
