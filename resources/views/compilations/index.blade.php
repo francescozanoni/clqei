@@ -110,7 +110,8 @@
                     {
                         name: 'link_to_detail',
                         render: function (data, type, row) {
-                            return '<a href="{{ url('/') }}/compilations/' + row['id'] + '" title="{{ __('View') }}">' +
+                            var url = '{{ url('/') }}/compilations/' + row['id'];
+                            return '<a href="' + url + '" title="{{ __('View') }}">' +
                                     '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>' +
                                     '</a>';
                         },
@@ -120,7 +121,8 @@
                     {
                         name: 'link_to_receipt',
                         render: function (data, type, row) {
-                            return '<a href="{{ url('/') }}/compilations/' + row['id'] + '?receipt" title="{{ __('Print compilation receipt') }}" target="_blank">' +
+                            var url = '{{ url('/') }}/compilations/' + row['id'];
+                            return '<a href="' + url + '?receipt" title="{{ __('Print compilation receipt') }}" target="_blank">' +
                                     '<span class="glyphicon glyphicon-print" aria-hidden="true"></span>' +
                                     '</a>';
                         },

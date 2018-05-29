@@ -65,7 +65,8 @@
                 {
                     name: 'link_to_detail',
                     render: function (data, type, row) {
-                        return '<a href="{{ url('/') }}/users/' + row['id'] + '" title="{{ __('View') }}">' +
+                        var url = '{{ url('/') }}/users/' + row['id'];
+                        return '<a href="' + url + '" title="{{ __('View') }}">' +
                                 '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>' +
                                 '</a>';
                     },
