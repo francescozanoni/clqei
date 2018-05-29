@@ -27,7 +27,6 @@ class CompilationService
     /**
      * Get compilation statistics.
      *
-     * @param callable $formatter output formatter
      * @return array e.g. Array (
      *                      [stageLocations] => Array (
      *                        [sede 2] => 1
@@ -52,7 +51,7 @@ class CompilationService
      *                      )
      *                    )
      */
-    public function getStatistics(callable $formatter = null) : array
+    public function getStatistics() : array
     {
 
         $compilations =
@@ -114,10 +113,6 @@ class CompilationService
         ksort($statistics['stageWeeks'], SORT_NATURAL);
         ksort($statistics['studentGenders'], SORT_NATURAL);
         ksort($statistics['studentNationalities'], SORT_NATURAL);
-
-        if ($formatter !== null) {
-            $statistics = $formatter($statistics);
-        }
 
         return $statistics;
 

@@ -14,11 +14,12 @@
 
         <div class="panel-body">
 
+            {{-- A container element for each question is created, together with its answers inside --}}
             @foreach ($statistics as $question => $answers)
-                <div id="container_{{ $question }}" style="width: 80%; height: 200px;"></div>
-                <span id="container_{{ $question }}_data" class="hidden">
-                    {!! json_encode($answers, JSON_UNESCAPED_SLASHES) !!}
-                </span>
+                <div id="chart_{{ $question }}" data-question="{{ $question }}" style="width: 100%; height: 400px;">
+                    {{-- JSON-ized question statistics --}}
+                    <span class="hidden">{!! json_encode($answers, JSON_UNESCAPED_SLASHES) !!}</span>
+                </div>
             @endforeach
 
         </div>
@@ -30,35 +31,15 @@
 @push('scripts')
 <script src="{{ asset('js/statistics.js') }}"></script>
 <script>
-
-    // https://www.highcharts.com/maps-demo/bar-stacked
-    // https://www.highcharts.com/maps-demo/column-stacked-percent
     $(function () {
-        @foreach ($statistics as $question => $answers)
-            Highcharts.chart(
-                'container_{{ $question }}',
-                {
-                    chart: {type: 'bar'},
-                    title: {
-                        text: '{{ $question }} (%)',
-                        align: 'left'
-                    },
-                    legend: {
-                        layout: 'vertical',
-                        align: 'right',
-                        verticalAlign: 'middle',
-                        width: 100
-                    },
-                    yAxis: {
-                        title: {
-                            text: ''
-                        }
-                    },
-                    plotOptions: {series: {stacking: 'percent'}},
-                    series: JSON.parse($('#container_{{ $question }}_data').html())
-                }
+        $('div[id^=chart_]').each(function () {
+            createHighchartsPie(
+                    this,
+                    $(this).data('question'),
+                    formatHighchartsPie(JSON.parse($(this).find('span.hidden').html())),
+                    {'Compilations': '{{ __('Compilations') }}'}
             );
-        @endforeach
+        });
     });
 </script>
 @endpush

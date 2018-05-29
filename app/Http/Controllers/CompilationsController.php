@@ -219,24 +219,7 @@ class CompilationsController extends Controller
     public function statistics()
     {
 
-        $statistics = $this->compilationService->getStatistics(
-            // @todo make the following callback dynamic
-            function ($data) {
-                $temp = [];
-                foreach ($data as $question => $answers) {
-                    if (isset($temp[$question]) === false) {
-                        $temp[$question] = [];
-                    }
-                    foreach ($answers as $answer => $count) {
-                        $temp[$question][] = [
-                            'name' => $answer,
-                            'data' => [$count]
-                        ];
-                    }
-                }
-                return $temp;
-            }
-        );
+        $statistics = $this->compilationService->getStatistics();
 
         return view('compilations.statistics', ['statistics' => $statistics]);
     }
