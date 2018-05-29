@@ -12,12 +12,14 @@
             {{ __('New questionnaire compilation') }}
 
             {{-- On development environment, automatic form fill button is provided --}}
+            @can('create', App\Models\Compilation::class)
             @if(app('env') === 'local')
                 <button class="btn btn-primary btn-xs pull-right" onclick="fillForm()"
                         title="{{ __('Compilation form is filled with random values, except date fields') }}">
                     {{ __('Automatic compilation') }}
                 </button>
             @endif
+            @endcan
 
         </div>
 
@@ -223,8 +225,10 @@
 @endsection
 
 {{-- On development environment, automatic form fill button is provided --}}
+@can('create', App\Models\Compilation::class)
 @if(app('env') === 'local')
     @push('scripts')
     <script src="{{ asset('js/compilation_form_filler.js') }}"></script>
     @endpush
 @endif
+@endcan
