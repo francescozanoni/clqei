@@ -25,7 +25,7 @@ class CompilationService
     }
 
     /**
-     * Get compilation statistics.
+     * Get compilation statistics, only stage-related data.
      *
      * @return array e.g. Array (
      *                      [stageLocations] => Array (
@@ -43,24 +43,17 @@ class CompilationService
      *                      [stageWeeks] => Array (
      *                        [1] => 3
      *                      )
-     *                      [studentGenders] => Array (
-     *                        [male] => 3
-     *                      )
-     *                      [studentNationalities] => Array (
-     *                        [IT] => 3
-     *                      )
      *                    )
      */
-    public function getStatistics() : array
+    public function getStageStatistics() : array
     {
 
         $compilations =
             Compilation
                 ::with([
-                    // Deleted locations, wards and students are included by default via model relatioships
+                    // Deleted locations and wards are included by default via model relatioships
                     'stageLocation',
                     'stageWard',
-                    'student'
                 ])
                 ->get();
 
@@ -69,8 +62,6 @@ class CompilationService
             'stageWards' => [],
             'stageAcademicYears' => [],
             'stageWeeks' => [],
-            'studentGenders' => [],
-            'studentNationalities' => [],
         ];
 
         foreach ($compilations as $compilation) {
@@ -94,6 +85,46 @@ class CompilationService
                 $statistics['stageWeeks'][$compilation->stage_weeks] = 0;
             }
             $statistics['stageWeeks'][$compilation->stage_weeks]++;
+        }
+
+        ksort($statistics['stageLocations'], SORT_NATURAL);
+        ksort($statistics['stageWards'], SORT_NATURAL);
+        ksort($statistics['stageAcademicYears'], SORT_NATURAL);
+        ksort($statistics['stageWeeks'], SORT_NATURAL);
+
+        return $statistics;
+
+    }
+
+    /**
+     * Get compilation statistics, only student-related data.
+     *
+     * @return array e.g. Array (
+     *                      [studentGenders] => Array (
+     *                        [male] => 3
+     *                      )
+     *                      [studentNationalities] => Array (
+     *                        [IT] => 3
+     *                      )
+     *                    )
+     */
+    public function getStudentStatistics() : array
+    {
+
+        $compilations =
+            Compilation
+                ::with([
+                    // Deleted students are included by default via model relatioships
+                    'student'
+                ])
+                ->get();
+
+        $statistics = [
+            'studentGenders' => [],
+            'studentNationalities' => [],
+        ];
+
+        foreach ($compilations as $compilation) {
 
             if (isset($statistics['studentGenders'][__($compilation->student->gender)]) === false) {
                 $statistics['studentGenders'][__($compilation->student->gender)] = 0;
@@ -107,10 +138,6 @@ class CompilationService
             $statistics['studentNationalities'][$countries[$compilation->student->nationality]]++;
         }
 
-        ksort($statistics['stageLocations'], SORT_NATURAL);
-        ksort($statistics['stageWards'], SORT_NATURAL);
-        ksort($statistics['stageAcademicYears'], SORT_NATURAL);
-        ksort($statistics['stageWeeks'], SORT_NATURAL);
         ksort($statistics['studentGenders'], SORT_NATURAL);
         ksort($statistics['studentNationalities'], SORT_NATURAL);
 

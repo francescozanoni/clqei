@@ -59,11 +59,13 @@
                     {!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}
                 </li>
                 @endcan
-                {{-- Compilation statistics temporarily accessible only to administrators --}}
-                @if (Auth::user()->can('createAdministrator', App\User::class))
+                {{-- Compilation statistics are accessible only to viewers and administrators --}}
+                @if (Auth::user()->can('createViewer', App\User::class) && $number_of_compilations > 0)
                     <li>
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
                         {!! link_to_route('compilations.statistics', __('Statistics')) !!}
+                        ({!! link_to_route('compilations.statistics', __('stages'), ['context' => 'stages']) !!},
+                            {!! link_to_route('compilations.statistics', __('students'), ['context' => 'students']) !!})
                     </li>
                 @endif
                 @endif

@@ -219,7 +219,21 @@ class CompilationsController extends Controller
     public function statistics()
     {
 
-        $statistics = $this->compilationService->getStatistics();
+        $statistics = null;
+
+        switch (request()->get('context')) {
+            case 'stages':
+                $statistics = $this->compilationService->getStageStatistics();
+                break;
+            case 'students':
+                $statistics = $this->compilationService->getStudentStatistics();
+                break;
+            default:
+                $statistics = array_merge(
+                    $this->compilationService->getStageStatistics(),
+                    $this->compilationService->getStudentStatistics()
+                );
+        }
 
         return view('compilations.statistics', ['statistics' => $statistics]);
     }
