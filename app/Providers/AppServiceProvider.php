@@ -6,7 +6,6 @@ use App\Models\Compilation;
 use App\Models\Location;
 use App\Models\Ward;
 use App\Observers\EloquentModelObserver;
-use App\Services\DataTablesPluginService;
 use App\User;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,7 +40,11 @@ class AppServiceProvider extends ServiceProvider
             ->give($countries);
 
         $this->app->bind('App\Services\DataTablesPluginService', function () {
-            return new DataTablesPluginService(base_path('node_modules/datatables.net-plugins'));
+            return new \App\Services\DataTablesPluginService(base_path('node_modules/datatables.net-plugins'));
+        });
+
+        $this->app->singleton('App\Services\CompilationService', function () {
+            return new \App\Services\CompilationService();
         });
 
     }

@@ -50,7 +50,7 @@ window.createHighchartsPie = function (domElement, question, data, labels) {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        format: '{point.name}: {point.percentage:.1f} %'
                     }
                 }
             },
