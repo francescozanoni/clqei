@@ -8,13 +8,17 @@
 
         <div class="panel-heading">
 
-            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
 
-            {{ __('Compilations')  }}
+            {{ __('Compilation statistics')  }}
 
         </div>
 
         <div class="panel-body">
+
+            @if (empty($statistics) === true)
+                {{ __('No compilations found') }}
+            @endif
 
             {{-- A container element for each question is created, together with its answers inside --}}
             @foreach ($statistics as $questionId => $answers)

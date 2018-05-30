@@ -53,8 +53,8 @@ class CompilationService
             'stage_end_date' => __('End date'),
             'stage_academic_year' => __('Academic year'),
             'stage_weeks' => __('Weeks'),
-            'student.gender' => __('Gender'),
-            'student.nationality' => __('Nationality'),
+            'student_gender' => __('Gender'),
+            'student_nationality' => __('Nationality'),
         ];
 
         // Answers located on other tables
@@ -147,11 +147,11 @@ class CompilationService
                 return (string)$answerId;
                 break;
 
-            case 'student.gender':
+            case 'student_gender':
                 return __($answerId);
                 break;
 
-            case 'student.nationality':
+            case 'student_nationality':
                 return $this->otherAnswers['__student_nationalities__'][$answerId];
                 break;
 

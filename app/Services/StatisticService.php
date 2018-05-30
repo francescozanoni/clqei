@@ -19,8 +19,8 @@ class StatisticService
      *                        [stage_ward_id] => 47
      *                        [stage_academic_year] => 2017/2018
      *                        [stage_weeks] => 10
-     *                        [student.gender] => female
-     *                        [student.nationality] => IT
+     *                        [student_gender] => female
+     *                        [student_nationality] => IT
      *                        [q1] => 10
      *                        [q2] => 86
      *                        [q3] => 87
@@ -85,8 +85,8 @@ class StatisticService
      *                      [stage_ward_id] => 47
      *                      [stage_academic_year] => 2017/2018
      *                      [stage_weeks] => 10
-     *                      [student.gender] => female
-     *                      [student.nationality] => IT
+     *                      [student_gender] => female
+     *                      [student_nationality] => IT
      *                      [q1] => 10
      *                      [q2] => 86
      *                      [q3] => 87
@@ -130,8 +130,8 @@ class StatisticService
             'stage_ward_id' => $compilation->stage_ward_id,
             'stage_academic_year' => $compilation->stage_academic_year,
             'stage_weeks' => $compilation->stage_weeks,
-            'student.gender' => $compilation->student->gender,
-            'student.nationality' => $compilation->student->nationality,
+            'student_gender' => $compilation->student->gender,
+            'student_nationality' => $compilation->student->nationality,
         ];
 
         foreach ($compilation->items as $item) {
@@ -165,11 +165,11 @@ class StatisticService
      *                        [5] => 1
      *                        [...]
      *                      )
-     *                      [student.gender] => Array (
+     *                      [student_gender] => Array (
      *                        [female] => 95
      *                        [male] => 26
      *                      )
-     *                      [student.nationality] => Array (
+     *                      [student_nationality] => Array (
      *                        [RO] => 4
      *                        [IT] => 111
      *                        [...]

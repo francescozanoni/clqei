@@ -221,14 +221,41 @@ class CompilationsController extends Controller
     public function statistics(App\Services\StatisticService $statisticService)
     {
 
-        $compilations =
-            \App\Models\Compilation
-                ::with([
-                    // Deleted students are included by default via model relationships
-                    'student',
-                    'items',
-                ])
-                ->get();
+        $query = Compilation
+            ::with([
+                // Deleted students are included by default via model relationships
+                'student',
+                'items',
+            ]);
+
+        if (request()->has('stage_location_id') === true) {
+            $query->where('stage_location_id', request()->get('stage_location_id'));
+        }
+        if (request()->has('stage_ward_id') === true) {
+            $query->where('stage_ward_id', request()->get('stage_ward_id'));
+        }
+        if (request()->has('stage_academic_year') === true) {
+            $query->where('stage_academic_year', request()->get('stage_academic_year'));
+        }
+        if (request()->has('stage_weeks') === true) {
+            // @todo implement this logic
+            // $query->where('stage_weeks', request()->get('stage_weeks'));
+        }
+        if (request()->has('student_gender') === true) {
+            $studentGender = request()->get('student_gender');
+            $query->whereHas('student', function ($query) use ($studentGender) {
+                $query->where('gender', $studentGender);
+            });
+        }
+        if (request()->has('student_nationality') === true) {
+            $studentNationality = request()->get('student_nationality');
+            $query->whereHas('student', function ($query) use ($studentNationality) {
+                $query->where('nationality', $studentNationality);
+            });
+        }
+
+        $compilations = $query->get();
+
         $formattedCompilations = $statisticService->formatCompilations($compilations);
         $statistics = $statisticService->getStatistics($formattedCompilations);
 

@@ -47,7 +47,7 @@ class CompilationServiceTest extends TestCase
         $text = $this->service->getAnswerText('1', 'stage_ward_id');
         $this->assertEquals('Example ward', $text);
 
-        // @todo add tests of stage_weeks, student.gender and student.nationality
+        // @todo add tests of stage_weeks, student_gender and student_nationality
     }
 
     public function testGetAnswerTextNotFound()
