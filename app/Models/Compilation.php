@@ -62,6 +62,7 @@ class Compilation extends Model
         return $this->hasMany('App\Models\CompilationItem')
             // Compilation items are returned only once, although items related
             // to "multiple_choice" are stored as several records/models.
+            ->groupBy('compilation_id')
             ->groupBy('question_id')
             // @todo item sorting must be based on section+question "position" attributes
             ->orderBy('question_id');
