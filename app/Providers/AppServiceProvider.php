@@ -18,13 +18,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    
+
         // https://laravel.com/docs/5.5/eloquent#events
         User::observe(EloquentModelObserver::class);
         Compilation::observe(EloquentModelObserver::class);
         Ward::observe(EloquentModelObserver::class);
         Location::observe(EloquentModelObserver::class);
-        
+
     }
 
     /**
@@ -44,23 +44,6 @@ class AppServiceProvider extends ServiceProvider
             return new DataTablesPluginService(base_path('node_modules/datatables.net-plugins'));
         });
 
-        $simpleBindings = [
-            'App\Services\CompilationService',
-            'App\Services\AcademicYearService',
-            'App\Services\UserService',
-            'App\Services\ImportService',
-        ];
-        foreach ($simpleBindings as $class) {
-            $this->app->bind($class, function () use ($class) {
-                return new $class();
-            });
-        }
-
     }
 
 }
-
-
-            
-        
-    
