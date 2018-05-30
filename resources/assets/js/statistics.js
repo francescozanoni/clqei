@@ -6,20 +6,22 @@ require('./statistics_bootstrap');
 
 /**
  * Format statistics of a single question for Highcharts pie chart
+ * and localize answer texts
  *
  * @param {Array} data
+ * @param {Object} labels localized chart labels
  * @returns {Array}
  */
-window.formatHighchartsPie = function (data) {
+window.formatHighchartsPie = function (data, labels) {
 
-    var formattedData = [];
+    let formattedData = [];
 
     for (var answer in data) {
         if (data.hasOwnProperty(answer) === false) {
             continue;
         }
         formattedData.push({
-            name: answer,
+            name: labels[answer],
             y: data[answer] // count of answer occurrences
         });
     }

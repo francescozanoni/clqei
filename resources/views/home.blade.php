@@ -64,8 +64,6 @@
                     <li>
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
                         {!! link_to_route('compilations.statistics', __('Statistics')) !!}
-                        ({!! link_to_route('compilations.statistics', __('stages'), ['context' => 'stages']) !!},
-                            {!! link_to_route('compilations.statistics', __('students'), ['context' => 'students']) !!})
                     </li>
                 @endif
                 @endif

@@ -48,7 +48,7 @@ class CompilationsController extends Controller
 
         $compilationBaseQuery = Compilation
             ::with([
-                // Deleted locations, wards and students are included by default via model relatioships
+                // Deleted locations, wards and students are included by default via model relationships
                 'stageLocation',
                 'stageWard',
                 'student',
@@ -185,7 +185,7 @@ class CompilationsController extends Controller
     {
 
         $compilation->load([
-            // Deleted locations, wards and students are included by default via model relatioships
+            // Deleted locations, wards and students are included by default via model relationships
             'stageLocation',
             'stageWard',
             'student',
@@ -196,6 +196,7 @@ class CompilationsController extends Controller
             },
             'items',
             'items.aanswer',
+            // "aanswer" is not a mistake
             'items.question',
             'items.question.section',
         ]);
@@ -213,29 +214,25 @@ class CompilationsController extends Controller
     /**
      * Display compilation statistics.
      *
+     * @param App\Services\StatisticService $statisticService
+     *
      * @return \Illuminate\Http\Response
      */
-    public function statistics()
+    public function statistics(App\Services\StatisticService $statisticService)
     {
 
-        $statistics = null;
-
-        switch (request()->get('context')) {
-            case 'stages':
-                $statistics = $this->compilationService->getStageStatistics();
-                break;
-            case 'students':
-                $statistics = $this->compilationService->getStudentStatistics();
-                break;
-            default:
-                $statistics = array_merge(
-                    $this->compilationService->getStageStatistics(),
-                    $this->compilationService->getStudentStatistics()
-                );
-        }
+        $compilations =
+            \App\Models\Compilation
+                ::with([
+                    // Deleted students are included by default via model relationships
+                    'student',
+                    'items',
+                ])
+                ->get();
+        $formattedCompilations = $statisticService->formatCompilations($compilations);
+        $statistics = $statisticService->getStatistics($formattedCompilations);
 
         return view('compilations.statistics', ['statistics' => $statistics]);
     }
-
 
 }

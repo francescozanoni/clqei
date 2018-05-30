@@ -1,3 +1,5 @@
+@inject('compilationService', 'App\Services\CompilationService')
+
 @extends('layouts.app')
 
 @section('content')
@@ -15,10 +17,20 @@
         <div class="panel-body">
 
             {{-- A container element for each question is created, together with its answers inside --}}
-            @foreach ($statistics as $question => $answers)
-                <div id="chart_{{ $question }}" data-question="{{ $question }}" style="width: 100%; height: 400px;">
+            @foreach ($statistics as $questionId => $answers)
+                @php
+                $labels = ['Compilations' => __('Compilations')];
+                foreach (array_keys($answers) as $answerId) {
+                $labels[(string)$answerId] = $compilationService->getAnswerText((string)$answerId, $questionId);
+                }
+                @endphp
+                <div id="chart_{{ $questionId }}"
+                     data-question="{{ $compilationService->getQuestionText($questionId) }}"
+                     style="width: 100%; height: 400px;">
                     {{-- JSON-ized question statistics --}}
-                    <span class="hidden">{!! json_encode($answers, JSON_UNESCAPED_SLASHES) !!}</span>
+                    <span class="hidden answers">{!! json_encode($answers, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</span>
+                    {{-- JSON-ized answer texts, localized --}}
+                    <span class="hidden labels">{!! json_encode($labels, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</span>
                 </div>
             @endforeach
 
@@ -33,11 +45,13 @@
 <script>
     $(function () {
         $('div[id^=chart_]').each(function () {
+            let data = JSON.parse($(this).find('.answers').html());
+            let labels = JSON.parse($(this).find('.labels').html());
             createHighchartsPie(
                     this,
                     $(this).data('question'),
-                    formatHighchartsPie(JSON.parse($(this).find('span.hidden').html())),
-                    {'Compilations': '{{ __('Compilations') }}'}
+                    formatHighchartsPie(data, labels),
+                    labels
             );
         });
     });

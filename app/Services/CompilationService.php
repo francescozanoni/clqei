@@ -3,13 +3,46 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
-use App\Models\Compilation;
+use App\Models\Answer;
 use App\Models\Location;
+use App\Models\Question;
+use App\Models\Section;
 use App\Models\Ward;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 
 class CompilationService
 {
+
+    /**
+     * @var Collection
+     */
+    private $sections = null;
+
+    /**
+     * @var Collection
+     */
+    private $questions = null;
+
+    /**
+     * @var Collection
+     */
+    private $answers = null;
+
+    /**
+     * @var array
+     */
+    private $otherAnswers = [];
+
+    public function __construct()
+    {
+        $this->sections = Section::withTrashed()->get();
+        $this->questions = Question::withTrashed()->get();
+        $this->answers = Answer::withTrashed()->get();
+        $this->otherAnswers['__stage_locations__'] = Location::withTrashed()->get();
+        $this->otherAnswers['__stage_wards__'] = Ward::withTrashed()->get();
+        $this->otherAnswers['__student_nationalities__'] = App::make('App\Services\CountryService')->getCountries();
+    }
 
     /**
      * Detect whether all environment requirements
@@ -25,123 +58,92 @@ class CompilationService
     }
 
     /**
-     * Get compilation statistics, only stage-related data.
+     * Get section text from ID.
      *
-     * @return array e.g. Array (
-     *                      [stageLocations] => Array (
-     *                        [sede 2] => 1
-     *                        [sede 3] => 2
-     *                      )
-     *                      [stageWards] => Array (
-     *                        [reparto 3] => 1
-     *                        [reparto 2] => 2
-     *                      )
-     *                      [stageAcademicYears] => Array (
-     *                        [2016/2017] => 2
-     *                        [2017/2018] => 1
-     *                      )
-     *                      [stageWeeks] => Array (
-     *                        [1] => 3
-     *                      )
-     *                    )
+     * @param $id
+     * @return string
      */
-    public function getStageStatistics() : array
+    public function getSectionText($id) : string
     {
+        $section = $this->sections->where('id', $id)->first();
 
-        $compilations =
-            Compilation
-                ::with([
-                    // Deleted locations and wards are included by default via model relatioships
-                    'stageLocation',
-                    'stageWard',
-                ])
-                ->get();
-
-        $statistics = [
-            'stageLocations' => [],
-            'stageWards' => [],
-            'stageAcademicYears' => [],
-            'stageWeeks' => [],
-        ];
-
-        foreach ($compilations as $compilation) {
-
-            if (isset($statistics['stageLocations'][$compilation->stageLocation->name]) === false) {
-                $statistics['stageLocations'][$compilation->stageLocation->name] = 0;
-            }
-            $statistics['stageLocations'][$compilation->stageLocation->name]++;
-
-            if (isset($statistics['stageWards'][$compilation->stageWard->name]) === false) {
-                $statistics['stageWards'][$compilation->stageWard->name] = 0;
-            }
-            $statistics['stageWards'][$compilation->stageWard->name]++;
-
-            if (isset($statistics['stageAcademicYears'][$compilation->stage_academic_year]) === false) {
-                $statistics['stageAcademicYears'][$compilation->stage_academic_year] = 0;
-            }
-            $statistics['stageAcademicYears'][$compilation->stage_academic_year]++;
-
-            if (isset($statistics['stageWeeks'][$compilation->stage_weeks]) === false) {
-                $statistics['stageWeeks'][$compilation->stage_weeks] = 0;
-            }
-            $statistics['stageWeeks'][$compilation->stage_weeks]++;
+        if ($section) {
+            return $section->text;
         }
 
-        ksort($statistics['stageLocations'], SORT_NATURAL);
-        ksort($statistics['stageWards'], SORT_NATURAL);
-        ksort($statistics['stageAcademicYears'], SORT_NATURAL);
-        ksort($statistics['stageWeeks'], SORT_NATURAL);
-
-        return $statistics;
-
+        return (string)$id;
     }
 
     /**
-     * Get compilation statistics, only student-related data.
+     * Get question text from ID (e.g. "23" or "q23").
      *
-     * @return array e.g. Array (
-     *                      [studentGenders] => Array (
-     *                        [male] => 3
-     *                      )
-     *                      [studentNationalities] => Array (
-     *                        [IT] => 3
-     *                      )
-     *                    )
+     * @param $id
+     * @return string
      */
-    public function getStudentStatistics() : array
+    public function getQuestionText($id) : string
     {
-
-        $compilations =
-            Compilation
-                ::with([
-                    // Deleted students are included by default via model relatioships
-                    'student'
-                ])
-                ->get();
-
-        $statistics = [
-            'studentGenders' => [],
-            'studentNationalities' => [],
+        $fixedQuestionTexts = [
+            'stage_location_id' => __('Location'),
+            'stage_ward_id' => __('Ward'),
+            'stage_start_date' => __('Start date'),
+            'stage_end_date' => __('End date'),
+            'stage_academic_year' => __('Academic year'),
+            'stage_weeks' => __('Weeks'),
+            'student.gender' => __('Gender'),
+            'student.nationality' => __('Nationality'),
         ];
 
-        foreach ($compilations as $compilation) {
-
-            if (isset($statistics['studentGenders'][__($compilation->student->gender)]) === false) {
-                $statistics['studentGenders'][__($compilation->student->gender)] = 0;
-            }
-            $statistics['studentGenders'][__($compilation->student->gender)]++;
-
-            $countries = App::make('App\Services\CountryService')->getCountries();
-            if (isset($statistics['studentNationalities'][$countries[$compilation->student->nationality]]) === false) {
-                $statistics['studentNationalities'][$countries[$compilation->student->nationality]] = 0;
-            }
-            $statistics['studentNationalities'][$countries[$compilation->student->nationality]]++;
+        if (isset($fixedQuestionTexts[$id]) === true) {
+            return $fixedQuestionTexts[$id];
         }
 
-        ksort($statistics['studentGenders'], SORT_NATURAL);
-        ksort($statistics['studentNationalities'], SORT_NATURAL);
+        $id = (string)$id;
 
-        return $statistics;
+        $question = $this->questions->where('id', preg_replace('/^q/', '', $id))->first();
+
+        if ($question) {
+            return $question->text;
+        }
+
+        return $id;
+    }
+
+    /**
+     * Get answer text from ID, if any.
+     *
+     * @param $id
+     * @param string $questionId context of the answer to search, in case it belongs to a different table
+     * @return string
+     *
+     * @todo refactor
+     */
+    public function getAnswerText($id, $questionId = '') : string
+    {
+        switch ($questionId) {
+            case 'stage_location_id':
+                $answer = $this->otherAnswers['__stage_locations__']->where('id', $id)->first();
+                return $answer->name;
+                break;
+            case 'stage_ward_id':
+                $answer = $this->otherAnswers['__stage_wards__']->where('id', $id)->first();
+                return $answer->name;
+                break;
+            case 'stage_weeks':
+                return (string)$id;
+                break;
+            case 'student.gender':
+                return __($id);
+                break;
+            case 'student.nationality':
+                return $this->otherAnswers['__student_nationalities__'][$id];
+                break;
+            default:
+                $answer = $this->answers->where('id', $id)->first();
+                if ($answer) {
+                    return __($answer->text);
+                }
+                return (string)$id;
+        }
 
     }
 
