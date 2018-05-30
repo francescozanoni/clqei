@@ -1,3 +1,5 @@
+@inject('compilationService', 'App\Services\CompilationService')
+
 @extends('layouts.app')
 
 @section('content')
@@ -21,7 +23,7 @@
         </div>
 
         <div class="panel-body">
-        
+
         @if (Auth::user()->can('viewAll', App\Models\Compilation::class))
             <table class="table table-striped table-condensed">
                 <thead>
@@ -55,7 +57,7 @@
                 </tbody>
             </table>
         @endif
-                
+
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
@@ -66,17 +68,17 @@
                 </thead>
                 <tbody>
                 <tr>
-                    
-                    <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Location') }}</td>
+
+                    <td class="col-sm-8 col-md-8 col-lg-8">{{ $compilationService->getQuestionText('stage_location_id') }}</td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stageLocation->name }}</td>
                 </tr>
                 <tr>
-                    
-                    <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Ward') }}</td>
+
+                    <td class="col-sm-8 col-md-8 col-lg-8">{{ $compilationService->getQuestionText('stage_ward_id') }}</td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stageWard->name }}</td>
                 </tr>
                 <tr>
-                    
+
                     <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Period') }}</td>
                     {{-- @todo refactor date localization to a service --}}
                     <td class="col-sm-4 col-md-4 col-lg-4">
@@ -93,22 +95,22 @@
                     </td>
                 </tr>
                 <tr>
-          
-                    <td class="col-sm-8 col-md-8 col-lg-8">{{ __('Weeks') }}</td>
+
+                    <td class="col-sm-8 col-md-8 col-lg-8">{{ $compilationService->getQuestionText('stage_weeks') }}</td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stage_weeks }}</td>
                 </tr>
                 <tr>
                     <td class="col-sm-8 col-md-8 col-lg-8">
-                        <span class="hidden-xs"> {{ __('Academic year') }} </span>
+                        <span class="hidden-xs"> {{ $compilationService->getQuestionText('stage_academic_year') }} </span>
                         <span class="visible-xs-inline hidden-print"> {{ __('Acad. year') }} </span>
                     </td>
                     <td class="col-sm-4 col-md-4 col-lg-4">{{ $compilation->stage_academic_year}}</td>
                 </tr>
                 </tbody>
             </table>
-            
+
                 @foreach ($compilation->items as $index => $item)
-                
+
                     @if (isset($compilation->items[$index - 1]) === false ||
                         $item->question->section->id !== $compilation->items[$index - 1]->question->section->id)
                          <table class="table table-striped table-condensed">
@@ -129,7 +131,7 @@
                          </thead>
                          <tbody>
                     @endif
-                    
+
                     <tr>
                         <td>{{ ($index + 1) }}</td>
                         <td class="col-sm-8 col-md-8 col-lg-8">
@@ -147,18 +149,18 @@
                             @endif
                         </td>
                     </tr>
-                    
+
                     @if (isset($compilation->items[$index + 1]) === false ||
                         $item->question->section->id !== $compilation->items[$index + 1]->question->section->id)
                         </tbody>
                         </table>
-                        
+
                         @if ($item->question->section->footer !== null)
                             <em>{{ $item->question->section->footer }}</em>
                         @endif
-                        
+
                     @endif
-                    
+
                 @endforeach
 
         </div>

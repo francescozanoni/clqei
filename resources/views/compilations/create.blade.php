@@ -1,4 +1,5 @@
 @inject('academicYearService', 'App\Services\AcademicYearService')
+@inject('compilationService', 'App\Services\CompilationService')
 
 @extends('layouts.app')
 
@@ -51,7 +52,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     {!! BootForm::select(
                             'stage_location_id',
-                            __('Location'),
+                            $compilationService->getQuestionText('stage_location_id'),
                             App\Models\Location::all()->sortBy('name')->pluck('name', 'id'),
                             null,
                             ['placeholder' => __('Select') . '...']
@@ -60,23 +61,33 @@
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     {!! BootForm::select(
                             'stage_ward_id',
-                            __('Ward'),
+                            $compilationService->getQuestionText('stage_ward_id'),
                             App\Models\Ward::all()->sortBy('name')->pluck('name', 'id'),
                             null,
                             ['placeholder' => __('Select') . '...']
                             ) !!}
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    {!! BootForm::date('stage_start_date', __('Start date'), null, ['placeholder' => __('YYYY-MM-DD')]) !!}
+                    {!! BootForm::date(
+                            'stage_start_date',
+                            $compilationService->getQuestionText('stage_start_date'),
+                            null,
+                            ['placeholder' => __('YYYY-MM-DD')]
+                            ) !!}
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    {!! BootForm::date('stage_end_date', __('End date'), null, ['placeholder' => __('YYYY-MM-DD')]) !!}
+                    {!! BootForm::date(
+                            'stage_end_date',
+                            $compilationService->getQuestionText('stage_end_date'),
+                            null,
+                            ['placeholder' => __('YYYY-MM-DD')]
+                            ) !!}
                 </div>
             </div>
 
             {!! BootForm::select(
                     'stage_academic_year',
-                    __('Academic year'),
+                    $compilationService->getQuestionText('stage_academic_year'),
                     [
                     $academicYearService->getPrevious() => $academicYearService->getPrevious(),
                     $academicYearService->getCurrent() => $academicYearService->getCurrent()
