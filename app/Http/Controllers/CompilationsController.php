@@ -35,8 +35,6 @@ class CompilationsController extends Controller
         // users are redirected.
         $this->middleware('no_new_compilations')->only('create');
 
-        $this->middleware('add_missing_questions')->only('store');
-
         $this->compilationService = $compilationService;
     }
 
@@ -204,6 +202,7 @@ class CompilationsController extends Controller
 
         $this->authorize('view', $compilation);
 
+        // When request contains the "receipt" parameter, the compilation's receipt view is rendered.
         if (request()->has('receipt')) {
             return view('compilations.receipt', ['compilation' => $compilation]);
         }

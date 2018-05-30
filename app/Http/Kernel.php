@@ -59,6 +59,5 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'not_student' => \App\Http\Middleware\RedirectIfStudent::class,
         'no_new_compilations' => \App\Http\Middleware\RedirectIfCompilationNotCreatable::class,
-        'add_missing_questions' => \App\Http\Middleware\AddMissingQuestions::class,
     ];
 }

@@ -7,9 +7,9 @@ use App;
 use App\Models\Compilation;
 use App\Models\Question;
 use App\Services\AcademicYearService;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreCompilationRequest extends FormRequest
@@ -47,12 +47,16 @@ class StoreCompilationRequest extends FormRequest
             'stage_ward_id' => 'required|exists:wards,id',
             // @todo add start/end date validation against academic year
             'stage_start_date' => [
-                'bail', 'required', 'date_format:Y-m-d',
+                'bail',
+                'required',
+                'date_format:Y-m-d',
                 'before:today',
                 'not_overlapping_time_range:stage_end_date,compilations,stage_start_date,stage_end_date,student_id',
             ],
             'stage_end_date' => [
-                'bail', 'required', 'date_format:Y-m-d',
+                'bail',
+                'required',
+                'date_format:Y-m-d',
                 'after:stage_start_date',
                 'before:' . $this->getMaxStageEndDate($this->stage_start_date ?? ''),
                 'not_overlapping_time_range:stage_start_date,compilations,stage_start_date,stage_end_date,student_id',
@@ -80,7 +84,7 @@ class StoreCompilationRequest extends FormRequest
 
         return $rules;
     }
-    
+
     /**
      * Stage end date must be before today and before 18 weeks after stage start date.
      *
@@ -92,7 +96,7 @@ class StoreCompilationRequest extends FormRequest
         if ($stageStartDate === '') {
             return Carbon::today()->format('Y-m-d');
         }
-        
+
         $date = \DateTime::createFromFormat('Y-m-d', $stageStartDate);
         if ($date === false) {
             return '';
@@ -103,7 +107,7 @@ class StoreCompilationRequest extends FormRequest
         if (Carbon::today() < $maxStageEndDate) {
             $maxStageEndDate = Carbon::today();
         }
-        
+
         return $maxStageEndDate->format('Y-m-d');
     }
 
@@ -164,6 +168,27 @@ class StoreCompilationRequest extends FormRequest
             );
         }
 
+    }
+
+    /**
+     * (Integrate and) get data to be validated from the request.
+     *
+     * @return array
+     */
+    protected function validationData()
+    {
+        // When a question could have several answers but none is given,
+        // one compilation item is anyway created, with NULL answer.
+        // This logic is required because HTML array fields (e.g. set of checkboxes),
+        // are not sent when no value is selected (even "nullable"
+        // validation flag is useless in this case).
+        foreach (Question::all() as $question) {
+            if ($this->has('q' . $question->id) === false) {
+                $this->merge(['q' . $question->id => null]);
+            }
+        }
+
+        return $this->all();
     }
 
 }
