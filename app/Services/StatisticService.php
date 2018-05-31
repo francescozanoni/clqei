@@ -135,7 +135,10 @@ class StatisticService
         ];
 
         foreach ($compilation->items as $item) {
-            $formatted['q' . $item->question_id] = $item->answer;
+            // NULL answers are added during compilation creation for validation purposes.
+            if ($item->answer !== null) {
+                $formatted['q' . $item->question_id] = $item->answer;
+            }
         }
 
         return $formatted;

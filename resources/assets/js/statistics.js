@@ -5,60 +5,138 @@
 require('./statistics_bootstrap');
 
 /**
- * Format statistics of a single question for Highcharts pie chart
- * and localize answer texts
- *
- * @param {Array} data
- * @param {Object} labels localized chart labels
- * @returns {Array}
+ * Highcharts pie chart factory
  */
-window.formatHighchartsPie = function (data, labels) {
+window.HighchartsPieFactory = {
 
-    let formattedData = [];
+    /**
+     * Format statistics of a single question and localize answer texts
+     *
+     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     * @returns {Array} e.g. [{"name": "Novara", "y": 82}, {"name": "Vercelli", "y": 11}, ...]
+     */
+    format: function (data, labels) {
 
-    for (var answer in data) {
-        if (data.hasOwnProperty(answer) === false) {
-            continue;
+        var formattedData = [];
+
+        for (var answer in data) {
+            if (data.hasOwnProperty(answer) === false) {
+                continue;
+            }
+            formattedData.push({
+                name: labels[answer],
+                y: data[answer] // count of answer occurrences
+            });
         }
-        formattedData.push({
-            name: labels[answer],
-            y: data[answer] // count of answer occurrences
-        });
+
+        return formattedData;
+    },
+
+    /**
+     * Create a chart
+     *
+     * @param {HTMLDOMElement} domElement HTML tag that contains the chart
+     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     */
+    create: function (domElement, data, labels) {
+
+        Highcharts.chart(
+            domElement,
+            {
+                chart: {type: 'pie'},
+                title: {text: ''},
+                tooltip: {pointFormat: labels['Compilations'] + ': <b>{point.y}</b>'},
+                plotOptions: {
+                    pie: {
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    colorByPoint: true,
+                    data: this.format(data, labels)
+                }]
+            }
+        );
+
     }
 
-    return formattedData;
 };
 
-/**
- * Create a Highcharts pie chart
- *
- * @param {HTMLDOMElement} domElement HTML tag that contains the chart
- * @param {String} question
- * @param {Array} data answers with statistics
- * @param {Object} labels localized chart labels
- */
-window.createHighchartsPie = function (domElement, question, data, labels) {
 
-    Highcharts.chart(
-        domElement,
-        {
-            chart: {type: 'pie'},
-            title: {text: question},
-            tooltip: {pointFormat: labels['Compilations'] + ': <b>{point.y}</b>'},
-            plotOptions: {
-                pie: {
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}: {point.percentage:.1f} %'
-                    }
-                }
-            },
-            series: [{
-                colorByPoint: true,
-                data: data
-            }]
+/**
+ * Highcharts stacked bar chart factory
+ */
+window.HighchartsStackedBarFactory = {
+
+    /**
+     * Format statistics of a single question and localize answer texts
+     *
+     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     * @returns {Array} e.g. [{"name": "Novara", "data": [82]}, {"name": "Vercelli", "data": [11]}, ...]
+     */
+    format: function (data, labels) {
+
+        var formattedData = [];
+
+        for (var answer in data) {
+            if (data.hasOwnProperty(answer) === false) {
+                continue;
+            }
+            formattedData.push({
+                name: labels[answer],
+                data: [data[answer]] // count of answer occurrences
+            });
         }
-    );
+
+        return formattedData;
+    },
+
+    /**
+     * Create a chart
+     *
+     * @param {HTMLDOMElement} domElement HTML tag that contains the chart
+     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     */
+    create: function (domElement, data, labels) {
+
+        Highcharts.chart(
+            domElement,
+            {
+                chart: {type: 'bar'},
+                title: {text: ''},
+                xAxis: {visible: false},
+                yAxis: {
+                    min: 0,
+                    title: {text: ''}
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'percent'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '',
+                    pointFormat: '{series.name}: {point.y} ' + labels['Compilations'].toLowerCase()
+                },
+                legend: {
+                    reversed: true,
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    layout: 'vertical',
+                    itemWidth: 200
+                },
+                series: this.format(data, labels)
+            }
+        );
+
+    }
 
 };

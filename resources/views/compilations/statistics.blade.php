@@ -25,12 +25,11 @@
                 @php
                 $labels = ['Compilations' => __('Compilations')];
                 foreach (array_keys($answers) as $answerId) {
-                $labels[(string)$answerId] = $compilationService->getAnswerText((string)$answerId, $questionId);
+                $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
                 }
                 @endphp
-                <div id="chart_{{ $questionId }}"
-                     data-question="{{ $compilationService->getQuestionText($questionId) }}"
-                     style="width: 100%; height: 400px;">
+                <p>{{ $compilationService->getQuestionText($questionId) }}</p>
+                <div id="chart_{{ $questionId }}" style="width: 100%; height: 150px;">
                     {{-- JSON-ized question statistics --}}
                     <span class="hidden answers">{!! json_encode($answers, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</span>
                     {{-- JSON-ized answer texts, localized --}}
@@ -49,14 +48,19 @@
 <script>
     $(function () {
         $('div[id^=chart_]').each(function () {
-            let data = JSON.parse($(this).find('.answers').html());
-            let labels = JSON.parse($(this).find('.labels').html());
-            createHighchartsPie(
+            /*
+             HighchartsPieFactory.create(
+                 this,
+                 JSON.parse($(this).find('.answers').html()),
+                 JSON.parse($(this).find('.labels').html())
+             );
+             */
+            HighchartsStackedBarFactory.create(
                     this,
-                    $(this).data('question'),
-                    formatHighchartsPie(data, labels),
-                    labels
+                    JSON.parse($(this).find('.answers').html()),
+                    JSON.parse($(this).find('.labels').html())
             );
+
         });
     });
 </script>

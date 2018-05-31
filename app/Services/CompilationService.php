@@ -41,9 +41,23 @@ class CompilationService
 
     public function __construct()
     {
-        $this->sections = Section::withTrashed()->get();
-        $this->questions = Question::withTrashed()->get();
-        $this->answers = Answer::withTrashed()->get();
+        $this->sections = new Collection();
+        $sections = Section::withTrashed()->get();
+        foreach ($sections as $section) {
+            $this->sections->put($section->id, $section);
+        }
+
+        $this->questions = new Collection();
+        $questions = Question::withTrashed()->get();
+        foreach ($questions as $question) {
+            $this->questions->put($question->id, $question);
+        }
+
+        $this->answers = new Collection();
+        $answers = Answer::withTrashed()->get();
+        foreach ($answers as $answer) {
+            $this->answers->put($answer->id, $answer);
+        }
 
         // Questions whose answers are located on other tables and that are not derived from database/seeds/*.json files
         $this->otherQuestions = [
@@ -58,8 +72,16 @@ class CompilationService
         ];
 
         // Answers located on other tables
-        $this->otherAnswers['__stage_locations__'] = Location::withTrashed()->get();
-        $this->otherAnswers['__stage_wards__'] = Ward::withTrashed()->get();
+        $this->otherAnswers['__stage_locations__'] = new Collection();
+        $answers = Location::withTrashed()->get();
+        foreach ($answers as $answer) {
+            $this->otherAnswers['__stage_locations__']->put($answer->id, $answer);
+        }
+        $this->otherAnswers['__stage_wards__'] = new Collection();
+        $answers = Ward::withTrashed()->get();
+        foreach ($answers as $answer) {
+            $this->otherAnswers['__stage_wards__']->put($answer->id, $answer);
+        }
 
         // Answers not located on tables
         // @todo handles case of deleted country
@@ -87,7 +109,7 @@ class CompilationService
      */
     public function getSectionText($id) : string
     {
-        $section = $this->sections->where('id', $id)->first();
+        $section = $this->sections->get($id);
 
         if ($section) {
             return $section->text;
@@ -111,7 +133,7 @@ class CompilationService
 
         $id = (string)$id;
 
-        $question = $this->questions->where('id', preg_replace('/^q/', '', $id))->first();
+        $question = $this->questions->get(preg_replace('/^q/', '', $id));
 
         if ($question) {
             return $question->text;
@@ -134,12 +156,12 @@ class CompilationService
         switch ($questionId) {
 
             case 'stage_location_id':
-                $answer = $this->otherAnswers['__stage_locations__']->where('id', $answerId)->first();
+                $answer = $this->otherAnswers['__stage_locations__']->get($answerId);
                 return $answer->name;
                 break;
 
             case 'stage_ward_id':
-                $answer = $this->otherAnswers['__stage_wards__']->where('id', $answerId)->first();
+                $answer = $this->otherAnswers['__stage_wards__']->get($answerId);
                 return $answer->name;
                 break;
 
@@ -156,7 +178,7 @@ class CompilationService
                 break;
 
             default:
-                $answer = $this->answers->where('id', $answerId)->first();
+                $answer = $this->answers->get($answerId);
                 if ($answer) {
                     return __($answer->text);
                 }
