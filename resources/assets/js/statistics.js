@@ -60,7 +60,8 @@ window.HighchartsPieFactory = {
                 series: [{
                     colorByPoint: true,
                     data: this.format(data, labels)
-                }]
+                }],
+                credits: {enabled: false}
             }
         );
 
@@ -133,7 +134,76 @@ window.HighchartsStackedBarFactory = {
                     layout: 'vertical',
                     itemWidth: 200
                 },
-                series: this.format(data, labels)
+                series: this.format(data, labels),
+                credits: {enabled: false}
+            }
+        );
+
+    }
+
+};
+
+/**
+ * Highcharts bar chart factory
+ */
+window.HighchartsBarFactory = {
+
+    /**
+     * Format statistics of a single question and localize answer texts
+     *
+     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     * @returns {Array} e.g. [["Novara", 82], ["Vercelli", 11], ...]
+     */
+    format: function (data, labels) {
+
+        var formattedData = [];
+
+        for (var answer in data) {
+            if (data.hasOwnProperty(answer) === false) {
+                continue;
+            }
+            formattedData.push([labels[answer], data[answer]]);
+        }
+
+        return formattedData;
+    },
+
+    /**
+     * Create a chart
+     *
+     * @param {HTMLDOMElement} domElement HTML tag that contains the chart
+     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     */
+    create: function (domElement, data, labels) {
+
+        Highcharts.chart(
+            domElement,
+            {
+                chart: {type: 'bar'},
+                title: {text: ''},
+                xAxis: {
+                    title: null,
+                    type: 'category'
+                },
+                yAxis: {
+                    title: null,
+                    tickInterval: 1
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }
+                },
+                legend: {enabled: false},
+                series: [{
+                    name: labels['Compilations'],
+                    data: this.format(data, labels)
+                }],
+                credits: {enabled: false}
             }
         );
 
