@@ -228,33 +228,43 @@ class CompilationsController extends Controller
                 'items',
             ]);
 
-        if (empty(request()->get('stage_location_id')) === false) {
-            $query->where('stage_location_id', request()->get('stage_location_id'));
-        }
-        if (empty(request()->get('stage_ward_id')) === false) {
-            $query->where('stage_ward_id', request()->get('stage_ward_id'));
-        }
-        if (empty(request()->get('stage_academic_year')) === false) {
-            $query->where('stage_academic_year', request()->get('stage_academic_year'));
-        }
-        if (empty(request()->get('stage_weeks')) === false) {
-            // @todo check whether this SQL string is compatible with other database engines
-            $query->whereRaw(
-                'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
-                [(int)request()->get('stage_weeks')]
-            );
-        }
-        if (empty(request()->get('student_gender')) === false) {
-            $studentGender = request()->get('student_gender');
-            $query->whereHas('student', function ($query) use ($studentGender) {
-                $query->where('gender', $studentGender);
-            });
-        }
-        if (empty(request()->get('student_nationality')) === false) {
-            $studentNationality = request()->get('student_nationality');
-            $query->whereHas('student', function ($query) use ($studentNationality) {
-                $query->where('nationality', $studentNationality);
-            });
+        foreach (request()->all() as $parameter => $value) {
+
+            if (empty($value) === true) {
+                continue;
+            }
+
+            switch ($parameter) {
+                case 'stage_location_id':
+                case 'stage_ward_id':
+                case 'stage_academic_year':
+                    $query->where($parameter, $value);
+                    break;
+                case 'stage_weeks':
+                    // @todo check whether this SQL string is compatible with other database engines
+                    $query->whereRaw(
+                        'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
+                        [(int)$value]
+                    );
+                    break;
+                case 'student_gender':
+                case 'student_nationality':
+                    $parameter = preg_replace('/^student_/', '', $parameter);
+                    $query->whereHas('student', function ($query) use ($parameter, $value) {
+                        $query->where($parameter, $value);
+                    });
+                    break;
+                default:
+                    // Dynamic questions
+                    if (preg_match('/^q\d+/', $parameter) === 1) {
+                        $parameter = preg_replace('/^q/', '', $parameter);
+                        $query->whereHas('items', function ($query) use ($parameter, $value) {
+                            $query->where('question_id', $parameter)
+                                ->where('answer', $value);
+                        });
+                    }
+            }
+
         }
 
         $compilations = $query->get();

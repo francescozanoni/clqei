@@ -30,6 +30,7 @@
                 {{ __('No compilations found') }}
             @endif
 
+            {{-- @todo refactor by rendering the following code by JavaScript --}}
             @if (empty(request()->all()) === false)
                 <h3>{{ __('Active filters') }}</h3>
                 <ul class="list-group">
@@ -42,6 +43,7 @@
                         @endif
                     @endforeach
                 </ul>
+                <hr />
             @endif
 
             {{-- A container element for each question is created, together with its answers inside --}}
@@ -113,14 +115,17 @@
             // Pie chart is currently unused
             // HighchartsPieFactory.create(this, questionId, data, labels);
 
-            $('#filterModal div.modal-body').append('<div class="clearfix">' + question + '</div>');
-            $('#filterModal div.modal-body > div:last-child').append('<select name="' + questionId + '" class="pull-right">');
-            $('#filterModal div.modal-body > div:last-child select').append('<option>');
+            // Questions/answers items are added to filter modal.
+            $('#filterModal div.modal-body').append('<div class="clearfix row">');
+            $('#filterModal div.modal-body > div:last-child').append('<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">' + question + '</div>');
+            $('#filterModal div.modal-body > div:last-child').append('<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">');
+            $('#filterModal div.modal-body > div:last-child > div:last-child').append('<select name="' + questionId + '" style="width: 100%">');
+            $('#filterModal div.modal-body > div:last-child > div:last-child select').append('<option>');
             for (answerId in data) {
-                $('#filterModal div.modal-body > div:last-child select').append('<option value="' + answerId + '">');
-                $('#filterModal div.modal-body > div:last-child select option:last-child').append(labels[answerId] + ' (' + data[answerId] + ')');
+                $('#filterModal div.modal-body > div:last-child > div:last-child select').append('<option value="' + answerId + '">');
+                $('#filterModal div.modal-body > div:last-child > div:last-child select option:last-child').append(labels[answerId] + ' (' + data[answerId] + ')');
                 if (getUrlParameter(questionId) === answerId) {
-                    $('#filterModal div.modal-body > div:last-child select option:last-child').prop('selected', 'selected');
+                    $('#filterModal div.modal-body > div:last-child > div:last-child select option:last-child').prop('selected', 'selected');
                 }
             }
 
