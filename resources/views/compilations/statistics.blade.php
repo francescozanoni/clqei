@@ -7,8 +7,17 @@
     <div class="panel panel-default">
 
         <div class="panel-heading">
+
             <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
-            {{ __('Compilation statistics')  }}
+            {{ __('Compilation statistics') }}
+
+            @if(empty(request()->all()) === false && empty($statistics) === false)
+                ({{ array_sum($statistics['stage_location_id']) }}
+                {{ __('of') }}
+                {{ \App\Models\Compilation::count() }})
+            @else
+                ({{ \App\Models\Compilation::count() }})
+            @endif
 
             {{-- "Cancel filters" button is displayed only if any filters are active --}}
             @if (empty(request()->all()) === false)
@@ -43,7 +52,7 @@
                         @endif
                     @endforeach
                 </ul>
-                <hr />
+                <hr/>
             @endif
 
             {{-- A container element for each question is created, together with its answers inside --}}
