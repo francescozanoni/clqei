@@ -256,7 +256,7 @@ class CompilationsController extends Controller
                     break;
                 default:
                     // Dynamic questions
-                    if (preg_match('/^q\d+/', $parameter) === 1) {
+                    if (preg_match('/^q\d+$/', $parameter) === 1) {
                         $parameter = preg_replace('/^q/', '', $parameter);
                         $query->whereHas('items', function ($query) use ($parameter, $value) {
                             $query->where('question_id', $parameter)
