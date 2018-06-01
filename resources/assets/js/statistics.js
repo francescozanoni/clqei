@@ -116,7 +116,8 @@ window.HighchartsStackedBarFactory = {
                 xAxis: {visible: false},
                 yAxis: {
                     min: 0,
-                    title: {text: ''}
+                    title: {text: ''},
+                    labels: {format: '{value} %'}
                 },
                 plotOptions: {
                     series: {
@@ -185,7 +186,13 @@ window.HighchartsBarFactory = {
                 title: {text: ''},
                 xAxis: {
                     title: null,
-                    type: 'category'
+                    type: 'category',
+                    labels: {
+                        style: {
+                            width: 150,
+                            'text-align': 'right'
+                        }
+                    }
                 },
                 yAxis: {
                     title: null,
@@ -195,7 +202,9 @@ window.HighchartsBarFactory = {
                     bar: {
                         dataLabels: {
                             enabled: false
-                        }
+                        },
+                        colorByPoint: true,
+                        pointWidth: 20
                     }
                 },
                 legend: {enabled: false},

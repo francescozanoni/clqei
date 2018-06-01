@@ -23,13 +23,15 @@
             {{-- A container element for each question is created, together with its answers inside --}}
             @foreach ($statistics as $questionId => $answers)
                 @php
+                // @todo refactor label array creation to another location
                 $labels = ['Compilations' => __('Compilations')];
                 foreach (array_keys($answers) as $answerId) {
                     $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
                 }
                 @endphp
                 <p>{{ $compilationService->getQuestionText($questionId) }}</p>
-                <div id="chart_{{ $questionId }}" style="width: 100%; height: {{ (count($answers) > 5 ? (40 * count($answers)) : 150) }}px;">
+                <div id="chart_{{ $questionId }}"
+                     style="width: 100%; height: {{ (count($answers) > 5 ? (30 * count($answers)) : 150) }}px;">
                     {{-- JSON-ized question statistics --}}
                     <span class="hidden answers">{!! json_encode($answers, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</span>
                     {{-- JSON-ized answer texts, localized --}}
@@ -50,28 +52,14 @@
         $('div[id^=chart_]').each(function () {
             var data = JSON.parse($(this).find('.answers').html());
             var labels = JSON.parse($(this).find('.labels').html());
-            /*
-             HighchartsPieFactory.create(
-             this,
-             data,
-             labels
-             );
-             */
+            // HighchartsPieFactory.create(this, data, labels);
+
+            // Chart type is chosen according to the number of different answers.
             if (Object.keys(data).length > 5) {
-                HighchartsBarFactory.create(
-                        this,
-                        data,
-                        labels
-                );
+                HighchartsBarFactory.create(this, data, labels);
             } else {
-                HighchartsStackedBarFactory.create(
-                        this,
-                        data,
-                        labels
-                );
+                HighchartsStackedBarFactory.create(this, data, labels);
             }
-
-
         });
     });
 </script>
