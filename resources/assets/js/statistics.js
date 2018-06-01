@@ -7,16 +7,17 @@ require('./statistics_bootstrap');
 /**
  * Highcharts pie chart factory
  */
-window.HighchartsPieFactory = {
+HighchartsPieFactory = {
 
     /**
      * Format statistics of a single question and localize answer texts
      *
+     * @param {String} questionId
      * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
      * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
      * @returns {Array} e.g. [{"name": "Novara", "y": 82}, {"name": "Vercelli", "y": 11}, ...]
      */
-    format: function (data, labels) {
+    format: function (questionId, data, labels) {
 
         var formattedData = [];
 
@@ -37,16 +38,17 @@ window.HighchartsPieFactory = {
      * Create a chart
      *
      * @param {HTMLDOMElement} domElement HTML tag that contains the chart
+     * @param {String} questionId
      * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
      * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
      */
-    create: function (domElement, data, labels) {
+    create: function (domElement, questionId, data, labels) {
 
         Highcharts.chart(
             domElement,
             {
                 chart: {type: 'pie'},
-                title: {text: ''},
+                title: null,
                 tooltip: {pointFormat: labels['Compilations'] + ': <b>{point.y}</b>'},
                 plotOptions: {
                     pie: {
@@ -59,7 +61,7 @@ window.HighchartsPieFactory = {
                 },
                 series: [{
                     colorByPoint: true,
-                    data: this.format(data, labels)
+                    data: this.format(questionId, data, labels)
                 }],
                 credits: {enabled: false}
             }
@@ -73,16 +75,17 @@ window.HighchartsPieFactory = {
 /**
  * Highcharts stacked bar chart factory
  */
-window.HighchartsStackedBarFactory = {
+HighchartsStackedBarFactory = {
 
     /**
      * Format statistics of a single question and localize answer texts
      *
+     * @param {String} questionId
      * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
      * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
      * @returns {Array} e.g. [{"name": "Novara", "data": [82]}, {"name": "Vercelli", "data": [11]}, ...]
      */
-    format: function (data, labels) {
+    format: function (questionId, data, labels) {
 
         var formattedData = [];
 
@@ -103,16 +106,17 @@ window.HighchartsStackedBarFactory = {
      * Create a chart
      *
      * @param {HTMLDOMElement} domElement HTML tag that contains the chart
+     * @param {String} questionId
      * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
      * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
      */
-    create: function (domElement, data, labels) {
+    create: function (domElement, questionId, data, labels) {
 
         Highcharts.chart(
             domElement,
             {
                 chart: {type: 'bar'},
-                title: {text: ''},
+                title: null,
                 xAxis: {visible: false},
                 yAxis: {
                     min: 0,
@@ -133,9 +137,16 @@ window.HighchartsStackedBarFactory = {
                     align: 'right',
                     verticalAlign: 'middle',
                     layout: 'vertical',
-                    itemWidth: 200
+                    itemWidth: 260,
+                    itemStyle: {
+                        fontWeight: 'auto',
+                        textOverflow: ''
+                    },
+                    style: {
+                        'white-space': 'wrap'
+                    }
                 },
-                series: this.format(data, labels),
+                series: this.format(questionId, data, labels),
                 credits: {enabled: false}
             }
         );
@@ -147,16 +158,17 @@ window.HighchartsStackedBarFactory = {
 /**
  * Highcharts bar chart factory
  */
-window.HighchartsBarFactory = {
+HighchartsBarFactory = {
 
     /**
      * Format statistics of a single question and localize answer texts
      *
+     * @param {String} questionId
      * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
      * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
      * @returns {Array} e.g. [["Novara", 82], ["Vercelli", 11], ...]
      */
-    format: function (data, labels) {
+    format: function (questionId, data, labels) {
 
         var formattedData = [];
 
@@ -164,7 +176,10 @@ window.HighchartsBarFactory = {
             if (data.hasOwnProperty(answer) === false) {
                 continue;
             }
-            formattedData.push([labels[answer], data[answer]]);
+            formattedData.push({
+                name: labels[answer],
+                y: data[answer] // count of answer occurrences
+            });
         }
 
         return formattedData;
@@ -174,16 +189,17 @@ window.HighchartsBarFactory = {
      * Create a chart
      *
      * @param {HTMLDOMElement} domElement HTML tag that contains the chart
+     * @param {String} questionId
      * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
      * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
      */
-    create: function (domElement, data, labels) {
+    create: function (domElement, questionId, data, labels) {
 
         Highcharts.chart(
             domElement,
             {
                 chart: {type: 'bar'},
-                title: {text: ''},
+                title: null,
                 xAxis: {
                     title: null,
                     type: 'category',
@@ -203,14 +219,14 @@ window.HighchartsBarFactory = {
                         dataLabels: {
                             enabled: false
                         },
-                        colorByPoint: true,
                         pointWidth: 20
                     }
                 },
                 legend: {enabled: false},
                 series: [{
                     name: labels['Compilations'],
-                    data: this.format(data, labels)
+                    colorByPoint: true,
+                    data: this.format(questionId, data, labels)
                 }],
                 credits: {enabled: false}
             }
