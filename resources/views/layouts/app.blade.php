@@ -11,9 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        {{ config('app.name') }}
-        -
-        {{ config('app.name_extended') }}
+        {{ config('app.name') }} - {{ config('app.name_extended') }}
     </title>
 
     <!-- Styles -->
@@ -114,9 +112,6 @@
                                         {{ __('All compilations') . ' (' . \App\Models\Compilation::count() . ')' }}
                                     </a>
                                 </li>
-                                @endcan
-                                {{-- Compilation statistics temporarily accessible only to administrators --}}
-                                @if (Auth::user()->can('createAdministrator', App\User::class))
                                 <li>
                                     <a href="{{ route('compilations.statistics') }}">
                                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
@@ -212,16 +207,14 @@
                                 </li>
                                 <li>
                                     <a href="#"
-                                       onclick="event.preventDefault();
-                                               alert('{{ __('Currently password can be changed only by password reset procedure (login page)') }}.');">
+                                       onclick="event.preventDefault(); alert('{{ __('Currently password can be changed only by password reset procedure (login page)') }}.');">
                                         <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
                                         {{ __('Change password') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                                         {{ __('Logout') }}
                                     </a>

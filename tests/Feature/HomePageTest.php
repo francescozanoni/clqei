@@ -33,6 +33,7 @@ class HomePageTest extends TestCase
         $response->assertDontSeeText(__('New compilation'));
         $response->assertSeeText(__('All compilations'));
         $response->assertDontSeeText(__('My compilations'));
+        $response->assertSeeText(__('Statistics'));
 
         $response->assertSee('<h3>' . __('Stages') . '</h3>');
         $response->assertSeeText(__('Locations'));
@@ -62,6 +63,7 @@ class HomePageTest extends TestCase
         $response->assertDontSeeText(__('New compilation'));
         $response->assertSeeText(__('All compilations'));
         $response->assertDontSeeText(__('My compilations'));
+        $response->assertSeeText(__('Statistics'));
 
         $response->assertSee('<h3>' . __('Stages') . '</h3>');
         $response->assertSeeText(__('Locations'));
@@ -91,6 +93,7 @@ class HomePageTest extends TestCase
         $response->assertSeeText(__('New compilation'));
         $response->assertDontSeeText(__('All compilations'));
         $response->assertSeeText(__('My compilations'));
+        $response->assertDontSeeText(__('Statistics'));
 
         $response->assertDontSee('<h3>' . __('Stages') . '</h3>');
         $response->assertDontSeeText(__('Locations'));

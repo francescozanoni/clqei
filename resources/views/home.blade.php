@@ -60,7 +60,7 @@
                 </li>
                 @endcan
                 {{-- Compilation statistics are accessible only to viewers and administrators --}}
-                @if (Auth::user()->can('createViewer', App\User::class) && $number_of_compilations > 0)
+                @if (Auth::user()->can('viewAll', App\Models\Compilation::class) && $number_of_compilations > 0)
                     <li>
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
                         {!! link_to_route('compilations.statistics', __('Statistics')) !!}

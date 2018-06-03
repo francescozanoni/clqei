@@ -39,6 +39,9 @@ class AdministratorTest extends TestCase
         $response->assertStatus(200);
         // Compilation list is rendered by DataTables, for administrators.
         $response->assertSee('datatables');
+        
+        $response = $this->actingAs($user)->get(route('compilations.statistics'));
+        $response->assertStatus(200);
 
         // Administrators can see their own profile page.
         $response = $this->actingAs($user)->get(route('users.show', ['user' => $user]));
