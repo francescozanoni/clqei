@@ -13,9 +13,9 @@ HighchartsPieFactory = {
      * Format statistics of a single question and localize answer texts
      *
      * @param {String} questionId
-     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
-     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
-     * @returns {Array} e.g. [{"name": "Novara", "y": 82}, {"name": "Vercelli", "y": 11}, ...]
+     * @param {Object} data answers with statistics, e.g. {"14": 82, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", ...}
+     * @returns {Array} e.g. [{"name": "Novara", "y": 82}, ...]
      */
     format: function (questionId, data, labels) {
 
@@ -39,8 +39,8 @@ HighchartsPieFactory = {
      *
      * @param {HTMLDOMElement} domElement HTML tag that contains the chart
      * @param {String} questionId
-     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
-     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     * @param {Object} data answers with statistics, e.g. {"14": 82, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", ...}
      */
     create: function (domElement, questionId, data, labels) {
 
@@ -81,9 +81,9 @@ HighchartsStackedBarFactory = {
      * Format statistics of a single question and localize answer texts
      *
      * @param {String} questionId
-     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
-     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
-     * @returns {Array} e.g. [{"name": "Novara", "data": [82]}, {"name": "Vercelli", "data": [11]}, ...]
+     * @param {Object} data answers with statistics, e.g. {"14": 82, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", ...}
+     * @returns {Array} e.g. [{"name": "Novara", "data": [82]}, ...]
      */
     format: function (questionId, data, labels) {
 
@@ -107,8 +107,8 @@ HighchartsStackedBarFactory = {
      *
      * @param {HTMLDOMElement} domElement HTML tag that contains the chart
      * @param {String} questionId
-     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
-     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     * @param {Object} data answers with statistics, e.g. {"14": 82, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", ...}
      */
     create: function (domElement, questionId, data, labels) {
 
@@ -124,9 +124,7 @@ HighchartsStackedBarFactory = {
                     labels: {format: '{value} %'}
                 },
                 plotOptions: {
-                    series: {
-                        stacking: 'percent'
-                    }
+                    series: {stacking: 'percent'}
                 },
                 tooltip: {
                     headerFormat: '',
@@ -142,9 +140,7 @@ HighchartsStackedBarFactory = {
                         fontWeight: 'auto',
                         textOverflow: ''
                     },
-                    style: {
-                        'white-space': 'wrap'
-                    }
+                    style: {'white-space': 'wrap'}
                 },
                 series: this.format(questionId, data, labels),
                 credits: {enabled: false}
@@ -164,9 +160,9 @@ HighchartsBarFactory = {
      * Format statistics of a single question and localize answer texts
      *
      * @param {String} questionId
-     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
-     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
-     * @returns {Array} e.g. [["Novara", 82], ["Vercelli", 11], ...]
+     * @param {Object} data answers with statistics, e.g. {"14": 82, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", ...}
+     * @returns {Array} e.g. [["Novara", 82], ...]
      */
     format: function (questionId, data, labels) {
 
@@ -190,8 +186,8 @@ HighchartsBarFactory = {
      *
      * @param {HTMLDOMElement} domElement HTML tag that contains the chart
      * @param {String} questionId
-     * @param {Object} data answers with statistics, e.g. {"14": 82, "21": 11, ...}
-     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", "21": "Vercelli", ...}
+     * @param {Object} data answers with statistics, e.g. {"14": 82, ...}
+     * @param {Object} labels localized chart labels, e.g. {"Compilations": "Compilazioni", "14": "Novara", ...}
      */
     create: function (domElement, questionId, data, labels) {
 
@@ -216,9 +212,7 @@ HighchartsBarFactory = {
                 },
                 plotOptions: {
                     bar: {
-                        dataLabels: {
-                            enabled: false
-                        },
+                        dataLabels: {enabled: false},
                         pointWidth: 20
                     }
                 },
