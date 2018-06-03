@@ -153,38 +153,44 @@ class CompilationService
      */
     public function getAnswerText($answerId, string $questionId = '') : string
     {
+      
+        $text = $answerId;
+      
         switch ($questionId) {
 
             case 'stage_location_id':
                 $answer = $this->otherAnswers['__stage_locations__']->get($answerId);
-                return $answer->name;
+                $text = $answer->name;
                 break;
 
             case 'stage_ward_id':
                 $answer = $this->otherAnswers['__stage_wards__']->get($answerId);
-                return $answer->name;
+                $text = $answer->name;
                 break;
 
             case 'stage_weeks':
-                return (string)$answerId;
+                $text = (string)$answerId;
                 break;
 
             case 'student_gender':
-                return __($answerId);
+                $text = __($answerId);
                 break;
 
             case 'student_nationality':
-                return $this->otherAnswers['__student_nationalities__'][$answerId];
+                $text = $this->otherAnswers['__student_nationalities__'][$answerId];
                 break;
 
             default:
                 $answer = $this->answers->get($answerId);
                 if ($answer) {
-                    return __($answer->text);
+                    $text = __($answer->text);
+                } else {
+                    $text = (string)$answerId;
                 }
-                return (string)$answerId;
-
+            
         }
+      
+        return $text;
 
     }
 
