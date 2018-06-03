@@ -41,21 +41,14 @@
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     {{ config('app.name') }}
-                    <span class="hidden-xs hidden-sm">
-                        -
-                        <small>
-                            {{ config('app.name_extended') }}
-                        </small>
-                    </span>
-
+                    <small class="hidden-xs hidden-sm">- {{ config('app.name_extended') }}</small>
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
+                <ul class="nav navbar-nav">&nbsp;</ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -232,8 +225,7 @@
                                         <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                                         {{ __('Logout') }}
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
