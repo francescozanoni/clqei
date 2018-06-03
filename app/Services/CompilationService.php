@@ -169,7 +169,7 @@ class CompilationService
                 break;
 
             case 'stage_weeks':
-                $text = (string)$answerId;
+                $text = $answerId;
                 break;
 
             case 'student_gender':
@@ -184,13 +184,11 @@ class CompilationService
                 $answer = $this->answers->get($answerId);
                 if ($answer) {
                     $text = __($answer->text);
-                } else {
-                    $text = (string)$answerId;
                 }
             
         }
       
-        return $text;
+        return (string)$text;
 
     }
 
