@@ -26,6 +26,7 @@
         "fzaninotto/faker": "~1.4",
         "infection/infection": "^0.8.2",
         "mockery/mockery": "0.9.*",
+        "phpunit/php-code-coverage": "^5.3",
         "phpunit/phpunit": "~6.0"
     },
     "autoload": {
