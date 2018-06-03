@@ -49,8 +49,7 @@ class UsersController extends Controller
                 $this->authorize('viewStudents', User::class);
                 if (request()->ajax()) {
                     $userQuery = User::students()->with(['student'])->select('users.*');
-                    $toReturn = DataTables::of($userQuery);
-                    return $toReturn->make(true);
+                    return DataTables::of($userQuery)->make(true);
                 }
                 return view('users.index_students');
                 break;
