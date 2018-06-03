@@ -84,6 +84,8 @@ class AdministratorTest extends TestCase
         $response->assertSee(__('Administrators'));
         $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_STUDENT]));
         $response->assertStatus(200);
+        // Student list is rendered by DataTables, for administrators.
+        $response->assertSee('datatables');
         $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_VIEWER]));
         $response->assertStatus(200);
         $response = $this->actingAs($user)->get(route('users.index', ['role' => User::ROLE_ADMINISTRATOR]));

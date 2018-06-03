@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndexUsersRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -23,38 +24,26 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param IndexUsersRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(IndexUsersRequest $request)
     {
-
-        if ($request->has('role') === false) {
-            return view('users.index_no_role');
-        }
         
-        $users = new Collection();
         $userRole = $request->get('role');
 
         switch ($userRole) {
             case User::ROLE_ADMINISTRATOR:
-                $this->authorize('viewAdministrators', User::class);
                 $users = User::administrators()->get();
                 break;
             case User::ROLE_VIEWER:
-                $this->authorize('viewViewers', User::class);
                 $users = User::viewers()->get();
                 break;
             case User::ROLE_STUDENT:
-                $this->authorize('viewStudents', User::class);
-                if (request()->ajax()) {
-                    $userQuery = User::students()->with(['student'])->select('users.*');
-                    return DataTables::of($userQuery)->make(true);
-                }
-                return view('users.index_students');
-                break;
+                // Students, since can be many, are handled in a different way.
+                return $this->indexStudents($request);
             default:
-               $userRole = null;
+               return view('users.index_no_role');
         }
 
         return view(
@@ -64,6 +53,24 @@ class UsersController extends Controller
                 'user_role' => $userRole
             ]
         );
+    }
+    
+    /**
+     * Display a listing of the resource (student users), via DataTables.
+     *
+     * @param IndexUsersRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    private function indexStudents(IndexUsersRequest $request)
+    {
+        
+        if (request()->ajax()) {
+            $userQuery = User::students()->with(['student'])->select('users.*');
+            return DataTables::of($userQuery)->make(true);
+        }
+                
+        return view('users.index_students');
+                
     }
 
     /**
