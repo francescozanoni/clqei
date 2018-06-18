@@ -4,7 +4,7 @@
 
 try {
 
-    window.Highcharts = require('highcharts');
+
 
 } catch (e) {
 

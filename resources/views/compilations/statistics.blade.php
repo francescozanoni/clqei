@@ -109,20 +109,13 @@
     $(function () {
         $('div[id^=chart_]').each(function () {
 
-            var questionId = Object.keys(JSON.parse($(this).find('.question').html()))[0];
-            var question = JSON.parse($(this).find('.question').html())[questionId];
-            var data = JSON.parse($(this).find('.answers').html());
-            var labels = JSON.parse($(this).find('.labels').html());
+            var chartContainerDomElement = this;
+            var chartContainerObject = $(chartContainerDomElement);
 
-            // Chart type is chosen according to the number of different answers.
-            if (Object.keys(data).length > 5) {
-                HighchartsBarFactory.create(this, questionId, data, labels);
-            } else {
-                HighchartsStackedBarFactory.create(this, questionId, data, labels);
-            }
-
-            // Pie chart is currently unused
-            // HighchartsPieFactory.create(this, questionId, data, labels);
+            var questionId = Object.keys(JSON.parse(chartContainerObject.find('.question').html()))[0];
+            var question = JSON.parse(chartContainerObject.find('.question').html())[questionId];
+            var data = JSON.parse(chartContainerObject.find('.answers').html());
+            var labels = JSON.parse(chartContainerObject.find('.labels').html());
 
             // Questions/answers items are added to filter modal.
             $('#filterModal div.modal-body').append('<div class="clearfix row">');
@@ -131,12 +124,19 @@
             $('#filterModal div.modal-body > div:last-child > div:last-child').append('<select name="' + questionId + '" style="width: 100%">');
             $('#filterModal div.modal-body > div:last-child > div:last-child select').append('<option>');
             for (answerId in data) {
+                if (data.hasOwnProperty(answerId) === false) {
+                    continue;
+                }
                 $('#filterModal div.modal-body > div:last-child > div:last-child select').append('<option value="' + answerId + '">');
                 $('#filterModal div.modal-body > div:last-child > div:last-child select option:last-child').append(labels[answerId] + ' (' + data[answerId] + ')');
                 if (getUrlParameter(questionId) === answerId) {
                     $('#filterModal div.modal-body > div:last-child > div:last-child select option:last-child').prop('selected', 'selected');
                 }
             }
+
+            // This function must be called here, after the previous code,
+            // because it erases chart data from chart container tag.
+            window.renderChart(this);
 
         });
     });
