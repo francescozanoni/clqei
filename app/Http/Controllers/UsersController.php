@@ -65,8 +65,19 @@ class UsersController extends Controller
     {
         
         if (request()->ajax()) {
-            $userQuery = User::students()->with(['student'])->select('users.*');
-            return DataTables::of($userQuery)->make(true);
+            $userQuery = User::students()
+                ->with(['student', 'student.compilations'])
+                ->select('users.*');
+            return DataTables::of($userQuery)
+                ->addColumn(
+                    'student.number_of_compilations',
+                    function ($user) {
+                        // A blank space is appended as workaround
+                        // to the still-unexplicable error occurring when returning zero.
+                        return $user->student->compilations->count() . ' ';
+                    }
+                )
+                ->make(true);
         }
                 
         return view('users.index_students');

@@ -18,6 +18,7 @@
                     <th>{{ __('Last name') }}</th>
                     <th>{{ __('First name') }}</th>
                     <th class="hidden-xs">{{ __('Identification number') }}</th>
+                    <th class="hidden-xs">{{ __('Compilations') }}</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -60,6 +61,11 @@
                 {
                     data: 'student.identification_number',
                     name: 'student.identification_number',
+                    className: "hidden-xs"
+                },
+                {
+                    data: 'student.number_of_compilations',
+                    name: 'student.number_of_compilations',
                     className: "hidden-xs"
                 },
                 {

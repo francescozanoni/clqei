@@ -7,8 +7,8 @@ window.onerror = function(message, url, line) {
 
     // You can view the information in an alert to see things working like this:
     alert(
-        "Error: " + message + "\n" +
-        "URL: " + url + "\n" +
+        "Error: " + JSON.stringify(message) + "\n" +
+        "URL: " + JSON.stringify(url) + "\n" +
         "line: " + line
     );
 
