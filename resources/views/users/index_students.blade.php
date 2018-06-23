@@ -87,8 +87,9 @@
                     render: function (data, type, row) {
                         var token = document.head.querySelector('meta[name="csrf-token"]').content;
                         var url = '{{ url('/') }}/users/' + row['id'];
+                        var message = '{{ __('Do you really want to delete this student?') }}';
                         return '<form action="' + url + '" method="POST">' +
-                                '<a href="' + url + '" title="{{ __('Delete') }}" onclick="event.preventDefault(); if (confirm(\'{{ __('Do you really want to delete this student?') }}\') !== true) { return; } this.parentElement.submit();" >' +
+                                '<a href="' + url + '" title="{{ __('Delete') }}" onclick="event.preventDefault(); if (confirm(\'' + message + '\') !== true) { return; } this.parentElement.submit();" >' +
                                 '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
                                 '</a>' +
                                 '<input type="hidden" name="_method" value="DELETE">' +
