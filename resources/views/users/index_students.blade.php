@@ -66,7 +66,10 @@
                 {
                     data: 'student.number_of_compilations',
                     name: 'student.number_of_compilations',
-                    className: "hidden-xs"
+                    className: "hidden-xs",
+                    {{-- @todo make this column searchable and sortable, by adding the column to controller --}}
+                    sortable: false,
+                    searchable: false
                 },
                 {
                     name: 'link_to_detail',
