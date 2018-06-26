@@ -25,12 +25,14 @@
                         onclick="window.location.href='{{ route('compilations.statistics') }}'">
                     {{ __('Cancel filters') }}
                 </button>
-                @endif
-                        <!-- Filter modal trigger button -->
-                <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal"
-                        data-target="#filterModal">
-                    {{ __('Apply filters') }}
-                </button>
+            @endif
+            
+            <!-- Filter modal trigger button -->
+            <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal"
+                    data-target="#filterModal">
+                {{ __('Apply filters') }}
+            </button>
+            
         </div>
 
         <div class="panel-body">
@@ -61,7 +63,7 @@
                 @php
                 $labels = ['Compilations' => __('Compilations')];
                 foreach (array_keys($answers) as $answerId) {
-                $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
+                    $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
                 }
                 @endphp
                 <p>{{ $compilationService->getQuestionText($questionId) }}</p>
@@ -107,6 +109,9 @@
 <script src="{{ asset('js/statistics.js') }}"></script>
 <script>
     $(function () {
+    
+        var modalBody = $('#filterModal div.modal-body');
+        
         $('div[id^=chart_]').each(function () {
 
             var chartContainerDomElement = this;
@@ -118,19 +123,24 @@
             var labels = JSON.parse(chartContainerObject.find('.labels').html());
 
             // Questions/answers items are added to filter modal.
-            $('#filterModal div.modal-body').append('<div class="clearfix row">');
-            $('#filterModal div.modal-body > div:last-child').append('<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">' + question + '</div>');
-            $('#filterModal div.modal-body > div:last-child').append('<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">');
-            $('#filterModal div.modal-body > div:last-child > div:last-child').append('<select name="' + questionId + '" style="width: 100%">');
-            $('#filterModal div.modal-body > div:last-child > div:last-child select').append('<option>');
+            modalBody.append(
+                '<div class="clearfix row">' +
+                '    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">' + question + '</div>' +
+                '    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">' +
+                '        <select name="' + questionId + '" style="width: 100%">' +
+                '            <option></option>' +
+                '        </select>' +
+                '    </div>' +
+                '</div>'
+            );
             for (answerId in data) {
                 if (data.hasOwnProperty(answerId) === false) {
                     continue;
                 }
-                $('#filterModal div.modal-body > div:last-child > div:last-child select').append('<option value="' + answerId + '">');
-                $('#filterModal div.modal-body > div:last-child > div:last-child select option:last-child').append(labels[answerId] + ' (' + data[answerId] + ')');
+                modalBody.find('select:last').append('<option value="' + answerId + '">');
+                modalBody.find('option:last').append(labels[answerId] + ' (' + data[answerId] + ')');
                 if (getUrlParameter(questionId) === answerId) {
-                    $('#filterModal div.modal-body > div:last-child > div:last-child select option:last-child').prop('selected', 'selected');
+                    modalBody.find('option:last').prop('selected', 'selected');
                 }
             }
 
