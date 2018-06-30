@@ -12,9 +12,7 @@
             {{ __('Compilation statistics') }}
 
             @if(empty(request()->all()) === false && empty($statistics) === false)
-                ({{ array_sum($statistics['stage_location_id']) }}
-                {{ __('of') }}
-                {{ \App\Models\Compilation::count() }})
+                ({{ array_sum($statistics['stage_location_id']) . ' ' . __('of') . ' ' . \App\Models\Compilation::count() }})
             @else
                 ({{ \App\Models\Compilation::count() }})
             @endif
@@ -70,11 +68,17 @@
                 <div id="chart_{{ $questionId }}"
                      style="width: 100%; height: {{ (count($answers) > 5 ? (30 * count($answers)) : 150) }}px;">
                     {{-- JSON-ized question ID and question --}}
-                    <span class="hidden question">{!! json_encode([$questionId => $compilationService->getQuestionText($questionId)], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</span>
+                    <span class="hidden question">
+                        @jsonize(['id' => $questionId, 'text' => $compilationService->getQuestionText($questionId)])
+                    </span>
                     {{-- JSON-ized question statistics --}}
-                    <span class="hidden answers">{!! json_encode($answers, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</span>
+                    <span class="hidden answers">
+                        @jsonize($answers)
+                    </span>
                     {{-- JSON-ized answer texts, localized --}}
-                    <span class="hidden labels">{!! json_encode($labels, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</span>
+                    <span class="hidden labels">
+                        @jsonize($labels)
+                    </span>
                 </div>
             @endforeach
 
@@ -114,32 +118,29 @@
         
         $('div[id^=chart_]').each(function () {
 
-            var chartContainerDomElement = this;
-            var chartContainerObject = $(chartContainerDomElement);
+            // Question/answers data is extracted from chart container tag.
+            var question = JSON.parse($(this).find('.question').html());
+            var answers = JSON.parse($(this).find('.answers').html());
+            var labels = JSON.parse($(this).find('.labels').html());
 
-            var questionId = Object.keys(JSON.parse(chartContainerObject.find('.question').html()))[0];
-            var question = JSON.parse(chartContainerObject.find('.question').html())[questionId];
-            var data = JSON.parse(chartContainerObject.find('.answers').html());
-            var labels = JSON.parse(chartContainerObject.find('.labels').html());
-
-            // Questions/answers items are added to filter modal.
+            // Question/answers items are added to filter modal.
             modalBody.append(
                 '<div class="clearfix row">' +
-                '    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">' + question + '</div>' +
+                '    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">' + question['text'] + '</div>' +
                 '    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">' +
-                '        <select name="' + questionId + '" style="width: 100%">' +
+                '        <select name="' + question['id'] + '" style="width: 100%">' +
                 '            <option></option>' +
                 '        </select>' +
                 '    </div>' +
                 '</div>'
             );
-            for (answerId in data) {
-                if (data.hasOwnProperty(answerId) === false) {
+            for (answerId in answers) {
+                if (answers.hasOwnProperty(answerId) === false) {
                     continue;
                 }
                 modalBody.find('select:last').append('<option value="' + answerId + '">');
-                modalBody.find('option:last').append(labels[answerId] + ' (' + data[answerId] + ')');
-                if (getUrlParameter(questionId) === answerId) {
+                modalBody.find('option:last').append(labels[answerId] + ' (' + answers[answerId] + ')');
+                if (getUrlParameter(question['id']) === answerId) {
                     modalBody.find('option:last').prop('selected', 'selected');
                 }
             }
