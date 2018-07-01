@@ -9,10 +9,15 @@ var HighchartsBarFactory = require('./Charts/Highcharts/Factories/Bar');
 // var HighchartsPieFactory = require('./Charts/Highcharts/Factories/Pie');
 var HighchartsStackedBarFactory = require('./Charts/Highcharts/Factories/StackedBar');
 
-window.renderChart = function(chartContainerDomElement) {
+/**
+ * Render a chart
+ *
+ * @param {DomElement} chartContainerDomElement
+ * @param {Object} data chart data (it must contain question, answers and labels items)
+ */
+window.renderChart = function(chartContainerDomElement, data) {
 
-    // Question/answers data is extracted from chart container tag.
-    var data = JSON.parse($(chartContainerDomElement).find('.data').html());
+    // Question/answers data is extracted from data input prameter.
     var question = data['question'];
     var answers = data['answers'];
     var labels = data['labels'];

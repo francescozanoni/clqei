@@ -64,7 +64,6 @@
                     $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
                 }
                 @endphp
-                <p>{{ $compilationService->getQuestionText($questionId) }}</p>
                 <div id="chart_{{ $questionId }}"
                      style="width: 100%; height: {{ (count($answers) > 5 ? (30 * count($answers)) : 150) }}px;">
                     <span class="hidden data">
@@ -144,9 +143,13 @@
                 }
             }
 
+            // Add question text before chart.
+            $(this).before('<p>' + question['text'] + '</p>');
+
+            // Chart creation
             // This function must be called here, after the previous code,
             // because it erases chart data from chart container tag.
-            window.renderChart(this);
+            window.renderChart(this, data);
 
         });
     });
