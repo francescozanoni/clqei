@@ -67,17 +67,15 @@
                 <p>{{ $compilationService->getQuestionText($questionId) }}</p>
                 <div id="chart_{{ $questionId }}"
                      style="width: 100%; height: {{ (count($answers) > 5 ? (30 * count($answers)) : 150) }}px;">
-                    {{-- JSON-ized question ID and question --}}
-                    <span class="hidden question">
-                        @jsonize(['id' => $questionId, 'text' => $compilationService->getQuestionText($questionId)])
-                    </span>
-                    {{-- JSON-ized question statistics --}}
-                    <span class="hidden answers">
-                        @jsonize($answers)
-                    </span>
-                    {{-- JSON-ized answer texts, localized --}}
-                    <span class="hidden labels">
-                        @jsonize($labels)
+                    <span class="hidden data">
+                        @jsonize([
+                            'question' => [
+                                'id' => $questionId,
+                                'text' => $compilationService->getQuestionText($questionId),
+                            ],
+                            'answers' => $answers,
+                            'labels' => $labels,
+                        ])
                     </span>
                 </div>
             @endforeach
@@ -119,9 +117,10 @@
         $('div[id^=chart_]').each(function () {
 
             // Question/answers data is extracted from chart container tag.
-            var question = JSON.parse($(this).find('.question').html());
-            var answers = JSON.parse($(this).find('.answers').html());
-            var labels = JSON.parse($(this).find('.labels').html());
+            var data = JSON.parse($(this).find('.data').html());
+            var question = data['question'];
+            var answers = data['answers'];
+            var labels = data['labels'];
 
             // Question/answers items are added to filter modal.
             modalBody.append(

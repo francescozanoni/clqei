@@ -11,20 +11,20 @@ var HighchartsStackedBarFactory = require('./Charts/Highcharts/Factories/Stacked
 
 window.renderChart = function(chartContainerDomElement) {
 
-    var chartContainerObject = $(chartContainerDomElement);
-
-    var questionId = Object.keys(JSON.parse(chartContainerObject.find('.question').html()))[0];
-    var data = JSON.parse(chartContainerObject.find('.answers').html());
-    var labels = JSON.parse(chartContainerObject.find('.labels').html());
+    // Question/answers data is extracted from chart container tag.
+    var data = JSON.parse($(chartContainerDomElement).find('.data').html());
+    var question = data['question'];
+    var answers = data['answers'];
+    var labels = data['labels'];
 
     // Chart type is chosen according to the number of different answers.
-    if (Object.keys(data).length > 5) {
-        HighchartsBarFactory.create(chartContainerDomElement, questionId, data, labels);
+    if (Object.keys(answers).length > 5) {
+        HighchartsBarFactory.create(chartContainerDomElement, question['id'], answers, labels);
     } else {
-        HighchartsStackedBarFactory.create(chartContainerDomElement, questionId, data, labels);
+        HighchartsStackedBarFactory.create(chartContainerDomElement, question['id'], answers, labels);
     }
 
     // Pie chart is currently unused
-    // HighchartsPieFactory.create(chartContainerDomElement, questionId, data, labels);
+    // HighchartsPieFactory.create(chartContainerDomElement, question['id'], answers, labels);
 
 };
