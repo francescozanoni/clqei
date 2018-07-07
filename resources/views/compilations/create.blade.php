@@ -47,9 +47,42 @@
 
             @endcan
 
-            <div class="row">
-                <div><h3 class="col-xs-12">{{ __('Stage') }}</h3></div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            {{-- Nav tabs --}}
+            <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                {{-- Pseudo-section 0 --}}
+                <li role="presentation" class="active">
+                        <a href="#section_0" aria-controls="section_0" role="tab" data-toggle="tab">
+                            <span class="hidden-sm">{{ __('Section') }}</span>
+                            <span class="visible-sm-inline">{{ __('Sect.') }}</span>
+                            0
+                        </a>
+                    </li>
+                @foreach ($sections as $index => $section)
+                    <li role="presentation">
+                        <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
+                           role="tab"
+                           data-toggle="tab">
+                            <span class="hidden-sm">{{ __('Section') }}</span>
+                            <span class="visible-sm-inline">{{ __('Sect.') }}</span>
+                            {{ ($index + 1) }}</a>
+                    </li>
+                @endforeach
+            </ul>
+
+            @php
+            // This variable allows not to rely on question IDs, that may be non-continuous.
+            $questionCounter = 1;
+            @endphp
+
+            {{-- Tab panes --}}
+            <div class="tab-content">
+            
+                {{-- Pseudo-section 0 --}}
+                <div role="tabpanel" class="tab-pane active" id="section_0">
+
+                        <h3>{{ __('Stage') }}</h3>
+                        <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     {!! BootForm::select(
                             'stage_location_id',
                             $compilationService->getQuestionText('stage_location_id'),
@@ -83,9 +116,8 @@
                             ['placeholder' => __('YYYY-MM-DD')]
                             ) !!}
                 </div>
-            </div>
-
-            {!! BootForm::select(
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                {!! BootForm::select(
                     'stage_academic_year',
                     $compilationService->getQuestionText('stage_academic_year'),
                     [
@@ -94,41 +126,20 @@
                     ],
                     $academicYearService->getCurrent()
                     ) !!}
-
-            {{-- Nav tabs --}}
-            <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                    </div>
+                        </div>
+                        
+                        <div class="pull-right">         
+                                <a href="#section_1" aria-controls="section_1" role="tab" data-toggle="tab"
+                                   onclick="$('#myTabs li:eq(1) a').tab('show')">
+                                    {{ __('Go to section') . ' 1' }}
+                                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                </a>     
+                        </div>
+                </div>
+                        
                 @foreach ($sections as $index => $section)
-                    <li role="presentation"
-                        @if ($section->id === 1)
-                        class="active"
-                            @endif
-                    >
-                        <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
-                           role="tab"
-                           data-toggle="tab">
-                            <span class="hidden-xs">{{ __('Section') }}</span>
-                            <span class="visible-xs-inline">{{ __('Sect.') }}</span>
-                            {{ ($index + 1) }}</a>
-                    </li>
-                @endforeach
-            </ul>
-
-            @php
-            // This variable is used in order not to rely on question IDs,
-            // that may be non-continuous.
-            $questionCounter = 1;
-            @endphp
-
-            {{-- Tab panes --}}
-            <div class="tab-content">
-                @foreach ($sections as $index => $section)
-                    <div role="tabpanel"
-                         @if ($section->id === 1)
-                         class="tab-pane active"
-                         @else
-                         class="tab-pane"
-                         @endif
-                         id="section_{{ $section->id }}">
+                    <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}">
 
                         <h3>{{ $section->title }}</h3>
 
@@ -204,7 +215,7 @@
                                    aria-controls="section_{{ $sections[$index + 1]->id }}"
                                    role="tab"
                                    data-toggle="tab"
-                                   onclick="$('#myTabs li:eq({{ ($index + 1) }}) a').tab('show')">
+                                   onclick="$('#myTabs li:eq({{ ($index + 2) }}) a').tab('show')">
                                     {{ __('Go to section') . ' ' . ($index + 2) }}
                                     <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                                 </a>
