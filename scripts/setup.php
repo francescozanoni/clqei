@@ -1,26 +1,24 @@
 #!/usr/bin/env php
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+define('BASE_PATH', realpath(__DIR__ . '/..'));
+require_once BASE_PATH . '/vendor/autoload.php';
 use Illuminate\Filesystem\Filesystem;
 
 # #####################################################
 
 # INSTALLATION OPTIONS
 
+# Default values
 $options = [
     'application_url' => 'http://localhost:8000', // Laravel's default
-
     'with_phpliteadmin' => false,
     'phpliteadmin_url' => 'https://bitbucket.org/phpliteadmin/public/downloads/phpLiteAdmin_v1-9-7-1.zip',
-
     'locale' => 'it',
-    'locale_source_path' => __DIR__ . '/vendor/caouecs/laravel-lang/src',
-    'locale_destination_path' => __DIR__ . '/resources/lang',
 ];
 
-$inputOptions = getopt('', ['application_url:', 'with_phpliteadmin', 'locale:']);
-
+# If provided, input values override default values
+$inputOptions = getopt('', ['application_url:', 'with_phpliteadmin', 'phpliteadmin_url:', 'locale:']);
 if (isset($inputOptions['application_url']) === true) {
     if (filter_var($inputOptions['application_url'], FILTER_VALIDATE_URL) === false) {
         die('Invalid application URL' . PHP_EOL);
@@ -29,6 +27,12 @@ if (isset($inputOptions['application_url']) === true) {
 }
 if (array_key_exists('with_phpliteadmin', $inputOptions) === true) {
     $options['with_phpliteadmin'] = true;
+}
+if (isset($inputOptions['phpliteadmin_url']) === true) {
+    if (filter_var($inputOptions['phpliteadmin_url'], FILTER_VALIDATE_URL) === false) {
+        die('Invalid phpLiteAdmin URL' . PHP_EOL);
+    }
+    $options['phpliteadmin_url'] = $inputOptions['phpliteadmin_url'];
 }
 if (isset($inputOptions['locale']) === true) {
     // @todo validate locale against locales within folder vendor/caouecs/laravel-lang/src
@@ -42,15 +46,17 @@ if (isset($inputOptions['locale']) === true) {
 
 # FILE/FOLDER PATH CONSTANTS
 
-define('HTACCESS_FILE_PATH', __DIR__ . '/public/.htaccess');
-define('HTACCESS_EXAMPLE_FILE_PATH', __DIR__ . '/public/.htaccess.example');
-define('DATABASE_FILE_PATH', __DIR__ . '/database/database.sqlite');
-define('DOT_ENV_FILE_PATH', __DIR__ . '/.env');
-define('DOT_ENV_EXAMPLE_FILE_PATH', __DIR__ . '/.env.example');
-define('PHPUNIT_XML_FILE_PATH', __DIR__ . '/phpunit.xml');
-define('PHPUNIT_XML_EXAMPLE_FILE_PATH', __DIR__ . '/phpunit.xml.example');
-define('PHPLITEADMIN_FOLDER_PATH', __DIR__ . '/public/phpliteadmin');
+define('HTACCESS_FILE_PATH', BASE_PATH . '/public/.htaccess');
+define('HTACCESS_EXAMPLE_FILE_PATH', BASE_PATH . '/public/.htaccess.example');
+define('DATABASE_FILE_PATH', BASE_PATH . '/database/database.sqlite');
+define('DOT_ENV_FILE_PATH', BASE_PATH . '/.env');
+define('DOT_ENV_EXAMPLE_FILE_PATH', BASE_PATH . '/.env.example');
+define('PHPUNIT_XML_FILE_PATH', BASE_PATH . '/phpunit.xml');
+define('PHPUNIT_XML_EXAMPLE_FILE_PATH', BASE_PATH . '/phpunit.xml.example');
+define('PHPLITEADMIN_FOLDER_PATH', BASE_PATH . '/public/phpliteadmin');
 define('PHPLITEADMIN_ZIP_FILE_PATH', sys_get_temp_dir() . '/phpliteadmin.zip');
+define('LOCALE_SOURCE_PATH', BASE_PATH . '/vendor/caouecs/laravel-lang/src');
+define('LOCALE_DESTINATION_PATH', BASE_PATH . '/resources/lang');
 
 # #####################################################
 
@@ -126,8 +132,8 @@ copy(PHPUNIT_XML_EXAMPLE_FILE_PATH, PHPUNIT_XML_FILE_PATH);
 
 echo 'Setting up locale files...' . PHP_EOL;
 
-$source = $options['locale_source_path'] . '/' . $options['locale'];
-$destination = $options['locale_destination_path'] . '/' . $options['locale'];
+$source = LOCALE_SOURCE_PATH . '/' . $options['locale'];
+$destination = LOCALE_DESTINATION_PATH . '/' . $options['locale'];
 (new Filesystem)->copyDirectory($source, $destination);
 
 # #####################################################
@@ -177,7 +183,7 @@ file_put_contents(HTACCESS_FILE_PATH, $file);
 
 exec('php artisan key:generate');
 
-# Post-install instructions
+# Post-installation suggestions
 if ($options['with_phpliteadmin'] === true) {
     echo PHP_EOL;
     echo "Manual steps:" . PHP_EOL;

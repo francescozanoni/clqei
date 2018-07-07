@@ -14,18 +14,24 @@ More details at URL https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/ .
 
 ### Installation
 
+#### Dependency installation
+
 ```bash
 composer install
 npm install
+```
 
-# To install with default URL http://localhost:8000
-php install.php
+#### Set up
 
-# To install with custom URL
-# php install.php --application_url=<APPLICATION_URL>
+```bash
+# To use default URL http://localhost:8000
+php scripts/setup.php
 
-# To install with phpLiteAdmin, available at <APPLICATION_URL>/phpliteadmin/phpliteadmin.php
-# php install.php --with_phpliteadmin
+# To use custom URL
+# php scripts/setup.php --application_url=<APPLICATION_URL>
+
+# To add phpLiteAdmin, reachable at URL <APPLICATION_URL>/phpliteadmin/phpliteadmin.php
+# php scripts/setup.php --with_phpliteadmin
 
 php artisan migrate --seed
 ```
@@ -44,6 +50,20 @@ php artisan migrate --seed
   - students' e-mail pattern
   - educational institution URL
 
+### Uninstallation
+
+#### Dependency uninstallation
+
+```bash
+rm -rf vendor
+rm -rf node_modules
+```
+
+#### Set down
+
+```bash
+php scripts/setdown.php
+```
 
 ### Local deployment
 
