@@ -104,7 +104,7 @@ class CompilationService
     /**
      * Get section text from ID.
      *
-     * @param $id
+     * @param int|string $id section ID
      * @return string
      */
     public function getSectionText($id) : string
@@ -121,7 +121,7 @@ class CompilationService
     /**
      * Get question text from ID (e.g. "23" or "q23").
      *
-     * @param string|int $id
+     * @param int|string $id question ID
      * @return string
      */
     public function getQuestionText($id) : string
@@ -190,6 +190,27 @@ class CompilationService
       
         return (string)$text;
 
+    }
+    
+    /**
+     * Get question's section, if available.
+     *
+     * @param int|string $id question ID
+     * @return null|App\Models\Section
+     */
+    public function getQuestionSection($id)
+    {
+
+        if (isset($this->otherQuestions[$id]) === true) {
+            return null;
+        }
+
+        $id = (string)$id;
+
+        $question = $this->questions->get(preg_replace('/^q/', '', $id));
+
+        return $this->sections->get($question->section_id);
+        
     }
 
 }

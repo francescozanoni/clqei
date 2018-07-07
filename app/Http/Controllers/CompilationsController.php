@@ -269,7 +269,69 @@ class CompilationsController extends Controller
 
         $compilations = $query->get();
 
+        /**
+         * @var array e.g. Array (
+         *                   Array (
+         *                     [stage_location_id] => 14
+         *                     [stage_ward_id] => 47
+         *                     [stage_academic_year] => 2017/2018
+         *                     [stage_weeks] => 10
+         *                     [student_gender] => female
+         *                     [student_nationality] => IT
+         *                     [q1] => 10
+         *                     [q2] => 86
+         *                     [q3] => 87
+         *                     [q4] => 90
+         *                     [q5] => 95
+         *                     [q6] => 103
+         *                     [q7] => 105
+         *                     [q9] => 109
+         *                     [q10] => 139
+         *                     [q11] => 141
+         *                     [q13] => 147
+         *                     [q14] => 152
+         *                     [q15] => 156
+         *                     [q16] => 160
+         *                     [q17] => 164
+         *                     [q18] => 168
+         *                     [q19] => 172
+         *                     [q20] => 176
+         *                     [q21] => 180
+         *                     [q22] => 184
+         *                     [q23] => 188
+         *                     [q24] => 192
+         *                     [q25] => 196
+         *                     [q26] => 200
+         *                     [q27] => 204
+         *                     [q28] => 208
+         *                     [q29] => 212
+         *                     [q30] => 216
+         *                     [q31] => 220
+         *                     [q32] => 224
+         *                     [q33] => 228
+         *                     [q34] => 232
+         *                     [q35] => 236
+         *                   )
+         *                   [...]
+         *                 )
+         */
         $formattedCompilations = $statisticService->formatCompilations($compilations);
+        
+        /**
+         * @var array e.g. Array (
+         *                   [stage_location_id] => Array (
+         *                     [14] => 82
+         *                     [21] => 11
+         *                     [...]
+         *                   )
+         *                   [stage_ward_id] => Array (
+         *                     [65] => 3
+         *                     [3] => 7
+         *                     [...]
+         *                   )
+         *                   [...]
+         *                 )
+         */
         $statistics = $statisticService->getStatistics($formattedCompilations);
 
         return view('compilations.statistics', ['statistics' => $statistics]);
