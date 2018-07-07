@@ -54,9 +54,19 @@
                 </ul>
                 <hr/>
             @endif
+            
+            @php
+            $section = null;
+            @endphp
 
             {{-- A container element for each question is created, together with its answers inside --}}
             @foreach ($statistics as $questionId => $answers)
+                @if($compilationService->getQuestionSection($questionId) !== $section)
+                    @php
+                    $section = $compilationService->getQuestionSection($questionId);
+                    @endphp
+                    <h3>{{ $section->title }}</h3>
+                @endif
                 {{--  @todo refactor label array creation to another location --}}
                 @php
                 $labels = ['Compilations' => __('Compilations')];

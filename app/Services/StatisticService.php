@@ -4,9 +4,25 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Models\Compilation;
+use App\Services\CompilationService;
 
 class StatisticService
 {
+
+    /**
+     * @var App\Services\CompilationService
+     */
+    private $compilationService;
+
+    /**
+     * Create a new service instance.
+     *
+     * @param App\Services\CompilationService $compilationService
+     */
+    public function __construct(App\Services\CompilationService $compilationService)
+    {
+        $this->compilationService = $compilationService;
+    }
 
     /**
      * Export a set of compilation to a statistic-compliant format.
