@@ -58,14 +58,14 @@
            {{-- Nav tabs --}}
             <ul class="nav nav-tabs" role="tablist" id="myTabs">
                 @foreach ($sections as $index => $section)
-                    <li role="presentation">
-                        <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
-                           role="tab"
-                           data-toggle="tab"
+                    <li role="presentation"
                            @if($index === 0)
                            class="active"
                            @endif
-                           >
+                    >
+                        <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
+                           role="tab"
+                           data-toggle="tab">
                             <span class="hidden-sm">{{ __('Section') }}</span>
                             <span class="visible-sm-inline">{{ __('Sect.') }}</span>
                             {{ $index }}</a>
@@ -89,7 +89,7 @@
                      @endphp
                     
                     
-                         <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}" class="active">
+                         <div role="tabpanel" class="tab-pane active" id="section_{{ $section->id }}">
                              <h3>
                              {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
                              </h3>
