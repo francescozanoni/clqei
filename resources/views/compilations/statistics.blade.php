@@ -94,7 +94,9 @@
                              {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
                              </h3>
                     @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
-                    
+                    @if ($section->footer !== null)
+                            <em>{{ $section->footer }}</em>
+                        @endif
                     @php
                     $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
                     @endphp
