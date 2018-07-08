@@ -33,3 +33,39 @@ window.renderChart = function(chartContainerDomElement, data) {
     // HighchartsPieFactory.create(chartContainerDomElement, question['id'], answers, labels);
 
 };
+
+/**
+ * Add a question and its answers to filter modal
+ *
+ * @param {jQuery} modalBody
+ * @param {Object} data chart data (it must contain question, answers and labels items)
+ * @param {Object} urlParameters
+ */
+window.addFilterToModal = function(modalBody, data, urlParameters) {
+
+            var question = data['question'];
+            var answers = data['answers'];
+            var labels = data['labels'];
+
+            modalBody.append(
+                '<div class="clearfix row">' +
+                '    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">' + question['text'] + '</div>' +
+                '    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">' +
+                '        <select name="' + question['id'] + '" style="width: 100%">' +
+                '            <option></option>' +
+                '        </select>' +
+                '    </div>' +
+                '</div>'
+            );
+            for (var answerId in answers) {
+                if (answers.hasOwnProperty(answerId) === false) {
+                    continue;
+                }
+                modalBody.find('select:last').append('<option value="' + answerId + '">');
+                modalBody.find('option:last').append(labels[answerId] + ' (' + answers[answerId] + ')');
+                if (urlParameters[question['id']] === answerId) {
+                    modalBody.find('option:last').prop('selected', 'selected');
+                }
+            }
+            
+};

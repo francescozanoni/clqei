@@ -128,35 +128,12 @@
             // Question/answers data is extracted from chart container tag.
             var data = JSON.parse($(this).find('.data').html());
             var question = data['question'];
-            var answers = data['answers'];
-            var labels = data['labels'];
-
-            // Question/answers items are added to filter modal.
-            modalBody.append(
-                '<div class="clearfix row">' +
-                '    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">' + question['text'] + '</div>' +
-                '    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">' +
-                '        <select name="' + question['id'] + '" style="width: 100%">' +
-                '            <option></option>' +
-                '        </select>' +
-                '    </div>' +
-                '</div>'
-            );
-            for (answerId in answers) {
-                if (answers.hasOwnProperty(answerId) === false) {
-                    continue;
-                }
-                modalBody.find('select:last').append('<option value="' + answerId + '">');
-                modalBody.find('option:last').append(labels[answerId] + ' (' + answers[answerId] + ')');
-                if (getUrlParameter(question['id']) === answerId) {
-                    modalBody.find('option:last').prop('selected', 'selected');
-                }
-            }
+            
+            window.addFilterToModal(modalBody, data, getUrlParameters());
 
             // Add question text before chart.
             $(this).before('<p>' + question['text'] + '</p>');
 
-            // Chart creation
             // This function must be called here, after the previous code,
             // because it erases chart data from chart container tag.
             window.renderChart(this, data);

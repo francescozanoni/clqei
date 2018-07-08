@@ -43,3 +43,29 @@ getUrlParameter = function (name, url) {
     }
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+/**
+ * Convert a URL or just the query part of a URL to an
+ * object with all keys and values.
+ * Usage examples:
+ *   // Get "GET" parameters from current request as object:
+ *   var parameters = parseQueryString(window.location.search);
+ *
+ * @see https://gist.github.com/Manc/9409355
+ */
+getUrlParameters = function(url) {
+    if (!url) {
+        url = window.location.href;
+    }
+        var obj = {},
+            qPos = url.indexOf("?"),
+	    tokens = url.substr(qPos + 1).split('&'),
+	    i = tokens.length - 1;
+	if (qPos !== -1 || url.indexOf("=") !== -1) {
+		for (; i >= 0; i--) {
+			var s = tokens[i].split('=');
+			obj[unescape(s[0])] = s.hasOwnProperty(1) ? unescape(s[1]) : null;
+		};
+	}
+	return obj;
+}
