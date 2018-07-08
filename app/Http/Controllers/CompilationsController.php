@@ -333,8 +333,14 @@ class CompilationsController extends Controller
          *                 )
          */
         $statistics = $statisticService->getStatistics($formattedCompilations);
+        
+        $sections = Section::with('questions.answers')->get();
+        $pseudoSection = new Section();
+        $pseudoSection->id = 0;
+        $pseudoSection->title = __('Stage');
+        $sections->prepend($pseudoSection);
 
-        return view('compilations.statistics', ['statistics' => $statistics]);
+        return view('compilations.statistics', ['statistics' => $statistics, 'sections' => $sections]);
     }
 
 }

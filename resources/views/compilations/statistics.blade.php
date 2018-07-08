@@ -55,18 +55,59 @@
                 <hr/>
             @endif
             
+           {{-- Nav tabs --}}
+            <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                @foreach ($sections as $index => $section)
+                    <li role="presentation">
+                        <a href="#section_{{ $section->id }}" aria-controls="section_{{ $section->id }}"
+                           role="tab"
+                           data-toggle="tab"
+                           @if($index === 0)
+                           class="active"
+                           @endif
+                           >
+                            <span class="hidden-sm">{{ __('Section') }}</span>
+                            <span class="visible-sm-inline">{{ __('Sect.') }}</span>
+                            {{ $index }}</a>
+                    </li>
+                @endforeach
+            </ul> 
+            
             @php
             $section = null;
             @endphp
 
+{{-- Tab panes --}}
+            <div class="tab-content">
+            
             {{-- A container element for each question is created, together with its answers inside --}}
             @foreach ($statistics as $questionId => $answers)
-                @if($compilationService->getQuestionSection($questionId) !== $section)
+            
+                    @if ($section === null)
                     @php
-                    $section = $compilationService->getQuestionSection($questionId);
+                     $section = $sections->first();
+                     @endphp
+                    
+                    
+                         <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}" class="active">
+                             <h3>
+                             {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
+                             </h3>
+                    @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
+                    
+                    @php
+                    $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
                     @endphp
-                    <h3>{{ $section->title }}</h3>
-                @endif
+                    </div>
+                    
+                         <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}">
+                             <h3>
+                             {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
+                             </h3>
+                    
+                    @endif
+            
+                
                 {{--  @todo refactor label array creation to another location --}}
                 @php
                 $labels = ['Compilations' => __('Compilations')];
@@ -87,7 +128,14 @@
                         ])
                     </span>
                 </div>
+                
+                @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
+                        </div>
+                    @endif
+                    
             @endforeach
+            
+            </div>
 
         </div>
 
