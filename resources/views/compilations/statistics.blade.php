@@ -118,7 +118,7 @@
                 }
                 @endphp
                 <div id="chart_{{ $questionId }}"
-                     style="width: 100%; height: {{ (count($answers) > 5 ? (30 * count($answers)) : 150) }}px;">
+                     style="width: 100%; height: {{ (count($answers) > 5 ? (30 * count($answers)) : 100) }}px;">
                     <span class="hidden data">
                         @jsonize([
                             'question' => [
