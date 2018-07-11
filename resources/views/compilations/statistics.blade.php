@@ -182,7 +182,7 @@
             window.addFilterToModal(modalBody, data, getUrlParameters());
 
             // Add question text before chart.
-            $(this).before('<p>' + question['text'] + '</p>');
+            $(this).before('<div>' + question['text'] + '</div>');
 
             // This function must be called here, after the previous code,
             // because it erases chart data from chart container tag.
