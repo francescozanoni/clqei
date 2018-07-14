@@ -17,6 +17,7 @@
                 ({{ \App\Models\Compilation::count() }})
             @endif
 
+            @if (empty($statistics) === false)
             {{-- "Cancel filters" button is displayed only if any filters are active --}}
             @if (empty(request()->all()) === false)
                 <button type="button" class="btn btn-primary btn-xs pull-right" style="margin-left:4px"
@@ -30,6 +31,7 @@
                     data-target="#filterModal">
                 {{ __('Apply filters') }}
             </button>
+            @endif
             
         </div>
 
@@ -38,22 +40,12 @@
             @if (empty($statistics) === true)
                 {{ __('No compilations found') }}
             @endif
-
-            {{-- @todo refactor by rendering the following code by JavaScript --}}
-            @if (empty(request()->all()) === false)
-                <h3>{{ __('Active filters') }}</h3>
-                <ul class="list-group">
-                    @foreach (request()->all() as $questionId => $answerId)
-                        @if (empty($answerId) === false)
-                            <li class="list-group-item">
-                                {{ $compilationService->getQuestionText($questionId) }}:
-                                <b>{{ $compilationService->getAnswerText($answerId, $questionId) }}</b>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                <hr/>
-            @endif
+            
+            @includeWhen(
+                empty(request()->all()) === false,
+                'compilations.statistics.active_filters',
+                ['activeFilters' => request()->all()]
+            )
             
            {{-- Nav tabs --}}
             <ul class="nav nav-tabs" role="tablist" id="myTabs">
@@ -72,13 +64,13 @@
                     </li>
                 @endforeach
             </ul> 
-            
-            @php
-            $section = null;
-            @endphp
 
 {{-- Tab panes --}}
             <div class="tab-content">
+            
+             @php
+             $section = null;
+             @endphp
             
             {{-- A container element for each question is created, together with its answers inside --}}
             @foreach ($statistics as $questionId => $answers)

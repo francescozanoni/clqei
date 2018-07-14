@@ -212,13 +212,78 @@ class CompilationsController extends Controller
     }
 
     /**
-     * Display compilation statistics.
+     * Display compilation statistics as charts.
      *
      * @param App\Services\StatisticService $statisticService
      *
      * @return \Illuminate\Http\Response
      */
-    public function statistics(App\Services\StatisticService $statisticService)
+    public function statisticsCharts(App\Services\StatisticService $statisticService)
+    {
+
+        /**
+         * @var array e.g. Array (
+         *                   [stage_location_id] => Array (
+         *                     [14] => 82
+         *                     [21] => 11
+         *                     [...]
+         *                   )
+         *                   [stage_ward_id] => Array (
+         *                     [65] => 3
+         *                     [3] => 7
+         *                     [...]
+         *                   )
+         *                   [...]
+         *                 )
+         */
+        $statistics = $this->getStatistics(request()->all(), $statisticService);
+        
+        $sections = Section::with('questions.answers')->get();
+        $pseudoSection = new Section();
+        $pseudoSection->id = 0;
+        $pseudoSection->title = __('Stage');
+        $sections->prepend($pseudoSection);
+
+        return view('compilations.statistics_charts', ['statistics' => $statistics, 'sections' => $sections]);
+    }
+    
+    /**
+     * Display compilation statistics as counts.
+     *
+     * @param App\Services\StatisticService $statisticService
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function statisticsCounts(App\Services\StatisticService $statisticService)
+    {
+
+        /**
+         * @var array e.g. Array (
+         *                   [stage_location_id] => Array (
+         *                     [14] => 82
+         *                     [21] => 11
+         *                     [...]
+         *                   )
+         *                   [stage_ward_id] => Array (
+         *                     [65] => 3
+         *                     [3] => 7
+         *                     [...]
+         *                   )
+         *                   [...]
+         *                 )
+         */
+        $statistics = $this->getStatistics(request()->all(), $statisticService);
+        
+        $sections = Section::with('questions.answers')->get();
+        $pseudoSection = new Section();
+        $pseudoSection->id = 0;
+        $pseudoSection->title = __('Stage');
+        $sections->prepend($pseudoSection);
+
+        return view('compilations.statistics_counts', ['statistics' => $statistics, 'sections' => $sections]);
+    }
+    
+    private function getStatistics(array $requestParameters, App\Services\StatisticService $statisticService) : array
     {
 
         $query = Compilation
@@ -228,7 +293,7 @@ class CompilationsController extends Controller
                 'items',
             ]);
 
-        foreach (request()->all() as $parameter => $value) {
+        foreach ($requestParameters as $parameter => $value) {
 
             if (empty($value) === true) {
                 continue;
@@ -333,14 +398,8 @@ class CompilationsController extends Controller
          *                 )
          */
         $statistics = $statisticService->getStatistics($formattedCompilations);
-        
-        $sections = Section::with('questions.answers')->get();
-        $pseudoSection = new Section();
-        $pseudoSection->id = 0;
-        $pseudoSection->title = __('Stage');
-        $sections->prepend($pseudoSection);
 
-        return view('compilations.statistics', ['statistics' => $statistics, 'sections' => $sections]);
+        return $statistics;
     }
 
 }

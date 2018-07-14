@@ -63,7 +63,9 @@
                 @if (Auth::user()->can('viewAll', App\Models\Compilation::class) && $number_of_compilations > 0)
                     <li>
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
-                        {!! link_to_route('compilations.statistics', __('Statistics')) !!}
+                        {{ __('Statistics') }}
+                        ({!! link_to_route('compilations.statistics_charts', __('charts')) !!},
+                        {!! link_to_route('compilations.statistics_counts', __('counts')) !!})
                     </li>
                 @endif
                 @endif

@@ -39,7 +39,9 @@ class ViewerTest extends TestCase
         // Compilation list is rendered by DataTables, for viewers.
         $response->assertSee('datatables');
         
-        $response = $this->actingAs($user)->get(route('compilations.statistics'));
+        $response = $this->actingAs($user)->get(route('compilations.statistics_charts'));
+        $response->assertStatus(200);
+        $response = $this->actingAs($user)->get(route('compilations.statistics_counts'));
         $response->assertStatus(200);
 
         // Viewers can see their own profile page.

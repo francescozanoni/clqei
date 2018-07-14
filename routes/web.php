@@ -36,9 +36,12 @@ Route::middleware(['auth'])->group(function () {
      * @see https://laravel.com/docs/5.5/controllers#resource-controllers
      */
 
-    Route::get('compilations/statistics', 'CompilationsController@statistics')
+    Route::get('compilations/statistics_charts', 'CompilationsController@statisticsCharts')
         ->middleware(['can:viewAll,App\Models\Compilation'])
-        ->name('compilations.statistics');
+        ->name('compilations.statistics_charts');
+    Route::get('compilations/statistics_counts', 'CompilationsController@statisticsCounts')
+        ->middleware(['can:viewAll,App\Models\Compilation'])
+        ->name('compilations.statistics_counts');
 
     /*
      * Verb        URI                               Action   Route Name

@@ -113,7 +113,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('compilations.statistics') }}">
+                                    <a href="{{ route('compilations.statistics_charts') }}">
                                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
                                         {{ __('Statistics') }}
                                     </a>
