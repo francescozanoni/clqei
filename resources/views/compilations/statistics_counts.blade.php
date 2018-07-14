@@ -100,8 +100,8 @@
                          <tbody>
                           @foreach ($answers as $answerId => $count)
                             <tr class="row">
-                                <td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{ $labels[$answerId] }}</td>
-                                <td class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{ $count }}</td>
+                                <td class="col-xs-10 col-sm-10 col-md-10 col-lg-10">{{ $labels[$answerId] }}</td>
+                                <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{ $count }}</td>
                             </tr>
                           @endforeach
                          </tbody>
