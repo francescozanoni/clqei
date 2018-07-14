@@ -16,6 +16,8 @@
             @else
                 ({{ \App\Models\Compilation::count() }})
             @endif
+            
+            - ({!! link_to_route('compilations.statistics_counts', __('counts')) !!})
 
             @if (empty($statistics) === false)
             {{-- "Cancel filters" button is displayed only if any filters are active --}}
@@ -83,7 +85,7 @@
                     
                          <div role="tabpanel" class="tab-pane active" id="section_{{ $section->id }}">
                              <h3>
-                             {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
+                             {{ $section->title }}
                              </h3>
                     @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
                     @if ($section->footer !== null)
@@ -96,7 +98,7 @@
                     
                          <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}">
                              <h3>
-                             {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
+                             {{ $section->title }}
                              </h3>
                     
                     @endif

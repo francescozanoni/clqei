@@ -17,6 +17,8 @@
                 ({{ \App\Models\Compilation::count() }})
             @endif
             
+            - ({!! link_to_route('compilations.statistics_charts', __('charts')) !!})
+            
         </div>
 
         <div class="panel-body">
@@ -61,7 +63,7 @@
                     
                          <div role="tabpanel" class="tab-pane active" id="section_{{ $section->id }}">
                              <h3>
-                             {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
+                             {{ $section->title }}
                              </h3>
                     @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
                     @if ($section->footer !== null)
@@ -74,7 +76,7 @@
                     
                          <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}">
                              <h3>
-                             {{ __('Section') . ' ' . $section->id . ' - ' . $section->title }}
+                             {{ $section->title }}
                              </h3>
                     
                     @endif
