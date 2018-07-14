@@ -67,16 +67,15 @@ class CompilationItem extends Model
                 break;
 
             case 'multiple_choice':
-                $siblingItems =
-                    CompilationItem
+                $answer =
+                    self
                         ::where('compilation_id', $this->compilation_id)
                         ->where('question_id', $this->question_id)
-                        ->get();
-                $siblingItemAnswers = [];
-                foreach ($siblingItems as $siblingItem) {
-                    $siblingItemAnswers[] = $siblingItem->aanswer;
-                }
-                $answer = $siblingItemAnswers;
+                        ->get()
+                        ->map(function ($item) {
+                            return $item->aanswer;
+                        })
+                        ->all();
                 break;
 
             default:
