@@ -92,31 +92,18 @@
 
 <div class="flex-center position-ref my-header">
     <div class="content">
-        @if (file_exists(public_path('logo.svg')) === true)
-            @if (config('clqei.educational_institution.url') !== '')
-                <a href="{{ config('clqei.educational_institution.url') }}" target="_blank">
-                    <img id="logo" src="{{ asset('logo.svg') }}"/>
-                </a>
-            @else
-                <img id="logo" src="{{ asset('logo.svg') }}"/>
+        @foreach(['svg', 'png', 'jpg'] as $extension)
+            @if(file_exists(public_path('logo.' . $extension)) === true)
+                @if (config('clqei.educational_institution.url') !== '')
+                    <a href="{{ config('clqei.educational_institution.url') }}" target="_blank">
+                        <img id="logo" src="{{ asset('logo.' . $extension) }}"/>
+                    </a>
+                @else
+                    <img id="logo" src="{{ asset('logo.' . $extension) }}"/>
+                @endif
+                @break
             @endif
-        @elseif(file_exists(public_path('logo.png')) === true)
-            @if (config('clqei.educational_institution.url') !== '')
-                <a href="{{ config('clqei.educational_institution.url') }}" target="_blank">
-                    <img id="logo" src="{{ asset('logo.png') }}"/>
-                </a>
-            @else
-                <img id="logo" src="{{ asset('logo.png') }}"/>
-            @endif
-        @elseif(file_exists(public_path('logo.jpg')) === true)
-            @if (config('clqei.educational_institution.url') !== '')
-                <a href="{{ config('clqei.educational_institution.url') }}" target="_blank">
-                    <img id="logo" src="{{ asset('logo.jpg') }}"/>
-                </a>
-            @else
-                <img id="logo" src="{{ asset('logo.jpg') }}"/>
-            @endif
-        @endif
+        @endforeach
     </div>
 </div>
 
@@ -131,7 +118,18 @@
         <div class="subtitle">
             {{ config('app.name_extended') }}
         </div>
-
+<!--        
+        <div>
+            {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}:
+            <ul>
+                <li>{{ __('quality of tutorial strategies') }},</li>
+                <li>{{ __('learning opportunities') }},</li>
+                <li>{{ __('safety and nursing care quality') }},</li>
+                <li>{{ __('self-direct learning') }},</li>
+                <li>{{ __('quality of the learning environment') }}.</li>
+            </ul>
+        </div>
+-->
         <div class="links">
             @if (Auth::guest())
                 <button class="btn btn-primary" onclick="location.href = '{{ route('login')}}'">
