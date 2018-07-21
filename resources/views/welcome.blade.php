@@ -49,7 +49,7 @@
             {{ config('app.name_extended') }}
         </div>
        
-        <div class="row">
+        <div class="row hidden-xs">
             <div class="col-sm-8 col-sm-offset-2">
             {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}:
             <ul>
