@@ -13,77 +13,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .my-header {
-            height: 15vh;
-        }
-
-        .my-body {
-            height: 75vh;
-        }
-
-        .my-footer {
-            height: 10vh;
-        }
-
-        .full-height {
-            height: 100vh;
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 10vh;
-        }
-
-        .subtitle {
-            font-size: 5vh;
-        }
-
-        .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .my-body .links button {
-            margin-top: 3rem;
-            width: 100px;
-        }
-
-        #logo {
-            height: 13vh;
-        }
-    </style>
+    <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
 
     <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
 </head>
@@ -118,8 +48,9 @@
         <div class="subtitle">
             {{ config('app.name_extended') }}
         </div>
-<!--        
-        <div>
+       
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
             {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}:
             <ul>
                 <li>{{ __('quality of tutorial strategies') }},</li>
@@ -128,8 +59,9 @@
                 <li>{{ __('self-direct learning') }},</li>
                 <li>{{ __('quality of the learning environment') }}.</li>
             </ul>
+            </div>
         </div>
--->
+
         <div class="links">
             @if (Auth::guest())
                 <button class="btn btn-primary" onclick="location.href = '{{ route('login')}}'">
@@ -153,10 +85,9 @@
 
 <div class="flex-center position-ref my-footer">
     <div class="content links">
-        {!! link_to(
-        config('copyright.url'),
-        '&copy; ' . config('copyright.year') . ' ' . config('copyright.author')
-        )!!}
+        {!!
+        link_to(config('copyright.url'), '&copy; ' . config('copyright.year') . ' ' . config('copyright.author'))
+        !!}
     </div>
 </div>
 
