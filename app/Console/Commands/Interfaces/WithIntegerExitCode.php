@@ -5,7 +5,7 @@ namespace App\Console\Commands\Interfaces;
 
 interface WithIntegerExitCode
 {
-    
+
     const SUCCESS = 0;
     const INVALID_INPUT = 1;
     const UNEXPECTED_ERROR = 2;

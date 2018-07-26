@@ -211,7 +211,7 @@ class StatisticService
                 $statistics[$questionId][$answerId]++;
             }
         }
-        
+
         // Answers are sorted by record ID.
         // @todo sort by answer real sort value
         foreach ($statistics as $questionId => &$answers) {

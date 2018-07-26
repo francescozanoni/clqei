@@ -7,8 +7,8 @@ use App\Models\Location;
 use App\Models\Ward;
 use App\Observers\EloquentModelObserver;
 use App\User;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
         Compilation::observe(EloquentModelObserver::class);
         Ward::observe(EloquentModelObserver::class);
         Location::observe(EloquentModelObserver::class);
-        
+
         Blade::directive('jsonize', function ($data) {
             return "<?php echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>";
         });

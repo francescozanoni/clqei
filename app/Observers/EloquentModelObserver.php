@@ -26,6 +26,22 @@ class EloquentModelObserver
     }
 
     /**
+     * Get a human readable string representation of the model class.
+     *
+     * @param Model $model
+     * @return string
+     */
+    private function getModelName(Model $model) : string
+    {
+        switch (get_class($model)) {
+            case User::class:
+                return $model->role;
+            default:
+                return rtrim($model->getTable(), 's');
+        }
+    }
+
+    /**
      * Listen to the model updated event.
      *
      * @param Model $model
@@ -62,22 +78,6 @@ class EloquentModelObserver
             self::FLASH_MESSAGE_KEY,
             __('The ' . $this->getModelName($model) . ' has been restored')
         );
-    }
-
-    /**
-     * Get a human readable string representation of the model class.
-     *
-     * @param Model $model
-     * @return string
-     */
-    private function getModelName(Model $model) : string
-    {
-        switch (get_class($model)) {
-            case User::class:
-                return $model->role;
-            default:
-                return rtrim($model->getTable(), 's');
-        }
     }
 
 }

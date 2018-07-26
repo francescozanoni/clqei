@@ -153,9 +153,9 @@ class CompilationService
      */
     public function getAnswerText($answerId, string $questionId = '') : string
     {
-      
+
         $text = $answerId;
-      
+
         switch ($questionId) {
 
             case 'stage_location_id':
@@ -185,18 +185,18 @@ class CompilationService
                 if ($answer) {
                     $text = __($answer->text);
                 }
-            
+
         }
-      
+
         return (string)$text;
 
     }
-    
+
     /**
      * Get question's section, if available.
      *
      * @param int|string $id question ID
-     * @return null|App\Models\Section
+     * @return null|\App\Models\Section
      */
     public function getQuestionSection($id)
     {
@@ -210,7 +210,7 @@ class CompilationService
         $question = $this->questions->get(preg_replace('/^q/', '', $id));
 
         return $this->sections->get($question->section_id);
-        
+
     }
 
 }

@@ -13,7 +13,7 @@ class StudentTest extends TestCase
 {
 
     use RefreshDatabase;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -55,7 +55,7 @@ class StudentTest extends TestCase
     {
 
         $user = User::students()->first();
-        
+
         // Students cannot see compilation statistics.
         $response = $this->actingAs($user)->get(route('compilations.statistics_charts'));
         $response->assertStatus(403);

@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IndexUsersRequest;
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use DB;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
@@ -29,7 +28,7 @@ class UsersController extends Controller
      */
     public function index(IndexUsersRequest $request)
     {
-        
+
         $userRole = $request->get('role');
 
         switch ($userRole) {
@@ -43,7 +42,7 @@ class UsersController extends Controller
                 // Students, since can be many, are handled in a different way.
                 return $this->indexStudents($request);
             default:
-               return view('users.index_no_role');
+                return view('users.index_no_role');
         }
 
         return view(
@@ -54,7 +53,7 @@ class UsersController extends Controller
             ]
         );
     }
-    
+
     /**
      * Display a listing of the resource (student users), via DataTables.
      *
@@ -63,7 +62,7 @@ class UsersController extends Controller
      */
     private function indexStudents(IndexUsersRequest $request)
     {
-        
+
         if (request()->ajax()) {
             $userQuery = User::students()
                 ->with(['student', 'student.compilations'])
@@ -79,15 +78,15 @@ class UsersController extends Controller
                 )
                 ->make(true);
         }
-                
+
         return view('users.index_students');
-                
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -107,7 +106,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -121,8 +120,8 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
@@ -136,7 +135,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)

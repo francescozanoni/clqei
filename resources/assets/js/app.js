@@ -53,19 +53,20 @@ getUrlParameter = function (name, url) {
  *
  * @see https://gist.github.com/Manc/9409355
  */
-getUrlParameters = function(url) {
+getUrlParameters = function (url) {
     if (!url) {
         url = window.location.href;
     }
-        var obj = {},
-            qPos = url.indexOf("?"),
-	    tokens = url.substr(qPos + 1).split('&'),
-	    i = tokens.length - 1;
-	if (qPos !== -1 || url.indexOf("=") !== -1) {
-		for (; i >= 0; i--) {
-			var s = tokens[i].split('=');
-			obj[unescape(s[0])] = s.hasOwnProperty(1) ? unescape(s[1]) : null;
-		};
-	}
-	return obj;
+    var obj = {},
+        qPos = url.indexOf("?"),
+        tokens = url.substr(qPos + 1).split('&'),
+        i = tokens.length - 1;
+    if (qPos !== -1 || url.indexOf("=") !== -1) {
+        for (; i >= 0; i--) {
+            var s = tokens[i].split('=');
+            obj[unescape(s[0])] = s.hasOwnProperty(1) ? unescape(s[1]) : null;
+        }
+        ;
+    }
+    return obj;
 }

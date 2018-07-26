@@ -17,24 +17,24 @@ class IndexUsersRequest extends FormRequest
     public function authorize() : bool
     {
         $user = Auth::user();
-        
+
         switch ($this->get('role')) {
-        
+
             case User::ROLE_ADMINISTRATOR:
                 return $user->can('viewAdministrators', User::class);
-                
+
             case User::ROLE_VIEWER:
                 return $user->can('viewViewers', User::class);
-                
+
             case User::ROLE_STUDENT:
                 return $user->can('viewStudents', User::class);
-                
+
             default:
                 return true;
-               
+
         }
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -44,7 +44,7 @@ class IndexUsersRequest extends FormRequest
     {
 
         $rules = [
-        
+
         ];
 
         return $rules;

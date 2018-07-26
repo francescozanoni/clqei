@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Services\ImportService;
-use App\Console\Commands\Interfaces\WithIntegerExitCode;
 use App;
+use App\Console\Commands\Interfaces\WithIntegerExitCode;
+use App\Services\ImportService;
+use Illuminate\Console\Command;
 
 class ImportLocations extends Command implements WithIntegerExitCode
 {
@@ -37,9 +37,9 @@ class ImportLocations extends Command implements WithIntegerExitCode
      */
     public function __construct(ImportService $importService)
     {
-	    parent::__construct();
+        parent::__construct();
 
-	    $this->importService = $importService;
+        $this->importService = $importService;
     }
 
     /**

@@ -22,7 +22,7 @@ class User extends Authenticatable
     const ROLE_ADMINISTRATOR = 'administrator';
     const ROLE_VIEWER = 'viewer';
     const ROLE_STUDENT = 'student';
-    
+
     const EXAMPLE_DOMAIN = 'example.com';
 
     /**
@@ -54,22 +54,22 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
     /**
      * Set the user's first name.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return void
      */
     public function setFirstNameAttribute($value)
     {
         $this->attributes['first_name'] = ucwords(strtolower($value), '\'- ');
     }
-    
+
     /**
      * Set the user's last name.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return void
      */
     public function setLastNameAttribute($value)
@@ -135,7 +135,7 @@ class User extends Authenticatable
         }
         $this->notify(new ResetPasswordNotification($token));
     }
-    
+
     public function isExampleUser() : bool
     {
         return substr($this->email, -strlen('@' . self::EXAMPLE_DOMAIN)) === '@' . self::EXAMPLE_DOMAIN;

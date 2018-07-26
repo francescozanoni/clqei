@@ -13,7 +13,7 @@ class ViewerTest extends TestCase
 {
 
     use RefreshDatabase;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -38,7 +38,7 @@ class ViewerTest extends TestCase
         $response->assertStatus(200);
         // Compilation list is rendered by DataTables, for viewers.
         $response->assertSee('datatables');
-        
+
         $response = $this->actingAs($user)->get(route('compilations.statistics_charts'));
         $response->assertStatus(200);
         $response = $this->actingAs($user)->get(route('compilations.statistics_counts'));

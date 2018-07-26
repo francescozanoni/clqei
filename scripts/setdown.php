@@ -22,10 +22,10 @@ $filePathsToDelete = [
 
 $optionalFilePathsToDelete = [
 
-	BASE_PATH . '/public/phpliteadmin/phpliteadmin.config.php',
-	BASE_PATH . '/public/phpliteadmin/phpliteadmin.config.sample.php',
-	BASE_PATH . '/public/phpliteadmin/phpliteadmin.php',
-	BASE_PATH . '/public/phpliteadmin/readme.md',
+    BASE_PATH . '/public/phpliteadmin/phpliteadmin.config.php',
+    BASE_PATH . '/public/phpliteadmin/phpliteadmin.config.sample.php',
+    BASE_PATH . '/public/phpliteadmin/phpliteadmin.php',
+    BASE_PATH . '/public/phpliteadmin/readme.md',
 
 ];
 
@@ -65,7 +65,8 @@ foreach ($filePathsToDelete as $filePath) {
 foreach ($optionalFilePathsToDelete as $filePath) {
     if (file_exists($filePath) === false ||
         is_writable($filePath) === false ||
-        is_file($filePath) === false) {
+        is_file($filePath) === false
+    ) {
         continue;
     }
     unlink($filePath);

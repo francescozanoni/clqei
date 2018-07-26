@@ -1,11 +1,10 @@
 {
-  "The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors" : "Il Clinical Learning Quality Environment Inventory è uno strumento validato di misurazione della qualità dell'apprendimento clinico dal punto di vista degli studenti di infermieristica, secondo cinque fattori",
+  "The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors": "Il Clinical Learning Quality Environment Inventory è uno strumento validato di misurazione della qualità dell'apprendimento clinico dal punto di vista degli studenti di infermieristica, secondo cinque fattori",
   "quality of tutorial strategies": "qualità delle strategie tutoriali",
   "learning opportunities": "opportunità di apprendimento",
   "safety and nursing care quality": "sicurezza e qualità dell'assistenza",
   "self-direct learning": "auto-apprendimento",
   "quality of the learning environment": "qualità dell'ambiente di apprendimento",
-
   "Login": "Accedi",
   "Register": "Registrati",
   "Logout": "Esci",
@@ -32,7 +31,6 @@
   "stages": "tirocini",
   "students": "studenti",
   "Users": "Utenti",
-
   "Register as student": "Registrati come studente",
   "Register new viewer": "Registra nuovo visualizzatore",
   "Register new viewer or administrator": "Registra nuovo visualizzatore o amministratore",
@@ -54,7 +52,6 @@
   "administrator": "amministratore",
   "Register new user": "Registra il nuovo utente",
   "There were some problems registering the user": "Alcuni problemi riscontrati durante la registrazione dell'utente",
-
   "New compilation": "Nuova compilazione",
   "Compilation form": "Modulo di compilazione",
   "New questionnaire compilation": "Nuova compilazione del questionario",
@@ -67,7 +64,6 @@
   "Last and first name": "Cognome e nome",
   "View": "Visualizza",
   "Currently no new compilations can be added: ensure at least one stage location and one stage ward are available": "Al momento nessuna nuova compilazione può essere creata: assicurarsi che almeno una sede di tirocinio ed un reparto di tirocinio siano disponibili",
-
   "Section": "Sezione",
   "Sect.": "Sez.",
   "Stage location": "Sede tirocinio",
@@ -83,7 +79,6 @@
   "Save": "Salva",
   "There were some problems adding the compilation": "Alcuni problemi riscontrati durante la creazione della compilazione",
   "The new compilation has been created": "La nuova compilazione è stata creata",
-
   "Compilation": "Compilazione",
   "Compilation of": "Compilazione del",
   "Question": "Domanda",
@@ -99,7 +94,6 @@
   "Weeks": "Settimane",
   "Academic year": "Anno accademico",
   "Acad. year": "Anno accad.",
-
   "Stages": "Tirocini",
   "Stage locations": "Sedi di tirocinio",
   "Deleted stage locations": "Sedi di tirocinio eliminate",
@@ -128,13 +122,11 @@
   "Edit": "Modifica",
   "Delete": "Elimina",
   "Restore": "Ripristina",
-
   "Student": "Studente",
   "Students": "Studenti",
   "Viewers": "Visualizzatori",
   "Administrators": "Amministratori",
   "Invalid user role": "Ruolo non valido",
-
   "Do you really want to delete this student?": "Vuoi davvero eliminare questo studente?",
   "Do you really want to delete this viewer?": "Vuoi davvero eliminare questo visualizzatore?",
   "Do you really want to delete this administrator?": "Vuoi davvero eliminare questo amministratore?",
@@ -148,16 +140,12 @@
   "No viewers found": "Nessun visualizzatore trovato",
   "No students found": "Nessuno studente trovato",
   "No users found": "Nessun utente trovato",
-
   "You are receiving this e-mail because we received a password reset request for your account.": "Stai ricevendo questa e-mail a seguito di una richiesta di reimpostazione password per il tuo account.",
   "If you did not request a password reset, no further action is required.": "Se non hai richiesto alcuna reimpostazione della password, puoi ignorare questo messaggio.",
-
   "The new student has been created": "Il nuovo studente è stato creato",
   "The new viewer has been created": "Il nuovo visualizzatore è stato creato",
   "The new administrator has been created": "Il nuovo amministratore è stato creato",
-
   "Overlapping time range.": "Intervallo temporale parzialmente o interamente già utilizzato.",
-
   "Automatic compilation": "Compilazione automatica",
   "Compilation form is filled with random values, except date fields": "Il modulo viene compilato con valori casuali, tranne i campi data"
 }

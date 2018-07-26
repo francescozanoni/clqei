@@ -13,7 +13,8 @@
 
         <div class="panel-body">
 
-            {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}:
+            {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}
+            :
             <ul>
                 <li>{{ __('quality of tutorial strategies') }},</li>
                 <li>{{ __('learning opportunities') }},</li>
@@ -53,21 +54,21 @@
                 @endif
                 @endcannot
                 @if ($number_of_compilations > 0)
-                @can('viewAll', App\Models\Compilation::class)
-                <li>
-                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                    {!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}
-                </li>
-                @endcan
-                {{-- Compilation statistics are accessible only to viewers and administrators --}}
-                @if (Auth::user()->can('viewAll', App\Models\Compilation::class) && $number_of_compilations > 0)
+                    @can('viewAll', App\Models\Compilation::class)
                     <li>
-                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
-                        {{ __('Statistics') }}
-                        ({!! link_to_route('compilations.statistics_charts', __('charts')) !!},
-                        {!! link_to_route('compilations.statistics_counts', __('counts')) !!})
+                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                        {!! link_to_route('compilations.index', __('All compilations') . ' (' . $number_of_compilations . ')') !!}
                     </li>
-                @endif
+                    @endcan
+                    {{-- Compilation statistics are accessible only to viewers and administrators --}}
+                    @if (Auth::user()->can('viewAll', App\Models\Compilation::class) && $number_of_compilations > 0)
+                        <li>
+                            <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                            {{ __('Statistics') }}
+                            ({!! link_to_route('compilations.statistics_charts', __('charts')) !!},
+                            {!! link_to_route('compilations.statistics_counts', __('counts')) !!})
+                        </li>
+                    @endif
                 @endif
             </ul>
 

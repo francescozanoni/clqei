@@ -58,7 +58,7 @@ class UserPolicy
             $user->role === User::ROLE_VIEWER ||
             $user->role === User::ROLE_ADMINISTRATOR;
     }
-  
+
     /**
      * Determine whether the user can create models with viewer role.
      *
@@ -71,7 +71,7 @@ class UserPolicy
             $user->role === User::ROLE_VIEWER ||
             $user->role === User::ROLE_ADMINISTRATOR;
     }
-  
+
     /**
      * Determine whether the user can view all models with viewer role.
      *
@@ -95,7 +95,7 @@ class UserPolicy
     {
         return $user->role === User::ROLE_ADMINISTRATOR;
     }
-  
+
     /**
      * Determine whether the user can view all models with administrator role.
      *

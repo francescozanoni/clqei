@@ -11,7 +11,7 @@ class HomePageTest extends TestCase
 {
 
     use RefreshDatabase;
-    
+
     public function setUp()
     {
         parent::setUp();

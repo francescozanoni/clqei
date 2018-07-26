@@ -33,7 +33,7 @@ class ImportService
         if (count(file($filePath)) === 0) {
             return ['Empty file'];
         }
-        
+
         return [];
 
     }
@@ -50,7 +50,7 @@ class ImportService
         if (in_array('App\Models\Interfaces\Importable', class_implements($class)) === false) {
             throw new \InvalidArgumentException('Invalid import model class');
         }
-        
+
         $records = file($filePath);
 
         // @todo add character check

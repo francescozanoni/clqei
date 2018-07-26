@@ -39,7 +39,7 @@ class AcademicYearService
     {
         return $this->getFromDate(date('Y-m-d'));
     }
-    
+
     /**
      * Get the academic year of a specified date
      *
@@ -49,7 +49,7 @@ class AcademicYearService
     public function getFromDate(string $date) : string
     {
         // @todo add date validation
-        
+
         $time = strtotime($date);
         $year = date('Y', $time);
 

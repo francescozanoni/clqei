@@ -21,7 +21,7 @@ class RegistrationTest extends TestCase
     {
 
         $payload = $this->getPayload();
-        
+
         $response = $this->post(route('register', $payload));
 
         $response->assertRedirect(route('home'));
@@ -103,16 +103,16 @@ class RegistrationTest extends TestCase
     {
 
         $this->seed();
-        
+
         $basePayload = [
-                        'first_name' => 'Example',
-                        'last_name' => 'Student',
-                        'password' => 'student',
-                        'password_confirmation' => 'student',
-                        'role' => User::ROLE_STUDENT,
-                        'nationality' => 'IT',
-                        'gender' => 'male',
-                    ];
+            'first_name' => 'Example',
+            'last_name' => 'Student',
+            'password' => 'student',
+            'password_confirmation' => 'student',
+            'role' => User::ROLE_STUDENT,
+            'nationality' => 'IT',
+            'gender' => 'male',
+        ];
 
         // Both e-mail and identification number duplicate.
         $payload = $basePayload;
@@ -154,7 +154,7 @@ class RegistrationTest extends TestCase
         $this->assertGuest();
 
     }
-    
+
     /**
      * Failed registration: invalid first name.
      */
@@ -162,7 +162,7 @@ class RegistrationTest extends TestCase
     {
 
         foreach (['F', ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['first_name'] = $fieldValue;
             $response = $this->post(route('register', $payload));
@@ -173,19 +173,19 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
 
     }
-    
+
     /**
      * Failed registration: invalid last name.
      */
     public function testInvalidLastName()
     {
-        
+
         foreach (['B', ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['last_name'] = $fieldValue;
             $response = $this->post(route('register', $payload));
@@ -196,11 +196,11 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
 
     }
-    
+
     /**
      * Failed registration: invalid e-mail.
      */
@@ -208,7 +208,7 @@ class RegistrationTest extends TestCase
     {
 
         foreach (['student@another.domain.com', 'example.com', ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['email'] = $fieldValue;
             $response = $this->post(route('register', $payload));
@@ -219,11 +219,11 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
 
     }
-    
+
     /**
      * Failed registration: invalid password.
      */
@@ -231,7 +231,7 @@ class RegistrationTest extends TestCase
     {
 
         foreach (['pwd', ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['password'] = $fieldValue;
             $payload['password_confirmation'] = $fieldValue;
@@ -243,9 +243,9 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
-        
+
         // Unmatched password.
         $payload = $this->getPayload();
         $payload['password'] = 'password1';
@@ -258,7 +258,7 @@ class RegistrationTest extends TestCase
         $this->assertDatabaseMissing('students', ['id' => 2]);
 
         $this->assertGuest();
-        
+
         // Missing confirmation.
         $payload = $this->getPayload();
         unset($payload['password_confirmation']);
@@ -272,7 +272,7 @@ class RegistrationTest extends TestCase
         $this->assertGuest();
 
     }
-    
+
     /**
      * Failed registration: invalid role.
      */
@@ -280,7 +280,7 @@ class RegistrationTest extends TestCase
     {
 
         foreach (['abc', 'STUDENT', User::ROLE_VIEWER, User::ROLE_ADMINISTRATOR, ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['role'] = $fieldValue;
             $response = $this->post(route('register', $payload));
@@ -291,11 +291,11 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
 
     }
-    
+
     /**
      * Failed registration: invalid identification number.
      */
@@ -303,7 +303,7 @@ class RegistrationTest extends TestCase
     {
 
         foreach (['abcd1234', '123456', ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['identification_number'] = $fieldValue;
             $response = $this->post(route('register', $payload));
@@ -314,11 +314,11 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
 
     }
-    
+
     /**
      * Failed registration: invalid nationality.
      */
@@ -326,7 +326,7 @@ class RegistrationTest extends TestCase
     {
 
         foreach (['XX', 'it', ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['nationality'] = $fieldValue;
             $response = $this->post(route('register', $payload));
@@ -337,11 +337,11 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
 
     }
-    
+
     /**
      * Failed registration: invalid gender.
      */
@@ -349,7 +349,7 @@ class RegistrationTest extends TestCase
     {
 
         foreach (['abc', 'MALE', ''] as $fieldValue) {
-        
+
             $payload = $this->getPayload();
             $payload['gender'] = $fieldValue;
             $response = $this->post(route('register', $payload));
@@ -360,7 +360,7 @@ class RegistrationTest extends TestCase
             $this->assertDatabaseMissing('students', ['id' => 2]);
 
             $this->assertGuest();
-            
+
         }
 
     }
