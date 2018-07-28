@@ -10,6 +10,7 @@ use App\Models\Section;
 use App\Models\Ward;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
+use App\Services\CountryService;
 
 class CompilationService
 {
@@ -39,27 +40,14 @@ class CompilationService
      */
     private $otherAnswers = [];
 
-    public function __construct()
+    public function __construct(CountryService $countryService)
     {
-        $this->sections = new Collection();
-        $sections = Section::withTrashed()->get();
-        foreach ($sections as $section) {
-            $this->sections->put($section->id, $section);
-        }
+        $this->sections = Section::withTrashed()->get()->keyBy('id');
+        $this->questions = Question::withTrashed()->get()->keyBy('id');
+        $this->answers = Answer::withTrashed()->get()->keyBy('id');
 
-        $this->questions = new Collection();
-        $questions = Question::withTrashed()->get();
-        foreach ($questions as $question) {
-            $this->questions->put($question->id, $question);
-        }
-
-        $this->answers = new Collection();
-        $answers = Answer::withTrashed()->get();
-        foreach ($answers as $answer) {
-            $this->answers->put($answer->id, $answer);
-        }
-
-        // Questions whose answers are located on other tables and that are not derived from database/seeds/*.json files
+        // Questions whose answers are located on other tables
+        // and that are not derived from database/seeds/*.json files
         $this->otherQuestions = [
             'stage_location_id' => __('Location'),
             'stage_ward_id' => __('Ward'),
@@ -72,20 +60,12 @@ class CompilationService
         ];
 
         // Answers located on other tables
-        $this->otherAnswers['__stage_locations__'] = new Collection();
-        $answers = Location::withTrashed()->get();
-        foreach ($answers as $answer) {
-            $this->otherAnswers['__stage_locations__']->put($answer->id, $answer);
-        }
-        $this->otherAnswers['__stage_wards__'] = new Collection();
-        $answers = Ward::withTrashed()->get();
-        foreach ($answers as $answer) {
-            $this->otherAnswers['__stage_wards__']->put($answer->id, $answer);
-        }
-
+        $this->otherAnswers['__stage_locations__'] = Location::withTrashed()->get()->keyBy('id');
+        $this->otherAnswers['__stage_wards__'] = Ward::withTrashed()->get()->keyBy('id');
+        
         // Answers not located on tables
         // @todo handles case of deleted country
-        $this->otherAnswers['__student_nationalities__'] = App::make('App\Services\CountryService')->getCountries();
+        $this->otherAnswers['__student_nationalities__'] = $countryService->getCountries();
     }
 
     /**

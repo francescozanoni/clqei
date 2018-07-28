@@ -48,10 +48,6 @@ class AppServiceProvider extends ServiceProvider
             return new \App\Services\DataTablesPluginService(base_path('node_modules/datatables.net-plugins'));
         });
 
-        $this->app->singleton('App\Services\CompilationService', function () {
-            return new \App\Services\CompilationService();
-        });
-
     }
 
 }
