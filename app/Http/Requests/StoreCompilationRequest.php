@@ -86,26 +86,27 @@ class StoreCompilationRequest extends FormRequest
     }
 
     /**
-     * Stage end date must be before today and before 18 weeks after stage start date.
+     * Stage end date must be:
+     *  - before one week from today,
+     *  - before N weeks after stage start date.
      *
      * @param string $stageStartDate
      * @return string
      */
     private function getMaxStageEndDate(string $stageStartDate) : string
     {
-        if ($stageStartDate === '') {
-            return Carbon::today()->format('Y-m-d');
+        $oneWeekFromToday = Carbon::today()->addWeeks(1);
+        
+        // If stage start date is empty or invalid,
+        // one week from today date is returned.
+        if ($stageStartDate === '' ||
+            \DateTime::createFromFormat('Y-m-d', $stageStartDate) === false) {
+            return $oneWeekFromToday->format('Y-m-d');
         }
 
-        $date = \DateTime::createFromFormat('Y-m-d', $stageStartDate);
-        if ($date === false) {
-            return '';
-        }
-
-        // @todo move week number to configuration
-        $maxStageEndDate = Carbon::parse($stageStartDate)->addWeeks(18);
-        if (Carbon::today() < $maxStageEndDate) {
-            $maxStageEndDate = Carbon::today();
+        $maxStageEndDate = Carbon::parse($stageStartDate)->addWeeks(config('clqei.stages.max_weeks'));
+        if ($oneWeekFromToday < $maxStageEndDate) {
+            $maxStageEndDate = $oneWeekFromToday;
         }
 
         return $maxStageEndDate->format('Y-m-d');
