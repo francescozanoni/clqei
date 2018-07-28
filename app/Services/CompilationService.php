@@ -139,17 +139,11 @@ class CompilationService
         switch ($questionId) {
 
             case 'stage_location_id':
-                $answer = $this->otherAnswers['__stage_locations__']->get($answerId);
-                $text = $answer->name;
+                $text = $this->otherAnswers['__stage_locations__']->get($answerId)->name;
                 break;
 
             case 'stage_ward_id':
-                $answer = $this->otherAnswers['__stage_wards__']->get($answerId);
-                $text = $answer->name;
-                break;
-
-            case 'stage_weeks':
-                $text = $answerId;
+                $text = $this->otherAnswers['__stage_wards__']->get($answerId)->name;
                 break;
 
             case 'student_gender':
@@ -161,8 +155,7 @@ class CompilationService
                 break;
 
             default:
-                $answer = $this->answers->get($answerId);
-                if ($answer) {
+                if ($answer = $this->answers->get($answerId)) {
                     $text = __($answer->text);
                 }
 
