@@ -50,9 +50,8 @@
         </div>
 
         <div class="row hidden-xs">
-            <div class="col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}
-                :
+            <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                {{ __('The Clinical Learning Quality Environment Inventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors') }}:
                 <ul>
                     <li>{{ __('quality of tutorial strategies') }},</li>
                     <li>{{ __('learning opportunities') }},</li>
