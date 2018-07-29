@@ -257,9 +257,14 @@ class CompilationsController extends Controller
                 'items',
             ]);
 
-        $queryWithFilters = $statisticService->getQueryWithFilters($query, $requestParameters);
+        foreach ($requestParameters as $parameter => $value) {
+            if (empty($value) === true) {
+                continue;
+            }   
+            $statisticService->applyQueryFilters($query, $parameter, $value);        
+        }
 
-        $compilations = $queryWithFilters->get();
+        $compilations = $query->get();
 
         /**
          * @var array e.g. Array (

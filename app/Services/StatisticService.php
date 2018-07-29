@@ -144,14 +144,8 @@ class StatisticService
         return $formatted;
     }
     
-    public function getQueryWithFilters($query, array $requestParameters)
+    public function applyQueryFilters($query, string $parameter, $value)
     {
-
-        foreach ($requestParameters as $parameter => $value) {
-
-            if (empty($value) === true) {
-                continue;
-            }
 
             switch ($parameter) {
                 case 'stage_location_id':
@@ -183,10 +177,6 @@ class StatisticService
                         });
                     }
             }
-
-        }
-        
-        return $query;
         
     }
 
