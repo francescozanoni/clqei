@@ -19,11 +19,11 @@ return [
         'url' => env('CLQEI_EDUCATIONAL_INSTITUTION_URL', ''),
 
     ],
-    
+
     'stages' => [
-    
+
         'max_weeks' => 18,
-    
+
     ],
 
 ];

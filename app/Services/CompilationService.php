@@ -8,30 +8,29 @@ use App\Models\Location;
 use App\Models\Question;
 use App\Models\Section;
 use App\Models\Ward;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\App;
-use App\Services\CountryService;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 
 class CompilationService
 {
 
     /**
-     * @var Collection all questionnaire sections, also deleted
+     * @var EloquentCollection all questionnaire sections, also deleted
      */
     private $sections = null;
 
     /**
-     * @var Collection all questionnaire questions, also deleted
+     * @var EloquentCollection all questionnaire questions, also deleted
      */
     private $questions = null;
 
     /**
-     * @var Collection all questionnaire dynamic answers (i.e. based on database/seeds/*.json files), also deleted
+     * @var EloquentCollection all questionnaire dynamic answers (i.e. based on database/seeds/*.json files), also deleted
      */
     private $answers = null;
 
     /**
-     * @var array all questionnaire fixed questions (see __construct() method for details), also deleted
+     * @var \Illuminate\Support\Collection all questionnaire fixed questions (see __construct() method for details), also deleted
      */
     private $otherQuestions = [];
 
@@ -48,7 +47,7 @@ class CompilationService
 
         // Questions whose answers are located on other tables
         // and that are not derived from database/seeds/*.json files
-        $this->otherQuestions = [
+        $this->otherQuestions = new Collection([
             'stage_location_id' => __('Location'),
             'stage_ward_id' => __('Ward'),
             'stage_start_date' => __('Start date'),
@@ -57,15 +56,15 @@ class CompilationService
             'stage_weeks' => __('Weeks'),
             'student_gender' => __('Gender'),
             'student_nationality' => __('Nationality'),
-        ];
+        ]);
 
         // Answers located on other tables
         $this->otherAnswers['__stage_locations__'] = Location::withTrashed()->get()->keyBy('id');
         $this->otherAnswers['__stage_wards__'] = Ward::withTrashed()->get()->keyBy('id');
-        
+
         // Answers not located on tables
         // @todo handles case of deleted country
-        $this->otherAnswers['__student_nationalities__'] = $countryService->getCountries();
+        $this->otherAnswers['__student_nationalities__'] = new Collection($countryService->getCountries());
     }
 
     /**
@@ -107,8 +106,10 @@ class CompilationService
     public function getQuestionText($id) : string
     {
 
-        if (isset($this->otherQuestions[$id]) === true) {
-            return $this->otherQuestions[$id];
+        $otherQuestion = $this->otherQuestions->get($id);
+
+        if ($otherQuestion) {
+            return $otherQuestion;
         }
 
         $id = (string)$id;
@@ -151,7 +152,7 @@ class CompilationService
                 break;
 
             case 'student_nationality':
-                $text = $this->otherAnswers['__student_nationalities__'][$answerId];
+                $text = $this->otherAnswers['__student_nationalities__']->get($answerId);
                 break;
 
             default:
@@ -174,7 +175,7 @@ class CompilationService
     public function getQuestionSection($id)
     {
 
-        if (isset($this->otherQuestions[$id]) === true) {
+        if ($this->otherQuestions->has($id) === true) {
             return null;
         }
 
