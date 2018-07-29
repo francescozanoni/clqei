@@ -56,10 +56,10 @@
                 @foreach ($statistics as $questionId => $answers)
 
                     @if ($section === null)
+                    
                         @php
                         $section = $sections->first();
                         @endphp
-
 
                         <div role="tabpanel" class="tab-pane active" id="section_{{ $section->id }}">
                             <h3>

@@ -45,7 +45,6 @@ class StoreCompilationRequest extends FormRequest
             'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
             'stage_location_id' => 'required|exists:locations,id',
             'stage_ward_id' => 'required|exists:wards,id',
-            // @todo add start/end date validation against academic year
             'stage_start_date' => [
                 'bail',
                 'required',

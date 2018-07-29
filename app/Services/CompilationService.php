@@ -32,7 +32,7 @@ class CompilationService
     /**
      * @var Collection all questionnaire fixed questions (see __construct() method for details), also deleted
      */
-    private $otherQuestions = [];
+    private $otherQuestions = null;
 
     /**
      * @var array all questionnaire "other" answers (see __construct() method for details), also deleted
