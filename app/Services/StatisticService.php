@@ -143,6 +143,52 @@ class StatisticService
 
         return $formatted;
     }
+    
+    public function getQueryWithFilters($query, array $requestParameters)
+    {
+
+        foreach ($requestParameters as $parameter => $value) {
+
+            if (empty($value) === true) {
+                continue;
+            }
+
+            switch ($parameter) {
+                case 'stage_location_id':
+                case 'stage_ward_id':
+                case 'stage_academic_year':
+                    $query->where($parameter, $value);
+                    break;
+                case 'stage_weeks':
+                    // @todo check whether this SQL string is compatible with other database engines
+                    $query->whereRaw(
+                        'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
+                        [(int)$value]
+                    );
+                    break;
+                case 'student_gender':
+                case 'student_nationality':
+                    $parameter = preg_replace('/^student_/', '', $parameter);
+                    $query->whereHas('student', function ($query) use ($parameter, $value) {
+                        $query->where($parameter, $value);
+                    });
+                    break;
+                default:
+                    // Dynamic questions
+                    if (preg_match('/^q\d+$/', $parameter) === 1) {
+                        $parameter = preg_replace('/^q/', '', $parameter);
+                        $query->whereHas('items', function ($query) use ($parameter, $value) {
+                            $query->where('question_id', $parameter)
+                                ->where('answer', $value);
+                        });
+                    }
+            }
+
+        }
+        
+        return $query;
+        
+    }
 
     /**
      * Count occurrences of each answer of each question of the provided compilations.
