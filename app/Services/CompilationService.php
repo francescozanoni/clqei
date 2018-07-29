@@ -30,7 +30,7 @@ class CompilationService
     private $answers = null;
 
     /**
-     * @var \Illuminate\Support\Collection all questionnaire fixed questions (see __construct() method for details), also deleted
+     * @var Collection all questionnaire fixed questions (see __construct() method for details), also deleted
      */
     private $otherQuestions = [];
 
