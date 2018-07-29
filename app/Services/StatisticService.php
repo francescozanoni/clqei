@@ -151,21 +151,13 @@ class StatisticService
                 case 'stage_location_id':
                 case 'stage_ward_id':
                 case 'stage_academic_year':
-                    $query->where($parameter, $value);
-                    break;
                 case 'stage_weeks':
-                    // @todo check whether this SQL string is compatible with other database engines
-                    $query->whereRaw(
-                        'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
-                        [(int)$value]
-                    );
+                    $this->applyQueryStageFilters($query, $parameter, $value);
                     break;
                 case 'student_gender':
                 case 'student_nationality':
                     $parameter = preg_replace('/^student_/', '', $parameter);
-                    $query->whereHas('student', function ($query) use ($parameter, $value) {
-                        $query->where($parameter, $value);
-                    });
+                    $this->applyQueryStudentFilters($query, $parameter, $value);
                     break;
                 default:
                     // Dynamic questions
@@ -179,6 +171,43 @@ class StatisticService
             }
         
     }
+    
+    private function applyQueryStageFilters($query, string $parameter, $value)
+    {
+
+            switch ($parameter) {
+                case 'stage_location_id':
+                case 'stage_ward_id':
+                case 'stage_academic_year':
+                    $query->where($parameter, $value);
+                    break;
+                case 'stage_weeks':
+                    // @todo check whether this SQL string is compatible with other database engines
+                    $query->whereRaw(
+                        'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
+                        [(int)$value]
+                    );
+                    break;
+                default:
+                
+            }
+    }
+    
+    private function applyQueryStudentFilters($query, string $parameter, $value)
+    {
+
+            switch ($parameter) {
+                case 'gender':
+                case 'nationality':
+                    $query->whereHas('student', function ($query) use ($parameter, $value) {
+                        $query->where($parameter, $value);
+                    });
+                    break;
+                default:
+                
+            }
+    }
+
 
     /**
      * Count occurrences of each answer of each question of the provided compilations.
