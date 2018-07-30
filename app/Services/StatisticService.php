@@ -9,6 +9,16 @@ class StatisticService
 {
 
     /**
+     * @var CompilationService
+     */
+    private $compilationService;
+
+    public function __construct(CompilationService $compilationService)
+    {
+        $this->compilationService = $compilationService;
+    }
+
+    /**
      * Export a set of compilation to a statistic-compliant format.
      *
      * @param array|\Traversable $compilations
@@ -60,19 +70,19 @@ class StatisticService
      */
     public function formatCompilations($compilations) : array
     {
+
         if (is_array($compilations) === false &&
             ($compilations instanceof \Traversable) === false
         ) {
             throw new \InvalidArgumentException('Compilation set must be an array or implement Traversable interface');
         }
 
-        $formatted = [];
-
-        foreach ($compilations as $compilation) {
-            $formatted[] = $this->formatCompilation($compilation);
+        if ($compilations instanceof \Traversable) {
+            $compilations = iterator_to_array($compilations);
         }
 
-        return $formatted;
+        return array_map([$this, 'formatCompilation'], $compilations);
+
     }
 
     /**
@@ -143,71 +153,6 @@ class StatisticService
 
         return $formatted;
     }
-    
-    public function applyQueryFilters($query, string $parameter, $value)
-    {
-
-            switch ($parameter) {
-                case 'stage_location_id':
-                case 'stage_ward_id':
-                case 'stage_academic_year':
-                case 'stage_weeks':
-                    $this->applyQueryStageFilters($query, $parameter, $value);
-                    break;
-                case 'student_gender':
-                case 'student_nationality':
-                    $parameter = preg_replace('/^student_/', '', $parameter);
-                    $this->applyQueryStudentFilters($query, $parameter, $value);
-                    break;
-                default:
-                    // Dynamic questions
-                    if (preg_match('/^q\d+$/', $parameter) === 1) {
-                        $parameter = preg_replace('/^q/', '', $parameter);
-                        $query->whereHas('items', function ($query) use ($parameter, $value) {
-                            $query->where('question_id', $parameter)
-                                ->where('answer', $value);
-                        });
-                    }
-            }
-        
-    }
-    
-    private function applyQueryStageFilters($query, string $parameter, $value)
-    {
-
-            switch ($parameter) {
-                case 'stage_location_id':
-                case 'stage_ward_id':
-                case 'stage_academic_year':
-                    $query->where($parameter, $value);
-                    break;
-                case 'stage_weeks':
-                    // @todo check whether this SQL string is compatible with other database engines
-                    $query->whereRaw(
-                        'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
-                        [(int)$value]
-                    );
-                    break;
-                default:
-                
-            }
-    }
-    
-    private function applyQueryStudentFilters($query, string $parameter, $value)
-    {
-
-            switch ($parameter) {
-                case 'gender':
-                case 'nationality':
-                    $query->whereHas('student', function ($query) use ($parameter, $value) {
-                        $query->where($parameter, $value);
-                    });
-                    break;
-                default:
-                
-            }
-    }
-
 
     /**
      * Count occurrences of each answer of each question of the provided compilations.

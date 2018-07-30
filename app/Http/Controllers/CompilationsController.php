@@ -260,8 +260,8 @@ class CompilationsController extends Controller
         foreach ($requestParameters as $parameter => $value) {
             if (empty($value) === true) {
                 continue;
-            }   
-            $statisticService->applyQueryFilters($query, $parameter, $value);        
+            }
+            $this->compilationService->applyQueryFilters($query, $parameter, $value);
         }
 
         $compilations = $query->get();

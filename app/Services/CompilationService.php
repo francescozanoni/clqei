@@ -8,6 +8,7 @@ use App\Models\Location;
 use App\Models\Question;
 use App\Models\Section;
 use App\Models\Ward;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
@@ -185,6 +186,86 @@ class CompilationService
 
         return $this->sections->get($question->section_id);
 
+    }
+
+    /**
+     * Apply filters to compilation search query.
+     *
+     * @param Builder $query
+     * @param string $parameter
+     * @param $value
+     */
+    public function applyQueryFilters(Builder $query, string $parameter, $value)
+    {
+
+        if (strpos($parameter, 'stage_') === 0) {
+            $this->applyQueryStageFilters($query, $parameter, $value);
+        }
+
+        if (strpos($parameter, 'student_') === 0) {
+            $parameter = str_replace('student_', '', $parameter);
+            $this->applyQueryStudentFilters($query, $parameter, $value);
+        }
+
+        // Dynamic questions
+        if (preg_match('/^q\d+$/', $parameter) === 1) {
+            $parameter = str_replace('q', '', $parameter);
+            $query->whereHas('items', function ($query) use ($parameter, $value) {
+                $query->where('question_id', $parameter)
+                    ->where('answer', $value);
+            });
+        }
+
+    }
+
+    /**
+     * Apply stage-related filters to compilation search query.
+     *
+     * @param Builder $query
+     * @param string $parameter
+     * @param mixed $value
+     */
+    private function applyQueryStageFilters(Builder $query, string $parameter, $value)
+    {
+
+        switch ($parameter) {
+            case 'stage_location_id':
+            case 'stage_ward_id':
+            case 'stage_academic_year':
+                $query->where($parameter, $value);
+                break;
+            case 'stage_weeks':
+                // @todo check whether this SQL string is compatible with other database engines
+                $query->whereRaw(
+                    'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
+                    [(int)$value]
+                );
+                break;
+            default:
+
+        }
+    }
+
+    /**
+     * Apply student-related filters to compilation search query.
+     *
+     * @param Builder $query
+     * @param string $parameter
+     * @param mixed $value
+     */
+    private function applyQueryStudentFilters(Builder $query, string $parameter, $value)
+    {
+
+        switch ($parameter) {
+            case 'gender':
+            case 'nationality':
+                $query->whereHas('student', function ($query) use ($parameter, $value) {
+                    $query->where($parameter, $value);
+                });
+                break;
+            default:
+
+        }
     }
 
 }

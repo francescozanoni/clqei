@@ -23,7 +23,7 @@
                 {{-- "Cancel filters" button is displayed only if any filters are active --}}
                 @if (empty(request()->all()) === false)
                     <button type="button" class="btn btn-primary btn-xs pull-right" style="margin-left:4px"
-                            onclick="window.location.href='{{ route('compilations.statistics') }}'">
+                            onclick="window.location.href='{{ route('compilations.statistics_charts') }}'">
                         {{ __('Cancel filters') }}
                     </button>
                     @endif
