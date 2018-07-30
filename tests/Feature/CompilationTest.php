@@ -11,13 +11,13 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tests\ProvideCompilationPayload;
+use Tests\ProvidesCompilationPayload;
 
 class CompilationTest extends TestCase
 {
 
     use RefreshDatabase;
-    use ProvideCompilationPayload;
+    use ProvidesCompilationPayload;
 
     public function setUp()
     {
