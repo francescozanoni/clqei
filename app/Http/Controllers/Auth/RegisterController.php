@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Auth;
 use App;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
-use App\Services\UserService;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -38,18 +37,20 @@ class RegisterController extends Controller
     protected $redirectTo = '/home';
 
     /**
-     * @var UserService
+     * @var array user validation rules
      */
-    protected $userService;
+    protected $validationRules;
 
     /**
      * Create a new controller instance.
+     * 
+     * @param  array $validationRules
      */
-    public function __construct(UserService $userService)
+    public function __construct(array $validationRules)
     {
         $this->middleware('not_student');
 
-        $this->userService = $userService;
+        $this->validationRules = $validationRules;
     }
 
     /**
@@ -84,18 +85,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
-        $rules = [];
-
-        if (Auth::guest()) {
-            $rules = $this->userService->getGuestValidationRules();
-        } else if (Auth::user()->role === User::ROLE_ADMINISTRATOR) {
-            $rules = $this->userService->getAdministratorValidationRules();
-        } else if (Auth::user()->role === User::ROLE_VIEWER) {
-            $rules = $this->userService->getViewerValidationRules();
-        }
-
-        return Validator::make($data, $rules);
+        return Validator::make($data, $this->validationRules);
     }
 
     /**

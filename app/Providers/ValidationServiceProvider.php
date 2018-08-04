@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class ValidationServiceProvider extends ServiceProvider
 {
@@ -144,6 +145,25 @@ class ValidationServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        $this->app
+            ->when(\App\Http\Controllers\Auth\RegisterController::class)
+            ->needs('$validationRules')
+            ->give(function () {
+                $userService = \App::make('App\Services\UserService');
+                if (\Auth::guest()) {
+                    return $userService->getGuestValidationRules();
+                }
+                if (\Auth::user()->role === User::ROLE_ADMINISTRATOR) {
+                    return $userService->getAdministratorValidationRules();
+                }
+                if (\Auth::user()->role === User::ROLE_VIEWER) {
+                    return $userService->getViewerValidationRules();
+                }
+                // Since students cannot register users,
+                // this statement should never be reached.
+                return [];
+            });
 
     }
 
