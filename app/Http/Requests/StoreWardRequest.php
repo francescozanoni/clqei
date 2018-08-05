@@ -36,7 +36,7 @@ class StoreWardRequest extends FormRequest
                 'required',
                 'min:3',
                 'string',
-                Rule::unique('wards')
+                Rule::unique(Ward::getTableName())
                     ->where(function ($query) {
                         return $query->whereNull('deleted_at');
                     })

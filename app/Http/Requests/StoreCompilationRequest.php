@@ -73,7 +73,7 @@ class StoreCompilationRequest extends FormRequest
 
             $rules['q' . $question->id] = [];
 
-            foreach ($this->getSingleQuestionRules($question) as $rule) {
+            foreach ($this->getQuestionValidationRules($question) as $rule) {
                 $rules['q' . $question->id][] = $rule;
             }
 
@@ -117,7 +117,7 @@ class StoreCompilationRequest extends FormRequest
      * @param Question $question
      * @return \Generator
      */
-    private function getSingleQuestionRules(Question $question)
+    private function getQuestionValidationRules(Question $question)
     {
 
         // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields

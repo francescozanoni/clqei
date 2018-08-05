@@ -75,11 +75,12 @@ class ValidationServiceProvider extends ServiceProvider
             'not_overlapping_time_range',
             /**
              * This validation rule ensures the provided time range does not overlap
-             * any existing time ranges on a table, optionally filtered by the value of another field.
+             * any existing time ranges on a table, optionally filtered by the value
+             * of another field.
              * E.g.:
              * [
-             *   'start_date' => 'required|date|not_overlapping_time_range:end_date,table,start_field,end_field,filter_field',
-             *   'end_date' => 'required|date|not_overlapping_time_range:start_date,table,start_field,end_field,filter_field',
+             *   'start_date' => 'date|not_overlapping_time_range:end_date,table,start_field,end_field,filter_field',
+             *   'end_date' => 'date|not_overlapping_time_range:start_date,table,start_field,end_field,filter_field',
              * ]
              *
              * @param string $attribute current field name
@@ -97,14 +98,10 @@ class ValidationServiceProvider extends ServiceProvider
                     return true;
                 }
 
-                // Form date range fields are retrieved and values suitably stored into variables.
+                // Form date range fields are retrieved and values properly stored into variables.
                 $otherFormFieldValue = Arr::get($validator->getData(), $parameters[0]);
-                $rangeStartFormValue = $value;
-                $rangeEndFormValue = $otherFormFieldValue;
-                if ($rangeEndFormValue < $rangeStartFormValue) {
-                    $rangeStartFormValue = $otherFormFieldValue;
-                    $rangeEndFormValue = $value;
-                }
+                $rangeStartFormValue = min($value, $otherFormFieldValue);
+                $rangeEndFormValue = max($value, $otherFormFieldValue);
 
                 $tableName = $parameters[1];
                 $rangeStartTableField = $parameters[2];

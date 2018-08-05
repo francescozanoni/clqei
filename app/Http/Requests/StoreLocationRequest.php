@@ -36,7 +36,7 @@ class StoreLocationRequest extends FormRequest
                 'required',
                 'min:3',
                 'string',
-                Rule::unique('locations')
+                Rule::unique(Location::getTableName())
                     ->where(function ($query) {
                         return $query->whereNull('deleted_at');
                     })
