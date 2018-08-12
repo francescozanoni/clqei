@@ -11,7 +11,7 @@ class ImportService
     /**
      * Validate files to import
      *
-     * @param string|array $filePaths paths to files to import
+     * @param string|array $filePaths paths to text files to import
      * @return array validation errors
      *
      * @todo adapt validation error output in case of multiple file paths
@@ -50,19 +50,23 @@ class ImportService
     }
 
     /**
-     * Import file
+     * Import files
      *
-     * @param string $filePath path to file to import
+     * @param string|array $filePaths paths to text files to import
      * @param string $class class of models to import
      */
-    public function import(string $filePath, string $class)
+    public function import($filePaths, string $class)
     {
 
         if (in_array('App\Models\Interfaces\Importable', class_implements($class)) === false) {
             throw new \InvalidArgumentException('Invalid import model class');
         }
 
-        $records = file($filePath);
+        if (is_array($filePaths) === false) {
+            $filePaths = [$filePaths];
+        }
+
+        $records = file(implode(PHP_EOL, $filePaths));
 
         // @todo add character check
         // @todo add uniqueness check
