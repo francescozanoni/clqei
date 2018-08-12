@@ -27,7 +27,7 @@ class HomePageTest extends TestCase
         $user = User::administrators()->first();
 
         $response = $this->actingAs($user)->get(route('home'));
-
+        
         $response->assertSee('<h3>' . __('Questionnaire compilations') . '</h3>');
         $response->assertSeeText(__('Compilation form'));
         $response->assertDontSeeText(__('New compilation'));
@@ -57,7 +57,7 @@ class HomePageTest extends TestCase
         $user = User::viewers()->first();
 
         $response = $this->actingAs($user)->get(route('home'));
-
+        
         $response->assertSee('<h3>' . __('Questionnaire compilations') . '</h3>');
         $response->assertSeeText(__('Compilation form'));
         $response->assertDontSeeText(__('New compilation'));
@@ -106,6 +106,51 @@ class HomePageTest extends TestCase
         $response->assertDontSeeText(__('Viewers'));
         $response->assertDontSeeText(__('Students'));
 
+    }
+    
+    public function testViewData()
+    {
+    
+        $user = User::administrators()->first();
+        $response = $this->actingAs($user)->get(route('home'));
+        // The following array is the content
+        // of $response->baseResponse->original->getData().
+        $response->assertViewHasAll([
+            'number_of_compilations' => 0,
+            'number_of_students' => 1,
+            'number_of_viewers' => 1,
+            'number_of_administrators' => 1,
+            'number_of_locations' => 1,
+            'number_of_wards' => 1,
+        ]);
+        
+        $user = User::viewers()->first();
+        $response = $this->actingAs($user)->get(route('home'));
+        // The following array is the content
+        // of $response->baseResponse->original->getData().
+        $response->assertViewHasAll([
+            'number_of_compilations' => 0,
+            'number_of_students' => 1,
+            'number_of_viewers' => 1,
+            'number_of_locations' => 1,
+            'number_of_wards' => 1,
+        ]);
+        $response->assertViewMissing('number_of_administrators');
+        
+        $user = User::students()->first();
+        $response = $this->actingAs($user)->get(route('home'));
+        // The following array is the content
+        // of $response->baseResponse->original->getData().
+        $response->assertViewHasAll([
+            'number_of_compilations' => 0,
+            'number_of_locations' => 1,
+            'number_of_wards' => 1,
+        ]);
+        $response->assertViewMissing('number_of_administrators');
+        $response->assertViewMissing('number_of_viewers');
+        $response->assertViewMissing('number_of_students');
+
+    
     }
 
 }
