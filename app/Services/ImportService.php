@@ -9,14 +9,22 @@ class ImportService
 {
 
     /**
-     * Validate file to import
+     * Validate files to import
      *
-     * @param string $filePath path to file to import
+     * @param string|array $filePaths paths to files to import
      * @return array validation errors
+     *
+     * @todo adapt validation error output in case of multiple file paths
      */
-    public function validate(string $filePath) : array
+    public function validate($filePaths) : array
     {
 
+        if (is_array($filePaths) === false) {
+            $filePaths = [$filePaths];
+        }
+        
+        foreach ($filePaths as $filePath) {
+        
         if (file_exists($filePath) === false ||
             is_readable($filePath) === false ||
             is_file($filePath) === false
@@ -32,6 +40,8 @@ class ImportService
 
         if (count(file($filePath)) === 0) {
             return ['Empty file'];
+        }
+        
         }
 
         return [];
