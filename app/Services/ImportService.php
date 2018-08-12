@@ -25,22 +25,23 @@ class ImportService
         
         foreach ($filePaths as $filePath) {
         
-        if (file_exists($filePath) === false ||
-            is_readable($filePath) === false ||
-            is_file($filePath) === false
-        ) {
-            return ['Invalid file path'];
-        }
+            if (is_string($filePath) === false ||
+                file_exists($filePath) === false ||
+                is_readable($filePath) === false ||
+                is_file($filePath) === false
+            ) {
+                return ['Invalid file path'];
+            }
 
-        $fileSystem = new Filesystem;
-        $fileMimeType = $fileSystem->mimeType($filePath);
-        if ($fileMimeType !== 'text/plain') {
-            return ['Invalid file type'];
-        }
+            $fileSystem = new Filesystem;
+            $fileMimeType = $fileSystem->mimeType($filePath);
+            if ($fileMimeType !== 'text/plain') {
+                return ['Invalid file type'];
+            }
 
-        if (count(file($filePath)) === 0) {
-            return ['Empty file'];
-        }
+            if (count(file($filePath)) === 0) {
+                return ['Empty file'];
+            }
         
         }
 
