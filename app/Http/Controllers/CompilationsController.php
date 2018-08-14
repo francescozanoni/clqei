@@ -41,7 +41,7 @@ class CompilationsController extends Controller
     /**
      * Display a listing of the compilations.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
@@ -109,7 +109,7 @@ class CompilationsController extends Controller
     /**
      * Show the form for creating a new compilation.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -127,7 +127,7 @@ class CompilationsController extends Controller
      * Store a newly created compilation in storage.
      *
      * @param  StoreCompilationRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreCompilationRequest $request)
     {
@@ -179,7 +179,7 @@ class CompilationsController extends Controller
      * Display the specified compilation.
      *
      * @param  \App\Models\Compilation $compilation
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(Compilation $compilation)
     {
@@ -216,7 +216,7 @@ class CompilationsController extends Controller
      *
      * @param App\Services\StatisticService $statisticService
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function statisticsCharts(App\Services\StatisticService $statisticService)
     {
@@ -339,7 +339,7 @@ class CompilationsController extends Controller
      *
      * @param App\Services\StatisticService $statisticService
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function statisticsCounts(App\Services\StatisticService $statisticService)
     {

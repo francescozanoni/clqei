@@ -12,7 +12,7 @@ class LocationsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -31,7 +31,7 @@ class LocationsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreLocationRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreLocationRequest $request)
     {
@@ -47,7 +47,7 @@ class LocationsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Location $location
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Location $location)
     {
@@ -59,7 +59,7 @@ class LocationsController extends Controller
      *
      * @param  \App\Http\Requests\StoreLocationRequest $request
      * @param  \App\Models\Location $location
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(StoreLocationRequest $request, Location $location)
     {
@@ -73,7 +73,7 @@ class LocationsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Location $location
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Location $location)
     {
@@ -86,7 +86,7 @@ class LocationsController extends Controller
      * Restore the specified resource.
      *
      * @param  int $locationId
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function restore(int $locationId)
     {

@@ -24,7 +24,7 @@ class UsersController extends Controller
      * Display a listing of the resource.
      *
      * @param IndexUsersRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index(IndexUsersRequest $request)
     {
@@ -58,7 +58,7 @@ class UsersController extends Controller
      * Display a listing of the resource (student users), via DataTables.
      *
      * @param IndexUsersRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     private function indexStudents(IndexUsersRequest $request)
     {
@@ -87,7 +87,7 @@ class UsersController extends Controller
      * Display the specified resource.
      *
      * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(User $user)
     {
@@ -107,7 +107,7 @@ class UsersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function edit(User $user)
     {
@@ -122,7 +122,7 @@ class UsersController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, User $user)
     {
@@ -136,7 +136,7 @@ class UsersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(User $user)
     {
