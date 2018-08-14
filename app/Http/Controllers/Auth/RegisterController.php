@@ -10,7 +10,6 @@ use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,7 +42,7 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     * 
+     *
      * @param  array $validationRules
      */
     public function __construct(array $validationRules)
@@ -61,10 +60,11 @@ class RegisterController extends Controller
      * in order to restrict auto-login only after student users registration.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function register(Request $request)
     {
+
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
@@ -73,8 +73,11 @@ class RegisterController extends Controller
             $this->guard()->login($user);
         }
 
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectPath());
+        // Currently this method is does nothing.
+        $this->registered($request, $user);
+
+        return redirect($this->redirectPath());
+
     }
 
     /**
