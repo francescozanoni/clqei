@@ -21,6 +21,13 @@ class Question extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+    
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = ['required' => 'boolean'];
 
     /**
      * Get the possible answers of this question
@@ -38,6 +45,11 @@ class Question extends Model
     public function section() : BelongsTo
     {
         return $this->belongsTo('App\Models\Section');
+    }
+    
+    public function getOptionsAttribute()
+    {
+        return json_decode($this->attributes['options'] ?? '');
     }
 
 }

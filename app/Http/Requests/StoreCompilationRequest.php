@@ -121,7 +121,7 @@ class StoreCompilationRequest extends FormRequest
     {
 
         // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
-        yield ($question->required == true ? 'required' : 'nullable');
+        yield ($question->required === true ? 'required' : 'nullable');
 
         if (in_array($question->type, ['single_choice', 'multiple_choice']) === true) {
             yield Rule::exists('answers', 'id')
@@ -154,7 +154,7 @@ class StoreCompilationRequest extends FormRequest
             return;
         }
 
-        $options = json_decode($question->options);
+        $options = $question->options;
         if (isset($options->makes_next_required) === false) {
             return;
         }
