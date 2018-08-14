@@ -24,7 +24,7 @@ class UsersController extends Controller
      * Display a listing of the resource.
      *
      * @param IndexUsersRequest $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index(IndexUsersRequest $request)
     {
