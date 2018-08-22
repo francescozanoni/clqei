@@ -2,21 +2,17 @@
 title: CLQEI
 ---
 
-### User roles
+The **C**linical **L**earning **Q**uality **E**nvironment **I**nventory is a validated instrument that measures the clinical learning quality as experienced by nursing students, according to five factors:
 
-- student
-  - can create questionnaire compilations
-  - can see his/her own compilations
-- viewer
-  - can view all questionnaire compilations
-  - can manage stage locations
-  - can manage stage wards
-  - can create other viewers
-  - can delete students
-- administrator
-  - can view all questionnaire compilations
-  - can manage stage locations
-  - can manage stage wards
-  - can manage viewers
-  - can delete students
-  - can create other administrators
+- quality of the tutorial strategies,
+- learning opportunities,
+- safety and nursing care quality,
+- self-direct learning,
+- quality of the learning environment.
+
+More details at URL https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/ .
+
+
+More:
+
+- [roles](roles.md)
