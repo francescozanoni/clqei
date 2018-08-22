@@ -1,4 +1,4 @@
-Screenshots:
+### Questionnaire screenshots
 
 - questionnaire - section 0 ![questionnaire - section 0](img/questionnaire_0.png)
 - questionnaire - section 1 ![questionnaire - section 1](img/questionnaire_1.png)

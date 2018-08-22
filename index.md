@@ -6,10 +6,11 @@ The **C**linical **L**earning **Q**uality **E**nvironment **I**nventory is a val
 - self-direct learning,
 - quality of the learning environment.
 
-More details at URL https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/ .
+More details at URL <https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/>.
 
 
-More:
+## More
 
 - [roles](roles.md)
-- [screenshots](screenshots.md)
+- screenshots:
+  - [questionnaire](questionnaire_screenshots.md)

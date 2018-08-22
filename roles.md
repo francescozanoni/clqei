@@ -1,7 +1,3 @@
----
-title: CLQEI
----
-
 ### User roles
 
 - student
