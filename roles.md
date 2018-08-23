@@ -8,7 +8,7 @@ CLQEI has four user roles:
 - student
   - can compile questionnaire
   - can see his/her own compilations
-- viewer
+- viewer (usually a tutor)
   - can view all questionnaire compilations
   - can view compilation aggregate data
   - can manage stage locations
