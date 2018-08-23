@@ -13,7 +13,7 @@ More details about the instrument are available at URL <https://www.ncbi.nlm.nih
 
 #### This tool
 
-This tool allows **students** to compile CLQEI questionnaire and **tutors** (or anybody supervising students' educational experience) to monitor compilations, both via detailed list and aggregate information (count and graph statistics).
+This [Laravel](https://laravel.com)-based application allows **students** to compile CLQEI questionnaire and **tutors** (or anybody supervising students' educational experience) to monitor compilations, both via detailed list and aggregate information (count and graph statistics).
 
 
 #### More
