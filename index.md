@@ -11,14 +11,14 @@ The **C**linical **L**earning **Q**uality **E**nvironment **I**nventory is a val
 More details about the instrument are available at URL <https://www.ncbi.nlm.nih.gov/m/pubmed/28398391/>.
 
 
-#### Tool
+#### This tool
 
-This tool allows students to compile CLQEI questionnaire and tutors to monitor compilations, both via detailed list and aggregate information.
+This tool allows **students** to compile CLQEI questionnaire and **tutors** (or anybody supervising students' educational experience) to monitor compilations, both via detailed list and aggregate information (count and graph statistics).
 
 
 #### More
 
-- [roles](roles.md)
+- [user roles](roles.md)
 - screenshots:
   - [questionnaire](questionnaire_screenshots.md)
   - [compilation statistics](statistics_screenshots.md)
