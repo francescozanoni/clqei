@@ -134,34 +134,6 @@ class ValidationServiceProvider extends ServiceProvider
             __('Overlapping time range.')
         );
 
-
-    }
-
-    /**
-     * Register any application services.
-     */
-    public function register()
-    {
-
-        $this->app
-            ->when(\App\Http\Controllers\Auth\RegisterController::class)
-            ->needs('$validationRules')
-            ->give(function () {
-                $userService = \App::make('App\Services\UserService');
-                if (\Auth::guest()) {
-                    return $userService->getGuestValidationRules();
-                }
-                if (\Auth::user()->role === User::ROLE_ADMINISTRATOR) {
-                    return $userService->getAdministratorValidationRules();
-                }
-                if (\Auth::user()->role === User::ROLE_VIEWER) {
-                    return $userService->getViewerValidationRules();
-                }
-                // Since students cannot register users,
-                // this statement should never be reached.
-                return [];
-            });
-
     }
 
 }

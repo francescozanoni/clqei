@@ -3,13 +3,14 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers\Auth;
 
-use App;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,18 +39,14 @@ class RegisterController extends Controller
     /**
      * @var array user validation rules
      */
-    protected $validationRules;
+    protected $validationRules = [];
 
     /**
      * Create a new controller instance.
-     *
-     * @param  array $validationRules
      */
-    public function __construct(array $validationRules)
+    public function __construct()
     {
         $this->middleware('not_student');
-
-        $this->validationRules = $validationRules;
     }
 
     /**
@@ -60,6 +57,7 @@ class RegisterController extends Controller
      * in order to restrict auto-login only after student users registration.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function register(Request $request)
@@ -88,7 +86,26 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, $this->validationRules);
+
+        $validationRules = [];
+
+        $userService = App::make('App\Services\UserService');
+        // The following choice logic of validation rules cannot be placed
+        // neither on a service provider nor on this controller's constructor,
+        // because in those points session has not been bootstrapped yet
+        // (therefore guest rules are always used).
+        if (Auth::guest()) {
+            $validationRules = $userService->getGuestValidationRules();
+        } else {
+            if (Auth::user()->role === User::ROLE_ADMINISTRATOR) {
+                $validationRules = $userService->getAdministratorValidationRules();
+            }
+            if (Auth::user()->role === User::ROLE_VIEWER) {
+                $validationRules = $userService->getViewerValidationRules();
+            }
+        }
+
+        return Validator::make($data, $validationRules);
     }
 
     /**
@@ -128,4 +145,5 @@ class RegisterController extends Controller
     }
 
     // @todo add password change
+
 }
