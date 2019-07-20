@@ -25,5 +25,7 @@ return [
         'max_weeks' => 18,
 
     ],
+    
+    'viewers_can_view_compilation_details' => env('CLQEI_VIEWERS_CAN_VIEW_COMPILATION_DETAILS', true),
 
 ];

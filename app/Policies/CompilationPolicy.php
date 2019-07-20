@@ -20,11 +20,12 @@ class CompilationPolicy
      */
     public function view(User $user, Compilation $compilation) : bool
     {
-        // Compilations can be viewed by administrators, viewers
+        // Compilation details can be viewed by administrators, viewers
         // and the student that created the compilation.
         return
-            $user->role !== User::ROLE_STUDENT ||
-            $user->student->id === $compilation->student->id;
+            $this->viewAny($user) &&
+            ($user->role !== User::ROLE_STUDENT ||
+            $user->student->id === $compilation->student->id);
     }
 
     /**
@@ -71,5 +72,21 @@ class CompilationPolicy
     public function viewAll(User $user) : bool
     {
         return $user->role !== User::ROLE_STUDENT;
+    }
+    
+    /**
+     * Determine whether the user can view any compilation details.
+     *
+     * @param  \App\User $user
+     * @return bool
+     */
+    public function viewAny(User $user) : bool
+    {
+        // Configuration can state viewers cannot view compilation details.
+        if (config('clqei.viewers_can_view_compilation_details') === false) {
+            return $user->role !== User::ROLE_VIEWER;
+        }
+        
+        return true;
     }
 }

@@ -3,16 +3,21 @@ declare(strict_types = 1);
 
 namespace Tests\Feature;
 
+use App;
+use App\Models\Compilation;
 use App\Models\Location;
 use App\Models\Ward;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Carbon\Carbon;
+use Tests\ProvidesCompilationPayload;
 
 class StudentTest extends TestCase
 {
 
     use RefreshDatabase;
+    use ProvidesCompilationPayload;
 
     public function setUp()
     {
@@ -45,6 +50,35 @@ class StudentTest extends TestCase
 
         $response = $this->actingAs($user)->post(route('logout'));
         $response->assertRedirect('/');
+        
+        // Seed a compilation related to this student.
+        // THIS STATEMENTS MUST BE HERE, AT THE BOTTOM OF THE METHOD, IN ORDER TO AVOID UNEXPECTED BEHAVIOUR.
+        // @todo refactor as shared code
+        $student = User::students()->first();
+        $stageLocation = Location::first();
+        $stageWard = Ward::first();
+        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
+        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
+        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $response =
+            $this->actingAs($student)
+                ->post(
+                    route('compilations.store',
+                        $this->getPayloadWithAllFields(
+                            $student->student->id,
+                            $stageLocation->id,
+                            $stageWard->id,
+                            $stageStartDate,
+                            $stageEndDate,
+                            $stageAcademicYear
+                        )
+                    )
+                );
+        $compilation = Compilation::first();
+        
+        // Students can view their own compilation details.
+        $response = $this->actingAs($user)->get(route('compilations.show', ['compilation' => $compilation]));
+        $response->assertStatus(200);
 
     }
 
@@ -119,7 +153,6 @@ class StudentTest extends TestCase
 
     }
 
-    //@todo add test that a student can see his/her compilations
     //@todo add test that a student cannot see other students' compilations
 
 }

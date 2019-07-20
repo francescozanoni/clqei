@@ -32,8 +32,10 @@
                         <span class="hidden-md hidden-lg">{{ __('Ward') }}</span>
                     </th>
                     <th>{{ __('Weeks') }}</th>
-                    <th></th>
-                    <th class="hidden-xs"></th>
+                    @if (Auth::user()->can('viewAny', App\Models\Compilation::class))
+                        <th></th>
+                        <th class="hidden-xs"></th>
+                    @endif
                 </tr>
                 </thead>
             </table>
@@ -106,7 +108,9 @@
                         name: 'compilations.stage_weeks',
                         searchable: false,
                         className: "hidden-xs hidden-sm"
-                    },
+                    }
+                    @if (Auth::user()->can('viewAny', App\Models\Compilation::class))
+                    ,
                     {
                         name: 'link_to_detail',
                         render: function (data, type, row) {
@@ -130,6 +134,7 @@
                         searchable: false,
                         className: "hidden-xs"
                     }
+                    @endif
                 ]
             });
         });
