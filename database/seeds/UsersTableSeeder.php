@@ -24,6 +24,15 @@ class UsersTableSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         }
+        
+        DB::table(User::getTableName())->insert([
+            'first_name' => 'Example 2',
+            'last_name' => ucfirst($role),
+            'email' => $role . '2@' . User::EXAMPLE_DOMAIN,
+            'password' => bcrypt($role),
+            'role' => $role,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
 
     }
 

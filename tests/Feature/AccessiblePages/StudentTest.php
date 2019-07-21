@@ -150,9 +150,39 @@ class StudentTest extends TestCase
         // Pages available only to unauthenticated users, viewers or administrators.
         $response = $this->get(route('register'));
         $response->assertRedirect(route('home'));
+        
+        // Seed a compilation related to this student.
+        // THIS STATEMENTS MUST BE HERE, AT THE BOTTOM OF THE METHOD, IN ORDER TO AVOID UNEXPECTED BEHAVIOUR.
+        // @todo refactor as shared code
+        $student = $user;
+        $stageLocation = Location::first();
+        $stageWard = Ward::first();
+        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
+        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
+        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $response =
+            $this->actingAs($student)
+                ->post(
+                    route('compilations.store',
+                        $this->getPayloadWithAllFields(
+                            $student->student->id,
+                            $stageLocation->id,
+                            $stageWard->id,
+                            $stageStartDate,
+                            $stageEndDate,
+                            $stageAcademicYear
+                        )
+                    )
+                );
+        $compilation = Compilation::first();
+        
+        // Switch user.
+        $user = User::students()->orderBy('id', 'desc')->first();
+        
+        // Students cannot view other students' compilation details.
+        $response = $this->actingAs($user)->get(route('compilations.show', ['compilation' => $compilation]));
+        $response->assertStatus(403);
 
     }
-
-    //@todo add test that a student cannot see other students' compilations
 
 }

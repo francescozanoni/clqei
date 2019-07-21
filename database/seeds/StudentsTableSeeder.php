@@ -22,6 +22,13 @@ class StudentsTableSeeder extends Seeder
             'nationality' => 'IT',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+        DB::table(Student::getTableName())->insert([
+            'user_id' => DB::table(User::getTableName())->where('role', User::ROLE_STUDENT)->orderBy('id', 'desc')->first()->id,
+            'identification_number' => '23456789',
+            'gender' => 'female',
+            'nationality' => 'IT',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
 
     }
 }

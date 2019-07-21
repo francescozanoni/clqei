@@ -38,8 +38,8 @@ class ViewerManagementTest extends TestCase
             __('The new viewer has been created')
         );
 
-        $this->assertDatabaseHas('users', ['id' => 4]);
-        $this->assertDatabaseMissing('users', ['id' => 5]);
+        $this->assertDatabaseHas('users', ['id' => 5]);
+        $this->assertDatabaseMissing('users', ['id' => 6]);
 
     }
 
@@ -73,8 +73,8 @@ class ViewerManagementTest extends TestCase
             __('The new viewer has been created')
         );
 
-        $this->assertDatabaseHas('users', ['id' => 4]);
-        $this->assertDatabaseMissing('users', ['id' => 5]);
+        $this->assertDatabaseHas('users', ['id' => 5]);
+        $this->assertDatabaseMissing('users', ['id' => 6]);
 
     }
 

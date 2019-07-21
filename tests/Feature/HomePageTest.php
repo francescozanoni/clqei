@@ -117,7 +117,7 @@ class HomePageTest extends TestCase
         // of $response->baseResponse->original->getData().
         $response->assertViewHasAll([
             'number_of_compilations' => 0,
-            'number_of_students' => 1,
+            'number_of_students' => 2,
             'number_of_viewers' => 1,
             'number_of_administrators' => 1,
             'number_of_locations' => 1,
@@ -130,7 +130,7 @@ class HomePageTest extends TestCase
         // of $response->baseResponse->original->getData().
         $response->assertViewHasAll([
             'number_of_compilations' => 0,
-            'number_of_students' => 1,
+            'number_of_students' => 2,
             'number_of_viewers' => 1,
             'number_of_locations' => 1,
             'number_of_wards' => 1,

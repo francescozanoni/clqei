@@ -122,8 +122,8 @@ class RegistrationTest extends TestCase
 
         $response->assertSessionHasErrors(['email', 'identification_number']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+        $this->assertDatabaseMissing('students', ['id' => 3]);
 
         $this->assertGuest();
 
@@ -135,8 +135,8 @@ class RegistrationTest extends TestCase
 
         $response->assertSessionHasErrors(['email']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+        $this->assertDatabaseMissing('students', ['id' => 3]);
 
         $this->assertGuest();
 
@@ -148,8 +148,8 @@ class RegistrationTest extends TestCase
 
         $response->assertSessionHasErrors(['identification_number']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+        $this->assertDatabaseMissing('students', ['id' => 3]);
 
         $this->assertGuest();
 
@@ -169,8 +169,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['first_name']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
@@ -192,8 +192,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['last_name']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
@@ -215,8 +215,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['email']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
@@ -239,8 +239,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['password']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
@@ -254,8 +254,8 @@ class RegistrationTest extends TestCase
 
         $response->assertSessionHasErrors(['password']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+        $this->assertDatabaseMissing('students', ['id' => 3]);
 
         $this->assertGuest();
 
@@ -266,8 +266,8 @@ class RegistrationTest extends TestCase
 
         $response->assertSessionHasErrors(['password']);
 
-        $this->assertDatabaseMissing('users', ['id' => 4]);
-        $this->assertDatabaseMissing('students', ['id' => 2]);
+        $this->assertDatabaseMissing('users', ['id' => 5]);
+        $this->assertDatabaseMissing('students', ['id' => 3]);
 
         $this->assertGuest();
 
@@ -287,8 +287,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['role']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
@@ -310,8 +310,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['identification_number']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
@@ -333,8 +333,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['nationality']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
@@ -356,8 +356,8 @@ class RegistrationTest extends TestCase
 
             $response->assertSessionHasErrors(['gender']);
 
-            $this->assertDatabaseMissing('users', ['id' => 4]);
-            $this->assertDatabaseMissing('students', ['id' => 2]);
+            $this->assertDatabaseMissing('users', ['id' => 5]);
+            $this->assertDatabaseMissing('students', ['id' => 3]);
 
             $this->assertGuest();
 
