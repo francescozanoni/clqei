@@ -1,5 +1,6 @@
 language: php
 php:
+  - '7.0'
   - '7.1'
   - '7.2'
 install:
@@ -7,4 +8,4 @@ install:
   - npm install
   - php scripts/setup.php --application_url=http://localhost
   - php artisan key:generate
-script: vendor/bin/paratest tests
+script: vendor/bin/phpunit tests
