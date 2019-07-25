@@ -3,21 +3,18 @@ declare(strict_types = 1);
 
 namespace Tests\Feature;
 
-use App;
-use App\Models\Compilation;
 use App\Models\Location;
 use App\Models\Ward;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\CreatesCompilations;
 use Tests\TestCase;
-use Carbon\Carbon;
-use Tests\ProvidesCompilationPayload;
 
 class ViewerTest extends TestCase
 {
 
     use RefreshDatabase;
-    use ProvidesCompilationPayload;
+    use CreatesCompilations;
 
     public function setUp()
     {
@@ -107,34 +104,13 @@ class ViewerTest extends TestCase
 
         // Seed a compilation.
         // THIS STATEMENTS MUST BE HERE, AT THE BOTTOM OF THE METHOD, IN ORDER TO AVOID UNEXPECTED BEHAVIOUR.
-        // @todo refactor as shared code
-        $student = User::students()->first();
-        $stageLocation = Location::first();
-        $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
-        $response =
-            $this->actingAs($student)
-                ->post(
-                    route('compilations.store',
-                        $this->getPayloadWithAllFields(
-                            $student->student->id,
-                            $stageLocation->id,
-                            $stageWard->id,
-                            $stageStartDate,
-                            $stageEndDate,
-                            $stageAcademicYear
-                        )
-                    )
-                );
-        $compilation = Compilation::first();
-        
+        $compilation = $this->createAndGetCompilation();
+
         // Configuration can state viewers cannot view compilation details.
         config(['clqei.viewers_can_view_compilation_details' => true]);
         $response = $this->actingAs($user)->get(route('compilations.show', ['compilation' => $compilation]));
         $response->assertStatus(200);
-        
+
     }
 
     /**
@@ -170,31 +146,11 @@ class ViewerTest extends TestCase
         $response->assertRedirect(route('home'));
         $response = $this->get(route('password.reset', ['token' => 'random']));
         $response->assertRedirect(route('home'));
-        
+
         // Seed a compilation.
         // THIS STATEMENTS MUST BE HERE, AT THE BOTTOM OF THE METHOD, IN ORDER TO AVOID UNEXPECTED BEHAVIOUR.
-        $student = User::students()->first();
-        $stageLocation = Location::first();
-        $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
-        $response =
-            $this->actingAs($student)
-                ->post(
-                    route('compilations.store',
-                        $this->getPayloadWithAllFields(
-                            $student->student->id,
-                            $stageLocation->id,
-                            $stageWard->id,
-                            $stageStartDate,
-                            $stageEndDate,
-                            $stageAcademicYear
-                        )
-                    )
-                );
-        $compilation = Compilation::first();
-        
+        $compilation = $this->createAndGetCompilation();
+
         // Configuration can state viewers cannot view compilation details.
         config(['clqei.viewers_can_view_compilation_details' => false]);
         $response = $this->actingAs($user)->get(route('compilations.show', ['compilation' => $compilation]));
