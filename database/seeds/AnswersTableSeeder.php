@@ -58,7 +58,7 @@ class AnswersTableSeeder extends Seeder
         $questions = [];
 
         // First all questions/answers are retrieved.
-        foreach ($questionnaire as $section => $sectionQuestions) {
+        foreach ($questionnaire as /* $section => */ $sectionQuestions) {
             $questions = array_merge($questions, $sectionQuestions);
         }
 

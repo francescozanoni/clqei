@@ -24,7 +24,10 @@ class UsersController extends Controller
      * Display a listing of the resource.
      *
      * @param IndexUsersRequest $request
+     *
      * @return \Illuminate\Http\Response|\Illuminate\View\View
+     *
+     * @throws \Exception
      */
     public function index(IndexUsersRequest $request)
     {
@@ -40,7 +43,7 @@ class UsersController extends Controller
                 break;
             case User::ROLE_STUDENT:
                 // Students, since can be many, are handled in a different way.
-                return $this->indexStudents($request);
+                return $this->indexStudents();
             default:
                 return view('users.index_no_role');
         }
@@ -57,10 +60,11 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource (student users), via DataTables.
      *
-     * @param IndexUsersRequest $request
      * @return \Illuminate\Http\Response|\Illuminate\View\View
+     *
+     * @throws \Exception
      */
-    private function indexStudents(IndexUsersRequest $request)
+    private function indexStudents()
     {
 
         if (request()->ajax()) {
@@ -86,8 +90,11 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User $user
+     * @param \App\User $user
+     *
      * @return \Illuminate\View\View
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(User $user)
     {
@@ -106,8 +113,11 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User $user
+     * @param \App\User $user
+     *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(User $user)
     {
@@ -120,11 +130,13 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\User $user
+     * @param \App\User $user
+     *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, User $user)
+    public function update(User $user)
     {
         $this->authorize('update', $user);
 
@@ -135,8 +147,11 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User $user
+     * @param \App\User $user
+     *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(User $user)
     {
@@ -156,4 +171,5 @@ class UsersController extends Controller
 
         return \Redirect::route('users.index', ['role' => $userRole]);
     }
+
 }

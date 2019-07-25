@@ -40,9 +40,11 @@ class GenerateCompilations extends Command implements WithIntegerExitCode
     public function handle() : int
     {
 
-        $number = (int)$this->argument('number');
+        // $number = (int)$this->argument('number');
 
-        $this->info('Compilations generated successfully');
+        // $this->info('Compilations generated successfully');
+
+        // @todo implement logic
 
         return self::SUCCESS;
 

@@ -23,7 +23,7 @@ class QuestionsTableSeeder extends Seeder
 
         $dataToInsert = [];
 
-        foreach ($questionnaire as $section => $questions) {
+        foreach ($questionnaire as /* $section => */ $questions) {
             foreach (array_keys($questions) as $index => $question) {
                 $dataToInsert[] = [
                     'id' => $questionId,
