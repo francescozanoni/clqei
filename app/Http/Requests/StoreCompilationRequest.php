@@ -28,7 +28,7 @@ class StoreCompilationRequest extends FormRequest
     public function authorize()
     {
         $user = Auth::user();
-        return $user->can('create', Compilation::class);
+        return $user->can("create", Compilation::class);
     }
 
     /**
@@ -42,25 +42,25 @@ class StoreCompilationRequest extends FormRequest
 
         // Fixed question rules.
         $rules = [
-            'student_id' => 'required|exists:students,id|in:' . Auth::user()->student->id,
-            'stage_location_id' => 'required|exists:locations,id',
-            'stage_ward_id' => 'required|exists:wards,id',
-            'stage_start_date' => [
-                'bail',
-                'required',
-                'date_format:Y-m-d',
-                'before:today',
-                'not_overlapping_time_range:stage_end_date,compilations,stage_start_date,stage_end_date,student_id',
+            "student_id" => "required|exists:students,id|in:" . Auth::user()->student->id,
+            "stage_location_id" => "required|exists:locations,id",
+            "stage_ward_id" => "required|exists:wards,id",
+            "stage_start_date" => [
+                "bail",
+                "required",
+                "date_format:Y-m-d",
+                "before:today",
+                "not_overlapping_time_range:stage_end_date,compilations,stage_start_date,stage_end_date,student_id",
             ],
-            'stage_end_date' => [
-                'bail',
-                'required',
-                'date_format:Y-m-d',
-                'after:stage_start_date',
-                'before:' . $this->getMaxStageEndDate($this->stage_start_date ?? ''),
-                'not_overlapping_time_range:stage_start_date,compilations,stage_start_date,stage_end_date,student_id',
+            "stage_end_date" => [
+                "bail",
+                "required",
+                "date_format:Y-m-d",
+                "after:stage_start_date",
+                "before:" . $this->getMaxStageEndDate($this->stage_start_date ?? ""),
+                "not_overlapping_time_range:stage_start_date,compilations,stage_start_date,stage_end_date,student_id",
             ],
-            'stage_academic_year' => 'required|in:' . implode(',', [
+            "stage_academic_year" => "required|in:" . implode(",", [
                     $academicYearService->getPrevious(),
                     $academicYearService->getCurrent()
                 ])
@@ -71,10 +71,10 @@ class StoreCompilationRequest extends FormRequest
 
         foreach ($questions as $question) {
 
-            $rules['q' . $question->id] = [];
+            $rules["q" . $question->id] = [];
 
             foreach ($this->getQuestionValidationRules($question) as $rule) {
-                $rules['q' . $question->id][] = $rule;
+                $rules["q" . $question->id][] = $rule;
             }
 
             $this->updateMandatorityQueue($question);
@@ -98,17 +98,17 @@ class StoreCompilationRequest extends FormRequest
         
         // If stage start date is empty or invalid,
         // one week from today date is returned.
-        if ($stageStartDate === '' ||
-            \DateTime::createFromFormat('Y-m-d', $stageStartDate) === false) {
-            return $oneWeekFromToday->format('Y-m-d');
+        if ($stageStartDate === "" ||
+            \DateTime::createFromFormat("Y-m-d", $stageStartDate) === false) {
+            return $oneWeekFromToday->format("Y-m-d");
         }
 
-        $maxStageEndDate = Carbon::parse($stageStartDate)->addWeeks(config('clqei.stages.max_weeks'));
+        $maxStageEndDate = Carbon::parse($stageStartDate)->addWeeks(config("clqei.stages.max_weeks"));
         if ($oneWeekFromToday < $maxStageEndDate) {
             $maxStageEndDate = $oneWeekFromToday;
         }
 
-        return $maxStageEndDate->format('Y-m-d');
+        return $maxStageEndDate->format("Y-m-d");
     }
 
     /**
@@ -121,24 +121,24 @@ class StoreCompilationRequest extends FormRequest
     {
 
         // https://laravel.com/docs/5.5/validation#a-note-on-optional-fields
-        yield ($question->required === true ? 'required' : 'nullable');
+        yield ($question->required === true ? "required" : "nullable");
 
-        if (in_array($question->type, ['single_choice', 'multiple_choice']) === true) {
-            yield Rule::exists('answers', 'id')
+        if (in_array($question->type, ["single_choice", "multiple_choice"]) === true) {
+            yield Rule::exists("answers", "id")
                 ->where(function ($query) use ($question) {
-                    $query->where('question_id', $question->id);
+                    $query->where("question_id", $question->id);
                 });
         }
 
-        if ($question->type === 'date') {
-            yield 'date';
+        if ($question->type === "date") {
+            yield "date";
         }
 
         // Reading of the mandatority queue, in case the current question is
         // required according to the value of a previous question.
         $requirement = array_pop($this->mandatorityQueue);
         if ($requirement !== null) {
-            yield 'required_if:q' . $requirement['question'] . ',' . $requirement['answer'];
+            yield "required_if:q" . $requirement["question"] . "," . $requirement["answer"];
         }
     }
 
@@ -162,8 +162,8 @@ class StoreCompilationRequest extends FormRequest
             array_push(
                 $this->mandatorityQueue,
                 [
-                    'question' => $question->id,
-                    'answer' => $question->answers[$options->makes_next_required->answer - 1]->id
+                    "question" => $question->id,
+                    "answer" => $question->answers[$options->makes_next_required->answer - 1]->id
                 ]
             );
         }
@@ -183,8 +183,8 @@ class StoreCompilationRequest extends FormRequest
         // are not sent when no value is selected (even "nullable"
         // validation flag is useless in this case).
         foreach (Question::all() as $question) {
-            if ($this->has('q' . $question->id) === false) {
-                $this->merge(['q' . $question->id => null]);
+            if ($this->has("q" . $question->id) === false) {
+                $this->merge(["q" . $question->id => null]);
             }
         }
 

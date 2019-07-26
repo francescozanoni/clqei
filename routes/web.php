@@ -11,15 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/", function () {
+    return view("welcome");
 });
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(["auth"])->group(function () {
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get("/home", "HomeController@index")->name("home");
 
     /* FULL ROUTE LIST OF A RESOURCE CONTROLLER
      *
@@ -36,12 +36,12 @@ Route::middleware(['auth'])->group(function () {
      * @see https://laravel.com/docs/5.5/controllers#resource-controllers
      */
 
-    Route::get('compilations/statistics_charts', 'CompilationsController@statisticsCharts')
-        ->middleware(['can:viewAll,App\Models\Compilation'])
-        ->name('compilations.statistics_charts');
-    Route::get('compilations/statistics_counts', 'CompilationsController@statisticsCounts')
-        ->middleware(['can:viewAll,App\Models\Compilation'])
-        ->name('compilations.statistics_counts');
+    Route::get("compilations/statistics_charts", "CompilationsController@statisticsCharts")
+        ->middleware(["can:viewAll,App\Models\Compilation"])
+        ->name("compilations.statistics_charts");
+    Route::get("compilations/statistics_counts", "CompilationsController@statisticsCounts")
+        ->middleware(["can:viewAll,App\Models\Compilation"])
+        ->name("compilations.statistics_counts");
 
     /*
      * Verb        URI                               Action   Route Name
@@ -52,9 +52,9 @@ Route::middleware(['auth'])->group(function () {
      * GET         /compilations/{compilation}       show     compilations.show
      */
     Route::resource(
-        'compilations',
-        'CompilationsController',
-        ['except' => ['edit', 'update', 'destroy']]
+        "compilations",
+        "CompilationsController",
+        ["except" => ["edit", "update", "destroy"]]
     );
 
     /*
@@ -67,14 +67,14 @@ Route::middleware(['auth'])->group(function () {
      * DELETE      /users/{user}                     destroy  users.destroy
      */
     Route::resource(
-        'users',
-        'UsersController',
-        ['except' => ['create', 'store']]
+        "users",
+        "UsersController",
+        ["except" => ["create", "store"]]
     );
 
-        Route::post('locations/{location_id}/restore', 'LocationsController@restore')
-            ->middleware('can:create,App\Models\Location')
-            ->name('locations.restore');
+        Route::post("locations/{location_id}/restore", "LocationsController@restore")
+            ->middleware("can:create,App\Models\Location")
+            ->name("locations.restore");
 
         /*
          * Verb        URI                               Action   Route Name
@@ -86,15 +86,15 @@ Route::middleware(['auth'])->group(function () {
          * DELETE      /locations/{location}             destroy  locations.destroy
          */
         Route::resource(
-            'locations',
-            'LocationsController',
-            ['except' => ['create', 'show']]
+            "locations",
+            "LocationsController",
+            ["except" => ["create", "show"]]
         )
-            ->middleware('can:create,App\Models\Location');
+            ->middleware("can:create,App\Models\Location");
 
-        Route::post('wards/{ward_id}/restore', 'WardsController@restore')
-            ->middleware('can:create,App\Models\Ward')
-            ->name('wards.restore');
+        Route::post("wards/{ward_id}/restore", "WardsController@restore")
+            ->middleware("can:create,App\Models\Ward")
+            ->name("wards.restore");
         /*
          * Verb        URI                               Action   Route Name
          * ---------------------------------------------------------------------------
@@ -105,28 +105,28 @@ Route::middleware(['auth'])->group(function () {
          * DELETE      /wards/{ward}                     destroy  wards.destroy
          */
         Route::resource(
-            'wards',
-            'WardsController',
-            ['except' => ['create', 'show']]
+            "wards",
+            "WardsController",
+            ["except" => ["create", "show"]]
         )
-            ->middleware('can:create,App\Models\Ward');
+            ->middleware("can:create,App\Models\Ward");
 
-    Route::middleware('can:viewAll,App\Models\Compilation')
+    Route::middleware("can:viewAll,App\Models\Compilation")
         ->group(function () {
 
         // ---------------------------------------------------------------------------
         // These routes are the entry points that provide frontend assets
         // located within the private part of the application.
-        Route::get('/datatables/languages/{country}.json', function ($countryCode) {
-            return App::make('App\Services\DataTablesPluginService')->getLanguage($countryCode);
+        Route::get("/datatables/languages/{country}.json", function ($countryCode) {
+            return App::make("App\Services\DataTablesPluginService")->getLanguage($countryCode);
         })
-            ->where('country', '[a-zA-Z]{2}')
-            ->name('datatables-language');
+            ->where("country", "[a-zA-Z]{2}")
+            ->name("datatables-language");
 
-        Route::get('/datatables/datetime.js', function () {
-            return App::make('App\Services\DataTablesPluginService')->getDateTime();
+        Route::get("/datatables/datetime.js", function () {
+            return App::make("App\Services\DataTablesPluginService")->getDateTime();
         })
-            ->name('datatables-datetime');
+            ->name("datatables-datetime");
 
     });
 
@@ -134,8 +134,8 @@ Route::middleware(['auth'])->group(function () {
 
 // ---------------------------------------------------------------------------
 
-if (App::environment() !== 'production') {
-    Route::get('/test', function () {
-        return 'test';
+if (App::environment() !== "production") {
+    Route::get("/test", function () {
+        return "test";
     });
 }

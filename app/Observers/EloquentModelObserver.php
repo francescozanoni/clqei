@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 class EloquentModelObserver
 {
 
-    const FLASH_MESSAGE_KEY = 'message';
+    const FLASH_MESSAGE_KEY = "message";
 
     /**
      * Listen to the model created event.
@@ -21,7 +21,7 @@ class EloquentModelObserver
     {
         Session::flash(
             self::FLASH_MESSAGE_KEY,
-            __('The new ' . $this->getModelName($model) . ' has been created')
+            __("The new " . $this->getModelName($model) . " has been created")
         );
     }
 
@@ -37,7 +37,7 @@ class EloquentModelObserver
             case User::class:
                 return $model->role;
             default:
-                return rtrim($model->getTable(), 's');
+                return rtrim($model->getTable(), "s");
         }
     }
 
@@ -50,7 +50,7 @@ class EloquentModelObserver
     {
         Session::flash(
             self::FLASH_MESSAGE_KEY,
-            __('The ' . $this->getModelName($model) . ' has been updated')
+            __("The " . $this->getModelName($model) . " has been updated")
         );
     }
 
@@ -63,7 +63,7 @@ class EloquentModelObserver
     {
         Session::flash(
             self::FLASH_MESSAGE_KEY,
-            __('The ' . $this->getModelName($model) . ' has been deleted')
+            __("The " . $this->getModelName($model) . " has been deleted")
         );
     }
 
@@ -76,7 +76,7 @@ class EloquentModelObserver
     {
         Session::flash(
             self::FLASH_MESSAGE_KEY,
-            __('The ' . $this->getModelName($model) . ' has been restored')
+            __("The " . $this->getModelName($model) . " has been restored")
         );
     }
 

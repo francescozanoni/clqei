@@ -16,13 +16,13 @@ class WardsController extends Controller
      */
     public function index()
     {
-        $wards = Ward::with('compilations')->get()->sortBy('name');
-        $deletedWards = Ward::with('compilations')->onlyTrashed()->get();
+        $wards = Ward::with("compilations")->get()->sortBy("name");
+        $deletedWards = Ward::with("compilations")->onlyTrashed()->get();
         return view(
-            'wards.index',
+            "wards.index",
             [
-                'wards' => $wards,
-                'deleted_wards' => $deletedWards
+                "wards" => $wards,
+                "deleted_wards" => $deletedWards
             ]
         );
     }
@@ -37,10 +37,10 @@ class WardsController extends Controller
     {
         $ward = new Ward;
 
-        $ward->name = $request->input('name');
+        $ward->name = $request->input("name");
         $ward->save();
 
-        return \Redirect::route('wards.index');
+        return \Redirect::route("wards.index");
     }
 
     /**
@@ -51,7 +51,7 @@ class WardsController extends Controller
      */
     public function edit(Ward $ward)
     {
-        return view('wards.edit', ['ward' => $ward]);
+        return view("wards.edit", ["ward" => $ward]);
     }
 
     /**
@@ -63,10 +63,10 @@ class WardsController extends Controller
      */
     public function update(StoreWardRequest $request, Ward $ward)
     {
-        $ward->name = $request->input('name');
+        $ward->name = $request->input("name");
         $ward->save();
 
-        return \Redirect::route('wards.index');
+        return \Redirect::route("wards.index");
     }
 
     /**
@@ -79,7 +79,7 @@ class WardsController extends Controller
     {
         $ward->delete();
 
-        return \Redirect::route('wards.index');
+        return \Redirect::route("wards.index");
     }
 
     /**
@@ -90,10 +90,10 @@ class WardsController extends Controller
      */
     public function restore(int $wardId)
     {
-        $ward = Ward::onlyTrashed()->where('id', $wardId)->get()->first();
+        $ward = Ward::onlyTrashed()->where("id", $wardId)->get()->first();
         $ward->restore();
 
-        return \Redirect::route('wards.index');
+        return \Redirect::route("wards.index");
     }
 
 }

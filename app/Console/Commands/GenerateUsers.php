@@ -16,16 +16,16 @@ class GenerateUsers extends Command implements WithIntegerExitCode
      *
      * @var string
      */
-    protected $signature = 'generate:users
+    protected $signature = "generate:users
                             {role : role of users to generate}
-                            {number=10: number of users to generate}';
+                            {number=10: number of users to generate}";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate users';
+    protected $description = "Generate users";
 
     /**
      * Create a new command instance.
@@ -43,16 +43,16 @@ class GenerateUsers extends Command implements WithIntegerExitCode
     public function handle() : int
     {
 
-        $role = $this->argument('role');
-        $number = (int)$this->argument('number');
+        $role = $this->argument("role");
+        $number = (int)$this->argument("number");
 
         if (in_array($role, [User::ROLE_ADMINISTRATOR, User::ROLE_VIEWER, User::ROLE_STUDENT]) === false) {
-            $this->error('Invalid user role');
+            $this->error("Invalid user role");
             return self::INVALID_INPUT;
         }
 
         if ($number < 1) {
-            $this->error('Invalid number of users');
+            $this->error("Invalid number of users");
             return self::INVALID_INPUT;
         }
 
@@ -80,7 +80,7 @@ class GenerateUsers extends Command implements WithIntegerExitCode
             default:
         }
 
-        $this->info('Users generated successfully');
+        $this->info("Users generated successfully");
 
         return self::SUCCESS;
 

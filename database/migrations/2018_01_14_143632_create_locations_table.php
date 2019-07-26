@@ -12,9 +12,9 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable(false);
+        Schema::create("locations", function (Blueprint $table) {
+            $table->increments("id");
+            $table->string("name")->nullable(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -25,6 +25,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists("locations");
     }
 }

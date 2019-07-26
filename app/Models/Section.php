@@ -19,7 +19,7 @@ class Section extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ["deleted_at"];
 
     /**
      * Get the questions of this section
@@ -27,7 +27,7 @@ class Section extends Model
      */
     public function questions() : HasMany
     {
-        return $this->hasMany('App\Models\Question');
+        return $this->hasMany("App\Models\Question");
     }
 
 }

@@ -16,15 +16,15 @@ class SendTestMail extends Command implements WithIntegerExitCode
      *
      * @var string
      */
-    protected $signature = 'send:mail
-                            {recipient : recipient e-mail address}';
+    protected $signature = "send:mail
+                            {recipient : recipient e-mail address}";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send a test e-mail';
+    protected $description = "Send a test e-mail";
 
     /**
      * Create a new command instance.
@@ -42,10 +42,10 @@ class SendTestMail extends Command implements WithIntegerExitCode
     public function handle() : int
     {
 
-        $recipient = $this->argument('recipient');
+        $recipient = $this->argument("recipient");
 
         if (!filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
-            $this->error('Invalid recipient e-mail address');
+            $this->error("Invalid recipient e-mail address");
             return self::INVALID_INPUT;
         }
 
@@ -56,12 +56,12 @@ class SendTestMail extends Command implements WithIntegerExitCode
 
         } catch (\Throwable $e) {
 
-            $this->error('E-mail delivery failed: ' . $e->getMessage());
+            $this->error("E-mail delivery failed: " . $e->getMessage());
             return self::UNEXPECTED_ERROR;
 
         }
 
-        $this->info('E-mail successfully sent');
+        $this->info("E-mail successfully sent");
 
         return self::SUCCESS;
 

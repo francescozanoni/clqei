@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    "driver" => env("SESSION_DRIVER", "file"),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,9 +29,9 @@ return [
     |
     */
 
-    'lifetime' => 120,
+    "lifetime" => 120,
 
-    'expire_on_close' => false,
+    "expire_on_close" => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +44,7 @@ return [
     |
     */
 
-    'encrypt' => false,
+    "encrypt" => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ return [
     |
     */
 
-    'files' => storage_path('framework/sessions'),
+    "files" => storage_path("framework/sessions"),
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'connection' => null,
+    "connection" => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'table' => 'sessions',
+    "table" => "sessions",
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +96,7 @@ return [
     |
     */
 
-    'store' => null,
+    "store" => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'lottery' => [2, 100],
+    "lottery" => [2, 100],
 
     /*
     |--------------------------------------------------------------------------
@@ -122,9 +122,9 @@ return [
     |
     */
 
-    'cookie' => env(
-        'SESSION_COOKIE',
-        str_slug(env('APP_NAME', 'laravel'), '_').'_session'
+    "cookie" => env(
+        "SESSION_COOKIE",
+        str_slug(env("APP_NAME", "laravel"), "_")."_session"
     ),
 
     /*
@@ -138,7 +138,7 @@ return [
     |
     */
 
-    'path' => parse_url(env('APP_URL', 'http://localhost'), PHP_URL_PATH) ?? '/',
+    "path" => parse_url(env("APP_URL", "http://localhost"), PHP_URL_PATH) ?? "/",
 
 
     /*
@@ -152,7 +152,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
+    "domain" => env("SESSION_DOMAIN", null),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +165,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE', false),
+    "secure" => env("SESSION_SECURE_COOKIE", false),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,7 +178,7 @@ return [
     |
     */
 
-    'http_only' => true,
+    "http_only" => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -193,6 +193,6 @@ return [
     |
     */
 
-    'same_site' => null,
+    "same_site" => null,
 
 ];

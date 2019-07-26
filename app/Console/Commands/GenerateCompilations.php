@@ -14,15 +14,15 @@ class GenerateCompilations extends Command implements WithIntegerExitCode
      *
      * @var string
      */
-    protected $signature = 'generate:compilations
-                            {number=10: number of compilations to generate}';
+    protected $signature = "generate:compilations
+                            {number=10: number of compilations to generate}";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate compilations';
+    protected $description = "Generate compilations";
 
     /**
      * Create a new command instance.

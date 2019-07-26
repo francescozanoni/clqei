@@ -30,17 +30,17 @@ class ImportService
                 is_readable($filePath) === false ||
                 is_file($filePath) === false
             ) {
-                return ['Invalid file path'];
+                return ["Invalid file path"];
             }
 
             $fileSystem = new Filesystem;
             $fileMimeType = $fileSystem->mimeType($filePath);
-            if ($fileMimeType !== 'text/plain') {
-                return ['Invalid file type'];
+            if ($fileMimeType !== "text/plain") {
+                return ["Invalid file type"];
             }
 
             if (count(file($filePath)) === 0) {
-                return ['Empty file'];
+                return ["Empty file"];
             }
         
         }
@@ -58,8 +58,8 @@ class ImportService
     public function import($filePaths, string $class)
     {
 
-        if (in_array('App\Models\Interfaces\Importable', class_implements($class)) === false) {
-            throw new \InvalidArgumentException('Invalid import model class');
+        if (in_array("App\Models\Interfaces\Importable", class_implements($class)) === false) {
+            throw new \InvalidArgumentException("Invalid import model class");
         }
 
         if (is_array($filePaths) === false) {
@@ -73,7 +73,7 @@ class ImportService
         // @todo add return of number of records imported
 
         // Data is cleaned.
-        $records = array_unique(array_map('trim', $records));
+        $records = array_unique(array_map("trim", $records));
 
         foreach ($records as $record) {
             $model = new $class();

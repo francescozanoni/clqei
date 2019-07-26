@@ -19,8 +19,8 @@ class StoreWardRequest extends FormRequest
     {
         $user = Auth::user();
         return
-            $user->can('create', Ward::class) &&
-            $user->can('update', Ward::class);
+            $user->can("create", Ward::class) &&
+            $user->can("update", Ward::class);
     }
 
     /**
@@ -32,13 +32,13 @@ class StoreWardRequest extends FormRequest
     {
 
         $rules = [
-            'name' => [
-                'required',
-                'min:3',
-                'string',
+            "name" => [
+                "required",
+                "min:3",
+                "string",
                 Rule::unique(Ward::getTableName())
                     ->where(function ($query) {
-                        return $query->whereNull('deleted_at');
+                        return $query->whereNull("deleted_at");
                     })
             ],
         ];

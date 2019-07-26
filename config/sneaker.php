@@ -10,7 +10,7 @@ return [
     | Should we email error traces?
     |
     */
-    'silent' => env('SNEAKER_SILENT', true),
+    "silent" => env("SNEAKER_SILENT", true),
 
     /*
     |--------------------------------------------------------------------------
@@ -23,9 +23,9 @@ return [
     | exception.
     |
     */
-    'capture' => [
+    "capture" => [
         // Symfony\Component\Debug\Exception\FatalErrorException::class,
-        '*'
+        "*"
     ],
 
     /*
@@ -37,8 +37,8 @@ return [
     |
     */
 
-    'to' => [
-        env('SNEAKER_RECIPIENT')
+    "to" => [
+        env("SNEAKER_RECIPIENT")
     ],
 
     /*
@@ -49,10 +49,10 @@ return [
     | For which bots should we NOT send error emails?
     |
     */
-    'ignored_bots' => [
-        'googlebot',        // Googlebot
-        'bingbot',          // Microsoft Bingbot
-        'slurp',            // Yahoo! Slurp
-        'ia_archiver',      // Alexa
+    "ignored_bots" => [
+        "googlebot",        // Googlebot
+        "bingbot",          // Microsoft Bingbot
+        "slurp",            // Yahoo! Slurp
+        "ia_archiver",      // Alexa
     ],
 ];

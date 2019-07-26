@@ -19,8 +19,8 @@ class StoreLocationRequest extends FormRequest
     {
         $user = Auth::user();
         return
-            $user->can('create', Location::class) &&
-            $user->can('update', Location::class);
+            $user->can("create", Location::class) &&
+            $user->can("update", Location::class);
     }
 
     /**
@@ -32,13 +32,13 @@ class StoreLocationRequest extends FormRequest
     {
 
         $rules = [
-            'name' => [
-                'required',
-                'min:3',
-                'string',
+            "name" => [
+                "required",
+                "min:3",
+                "string",
                 Rule::unique(Location::getTableName())
                     ->where(function ($query) {
-                        return $query->whereNull('deleted_at');
+                        return $query->whereNull("deleted_at");
                     })
             ],
         ];

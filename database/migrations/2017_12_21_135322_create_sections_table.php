@@ -12,11 +12,11 @@ class CreateSectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
-            $table->increments('id')->autoIncrement();
-            $table->string('text')->nullable(false);
+        Schema::create("sections", function (Blueprint $table) {
+            $table->increments("id")->autoIncrement();
+            $table->string("text")->nullable(false);
             // Position of the section within the set of section (1...N)
-            $table->unsignedTinyInteger('position')->nullable(false)->unique();
+            $table->unsignedTinyInteger("position")->nullable(false)->unique();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +27,6 @@ class CreateSectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists("sections");
     }
 }

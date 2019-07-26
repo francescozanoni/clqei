@@ -74,14 +74,14 @@ class StatisticService
         if (is_array($compilations) === false &&
             ($compilations instanceof \Traversable) === false
         ) {
-            throw new \InvalidArgumentException('Compilation set must be an array or implement Traversable interface');
+            throw new \InvalidArgumentException("Compilation set must be an array or implement Traversable interface");
         }
 
         if ($compilations instanceof \Traversable) {
             $compilations = iterator_to_array($compilations);
         }
 
-        return array_map([$this, 'formatCompilation'], $compilations);
+        return array_map([$this, "formatCompilation"], $compilations);
 
     }
 
@@ -136,18 +136,18 @@ class StatisticService
     {
 
         $formatted = [
-            'stage_location_id' => $compilation->stage_location_id,
-            'stage_ward_id' => $compilation->stage_ward_id,
-            'stage_academic_year' => $compilation->stage_academic_year,
-            'stage_weeks' => $compilation->stage_weeks,
-            'student_gender' => $compilation->student->gender,
-            'student_nationality' => $compilation->student->nationality,
+            "stage_location_id" => $compilation->stage_location_id,
+            "stage_ward_id" => $compilation->stage_ward_id,
+            "stage_academic_year" => $compilation->stage_academic_year,
+            "stage_weeks" => $compilation->stage_weeks,
+            "student_gender" => $compilation->student->gender,
+            "student_nationality" => $compilation->student->nationality,
         ];
 
         foreach ($compilation->items as $item) {
             // NULL answers are added during compilation creation for validation purposes.
             if ($item->answer !== null) {
-                $formatted['q' . $item->question_id] = $item->answer;
+                $formatted["q" . $item->question_id] = $item->answer;
             }
         }
 
@@ -205,7 +205,7 @@ class StatisticService
         if (is_array($formattedCompilations) === false &&
             ($formattedCompilations instanceof \Traversable) === false
         ) {
-            throw new \InvalidArgumentException('Compilation set must be an array or implement Traversable interface');
+            throw new \InvalidArgumentException("Compilation set must be an array or implement Traversable interface");
         }
 
         $statistics = [];
@@ -225,7 +225,7 @@ class StatisticService
         // Answers are sorted by record ID.
         // @todo sort by answer real sort value
         foreach ($statistics as $questionId => &$answers) {
-            if (preg_match('/^q\d+$/', $questionId) === 1) {
+            if (preg_match("/^q\d+$/", $questionId) === 1) {
                 ksort($answers);
             }
         }

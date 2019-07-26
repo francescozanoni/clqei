@@ -11,8 +11,8 @@ declare(strict_types = 1);
 function firstNameLastNameEMail(string $firstName, string $lastName) : array
 {
     return [
-        'first_name' => $firstName,
-        'last_name' => $lastName,
-        'email' => strtolower($firstName . '.' . $lastName) . '@example.com',
+        "first_name" => $firstName,
+        "last_name" => $lastName,
+        "email" => strtolower($firstName . "." . $lastName) . "@example.com",
     ];
 }

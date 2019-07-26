@@ -20,7 +20,7 @@ class Ward extends Model implements Importable
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ["deleted_at"];
 
     /**
      * Get the compilations of this student
@@ -28,7 +28,7 @@ class Ward extends Model implements Importable
      */
     public function compilations() : HasMany
     {
-        return $this->hasMany('App\Models\Compilation', 'stage_ward_id');
+        return $this->hasMany("App\Models\Compilation", "stage_ward_id");
     }
 
 }

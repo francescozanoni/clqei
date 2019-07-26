@@ -83,7 +83,7 @@ class CompilationPolicy
     public function viewAny(User $user) : bool
     {
         // Configuration can state viewers cannot view compilation details.
-        if (config('clqei.viewers_can_view_compilation_details') === false) {
+        if (config("clqei.viewers_can_view_compilation_details") === false) {
             return $user->role !== User::ROLE_VIEWER;
         }
         

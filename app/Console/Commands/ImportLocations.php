@@ -15,15 +15,15 @@ class ImportLocations extends Command implements WithIntegerExitCode
      *
      * @var string
      */
-    protected $signature = 'import:locations
-                            {file_path : Path to file containing locations}';
+    protected $signature = "import:locations
+                            {file_path : Path to file containing locations}";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import stage locations from file';
+    protected $description = "Import stage locations from file";
 
     /**
      * @var ImportService
@@ -50,7 +50,7 @@ class ImportLocations extends Command implements WithIntegerExitCode
     public function handle() : int
     {
 
-        $filePath = $this->argument('file_path');
+        $filePath = $this->argument("file_path");
 
         $errors = $this->importService->validate($filePath);
 
@@ -63,7 +63,7 @@ class ImportLocations extends Command implements WithIntegerExitCode
 
         $this->importService->import($filePath, App\Models\Location::class);
 
-        $this->info('Locations imported successfully');
+        $this->info("Locations imported successfully");
 
         return self::SUCCESS;
 

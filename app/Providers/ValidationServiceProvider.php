@@ -18,7 +18,7 @@ class ValidationServiceProvider extends ServiceProvider
     {
 
         Validator::extend(
-            'empty_if',
+            "empty_if",
             /**
              * This validation rule is the opposite of required_if:
              * if another field has a specific value, the current field must be empty.
@@ -37,8 +37,8 @@ class ValidationServiceProvider extends ServiceProvider
             function ($attribute, $value, $parameters, $validator) {
 
                 $validator->setFallbackMessages([
-                    'The ' . str_replace('_', ' ', $attribute) . ' field must be empty ' .
-                    'when ' . str_replace('_', ' ', $parameters[0]) . ' is ' . $parameters[1] . '.'
+                    "The " . str_replace("_", " ", $attribute) . " field must be empty " .
+                    "when " . str_replace("_", " ", $parameters[0]) . " is " . $parameters[1] . "."
                 ]);
 
                 // Fix for situations where the other field is a boolean:
@@ -51,10 +51,10 @@ class ValidationServiceProvider extends ServiceProvider
                 // ]
                 $otherFieldValue = Arr::get($validator->getData(), $parameters[0]);
                 $otherFieldValueToCompare = $parameters[1];
-                if ($otherFieldValueToCompare === 'true') {
+                if ($otherFieldValueToCompare === "true") {
                     $otherFieldValueToCompare = true;
                 }
-                if ($otherFieldValueToCompare === 'false') {
+                if ($otherFieldValueToCompare === "false") {
                     $otherFieldValueToCompare = false;
                 }
 
@@ -63,7 +63,7 @@ class ValidationServiceProvider extends ServiceProvider
                     if (is_array($value) === true) {
                         return $value === [];
                     }
-                    return ((string)$value === '');
+                    return ((string)$value === "");
                 }
 
                 return true;
@@ -72,7 +72,7 @@ class ValidationServiceProvider extends ServiceProvider
         );
 
         Validator::extend(
-            'not_overlapping_time_range',
+            "not_overlapping_time_range",
             /**
              * This validation rule ensures the provided time range does not overlap
              * any existing time ranges on a table, optionally filtered by the value
@@ -122,8 +122,8 @@ class ValidationServiceProvider extends ServiceProvider
                 // WHERE start_date <= <my_end_date>
                 //     AND end_date >= <my_start_date>
                 $query = DB::table($tableName)
-                    ->where($rangeStartTableField, '<=', $rangeEndFormValue)
-                    ->where($rangeEndTableField, '>=', $rangeStartFormValue);
+                    ->where($rangeStartTableField, "<=", $rangeEndFormValue)
+                    ->where($rangeEndTableField, ">=", $rangeStartFormValue);
                 if ($filterTableFieldName !== null) {
                     $query = $query->where($filterTableFieldName, $filterTableFieldValue);
                 }
@@ -131,7 +131,7 @@ class ValidationServiceProvider extends ServiceProvider
 
             },
             // @todo refactor validation message localization
-            __('Overlapping time range.')
+            __("Overlapping time range.")
         );
 
     }

@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'type' => Type::VERTICAL,
+    "type" => Type::VERTICAL,
 
     /*
     |--------------------------------------------------------------------------
@@ -27,10 +27,10 @@ return [
     |
     */
 
-    'left_column_class'  => 'col-sm-2 col-md-3',
-    'right_column_class' => 'col-sm-10 col-md-9',
+    "left_column_class"  => "col-sm-2 col-md-3",
+    "right_column_class" => "col-sm-10 col-md-9",
 
-    'left_column_offset_class' => 'col-sm-offset-2 col-md-offset-3',
+    "left_column_offset_class" => "col-sm-offset-2 col-md-offset-3",
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'show_all_errors' => false,
+    "show_all_errors" => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -53,5 +53,5 @@ return [
     |
     */
 
-    'icon_prefix' => 'fa fa-'
+    "icon_prefix" => "fa fa-"
 ];

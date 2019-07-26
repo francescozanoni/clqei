@@ -23,8 +23,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
-        'password',
-        'password_confirmation',
+        "password",
+        "password_confirmation",
     ];
 
     /**
@@ -39,7 +39,7 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         if ($this->shouldReport($exception)) {
-            app('sneaker')->captureException($exception);
+            app("sneaker")->captureException($exception);
         }
 
         parent::report($exception);

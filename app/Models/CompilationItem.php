@@ -19,7 +19,7 @@ class CompilationItem extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ["deleted_at"];
 
     /**
      * Get the compilation to which this item belongs
@@ -27,7 +27,7 @@ class CompilationItem extends Model
      */
     public function compilation() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Compilation');
+        return $this->belongsTo("App\Models\Compilation");
     }
 
     /**
@@ -36,7 +36,7 @@ class CompilationItem extends Model
      */
     public function question() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Question')->withTrashed();
+        return $this->belongsTo("App\Models\Question")->withTrashed();
     }
 
     /**
@@ -54,7 +54,7 @@ class CompilationItem extends Model
     public function getTheAnswerAttribute()
     {
 
-        if ($this->attributes['answer'] === null) {
+        if ($this->attributes["answer"] === null) {
             return null;
         }
 
@@ -62,15 +62,15 @@ class CompilationItem extends Model
 
         switch ($this->question->type) {
 
-            case 'single_choice':
+            case "single_choice":
                 $answer = $this->aanswer->text;
                 break;
 
-            case 'multiple_choice':
+            case "multiple_choice":
                 $answer =
                     self
-                        ::where('compilation_id', $this->compilation_id)
-                        ->where('question_id', $this->question_id)
+                        ::where("compilation_id", $this->compilation_id)
+                        ->where("question_id", $this->question_id)
                         ->get()
                         ->map(function ($item) {
                             return $item->aanswer;
@@ -79,7 +79,7 @@ class CompilationItem extends Model
                 break;
 
             default:
-                $answer = $this->attributes['answer'];
+                $answer = $this->attributes["answer"];
         }
 
         return $answer;
@@ -94,7 +94,7 @@ class CompilationItem extends Model
      */
     public function aanswer() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Answer', 'answer', 'id')->withTrashed();
+        return $this->belongsTo("App\Models\Answer", "answer", "id")->withTrashed();
     }
 
 }

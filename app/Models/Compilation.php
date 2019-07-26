@@ -20,10 +20,10 @@ class Compilation extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ["deleted_at"];
 
     protected $appends = [
-        'stage_weeks'
+        "stage_weeks"
     ];
 
     /**
@@ -32,7 +32,7 @@ class Compilation extends Model
      */
     public function student() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Student')->withTrashed();
+        return $this->belongsTo("App\Models\Student")->withTrashed();
     }
 
     /**
@@ -41,7 +41,7 @@ class Compilation extends Model
      */
     public function stageLocation() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Location', 'stage_location_id', 'id')->withTrashed();
+        return $this->belongsTo("App\Models\Location", "stage_location_id", "id")->withTrashed();
     }
 
     /**
@@ -50,7 +50,7 @@ class Compilation extends Model
      */
     public function stageWard() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Ward', 'stage_ward_id', 'id')->withTrashed();
+        return $this->belongsTo("App\Models\Ward", "stage_ward_id", "id")->withTrashed();
     }
 
     /**
@@ -59,13 +59,13 @@ class Compilation extends Model
      */
     public function items() : HasMany
     {
-        return $this->hasMany('App\Models\CompilationItem')
+        return $this->hasMany("App\Models\CompilationItem")
             // Compilation items are returned only once, although items related
             // to "multiple_choice" are stored as several records/models.
-            ->groupBy('compilation_id')
-            ->groupBy('question_id')
+            ->groupBy("compilation_id")
+            ->groupBy("question_id")
             // @todo item sorting must be based on section+question "position" attributes
-            ->orderBy('question_id');
+            ->orderBy("question_id");
     }
 
     /**

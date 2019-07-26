@@ -15,15 +15,15 @@ class ImportWards extends Command implements WithIntegerExitCode
      *
      * @var string
      */
-    protected $signature = 'import:wards
-                            {file_path : Path to file containing wards}';
+    protected $signature = "import:wards
+                            {file_path : Path to file containing wards}";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import stage wards from file';
+    protected $description = "Import stage wards from file";
 
     /**
      * @var ImportService
@@ -50,7 +50,7 @@ class ImportWards extends Command implements WithIntegerExitCode
     public function handle() : int
     {
 
-        $filePath = $this->argument('file_path');
+        $filePath = $this->argument("file_path");
 
         $errors = $this->importService->validate($filePath);
 
@@ -63,7 +63,7 @@ class ImportWards extends Command implements WithIntegerExitCode
 
         $this->importService->import($filePath, App\Models\Ward::class);
 
-        $this->info('Wards imported successfully');
+        $this->info("Wards imported successfully");
 
         return self::SUCCESS;
 

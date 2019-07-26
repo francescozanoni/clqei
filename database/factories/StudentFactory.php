@@ -16,8 +16,8 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Student::class, function (Faker $faker) {
 
     return [
-        'identification_number' => $faker->regexify('[1-9][0-9]{7}'),
-        'gender' => $faker->randomElement(['male', 'female']),
-        'nationality' => $faker->randomElement(['IT']),
+        "identification_number" => $faker->regexify("[1-9][0-9]{7}"),
+        "gender" => $faker->randomElement(["male", "female"]),
+        "nationality" => $faker->randomElement(["IT"]),
     ];
 });

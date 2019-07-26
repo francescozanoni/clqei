@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'notify' => env('AUTHENTICATION_LOG_NOTIFY', true),
+    "notify" => env("AUTHENTICATION_LOG_NOTIFY", true),
 
     /*
     |--------------------------------------------------------------------------
@@ -23,6 +23,6 @@ return [
     |
     */
 
-    'older' => 365,
+    "older" => 365,
 
 ];

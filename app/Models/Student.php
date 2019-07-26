@@ -20,7 +20,7 @@ class Student extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ["deleted_at"];
 
     /**
      * Get the compilations of this student
@@ -28,7 +28,7 @@ class Student extends Model
      */
     public function compilations() : HasMany
     {
-        return $this->hasMany('App\Models\Compilation');
+        return $this->hasMany("App\Models\Compilation");
     }
 
     /**
@@ -37,7 +37,7 @@ class Student extends Model
      */
     public function user() : BelongsTo
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo("App\User");
     }
 
 }

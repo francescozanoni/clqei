@@ -15,9 +15,9 @@ class DataTablesPluginService
 {
 
     private $pluginBasePath;
-    private $defaultLanguage = 'en';
-    private $i18nRelativePath = 'i18n';
-    private $dateTimeRelativePath = 'dataRender/datetime.js';
+    private $defaultLanguage = "en";
+    private $i18nRelativePath = "i18n";
+    private $dateTimeRelativePath = "dataRender/datetime.js";
     private $languageFilePaths;
 
     public function __construct(string $pluginBasePath)
@@ -27,7 +27,7 @@ class DataTablesPluginService
             is_dir($pluginBasePath) === false ||
             is_readable($pluginBasePath) === false
         ) {
-            throw new \InvalidArgumentException('Invalid plugin base path: ' . $pluginBasePath);
+            throw new \InvalidArgumentException("Invalid plugin base path: " . $pluginBasePath);
         }
 
         $this->pluginBasePath = $pluginBasePath;
@@ -50,7 +50,7 @@ class DataTablesPluginService
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Czech.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Danish.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Dutch.lang',
-            'en' => $pluginBasePath . '/' . $this->i18nRelativePath . '/English.lang',
+            "en" => $pluginBasePath . "/" . $this->i18nRelativePath . "/English.lang",
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Estonian.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Filipino.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Finnish.lang',
@@ -67,7 +67,7 @@ class DataTablesPluginService
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Indonesian.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Indonesian-Alternative.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Irish.lang',
-            'it' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Italian.lang',
+            "it" => $pluginBasePath . "/" . $this->i18nRelativePath . "/Italian.lang",
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Japanese.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Kazakh.lang',
             // '' => $pluginBasePath . '/' . $this->i18nRelativePath . '/Korean.lang',
@@ -128,7 +128,7 @@ class DataTablesPluginService
 
         // All comments are stripped from file, in order to make the JSON valid.
         // https://stackoverflow.com/questions/17776942/remove-fake-comments-from-json-file#17776997
-        $languageFileContent = trim(preg_replace('#/\*.*?\*/#s', '', file_get_contents($languageFileContent)));
+        $languageFileContent = trim(preg_replace("#/\*.*?\*/#s", "", file_get_contents($languageFileContent)));
 
         return $languageFileContent;
 
@@ -144,7 +144,7 @@ class DataTablesPluginService
     public function getDateTime() : string
     {
 
-        return file_get_contents($this->pluginBasePath . '/' . $this->dateTimeRelativePath);
+        return file_get_contents($this->pluginBasePath . "/" . $this->dateTimeRelativePath);
 
     }
 

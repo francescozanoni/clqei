@@ -14,7 +14,7 @@ class AnswersTableSeeder extends Seeder
     public function run()
     {
 
-        $currentDateTime = Carbon::now()->format('Y-m-d H:i:s');
+        $currentDateTime = Carbon::now()->format("Y-m-d H:i:s");
 
         $dataToInsert = [];
 
@@ -22,10 +22,10 @@ class AnswersTableSeeder extends Seeder
 
             foreach ($answers as $answerIndex => $answer) {
                 $dataToInsert[] = [
-                    'text' => $answer,
-                    'question_id' => $questionId,
-                    'position' => ($answerIndex + 1),
-                    'created_at' => $currentDateTime,
+                    "text" => $answer,
+                    "question_id" => $questionId,
+                    "position" => ($answerIndex + 1),
+                    "created_at" => $currentDateTime,
                 ];
             }
 
@@ -47,7 +47,7 @@ class AnswersTableSeeder extends Seeder
             json_decode(
                 file_get_contents(
                     database_path(
-                        'seeds/questionnaire_texts_' . config('app.locale') . '.json'
+                        "seeds/questionnaire_texts_" . config("app.locale") . ".json"
                     )
                 ),
                 true

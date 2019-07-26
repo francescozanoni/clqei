@@ -17,7 +17,7 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('not_student')->only('index');
+        $this->middleware("not_student")->only("index");
     }
 
     /**
@@ -32,7 +32,7 @@ class UsersController extends Controller
     public function index(IndexUsersRequest $request)
     {
 
-        $userRole = $request->get('role');
+        $userRole = $request->get("role");
 
         switch ($userRole) {
             case User::ROLE_ADMINISTRATOR:
@@ -45,14 +45,14 @@ class UsersController extends Controller
                 // Students, since can be many, are handled in a different way.
                 return $this->indexStudents();
             default:
-                return view('users.index_no_role');
+                return view("users.index_no_role");
         }
 
         return view(
-            'users.index',
+            "users.index",
             [
-                'users' => $users,
-                'user_role' => $userRole
+                "users" => $users,
+                "user_role" => $userRole
             ]
         );
     }
@@ -69,21 +69,21 @@ class UsersController extends Controller
 
         if (request()->ajax()) {
             $userQuery = User::students()
-                ->with(['student', 'student.compilations'])
-                ->select('users.*');
+                ->with(["student", "student.compilations"])
+                ->select("users.*");
             return DataTables::of($userQuery)
                 ->addColumn(
-                    'student.number_of_compilations',
+                    "student.number_of_compilations",
                     function ($user) {
                         // A blank space is appended as workaround
                         // to the still-unexplicable error occurring when returning zero.
-                        return $user->student->compilations->count() . ' ';
+                        return $user->student->compilations->count() . " ";
                     }
                 )
                 ->make(true);
         }
 
-        return view('users.index_students');
+        return view("users.index_students");
 
     }
 
@@ -98,15 +98,15 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('view', $user);
+        $this->authorize("view", $user);
 
         if ($user->role === User::ROLE_STUDENT) {
             $user->load(User::ROLE_STUDENT);
         }
 
         return view(
-            'users.show',
-            ['user' => $user]
+            "users.show",
+            ["user" => $user]
         );
     }
 
@@ -121,10 +121,10 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update', $user);
+        $this->authorize("update", $user);
 
         // @todo implement edit logic
-        return redirect(route('home'));
+        return redirect(route("home"));
     }
 
     /**
@@ -138,10 +138,10 @@ class UsersController extends Controller
      */
     public function update(User $user)
     {
-        $this->authorize('update', $user);
+        $this->authorize("update", $user);
 
         // @todo implement edit logic
-        return redirect(route('home'));
+        return redirect(route("home"));
     }
 
     /**
@@ -156,7 +156,7 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
 
-        $this->authorize('delete', $user);
+        $this->authorize("delete", $user);
 
         $userRole = $user->role;
 
@@ -169,7 +169,7 @@ class UsersController extends Controller
 
         });
 
-        return \Redirect::route('users.index', ['role' => $userRole]);
+        return \Redirect::route("users.index", ["role" => $userRole]);
     }
 
 }

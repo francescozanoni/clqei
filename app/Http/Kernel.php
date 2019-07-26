@@ -27,7 +27,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareGroups = [
-        'web' => [
+        "web" => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -37,9 +37,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'api' => [
-            'throttle:60,1',
-            'bindings',
+        "api" => [
+            "throttle:60,1",
+            "bindings",
         ],
     ];
 
@@ -51,13 +51,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'not_student' => \App\Http\Middleware\RedirectIfStudent::class,
-        'no_new_compilations' => \App\Http\Middleware\RedirectIfCompilationNotCreatable::class,
+        "auth" => \Illuminate\Auth\Middleware\Authenticate::class,
+        "auth.basic" => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        "bindings" => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        "can" => \Illuminate\Auth\Middleware\Authorize::class,
+        "guest" => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        "throttle" => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        "not_student" => \App\Http\Middleware\RedirectIfStudent::class,
+        "no_new_compilations" => \App\Http\Middleware\RedirectIfCompilationNotCreatable::class,
     ];
 }

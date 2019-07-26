@@ -33,7 +33,7 @@ class CompilationsController extends Controller
     {
         // If compilations cannot be currently created,
         // users are redirected.
-        $this->middleware('no_new_compilations')->only('create');
+        $this->middleware("no_new_compilations")->only("create");
 
         $this->compilationService = $compilationService;
     }
@@ -49,24 +49,24 @@ class CompilationsController extends Controller
         $compilationBaseQuery = Compilation
             ::with([
                 // Deleted locations, wards and students are included by default via model relationships
-                'stageLocation',
-                'stageWard',
-                'student',
+                "stageLocation",
+                "stageWard",
+                "student",
                 // Deleted users must be included
                 // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-                'student.user' => function ($query) {
+                "student.user" => function ($query) {
                     $query->withTrashed();
                 }
             ]);
 
         // Student view of compilation list: no DataTables
-        if (Auth::user()->cannot('viewAll', Compilation::class)) {
+        if (Auth::user()->cannot("viewAll", Compilation::class)) {
             $compilations = $compilationBaseQuery
-                ->whereHas('student', function ($query) {
-                    $query->where('id', Auth::user()->student->id);
+                ->whereHas("student", function ($query) {
+                    $query->where("id", Auth::user()->student->id);
                 })
                 ->get();
-            return view('compilations.index_student', ['compilations' => $compilations]);
+            return view("compilations.index_student", ["compilations" => $compilations]);
         }
 
 
@@ -75,26 +75,26 @@ class CompilationsController extends Controller
         // AJAX data call from DataTables.
         if (request()->ajax()) {
 
-            $compilationQuery = $compilationBaseQuery->select('compilations.*');
+            $compilationQuery = $compilationBaseQuery->select("compilations.*");
 
             $toReturn = DataTables::of($compilationQuery)
-                ->editColumn('created_at', function ($compilation) {
+                ->editColumn("created_at", function ($compilation) {
                     // Date/times must be formatted to simple dates, in order to allow
                     // DataTables plugin (datetimes) correctly format the value.
-                    return with(new Carbon($compilation->created_at))->format('Y-m-d');
+                    return with(new Carbon($compilation->created_at))->format("Y-m-d");
                 });
 
             // @todo refactor by extracting all order parameter usage and sanitization logic
-            $order = request()->get('order')[0];
-            $order['column'] = (int)$order['column'];
-            $order['dir'] = in_array($order['dir'], ['asc', 'desc']) ? $order['dir'] : 'asc';
+            $order = request()->get("order")[0];
+            $order["column"] = (int)$order["column"];
+            $order["dir"] = in_array($order["dir"], ["asc", "desc"]) ? $order["dir"] : "asc";
             // Since stage weeks are computed on-the-fly,
             // sorting by that column requires a different logic.
-            if (request()->input('columns')[$order['column']]['data'] === 'stage_weeks') {
+            if (request()->input("columns")[$order["column"]]["data"] === "stage_weeks") {
                 $toReturn->order(function ($query) use ($order) {
                     // @todo check whether this SQL string is compatible with other database engines
                     $query->orderByRaw(
-                        '(strftime("%J", stage_end_date) - strftime("%J", stage_start_date)) ' . $order['dir']
+                        "(strftime('%J', stage_end_date) - strftime('%J', stage_start_date)) " . $order["dir"]
                     );
                 });
             }
@@ -103,7 +103,7 @@ class CompilationsController extends Controller
 
         }
 
-        return view('compilations.index');
+        return view("compilations.index");
     }
 
     /**
@@ -116,17 +116,17 @@ class CompilationsController extends Controller
 
         // Fetch all active sections,
         // with their active questions and active answers.
-        $sections = Section::with('questions.answers')->get();
+        $sections = Section::with("questions.answers")->get();
 
         // @todo sort sections and questions by position
 
-        return view('compilations.create', ['sections' => $sections]);
+        return view("compilations.create", ["sections" => $sections]);
     }
 
     /**
      * Store a newly created compilation in storage.
      *
-     * @param  StoreCompilationRequest $request
+     * @param StoreCompilationRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreCompilationRequest $request)
@@ -139,17 +139,17 @@ class CompilationsController extends Controller
         DB::transaction(function () use ($request, $compilation) {
 
             $compilation->student()->associate(Auth::user()->student);
-            $compilation->stageLocation()->associate(Location::find($request->input('stage_location_id')));
-            $compilation->stageWard()->associate(Ward::find($request->input('stage_ward_id')));
-            $compilation->stage_start_date = $request->input('stage_start_date');
-            $compilation->stage_end_date = $request->input('stage_end_date');
-            $compilation->stage_academic_year = $request->input('stage_academic_year');
+            $compilation->stageLocation()->associate(Location::find($request->input("stage_location_id")));
+            $compilation->stageWard()->associate(Ward::find($request->input("stage_ward_id")));
+            $compilation->stage_start_date = $request->input("stage_start_date");
+            $compilation->stage_end_date = $request->input("stage_end_date");
+            $compilation->stage_academic_year = $request->input("stage_academic_year");
             $compilation->save();
 
             collect($request->all())
                 // Only "qN" parameters are considered, to create compilation items.
                 ->filter(function ($answers, $questionKey) {
-                    return preg_match('/^q\d+$/', $questionKey) === 1;
+                    return preg_match("/^q\d+$/", $questionKey) === 1;
                 })
                 // When a question has several answers,
                 // one compilation item is created for each answer.
@@ -171,14 +171,14 @@ class CompilationsController extends Controller
         });
 
         // Redirection does not work from within transaction block.
-        return \Redirect::route('compilations.show', [$compilation->id]);
+        return \Redirect::route("compilations.show", [$compilation->id]);
 
     }
 
     /**
      * Display the specified compilation.
      *
-     * @param  \App\Models\Compilation $compilation
+     * @param \App\Models\Compilation $compilation
      * @return \Illuminate\View\View
      */
     public function show(Compilation $compilation)
@@ -186,29 +186,29 @@ class CompilationsController extends Controller
 
         $compilation->load([
             // Deleted locations, wards and students are included by default via model relationships
-            'stageLocation',
-            'stageWard',
-            'student',
+            "stageLocation",
+            "stageWard",
+            "student",
             // Deleted users must be included
             // https://stackoverflow.com/questions/33900124/eloquent-withtrashed-for-soft-deletes-on-eager-loading-query-laravel-5-1
-            'student.user' => function ($query) {
+            "student.user" => function ($query) {
                 $query->withTrashed();
             },
-            'items',
-            'items.aanswer',
+            "items",
+            "items.aanswer",
             // "aanswer" is not a mistake
-            'items.question',
-            'items.question.section',
+            "items.question",
+            "items.question.section",
         ]);
 
-        $this->authorize('view', $compilation);
+        $this->authorize("view", $compilation);
 
         // When request contains the "receipt" parameter, the compilation's receipt view is rendered.
-        if (request()->has('receipt')) {
-            return view('compilations.receipt', ['compilation' => $compilation]);
+        if (request()->has("receipt")) {
+            return view("compilations.receipt", ["compilation" => $compilation]);
         }
 
-        return view('compilations.show', ['compilation' => $compilation]);
+        return view("compilations.show", ["compilation" => $compilation]);
     }
 
     /**
@@ -238,13 +238,13 @@ class CompilationsController extends Controller
          */
         $statistics = $this->getStatistics(request()->all(), $statisticService);
 
-        $sections = Section::with('questions.answers')->get();
+        $sections = Section::with("questions.answers")->get();
         $pseudoSection = new Section();
         $pseudoSection->id = 0;
-        $pseudoSection->title = __('Stage');
+        $pseudoSection->title = __("Stage");
         $sections->prepend($pseudoSection);
 
-        return view('compilations.statistics_charts', ['statistics' => $statistics, 'sections' => $sections]);
+        return view("compilations.statistics_charts", ["statistics" => $statistics, "sections" => $sections]);
     }
 
     private function getStatistics(array $requestParameters, App\Services\StatisticService $statisticService) : array
@@ -253,8 +253,8 @@ class CompilationsController extends Controller
         $query = Compilation
             ::with([
                 // Deleted students are included by default via model relationships
-                'student',
-                'items',
+                "student",
+                "items",
             ]);
 
         foreach ($requestParameters as $parameter => $value) {
@@ -361,13 +361,13 @@ class CompilationsController extends Controller
          */
         $statistics = $this->getStatistics(request()->all(), $statisticService);
 
-        $sections = Section::with('questions.answers')->get();
+        $sections = Section::with("questions.answers")->get();
         $pseudoSection = new Section();
         $pseudoSection->id = 0;
-        $pseudoSection->title = __('Stage');
+        $pseudoSection->title = __("Stage");
         $sections->prepend($pseudoSection);
 
-        return view('compilations.statistics_counts', ['statistics' => $statistics, 'sections' => $sections]);
+        return view("compilations.statistics_counts", ["statistics" => $statistics, "sections" => $sections]);
     }
 
 }

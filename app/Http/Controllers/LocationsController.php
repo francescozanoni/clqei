@@ -16,13 +16,13 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::with('compilations')->get()->sortBy('name');
-        $deletedLocations = Location::with('compilations')->onlyTrashed()->get();
+        $locations = Location::with("compilations")->get()->sortBy("name");
+        $deletedLocations = Location::with("compilations")->onlyTrashed()->get();
         return view(
-            'locations.index',
+            "locations.index",
             [
-                'locations' => $locations,
-                'deleted_locations' => $deletedLocations
+                "locations" => $locations,
+                "deleted_locations" => $deletedLocations
             ]
         );
     }
@@ -37,10 +37,10 @@ class LocationsController extends Controller
     {
         $location = new Location;
 
-        $location->name = $request->input('name');
+        $location->name = $request->input("name");
         $location->save();
 
-        return \Redirect::route('locations.index');
+        return \Redirect::route("locations.index");
     }
 
     /**
@@ -51,7 +51,7 @@ class LocationsController extends Controller
      */
     public function edit(Location $location)
     {
-        return view('locations.edit', ['location' => $location]);
+        return view("locations.edit", ["location" => $location]);
     }
 
     /**
@@ -63,10 +63,10 @@ class LocationsController extends Controller
      */
     public function update(StoreLocationRequest $request, Location $location)
     {
-        $location->name = $request->input('name');
+        $location->name = $request->input("name");
         $location->save();
 
-        return \Redirect::route('locations.index');
+        return \Redirect::route("locations.index");
     }
 
     /**
@@ -79,7 +79,7 @@ class LocationsController extends Controller
     {
         $location->delete();
 
-        return \Redirect::route('locations.index');
+        return \Redirect::route("locations.index");
     }
 
     /**
@@ -90,10 +90,10 @@ class LocationsController extends Controller
      */
     public function restore(int $locationId)
     {
-        $location = Location::onlyTrashed()->where('id', $locationId)->get()->first();
+        $location = Location::onlyTrashed()->where("id", $locationId)->get()->first();
         $location->restore();
 
-        return \Redirect::route('locations.index');
+        return \Redirect::route("locations.index");
     }
 
 }

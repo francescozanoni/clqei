@@ -15,8 +15,8 @@ class WardsTableSeeder extends Seeder
     {
 
         DB::table(Ward::getTableName())->insert([
-            'name' => 'Example ward',
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            "name" => "Example ward",
+            "created_at" => Carbon::now()->format("Y-m-d H:i:s"),
         ]);
 
     }

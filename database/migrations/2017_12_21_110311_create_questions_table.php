@@ -12,16 +12,16 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
-            $table->increments('id')->autoIncrement();
-            $table->string('text')->nullable(false);
-            $table->unsignedInteger('section_id')->nullable(false);
-            $table->enum('type', ['single_choice', 'multiple_choice', 'text'])->nullable(false)->default('text');
-            $table->boolean('required')->nullable(false)->default(true);
-            $table->json('options')->nullable(true);
+        Schema::create("questions", function (Blueprint $table) {
+            $table->increments("id")->autoIncrement();
+            $table->string("text")->nullable(false);
+            $table->unsignedInteger("section_id")->nullable(false);
+            $table->enum("type", ["single_choice", "multiple_choice", "text"])->nullable(false)->default("text");
+            $table->boolean("required")->nullable(false)->default(true);
+            $table->json("options")->nullable(true);
             // Position of the question within the set of questions of a section (1...N)
-            $table->unsignedTinyInteger('position')->nullable(false);
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->unsignedTinyInteger("position")->nullable(false);
+            $table->foreign("section_id")->references("id")->on("sections");
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +32,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists("questions");
     }
 }

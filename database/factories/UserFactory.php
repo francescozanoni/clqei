@@ -21,32 +21,32 @@ $factory->define(User::class, function (Faker $faker) {
         $faker->firstName,
         $faker->lastName
     );
-    $data['password'] = $password ?: $password = bcrypt('secret');
+    $data["password"] = $password ?: $password = bcrypt("secret");
 
     return $data;
 });
 
 $factory->state(User::class, User::ROLE_ADMINISTRATOR, [
-    'role' => User::ROLE_ADMINISTRATOR,
+    "role" => User::ROLE_ADMINISTRATOR,
 ]);
 
 $factory->state(User::class, User::ROLE_VIEWER, [
-    'role' => User::ROLE_VIEWER,
+    "role" => User::ROLE_VIEWER,
 ]);
 
 $factory->state(User::class, User::ROLE_STUDENT, [
-    'role' => User::ROLE_STUDENT,
+    "role" => User::ROLE_STUDENT,
 ]);
 
-$factory->state(User::class, 'male', function (Faker $faker) {
+$factory->state(User::class, "male", function (Faker $faker) {
     return firstNameLastNameEMail(
-        $faker->firstName('male'),
+        $faker->firstName("male"),
         $faker->lastName
     );
 });
-$factory->state(User::class, 'female', function (Faker $faker) {
+$factory->state(User::class, "female", function (Faker $faker) {
     return firstNameLastNameEMail(
-        $faker->firstName('female'),
+        $faker->firstName("female"),
         $faker->lastName
     );
 });

@@ -42,30 +42,30 @@ class CompilationService
 
     public function __construct(CountryService $countryService)
     {
-        $this->sections = Section::withTrashed()->get()->keyBy('id');
-        $this->questions = Question::withTrashed()->get()->keyBy('id');
-        $this->answers = Answer::withTrashed()->get()->keyBy('id');
+        $this->sections = Section::withTrashed()->get()->keyBy("id");
+        $this->questions = Question::withTrashed()->get()->keyBy("id");
+        $this->answers = Answer::withTrashed()->get()->keyBy("id");
 
         // Questions whose answers are located on other tables
         // and that are not derived from database/seeds/*.json files
         $this->otherQuestions = new Collection([
-            'stage_location_id' => __('Location'),
-            'stage_ward_id' => __('Ward'),
-            'stage_start_date' => __('Start date'),
-            'stage_end_date' => __('End date'),
-            'stage_academic_year' => __('Academic year'),
-            'stage_weeks' => __('Weeks'),
-            'student_gender' => __('Gender'),
-            'student_nationality' => __('Nationality'),
+            "stage_location_id" => __("Location"),
+            "stage_ward_id" => __("Ward"),
+            "stage_start_date" => __("Start date"),
+            "stage_end_date" => __("End date"),
+            "stage_academic_year" => __("Academic year"),
+            "stage_weeks" => __("Weeks"),
+            "student_gender" => __("Gender"),
+            "student_nationality" => __("Nationality"),
         ]);
 
         // Answers located on other tables
-        $this->otherAnswers['__stage_locations__'] = Location::withTrashed()->get()->keyBy('id');
-        $this->otherAnswers['__stage_wards__'] = Ward::withTrashed()->get()->keyBy('id');
+        $this->otherAnswers["__stage_locations__"] = Location::withTrashed()->get()->keyBy("id");
+        $this->otherAnswers["__stage_wards__"] = Ward::withTrashed()->get()->keyBy("id");
 
         // Answers not located on tables
         // @todo handles case of deleted country
-        $this->otherAnswers['__student_nationalities__'] = new Collection($countryService->getCountries());
+        $this->otherAnswers["__student_nationalities__"] = new Collection($countryService->getCountries());
     }
 
     /**
@@ -115,7 +115,7 @@ class CompilationService
 
         $id = (string)$id;
 
-        $question = $this->questions->get(preg_replace('/^q/', '', $id));
+        $question = $this->questions->get(preg_replace("/^q/", "", $id));
 
         if ($question) {
             return $question->text;
@@ -133,27 +133,27 @@ class CompilationService
      *
      * @todo refactor
      */
-    public function getAnswerText($answerId, string $questionId = '') : string
+    public function getAnswerText($answerId, string $questionId = "") : string
     {
 
         $text = $answerId;
 
         switch ($questionId) {
 
-            case 'stage_location_id':
-                $text = $this->otherAnswers['__stage_locations__']->get($answerId)->name;
+            case "stage_location_id":
+                $text = $this->otherAnswers["__stage_locations__"]->get($answerId)->name;
                 break;
 
-            case 'stage_ward_id':
-                $text = $this->otherAnswers['__stage_wards__']->get($answerId)->name;
+            case "stage_ward_id":
+                $text = $this->otherAnswers["__stage_wards__"]->get($answerId)->name;
                 break;
 
-            case 'student_gender':
+            case "student_gender":
                 $text = __($answerId);
                 break;
 
-            case 'student_nationality':
-                $text = $this->otherAnswers['__student_nationalities__']->get($answerId);
+            case "student_nationality":
+                $text = $this->otherAnswers["__student_nationalities__"]->get($answerId);
                 break;
 
             default:
@@ -182,7 +182,7 @@ class CompilationService
 
         $id = (string)$id;
 
-        $question = $this->questions->get(preg_replace('/^q/', '', $id));
+        $question = $this->questions->get(preg_replace("/^q/", "", $id));
 
         return $this->sections->get($question->section_id);
 
@@ -198,21 +198,21 @@ class CompilationService
     public function applyQueryFilters(Builder $query, string $parameter, $value)
     {
 
-        if (strpos($parameter, 'stage_') === 0) {
+        if (strpos($parameter, "stage_") === 0) {
             $this->applyQueryStageFilters($query, $parameter, $value);
         }
 
-        if (strpos($parameter, 'student_') === 0) {
-            $parameter = str_replace('student_', '', $parameter);
+        if (strpos($parameter, "student_") === 0) {
+            $parameter = str_replace("student_", "", $parameter);
             $this->applyQueryStudentFilters($query, $parameter, $value);
         }
 
         // Dynamic questions
-        if (preg_match('/^q\d+$/', $parameter) === 1) {
-            $parameter = str_replace('q', '', $parameter);
-            $query->whereHas('items', function ($query) use ($parameter, $value) {
-                $query->where('question_id', $parameter)
-                    ->where('answer', $value);
+        if (preg_match("/^q\d+$/", $parameter) === 1) {
+            $parameter = str_replace("q", "", $parameter);
+            $query->whereHas("items", function ($query) use ($parameter, $value) {
+                $query->where("question_id", $parameter)
+                    ->where("answer", $value);
             });
         }
 
@@ -229,15 +229,15 @@ class CompilationService
     {
 
         switch ($parameter) {
-            case 'stage_location_id':
-            case 'stage_ward_id':
-            case 'stage_academic_year':
+            case "stage_location_id":
+            case "stage_ward_id":
+            case "stage_academic_year":
                 $query->where($parameter, $value);
                 break;
-            case 'stage_weeks':
+            case "stage_weeks":
                 // @todo check whether this SQL string is compatible with other database engines
                 $query->whereRaw(
-                    'round((strftime("%J", stage_end_date) - strftime("%J", stage_start_date) + 1) / 7) = ?',
+                    "round((strftime('%J', stage_end_date) - strftime('%J', stage_start_date) + 1) / 7) = ?",
                     [(int)$value]
                 );
                 break;
@@ -257,9 +257,9 @@ class CompilationService
     {
 
         switch ($parameter) {
-            case 'gender':
-            case 'nationality':
-                $query->whereHas('student', function ($query) use ($parameter, $value) {
+            case "gender":
+            case "nationality":
+                $query->whereHas("student", function ($query) use ($parameter, $value) {
                     $query->where($parameter, $value);
                 });
                 break;

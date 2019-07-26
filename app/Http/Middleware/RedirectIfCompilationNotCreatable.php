@@ -33,7 +33,7 @@ class RedirectIfCompilationNotCreatable
     {
 
         if ($this->compilationService->isCompilationCreatable() === false) {
-            return redirect('/home');
+            return redirect("/home");
         }
 
         return $next($request);

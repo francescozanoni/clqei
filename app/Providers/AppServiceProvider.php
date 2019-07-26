@@ -27,8 +27,8 @@ class AppServiceProvider extends ServiceProvider
         Ward::observe(EloquentModelObserver::class);
         Location::observe(EloquentModelObserver::class);
 
-        Blade::directive('jsonize', function ($data) {
-            return "<?php echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>";
+        Blade::directive("jsonize", function ($data) {
+            return '<?php echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>';
         });
 
     }
@@ -40,18 +40,18 @@ class AppServiceProvider extends ServiceProvider
     {
 
         // @todo ensure $countries population can stay here or must be moved to boot() method
-        $countries = require(base_path('vendor/umpirsky/country-list/data/' . config('app.locale') . '/country.php'));
+        $countries = require(base_path("vendor/umpirsky/country-list/data/" . config("app.locale") . "/country.php"));
 
-        $this->app->when('App\Services\CountryService')
+        $this->app->when("App\Services\CountryService")
             ->needs('$countries')
             ->give($countries);
 
-        $this->app->bind('App\Services\DataTablesPluginService', function () {
-            return new DataTablesPluginService(base_path('node_modules/datatables.net-plugins'));
+        $this->app->bind("App\Services\DataTablesPluginService", function () {
+            return new DataTablesPluginService(base_path("node_modules/datatables.net-plugins"));
         });
 
-        $this->app->singleton('App\Services\CompilationService', function ($app) {
-            return new CompilationService($app->make('App\Services\CountryService'));
+        $this->app->singleton("App\Services\CompilationService", function ($app) {
+            return new CompilationService($app->make("App\Services\CountryService"));
         });
 
     }

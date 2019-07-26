@@ -34,7 +34,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = "/home";
 
     /**
      * @var array user validation rules
@@ -46,7 +46,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('not_student');
+        $this->middleware("not_student");
     }
 
     /**
@@ -89,7 +89,7 @@ class RegisterController extends Controller
 
         $validationRules = [];
 
-        $userService = App::make('App\Services\UserService');
+        $userService = App::make("App\Services\UserService");
         // The following choice logic of validation rules cannot be placed
         // neither on a service provider nor on this controller's constructor,
         // because in those points session has not been bootstrapped yet
@@ -122,19 +122,19 @@ class RegisterController extends Controller
         DB::transaction(function () use (&$user, $data) {
 
             $user = User::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'email' => $data['email'],
-                'password' => bcrypt($data['password']),
-                'role' => $data['role'],
+                "first_name" => $data["first_name"],
+                "last_name" => $data["last_name"],
+                "email" => $data["email"],
+                "password" => bcrypt($data["password"]),
+                "role" => $data["role"],
             ]);
 
             // If a student user is created, the related student model is created.
             if ($user->role === User::ROLE_STUDENT) {
                 $student = new Student;
-                $student->identification_number = $data['identification_number'];
-                $student->gender = $data['gender'];
-                $student->nationality = $data['nationality'];
+                $student->identification_number = $data["identification_number"];
+                $student->gender = $data["gender"];
+                $student->nationality = $data["nationality"];
                 $student->user()->associate($user);
                 $student->save();
             }

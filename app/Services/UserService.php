@@ -21,18 +21,18 @@ class UserService
     {
         $rules = $this->getBaseValidationRules();
 
-        $rules['role'][] = 'in:' . User::ROLE_STUDENT;
-        $rules['identification_number'] = [
-            'required',
-            'regex:/' . config('clqei.students.identification_number.pattern') . '/',
-            'unique:students'
+        $rules["role"][] = "in:" . User::ROLE_STUDENT;
+        $rules["identification_number"] = [
+            "required",
+            "regex:/" . config("clqei.students.identification_number.pattern") . "/",
+            "unique:students"
         ];
-        $rules['gender'] = ['required', 'in:male,female'];
-        $rules['nationality'] = [
-            'required',
-            'in:' . implode(',', App::make('App\Services\CountryService')->getCountryCodes())
+        $rules["gender"] = ["required", "in:male,female"];
+        $rules["nationality"] = [
+            "required",
+            "in:" . implode(",", App::make("App\Services\CountryService")->getCountryCodes())
         ];
-        $rules['email'][] = 'regex:/' . config('clqei.students.email.pattern') . '/';
+        $rules["email"][] = "regex:/" . config("clqei.students.email.pattern") . "/";
 
         return $rules;
     }
@@ -46,11 +46,11 @@ class UserService
     {
 
         return [
-            'first_name' => ['required', 'string', 'min:2', 'max:255'],
-            'last_name' => ['required', 'string', 'min:2', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'role' => ['required'],
+            "first_name" => ["required", "string", "min:2", "max:255"],
+            "last_name" => ["required", "string", "min:2", "max:255"],
+            "email" => ["required", "string", "email", "max:255", "unique:users"],
+            "password" => ["required", "string", "min:6", "confirmed"],
+            "role" => ["required"],
         ];
 
     }
@@ -65,7 +65,7 @@ class UserService
     {
         $rules = $this->getBaseValidationRules();
 
-        $rules['role'][] = 'in:' . User::ROLE_VIEWER;
+        $rules["role"][] = "in:" . User::ROLE_VIEWER;
 
         return $rules;
     }
@@ -80,7 +80,7 @@ class UserService
     {
         $rules = $this->getBaseValidationRules();
 
-        $rules['role'][] = 'in:' . User::ROLE_VIEWER . ',' . User::ROLE_ADMINISTRATOR;
+        $rules["role"][] = "in:" . User::ROLE_VIEWER . "," . User::ROLE_ADMINISTRATOR;
 
         return $rules;
     }

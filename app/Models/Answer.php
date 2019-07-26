@@ -19,7 +19,7 @@ class Answer extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ["deleted_at"];
 
     /**
      * Get the question of this answer
@@ -27,7 +27,7 @@ class Answer extends Model
      */
     public function question() : BelongsTo
     {
-        return $this->belongsTo('App\Models\Question');
+        return $this->belongsTo("App\Models\Question");
     }
 
 }

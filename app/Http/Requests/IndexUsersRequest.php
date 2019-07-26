@@ -18,16 +18,16 @@ class IndexUsersRequest extends FormRequest
     {
         $user = Auth::user();
 
-        switch ($this->get('role')) {
+        switch ($this->get("role")) {
 
             case User::ROLE_ADMINISTRATOR:
-                return $user->can('viewAdministrators', User::class);
+                return $user->can("viewAdministrators", User::class);
 
             case User::ROLE_VIEWER:
-                return $user->can('viewViewers', User::class);
+                return $user->can("viewViewers", User::class);
 
             case User::ROLE_STUDENT:
-                return $user->can('viewStudents', User::class);
+                return $user->can("viewStudents", User::class);
 
             default:
                 return true;

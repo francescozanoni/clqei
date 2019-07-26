@@ -11,9 +11,9 @@ class CreateWardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wards', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable(false);
+        Schema::create("wards", function (Blueprint $table) {
+            $table->increments("id");
+            $table->string("name")->nullable(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +24,6 @@ class CreateWardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wards');
+        Schema::dropIfExists("wards");
     }
 }

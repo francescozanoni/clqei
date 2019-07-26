@@ -19,18 +19,18 @@ class User extends Authenticatable
     use EloquentGetTableName;
     use AuthenticationLogable;
 
-    const ROLE_ADMINISTRATOR = 'administrator';
-    const ROLE_VIEWER = 'viewer';
-    const ROLE_STUDENT = 'student';
+    const ROLE_ADMINISTRATOR = "administrator";
+    const ROLE_VIEWER = "viewer";
+    const ROLE_STUDENT = "student";
 
-    const EXAMPLE_DOMAIN = 'example.com';
+    const EXAMPLE_DOMAIN = "example.com";
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ["deleted_at"];
 
     /**
      * The attributes that are mass assignable.
@@ -38,11 +38,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'role',
+        "first_name",
+        "last_name",
+        "email",
+        "password",
+        "role",
     ];
 
     /**
@@ -51,8 +51,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        "password",
+        "remember_token",
     ];
 
     /**
@@ -63,7 +63,7 @@ class User extends Authenticatable
      */
     public function setFirstNameAttribute($value)
     {
-        $this->attributes['first_name'] = ucwords(strtolower($value), '\'- ');
+        $this->attributes["first_name"] = ucwords(strtolower($value), "'- ");
     }
 
     /**
@@ -74,7 +74,7 @@ class User extends Authenticatable
      */
     public function setLastNameAttribute($value)
     {
-        $this->attributes['last_name'] = ucwords(strtolower($value), '\'- ');
+        $this->attributes["last_name"] = ucwords(strtolower($value), "'- ");
     }
 
     /**
@@ -83,7 +83,7 @@ class User extends Authenticatable
      */
     public function student() : HasOne
     {
-        return $this->hasOne('App\Models\Student');
+        return $this->hasOne("App\Models\Student");
     }
 
     /**
@@ -94,7 +94,7 @@ class User extends Authenticatable
      */
     public function scopeStudents(Builder $query) : Builder
     {
-        return $query->where('role', self::ROLE_STUDENT);
+        return $query->where("role", self::ROLE_STUDENT);
     }
 
     /**
@@ -105,7 +105,7 @@ class User extends Authenticatable
      */
     public function scopeViewers(Builder $query) : Builder
     {
-        return $query->where('role', self::ROLE_VIEWER);
+        return $query->where("role", self::ROLE_VIEWER);
     }
 
     /**
@@ -116,7 +116,7 @@ class User extends Authenticatable
      */
     public function scopeAdministrators(Builder $query) : Builder
     {
-        return $query->where('role', self::ROLE_ADMINISTRATOR);
+        return $query->where("role", self::ROLE_ADMINISTRATOR);
     }
 
     /**
@@ -138,7 +138,7 @@ class User extends Authenticatable
 
     public function isExampleUser() : bool
     {
-        return substr($this->email, -strlen('@' . self::EXAMPLE_DOMAIN)) === '@' . self::EXAMPLE_DOMAIN;
+        return substr($this->email, -strlen("@" . self::EXAMPLE_DOMAIN)) === "@" . self::EXAMPLE_DOMAIN;
     }
 
 }

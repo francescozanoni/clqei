@@ -13,15 +13,15 @@ class SectionsTableHeaderFooterSeeder extends Seeder
     public function run()
     {
 
-        $sectionsHeadersFooters = json_decode(file_get_contents(database_path('seeds/sections_headers_footers_' . config('app.locale') . '.json')),
+        $sectionsHeadersFooters = json_decode(file_get_contents(database_path("seeds/sections_headers_footers_" . config("app.locale") . ".json")),
             true);
 
         foreach ($sectionsHeadersFooters as $index => $section) {
             DB::table(Section::getTableName())
-                ->where('id', ($index + 1))
+                ->where("id", ($index + 1))
                 ->update([
-                    'header' => $section['header'],
-                    'footer' => $section['footer'],
+                    "header" => $section["header"],
+                    "footer" => $section["footer"],
                 ]);
         }
 

@@ -12,13 +12,13 @@ class ModifySectionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('sections', function (Blueprint $table) {
-            $table->renameColumn('text', 'title');
+        Schema::table("sections", function (Blueprint $table) {
+            $table->renameColumn("text", "title");
         });
         // Renaming and addition operations performed together seem to make the migration fail.
-        Schema::table('sections', function (Blueprint $table) {
-            $table->text('header')->nullable(true);
-            $table->text('footer')->nullable(true);
+        Schema::table("sections", function (Blueprint $table) {
+            $table->text("header")->nullable(true);
+            $table->text("footer")->nullable(true);
         });
     }
 
@@ -27,11 +27,11 @@ class ModifySectionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sections', function (Blueprint $table) {
-            $table->dropColumn(['header', 'footer']);
+        Schema::table("sections", function (Blueprint $table) {
+            $table->dropColumn(["header", "footer"]);
         });
-        Schema::table('sections', function (Blueprint $table) {
-            $table->renameColumn('title', 'text');
+        Schema::table("sections", function (Blueprint $table) {
+            $table->renameColumn("title", "text");
         });
     }
 }

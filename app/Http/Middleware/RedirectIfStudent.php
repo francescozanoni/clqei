@@ -22,7 +22,7 @@ class RedirectIfStudent
         if (Auth::guard($guard)->check() &&
             Auth::guard($guard)->user()->role === User::ROLE_STUDENT
         ) {
-            return redirect(route('home'));
+            return redirect(route("home"));
         }
 
         return $next($request);
