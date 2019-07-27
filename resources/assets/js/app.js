@@ -4,12 +4,12 @@
  * application frontend using useful Laravel and JavaScript libraries.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
 // Disable submit button after form submission.
 // https://stackoverflow.com/questions/5691054/disable-submit-button-on-form-submit/5691065
-$('form').submit(function () {
-    $(this).find(':input[type=submit]').prop('disabled', true);
+$("form").submit(function () {
+    $(this).find(":input[type=submit]").prop("disabled", true);
 });
 
 /**
@@ -39,7 +39,7 @@ getUrlParameter = function (name, url) {
         return null;
     }
     if (!results[2]) {
-        return '';
+        return "";
     }
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
@@ -59,14 +59,13 @@ getUrlParameters = function (url) {
     }
     var obj = {},
         qPos = url.indexOf("?"),
-        tokens = url.substr(qPos + 1).split('&'),
+        tokens = url.substr(qPos + 1).split("&"),
         i = tokens.length - 1;
     if (qPos !== -1 || url.indexOf("=") !== -1) {
         for (; i >= 0; i--) {
-            var s = tokens[i].split('=');
+            var s = tokens[i].split("=");
             obj[unescape(s[0])] = s.hasOwnProperty(1) ? unescape(s[1]) : null;
         }
-        ;
     }
     return obj;
 }

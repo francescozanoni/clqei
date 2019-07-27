@@ -4,12 +4,12 @@
 
 try {
 
-    window.$ = window.jQuery = require('jquery');
+    window.$ = window.jQuery = require("jquery");
 
-    window.moment = require('moment');
+    window.moment = require("moment");
 
-    require('datatables.net');
-    require('datatables.net-bs');
+    require("datatables.net");
+    require("datatables.net-bs");
 
 } catch (e) {
 

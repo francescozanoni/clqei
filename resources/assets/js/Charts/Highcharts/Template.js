@@ -1,7 +1,7 @@
 /**
  * Created by Francesco.Zanoni on 11/06/2018.
  */
-'use strict';
+"use strict";
 
 /**
  * Highcharts template

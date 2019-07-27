@@ -1,11 +1,11 @@
 /**
  * Created by Francesco.Zanoni on 11/06/2018.
  */
-'use strict';
+"use strict";
 
 // Template object is always cloned.
-var template = JSON.parse(JSON.stringify(require('../Template')));
-var Highcharts = require('highcharts');
+var template = JSON.parse(JSON.stringify(require("../Template")));
+var Highcharts = require("highcharts");
 
 /**
  * Highcharts pie chart factory
@@ -49,17 +49,17 @@ module.exports = {
 
         var config = template;
 
-        config.chart.type = 'pie';
-        config.tooltip = {pointFormat: labels['Compilations'] + ': <b>{point.y}</b>'};
+        config.chart.type = "pie";
+        config.tooltip = {pointFormat: labels["Compilations"] + ": <b>{point.y}</b>"};
         config.plotOptions.pie = {
-            cursor: 'pointer',
+            cursor: "pointer",
             dataLabels: {
                 enabled: true,
-                format: '{point.name}: {point.percentage:.1f} %'
+                format: "{point.name}: {point.percentage:.1f} %"
             }
         };
         config.legend = [{
-            name: labels['Compilations'],
+            name: labels["Compilations"],
             colorByPoint: true,
             data: this.format(questionId, data, labels)
         }];

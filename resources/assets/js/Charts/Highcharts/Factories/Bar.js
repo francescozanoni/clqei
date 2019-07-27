@@ -1,11 +1,11 @@
 /**
  * Created by Francesco.Zanoni on 11/06/2018.
  */
-'use strict';
+"use strict";
 
 // Template object is always cloned.
-var template = JSON.parse(JSON.stringify(require('../Template')));
-var Highcharts = require('highcharts');
+var template = JSON.parse(JSON.stringify(require("../Template")));
+var Highcharts = require("highcharts");
 
 /**
  * Highcharts bar chart factory
@@ -49,14 +49,14 @@ module.exports = {
 
         var config = template;
 
-        config.chart.type = 'bar';
+        config.chart.type = "bar";
         config.xAxis = {
             title: null,
-            type: 'category',
+            type: "category",
             labels: {
                 style: {
                     width: 150,
-                    'text-align': 'right'
+                    "text-align": "right"
                 }
             }
         };
@@ -70,7 +70,7 @@ module.exports = {
         };
         config.legend = {enabled: false};
         config.series = [{
-            name: labels['Compilations'],
+            name: labels["Compilations"],
             colorByPoint: true,
             data: this.format(questionId, data, labels)
         }];

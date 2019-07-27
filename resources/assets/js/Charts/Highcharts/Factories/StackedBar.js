@@ -1,11 +1,11 @@
 /**
  * Created by Francesco.Zanoni on 11/06/2018.
  */
-'use strict';
+"use strict";
 
 // Template object is always cloned.
-var template = JSON.parse(JSON.stringify(require('../Template')));
-var Highcharts = require('highcharts');
+var template = JSON.parse(JSON.stringify(require("../Template")));
+var Highcharts = require("highcharts");
 
 /**
  * Highcharts stacked bar chart factory
@@ -49,29 +49,29 @@ module.exports = {
 
         var config = template;
 
-        config.chart.type = 'bar';
+        config.chart.type = "bar";
         config.xAxis = {visible: false};
         config.yAxis = {
             min: 0,
-            title: {text: ''},
-            labels: {format: '{value} %'}
+            title: {text: ""},
+            labels: {format: "{value} %"}
         };
-        config.plotOptions.series = {stacking: 'percent'};
+        config.plotOptions.series = {stacking: "percent"};
         config.tooltip = {
-            headerFormat: '',
-            pointFormat: '{series.name}: {point.y} ' + labels['Compilations'].toLowerCase()
+            headerFormat: "",
+            pointFormat: "{series.name}: {point.y} " + labels["Compilations"].toLowerCase()
         };
         config.legend = {
             reversed: true,
-            align: 'right',
-            verticalAlign: 'middle',
-            layout: 'vertical',
+            align: "right",
+            verticalAlign: "middle",
+            layout: "vertical",
             itemWidth: 260,
             itemStyle: {
-                fontWeight: 'auto',
-                textOverflow: ''
+                fontWeight: "auto",
+                textOverflow: ""
             },
-            style: {'white-space': 'wrap'}
+            style: {"white-space": "wrap"}
         };
         config.series = this.format(questionId, data, labels);
 
