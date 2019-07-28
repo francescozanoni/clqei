@@ -94,9 +94,10 @@ class RegisterController extends Controller
         // neither on a service provider nor on this controller's constructor,
         // because in those points session has not been bootstrapped yet
         // (therefore guest rules are always used).
-        if (Auth::guest()) {
+        if (Auth::guest() === true) {
             $validationRules = $userService->getGuestValidationRules();
-        } else {
+        }
+        if (Auth::guest() === false) {
             if (Auth::user()->role === User::ROLE_ADMINISTRATOR) {
                 $validationRules = $userService->getAdministratorValidationRules();
             }

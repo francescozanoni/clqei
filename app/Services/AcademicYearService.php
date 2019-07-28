@@ -55,9 +55,9 @@ class AcademicYearService
 
         if (date("n", $time) < 10) {
             return ($year - 1) . "/" . $year;
-        } else {
-            return ($year) . "/" . ($year + 1);
         }
+        
+        return ($year) . "/" . ($year + 1);
     }
 
     /**

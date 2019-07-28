@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+let mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,11 +11,11 @@ let mix = require('laravel-mix');
  |
  */
 
-// setResourceRoot('../') is required to correctly resolve font paths,
+// setResourceRoot("../") is required to correctly resolve font paths,
 // in case of application reachable by a domain subfolder
-mix.setResourceRoot('../')
-    .js('resources/assets/js/app.js', 'public/js')
-    .js('resources/assets/js/statistics.js', 'public/js')
-    .js('resources/assets/js/lists.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css')
-    .sass('resources/assets/sass/lists.scss', 'public/css');
+mix.setResourceRoot("../")
+    .js("resources/assets/js/app.js", "public/js")
+    .js("resources/assets/js/statistics.js", "public/js")
+    .js("resources/assets/js/lists.js", "public/js")
+    .sass("resources/assets/sass/app.scss", "public/css")
+    .sass("resources/assets/sass/lists.scss", "public/css");
