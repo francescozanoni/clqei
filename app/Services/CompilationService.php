@@ -84,44 +84,44 @@ class CompilationService
     /**
      * Get section text from ID.
      *
-     * @param int|string $id section ID
+     * @param int|string $sectionId section ID
      * @return string
      */
-    public function getSectionText($id) : string
+    public function getSectionText($sectionId) : string
     {
-        $section = $this->sections->get($id);
+        $section = $this->sections->get($sectionId);
 
         if ($section) {
             return $section->text;
         }
 
-        return (string)$id;
+        return (string)$sectionId;
     }
 
     /**
      * Get question text from ID (e.g. "23" or "q23").
      *
-     * @param int|string $id question ID
+     * @param int|string $questionId question ID
      * @return string
      */
-    public function getQuestionText($id) : string
+    public function getQuestionText($questionId) : string
     {
 
-        $otherQuestion = $this->otherQuestions->get($id);
+        $otherQuestion = $this->otherQuestions->get($questionId);
 
         if ($otherQuestion) {
             return $otherQuestion;
         }
 
-        $id = (string)$id;
+        $questionId = (string)$questionId;
 
-        $question = $this->questions->get(preg_replace("/^q/", "", $id));
+        $question = $this->questions->get(preg_replace("/^q/", "", $questionId));
 
         if ($question) {
             return $question->text;
         }
 
-        return $id;
+        return $questionId;
     }
 
     /**
@@ -170,19 +170,19 @@ class CompilationService
     /**
      * Get question's section, if available.
      *
-     * @param int|string $id question ID
-     * @return null|\App\Models\Section
+     * @param int|string $questionId question ID
+     * @return null|Section
      */
-    public function getQuestionSection($id)
+    public function getQuestionSection($questionId)
     {
 
-        if ($this->otherQuestions->has($id) === true) {
+        if ($this->otherQuestions->has($questionId) === true) {
             return null;
         }
 
-        $id = (string)$id;
+        $questionId = (string)$questionId;
 
-        $question = $this->questions->get(preg_replace("/^q/", "", $id));
+        $question = $this->questions->get(preg_replace("/^q/", "", $questionId));
 
         return $this->sections->get($question->section_id);
 
