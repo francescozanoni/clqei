@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Location::observe(EloquentModelObserver::class);
 
         Blade::directive("jsonize", function ($data) {
-            return '<?php echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>';
+            return "<?php echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>";
         });
 
     }
