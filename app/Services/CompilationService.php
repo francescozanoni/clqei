@@ -148,6 +148,10 @@ class CompilationService
                 $text = $this->otherAnswers["__stage_wards__"]->get($answerId)->name;
                 break;
 
+            case "stage_weeks":
+                $text = $answerId;
+                break;
+
             case "student_gender":
                 $text = __($answerId);
                 break;
