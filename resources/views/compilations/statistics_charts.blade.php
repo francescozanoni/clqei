@@ -6,34 +6,40 @@
 
     <div class="panel panel-default">
 
+        {{-- @todo merge this tag with statistics_counts.blade.php --}}
         <div class="panel-heading">
 
             <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
             {{ __('Compilation statistics') }}
 
-            @if(empty(request()->all()) === false && empty($statistics) === false)
-                ({{ array_sum($statistics['stage_location_id']) . ' ' . __('of') . ' ' . \App\Models\Compilation::count() }}
-                )
+            @if(empty($filters) === false && empty($statistics) === false)
+                ({{
+                array_sum($statistics['stage_location_id']) .
+                ' ' .
+                __('of') .
+                ' ' .
+                \App\Models\Compilation::count()
+                }})
             @else
                 ({{ \App\Models\Compilation::count() }})
             @endif
-            - ({!! link_to_route('compilations.statistics_counts', __('counts')) !!})
+            - ({!! link_to_route('compilations.statistics_counts', __('counts'), $filters) !!})
 
             @if (empty($statistics) === false)
                 {{-- "Cancel filters" button is displayed only if any filters are active --}}
-                @if (empty(request()->all()) === false)
+                @if (empty($filters) === false)
                     <button type="button" class="btn btn-primary btn-xs pull-right" style="margin-left:4px"
                             onclick="window.location.href='{{ route('compilations.statistics_charts') }}'">
                         {{ __('Cancel filters') }}
                     </button>
-                    @endif
-
-                            <!-- Filter modal trigger button -->
-                    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal"
-                            data-target="#filterModal">
-                        {{ __('Apply filters') }}
-                    </button>
                 @endif
+
+            <!-- Filter modal trigger button -->
+                <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal"
+                        data-target="#filterModal">
+                    {{ __('Apply filters') }}
+                </button>
+            @endif
 
         </div>
 
@@ -44,9 +50,9 @@
             @endif
 
             @includeWhen(
-                empty(request()->all()) === false,
+                empty($filters) === false,
                 'compilations.statistics.active_filters',
-                ['activeFilters' => request()->all()]
+                ['activeFilters' => $filters]
             )
 
             {{-- Nav tabs --}}
@@ -71,7 +77,7 @@
             <div class="tab-content">
 
                 @php
-                $section = null;
+                    $section = null;
                 @endphp
 
                 {{-- A container element for each question is created, together with its answers inside --}}
@@ -79,7 +85,7 @@
 
                     @if ($section === null)
                         @php
-                        $section = $sections->first();
+                            $section = $sections->first();
                         @endphp
 
 
@@ -92,7 +98,7 @@
                                     <em>{{ $section->footer }}</em>
                                 @endif
                                 @php
-                                $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
+                                    $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
                                 @endphp
                         </div>
 
@@ -106,23 +112,23 @@
 
                             {{--  @todo refactor label array creation to another location --}}
                             @php
-                            $labels = ['Compilations' => __('Compilations')];
-                            foreach (array_keys($answers) as $answerId) {
-                            $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
-                            }
+                                $labels = ['Compilations' => __('Compilations')];
+                                foreach (array_keys($answers) as $answerId) {
+                                $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
+                                }
                             @endphp
                             <div id="chart_{{ $questionId }}"
                                  style="width: 100%; height: {{ (count($answers) > 5 || max(array_map('strlen', $answers)) > 16 ? (30 * count($answers)) : 100) }}px;">
-                    <span class="hidden data">
-                        @jsonize([
-                            'question' => [
-                                'id' => $questionId,
-                                'text' => $compilationService->getQuestionText($questionId),
-                            ],
-                            'answers' => $answers,
-                            'labels' => $labels,
-                        ])
-                    </span>
+                                <span class="hidden data">
+                                    @jsonize([
+                                        'question' => [
+                                            'id' => $questionId,
+                                            'text' => $compilationService->getQuestionText($questionId),
+                                        ],
+                                        'answers' => $answers,
+                                        'labels' => $labels,
+                                    ])
+                                </span>
                             </div>
 
                             @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
@@ -161,28 +167,28 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/statistics.js') }}"></script>
-<script>
-    $(function () {
+    <script src="{{ asset('js/statistics.js') }}"></script>
+    <script>
+        $(function () {
 
-        var modalBody = $('#filterModal div.modal-body');
+            var modalBody = $('#filterModal div.modal-body');
 
-        $('div[id^=chart_]').each(function () {
+            $('div[id^=chart_]').each(function () {
 
-            // Question/answers data is extracted from chart container tag.
-            var data = JSON.parse($(this).find('.data').html());
-            var question = data['question'];
+                // Question/answers data is extracted from chart container tag.
+                var data = JSON.parse($(this).find('.data').html());
+                var question = data['question'];
 
-            window.addFilterToModal(modalBody, data, getUrlParameters());
+                window.addFilterToModal(modalBody, data, getUrlParameters());
 
-            // Add question text before chart.
-            $(this).before('<div>' + question['text'] + '</div>');
+                // Add question text before chart.
+                $(this).before('<div>' + question['text'] + '</div>');
 
-            // This function must be called here, after the previous code,
-            // because it erases chart data from chart container tag.
-            window.renderChart(this, data);
+                // This function must be called here, after the previous code,
+                // because it erases chart data from chart container tag.
+                window.renderChart(this, data);
 
+            });
         });
-    });
-</script>
+    </script>
 @endpush

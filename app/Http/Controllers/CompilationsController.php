@@ -244,7 +244,14 @@ class CompilationsController extends Controller
         $pseudoSection->title = __("Stage");
         $sections->prepend($pseudoSection);
 
-        return view("compilations.statistics_charts", ["statistics" => $statistics, "sections" => $sections]);
+        return view(
+            "compilations.statistics_charts",
+            [
+                "statistics" => $statistics,
+                "sections" => $sections,
+                "filters" => request()->query(),
+            ]
+        );
     }
 
     private function getStatistics(array $requestParameters, App\Services\StatisticService $statisticService) : array
@@ -367,7 +374,14 @@ class CompilationsController extends Controller
         $pseudoSection->title = __("Stage");
         $sections->prepend($pseudoSection);
 
-        return view("compilations.statistics_counts", ["statistics" => $statistics, "sections" => $sections]);
+        return view(
+            "compilations.statistics_counts",
+            [
+                "statistics" => $statistics,
+                "sections" => $sections,
+                "filters" => request()->query(),
+            ]
+        );
     }
 
 }
