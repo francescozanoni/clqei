@@ -141,11 +141,8 @@ class CompilationService
         switch ($questionId) {
 
             case "stage_location_id":
-                $text = $this->otherAnswers["__stage_locations__"]->get($answerId)->name;
-                break;
-
             case "stage_ward_id":
-                $text = $this->otherAnswers["__stage_wards__"]->get($answerId)->name;
+                $text = $this->otherAnswers["__" . str_replace("_id", "s", $questionId) . "__"]->get($answerId)->name;
                 break;
 
             case "stage_weeks":

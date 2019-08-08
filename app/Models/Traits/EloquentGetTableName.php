@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Models\Traits;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Trait EloquentGetTableName
  *
@@ -18,7 +20,12 @@ trait EloquentGetTableName
      */
     public static function getTableName() : string
     {
-        return ((new self)->getTable());
+        /**
+         * @var Model
+         */
+        $modelInstance = (new self);
+
+        return $modelInstance->getTable();
     }
 
 }

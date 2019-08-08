@@ -39,7 +39,8 @@ class ImportService
                 return ["Invalid file type"];
             }
 
-            if (count(file($filePath)) === 0) {
+            if (file($filePath) === false ||
+                count(file($filePath)) === 0) {
                 return ["Empty file"];
             }
         

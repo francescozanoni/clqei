@@ -23,7 +23,7 @@ class ResetPassword extends OriginalResetPassword
         // @todo customize also e-mail header and footer (still in English)
         return (new MailMessage)
             ->line(__("You are receiving this e-mail because we received a password reset request for your account."))
-            ->action(__("Reset password"), url(config("app.url") . route("password.reset", $this->token, false)))
+            ->action(__("Reset password"), url(config("app.url") . route("password.reset", [$this->token], false)))
             ->line(__("If you did not request a password reset, no further action is required."));
     }
 }
