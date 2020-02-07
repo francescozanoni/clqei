@@ -30,28 +30,28 @@ class AdministratorManagementTest extends TestCase
 
         $user = User::administrators()->first();
 
-        $response = $this->actingAs($user)->post(route('register', $payload));
+        $response = $this->actingAs($user)->post(route("register", $payload));
 
-        $response->assertRedirect(route('home'));
+        $response->assertRedirect(route("home"));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new administrator has been created')
+            __("The new administrator has been created")
         );
 
-        $this->assertDatabaseHas('users', ['id' => 5]);
-        $this->assertDatabaseMissing('users', ['id' => 6]);
+        $this->assertDatabaseHas("users", ["id" => 5]);
+        $this->assertDatabaseMissing("users", ["id" => 6]);
 
     }
 
     private function getPayload() : array
     {
         return [
-            'first_name' => 'Foo',
-            'last_name' => 'Bar',
-            'email' => 'foo.bar@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'role' => User::ROLE_ADMINISTRATOR,
+            "first_name" => "Foo",
+            "last_name" => "Bar",
+            "email" => "foo.bar@example.com",
+            "password" => "password",
+            "password_confirmation" => "password",
+            "role" => User::ROLE_ADMINISTRATOR,
         ];
     }
 

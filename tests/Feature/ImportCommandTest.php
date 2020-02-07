@@ -21,16 +21,16 @@ class ImportCommandTest extends TestCase
     {
 
         // Non text file
-        $exitCode = Artisan::call('import:locations', ['file_path' => config('database.connections.sqlite.database')]);
+        $exitCode = Artisan::call("import:locations", ["file_path" => config("database.connections.sqlite.database")]);
         $this->assertEquals(ImportLocations::INVALID_INPUT, $exitCode);
 
         // Inexistent file
-        $exitCode = Artisan::call('import:locations', ['file_path' => 'inexistent_file.txt']);
+        $exitCode = Artisan::call("import:locations", ["file_path" => "inexistent_file.txt"]);
         $this->assertEquals(ImportLocations::INVALID_INPUT, $exitCode);
 
         // Empty file
-        $emptyFilePath = tempnam(sys_get_temp_dir(), 'clqei');
-        $exitCode = Artisan::call('import:locations', ['file_path' => $emptyFilePath]);
+        $emptyFilePath = tempnam(sys_get_temp_dir(), "clqei");
+        $exitCode = Artisan::call("import:locations", ["file_path" => $emptyFilePath]);
         unlink($emptyFilePath);
         $this->assertEquals(ImportLocations::INVALID_INPUT, $exitCode);
 
@@ -44,30 +44,30 @@ class ImportCommandTest extends TestCase
 
         $this->seed();
 
-        $filePath = tempnam(sys_get_temp_dir(), 'clqei');
-        file_put_contents($filePath, 'TEST LOCATION 1' . PHP_EOL, FILE_APPEND);
-        file_put_contents($filePath, 'TEST LOCATION 2' . PHP_EOL, FILE_APPEND);
-        $exitCode = Artisan::call('import:locations', ['file_path' => $filePath]);
+        $filePath = tempnam(sys_get_temp_dir(), "clqei");
+        file_put_contents($filePath, "TEST LOCATION 1" . PHP_EOL, FILE_APPEND);
+        file_put_contents($filePath, "TEST LOCATION 2" . PHP_EOL, FILE_APPEND);
+        $exitCode = Artisan::call("import:locations", ["file_path" => $filePath]);
         unlink($filePath);
 
         $this->assertEquals(ImportLocations::SUCCESS, $exitCode);
         $this->assertDatabaseHas(
-            'locations',
+            "locations",
             [
-                'id' => 2,
-                'name' => 'TEST LOCATION 1',
-                'deleted_at' => null
+                "id" => 2,
+                "name" => "TEST LOCATION 1",
+                "deleted_at" => null
             ]
         );
         $this->assertDatabaseHas(
-            'locations',
+            "locations",
             [
-                'id' => 3,
-                'name' => 'TEST LOCATION 2',
-                'deleted_at' => null
+                "id" => 3,
+                "name" => "TEST LOCATION 2",
+                "deleted_at" => null
             ]
         );
-        $this->assertDatabaseMissing('locations', ['id' => 4]);
+        $this->assertDatabaseMissing("locations", ["id" => 4]);
 
     }
 
@@ -78,16 +78,16 @@ class ImportCommandTest extends TestCase
     {
 
         // Non text file
-        $exitCode = Artisan::call('import:wards', ['file_path' => config('database.connections.sqlite.database')]);
+        $exitCode = Artisan::call("import:wards", ["file_path" => config("database.connections.sqlite.database")]);
         $this->assertEquals(ImportWards::INVALID_INPUT, $exitCode);
 
         // Inexistent file
-        $exitCode = Artisan::call('import:wards', ['file_path' => 'inexistent_file.txt']);
+        $exitCode = Artisan::call("import:wards", ["file_path" => "inexistent_file.txt"]);
         $this->assertEquals(ImportWards::INVALID_INPUT, $exitCode);
 
         // Empty file
-        $emptyFilePath = tempnam(sys_get_temp_dir(), 'clqei');
-        $exitCode = Artisan::call('import:wards', ['file_path' => $emptyFilePath]);
+        $emptyFilePath = tempnam(sys_get_temp_dir(), "clqei");
+        $exitCode = Artisan::call("import:wards", ["file_path" => $emptyFilePath]);
         unlink($emptyFilePath);
         $this->assertEquals(ImportWards::INVALID_INPUT, $exitCode);
 
@@ -101,30 +101,30 @@ class ImportCommandTest extends TestCase
 
         $this->seed();
 
-        $filePath = tempnam(sys_get_temp_dir(), 'clqei');
-        file_put_contents($filePath, 'TEST WARD 1' . PHP_EOL, FILE_APPEND);
-        file_put_contents($filePath, 'TEST WARD 2' . PHP_EOL, FILE_APPEND);
-        $exitCode = Artisan::call('import:wards', ['file_path' => $filePath]);
+        $filePath = tempnam(sys_get_temp_dir(), "clqei");
+        file_put_contents($filePath, "TEST WARD 1" . PHP_EOL, FILE_APPEND);
+        file_put_contents($filePath, "TEST WARD 2" . PHP_EOL, FILE_APPEND);
+        $exitCode = Artisan::call("import:wards", ["file_path" => $filePath]);
         unlink($filePath);
 
         $this->assertEquals(ImportLocations::SUCCESS, $exitCode);
         $this->assertDatabaseHas(
-            'wards',
+            "wards",
             [
-                'id' => 2,
-                'name' => 'TEST WARD 1',
-                'deleted_at' => null
+                "id" => 2,
+                "name" => "TEST WARD 1",
+                "deleted_at" => null
             ]
         );
         $this->assertDatabaseHas(
-            'wards',
+            "wards",
             [
-                'id' => 3,
-                'name' => 'TEST WARD 2',
-                'deleted_at' => null
+                "id" => 3,
+                "name" => "TEST WARD 2",
+                "deleted_at" => null
             ]
         );
-        $this->assertDatabaseMissing('wards', ['id' => 4]);
+        $this->assertDatabaseMissing("wards", ["id" => 4]);
 
     }
 

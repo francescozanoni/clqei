@@ -1,7 +1,9 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tests;
+
+use App\Models\Answer;
 
 trait ProvidesCompilationPayload
 {
@@ -24,7 +26,7 @@ trait ProvidesCompilationPayload
         string $stageStartDate,
         string $stageEndDate,
         string $stageAcademicYear
-    ) : array
+    ): array
     {
         $payload =
             $this->getPayloadWithAllFields(
@@ -36,10 +38,10 @@ trait ProvidesCompilationPayload
                 $stageAcademicYear
             );
 
-        $payload['q6'] = '104';
-        unset($payload['q7']);
-        $payload['q8'] = '110';
-        $payload['q9'] = null;
+        $payload["q6"] = "104";
+        unset($payload["q7"]);
+        $payload["q8"] = "110";
+        $payload["q9"] = null;
 
         return $payload;
     }
@@ -62,54 +64,54 @@ trait ProvidesCompilationPayload
         string $stageStartDate,
         string $stageEndDate,
         string $stageAcademicYear
-    ) : array
+    ): array
     {
 
         return [
-            'student_id' => (string)$studentId,
-            'stage_location_id' => (string)$stageLocationId,
-            'stage_ward_id' => (string)$stageWardId,
-            'stage_start_date' => $stageStartDate,
-            'stage_end_date' => $stageEndDate,
-            'stage_academic_year' => $stageAcademicYear,
-            'q1' => '1',
-            'q2' => '84',
-            'q3' => '87',
-            'q4' => '89',
-            'q5' => '91',
-            'q6' => '103',
-            'q7' => [
-                '105',
-                '106',
-                '107',
-                '108'
+            "student_id" => (string)$studentId,
+            "stage_location_id" => (string)$stageLocationId,
+            "stage_ward_id" => (string)$stageWardId,
+            "stage_start_date" => $stageStartDate,
+            "stage_end_date" => $stageEndDate,
+            "stage_academic_year" => $stageAcademicYear,
+            "q1" => "1",
+            "q2" => "84",
+            "q3" => "87",
+            "q4" => "89",
+            "q5" => "91",
+            "q6" => "103",
+            "q7" => [
+                "105",
+                "106",
+                "107",
+                "108"
             ],
-            'q8' => '109',
-            'q9' => '111',
-            'q10' => '142',
-            'q11' => '147',
-            'q12' => '151',
-            'q13' => '155',
-            'q14' => '159',
-            'q15' => '163',
-            'q16' => '167',
-            'q17' => '171',
-            'q18' => '175',
-            'q19' => '179',
-            'q20' => '183',
-            'q21' => '187',
-            'q22' => '191',
-            'q23' => '195',
-            'q24' => '199',
-            'q25' => '203',
-            'q26' => '207',
-            'q27' => '211',
-            'q28' => '215',
-            'q29' => '219',
-            'q30' => '223',
-            'q31' => '227',
-            'q32' => '231',
-            'q33' => '235'
+            "q8" => "109",
+            "q9" => "111",
+            "q10" => "114",
+            "q11" => "119",
+            "q12" => "123",
+            "q13" => "127",
+            "q14" => "131",
+            "q15" => "135",
+            "q16" => "139",
+            "q17" => "143",
+            "q18" => "147",
+            "q19" => "151",
+            "q20" => "155",
+            "q21" => "159",
+            "q22" => "163",
+            "q23" => "167",
+            "q24" => "171",
+            "q25" => "175",
+            "q26" => "179",
+            "q27" => "183",
+            "q28" => "187",
+            "q29" => "191",
+            "q30" => "195",
+            "q31" => "199",
+            "q32" => "203",
+            "q33" => "207"
         ];
 
     }

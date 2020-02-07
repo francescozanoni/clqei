@@ -34,14 +34,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -53,16 +53,16 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
+        $response->assertRedirect(route("compilations.show", ["compilation" => 1]));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created')
+            __("The new compilation has been created")
         );
-        $this->assertDatabaseHas('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilations', ['id' => 2]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 36, 'compilation_id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 37]);
+        $this->assertDatabaseHas("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilations", ["id" => 2]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
 
     }
 
@@ -77,14 +77,14 @@ class CompilationTest extends TestCase
         $stageWard = Ward::first();
 
         // First compilation.
-        $stageStartDate = Carbon::today()->subDays(40)->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subDays(20)->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subDays(40)->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subDays(20)->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -96,26 +96,26 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
+        $response->assertRedirect(route("compilations.show", ["compilation" => 1]));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created')
+            __("The new compilation has been created")
         );
-        $this->assertDatabaseHas('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilations', ['id' => 2]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 36, 'compilation_id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 37]);
+        $this->assertDatabaseHas("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilations", ["id" => 2]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
 
         // Second compilation.
-        $stageStartDate = Carbon::today()->subDays(60)->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subDays(41)->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subDays(60)->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subDays(41)->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -127,26 +127,26 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertRedirect(route('compilations.show', ['compilation' => 2]));
+        $response->assertRedirect(route("compilations.show", ["compilation" => 2]));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created')
+            __("The new compilation has been created")
         );
-        $this->assertDatabaseHas('compilations', ['id' => 2]);
-        $this->assertDatabaseMissing('compilations', ['id' => 3]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 37, 'compilation_id' => 2]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 72, 'compilation_id' => 2]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 73]);
+        $this->assertDatabaseHas("compilations", ["id" => 2]);
+        $this->assertDatabaseMissing("compilations", ["id" => 3]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 37, "compilation_id" => 2]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 72, "compilation_id" => 2]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 73]);
 
         // Third compilation.
-        $stageStartDate = Carbon::today()->subDays(19)->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subDays(5)->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subDays(19)->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subDays(5)->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -158,16 +158,16 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertRedirect(route('compilations.show', ['compilation' => 3]));
+        $response->assertRedirect(route("compilations.show", ["compilation" => 3]));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created')
+            __("The new compilation has been created")
         );
-        $this->assertDatabaseHas('compilations', ['id' => 3]);
-        $this->assertDatabaseMissing('compilations', ['id' => 4]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 73, 'compilation_id' => 3]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 108, 'compilation_id' => 3]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 109]);
+        $this->assertDatabaseHas("compilations", ["id" => 3]);
+        $this->assertDatabaseMissing("compilations", ["id" => 4]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 73, "compilation_id" => 3]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 108, "compilation_id" => 3]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 109]);
 
     }
 
@@ -180,14 +180,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate(Carbon::parse($stageStartDate)->subYear()->format('Y-m-d'));
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate(Carbon::parse($stageStartDate)->subYear()->format("Y-m-d"));
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -199,16 +199,16 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
+        $response->assertRedirect(route("compilations.show", ["compilation" => 1]));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created')
+            __("The new compilation has been created")
         );
-        $this->assertDatabaseHas('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilations', ['id' => 2]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 36, 'compilation_id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 37]);
+        $this->assertDatabaseHas("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilations", ["id" => 2]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
 
     }
 
@@ -221,15 +221,15 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
                     route(
-                        'compilations.store',
+                        "compilations.store",
                         $this->getPayloadWithOnlyRequiredFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -241,20 +241,20 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
+        $response->assertRedirect(route("compilations.show", ["compilation" => 1]));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created')
+            __("The new compilation has been created")
         );
-        $this->assertDatabaseHas('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilations', ['id' => 2]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 33, 'compilation_id' => 1]);
+        $this->assertDatabaseHas("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilations", ["id" => 2]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 33, "compilation_id" => 1]);
         // Empty optional select box field is stored as NULL.
-        $this->assertDatabaseHas('compilation_items', ['compilation_id' => 1, 'question_id' => 7, 'answer' => null]);
+        $this->assertDatabaseHas("compilation_items", ["compilation_id" => 1, "question_id" => 7, "answer" => null]);
         // Empty optional checkbox field is stored as NULL.
-        $this->assertDatabaseHas('compilation_items', ['compilation_id' => 1, 'question_id' => 9, 'answer' => null]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 34]);
+        $this->assertDatabaseHas("compilation_items", ["compilation_id" => 1, "question_id" => 9, "answer" => null]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 34]);
 
     }
 
@@ -267,9 +267,9 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $fullData = $this->getPayloadWithAllFields(
             $user->student->id,
@@ -286,7 +286,7 @@ class CompilationTest extends TestCase
                 $this->actingAs($user)
                     ->post(
                         route(
-                            'compilations.store',
+                            "compilations.store",
                             array_filter(
                                 $fullData,
                                 function ($key) use ($keyToRemove) {
@@ -298,8 +298,8 @@ class CompilationTest extends TestCase
                     );
 
             $response->assertSessionHasErrors([$keyToRemove]);
-            $this->assertDatabaseMissing('compilations', ['id' => 1]);
-            $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+            $this->assertDatabaseMissing("compilations", ["id" => 1]);
+            $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
         }
 
@@ -314,14 +314,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id + 1,
                             $stageLocation->id,
@@ -333,9 +333,9 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertSessionHasErrors(['student_id']);
-        $this->assertDatabaseMissing('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+        $response->assertSessionHasErrors(["student_id"]);
+        $this->assertDatabaseMissing("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
     }
 
@@ -348,14 +348,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id + 1,
@@ -367,9 +367,9 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertSessionHasErrors(['stage_location_id']);
-        $this->assertDatabaseMissing('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+        $response->assertSessionHasErrors(["stage_location_id"]);
+        $this->assertDatabaseMissing("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
     }
 
@@ -382,14 +382,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -401,9 +401,9 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertSessionHasErrors(['stage_ward_id']);
-        $this->assertDatabaseMissing('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+        $response->assertSessionHasErrors(["stage_ward_id"]);
+        $this->assertDatabaseMissing("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
     }
 
@@ -416,14 +416,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -435,9 +435,9 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertSessionHasErrors(['stage_end_date']);
-        $this->assertDatabaseMissing('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+        $response->assertSessionHasErrors(["stage_end_date"]);
+        $this->assertDatabaseMissing("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
     }
 
@@ -450,14 +450,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subYear()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subYear()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -469,9 +469,9 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertSessionHasErrors(['stage_end_date']);
-        $this->assertDatabaseMissing('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+        $response->assertSessionHasErrors(["stage_end_date"]);
+        $this->assertDatabaseMissing("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
     }
 
@@ -484,14 +484,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = 'dffggfg';
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageEndDate);
+        $stageStartDate = "dffggfg";
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageEndDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -503,9 +503,9 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertSessionHasErrors(['stage_start_date']);
-        $this->assertDatabaseMissing('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+        $response->assertSessionHasErrors(["stage_start_date"]);
+        $this->assertDatabaseMissing("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
     }
 
@@ -518,14 +518,14 @@ class CompilationTest extends TestCase
         $user = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getOther(-10);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getOther(-10);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -537,9 +537,9 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertSessionHasErrors(['stage_academic_year']);
-        $this->assertDatabaseMissing('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 1]);
+        $response->assertSessionHasErrors(["stage_academic_year"]);
+        $this->assertDatabaseMissing("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 1]);
 
     }
 
@@ -554,14 +554,14 @@ class CompilationTest extends TestCase
         $stageWard = Ward::first();
 
         // First compilation.
-        $stageStartDate = Carbon::today()->subDays(40)->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subDays(20)->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subDays(40)->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subDays(20)->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $response =
             $this->actingAs($user)
                 ->post(
-                    route('compilations.store',
+                    route("compilations.store",
                         $this->getPayloadWithAllFields(
                             $user->student->id,
                             $stageLocation->id,
@@ -573,47 +573,47 @@ class CompilationTest extends TestCase
                     )
                 );
 
-        $response->assertRedirect(route('compilations.show', ['compilation' => 1]));
+        $response->assertRedirect(route("compilations.show", ["compilation" => 1]));
         $response->assertSessionHas(
             EloquentModelObserver::FLASH_MESSAGE_KEY,
-            __('The new compilation has been created')
+            __("The new compilation has been created")
         );
-        $this->assertDatabaseHas('compilations', ['id' => 1]);
-        $this->assertDatabaseMissing('compilations', ['id' => 2]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 1, 'compilation_id' => 1]);
-        $this->assertDatabaseHas('compilation_items', ['id' => 36, 'compilation_id' => 1]);
-        $this->assertDatabaseMissing('compilation_items', ['id' => 37]);
+        $this->assertDatabaseHas("compilations", ["id" => 1]);
+        $this->assertDatabaseMissing("compilations", ["id" => 2]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
+        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
 
         // Following compilations, with overlapping date ranges.
         $data = [
 
             [
-                'stage_start_date' => Carbon::today()->subDays(50)->format('Y-m-d'),
-                'stage_end_date' => Carbon::today()->subDays(40)->format('Y-m-d'),
+                "stage_start_date" => Carbon::today()->subDays(50)->format("Y-m-d"),
+                "stage_end_date" => Carbon::today()->subDays(40)->format("Y-m-d"),
             ],
             [
-                'stage_start_date' => Carbon::today()->subDays(50)->format('Y-m-d'),
-                'stage_end_date' => Carbon::today()->subDays(30)->format('Y-m-d'),
+                "stage_start_date" => Carbon::today()->subDays(50)->format("Y-m-d"),
+                "stage_end_date" => Carbon::today()->subDays(30)->format("Y-m-d"),
             ],
             [
-                'stage_start_date' => Carbon::today()->subDays(40)->format('Y-m-d'),
-                'stage_end_date' => Carbon::today()->subDays(30)->format('Y-m-d'),
+                "stage_start_date" => Carbon::today()->subDays(40)->format("Y-m-d"),
+                "stage_end_date" => Carbon::today()->subDays(30)->format("Y-m-d"),
             ],
             [
-                'stage_start_date' => Carbon::today()->subDays(35)->format('Y-m-d'),
-                'stage_end_date' => Carbon::today()->subDays(30)->format('Y-m-d'),
+                "stage_start_date" => Carbon::today()->subDays(35)->format("Y-m-d"),
+                "stage_end_date" => Carbon::today()->subDays(30)->format("Y-m-d"),
             ],
             [
-                'stage_start_date' => Carbon::today()->subDays(30)->format('Y-m-d'),
-                'stage_end_date' => Carbon::today()->subDays(20)->format('Y-m-d'),
+                "stage_start_date" => Carbon::today()->subDays(30)->format("Y-m-d"),
+                "stage_end_date" => Carbon::today()->subDays(20)->format("Y-m-d"),
             ],
             [
-                'stage_start_date' => Carbon::today()->subDays(30)->format('Y-m-d'),
-                'stage_end_date' => Carbon::today()->subDays(10)->format('Y-m-d'),
+                "stage_start_date" => Carbon::today()->subDays(30)->format("Y-m-d"),
+                "stage_end_date" => Carbon::today()->subDays(10)->format("Y-m-d"),
             ],
             [
-                'stage_start_date' => Carbon::today()->subDays(20)->format('Y-m-d'),
-                'stage_end_date' => Carbon::today()->subDays(10)->format('Y-m-d'),
+                "stage_start_date" => Carbon::today()->subDays(20)->format("Y-m-d"),
+                "stage_end_date" => Carbon::today()->subDays(10)->format("Y-m-d"),
             ],
 
         ];
@@ -623,21 +623,21 @@ class CompilationTest extends TestCase
             $response =
                 $this->actingAs($user)
                     ->post(
-                        route('compilations.store',
+                        route("compilations.store",
                             $this->getPayloadWithAllFields(
                                 $user->student->id,
                                 $stageLocation->id,
                                 $stageWard->id,
-                                $datum['stage_start_date'],
-                                $datum['stage_end_date'],
-                                App::make('App\Services\AcademicYearService')->getFromDate($datum['stage_start_date'])
+                                $datum["stage_start_date"],
+                                $datum["stage_end_date"],
+                                App::make("App\Services\AcademicYearService")->getFromDate($datum["stage_start_date"])
                             )
                         )
                     );
 
-            $response->assertSessionHasErrors(['stage_start_date', 'stage_end_date']);
-            $this->assertDatabaseMissing('compilations', ['id' => 2]);
-            $this->assertDatabaseMissing('compilation_items', ['id' => 37]);
+            $response->assertSessionHasErrors(["stage_start_date", "stage_end_date"]);
+            $this->assertDatabaseMissing("compilations", ["id" => 2]);
+            $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
 
         }
 

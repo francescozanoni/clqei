@@ -25,13 +25,13 @@ trait CreatesCompilations
         $student = User::students()->first();
         $stageLocation = Location::first();
         $stageWard = Ward::first();
-        $stageStartDate = Carbon::today()->subMonth()->format('Y-m-d');
-        $stageEndDate = Carbon::today()->subWeek()->format('Y-m-d');
-        $stageAcademicYear = App::make('App\Services\AcademicYearService')->getFromDate($stageStartDate);
+        $stageStartDate = Carbon::today()->subMonth()->format("Y-m-d");
+        $stageEndDate = Carbon::today()->subWeek()->format("Y-m-d");
+        $stageAcademicYear = App::make("App\Services\AcademicYearService")->getFromDate($stageStartDate);
 
         $this->actingAs($student)
             ->post(
-                route('compilations.store',
+                route("compilations.store",
                     $this->getPayloadWithAllFields(
                         $student->student->id,
                         $stageLocation->id,
