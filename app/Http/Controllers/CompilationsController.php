@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -254,7 +254,7 @@ class CompilationsController extends Controller
         );
     }
 
-    private function getStatistics(array $requestParameters, App\Services\StatisticService $statisticService) : array
+    private function getStatistics(array $requestParameters, App\Services\StatisticService $statisticService): array
     {
 
         $query = Compilation
@@ -270,8 +270,6 @@ class CompilationsController extends Controller
             }
             $this->compilationService->applyQueryFilters($query, $parameter, $value);
         }
-
-        $compilations = $query->get();
 
         /**
          * @var array e.g. Array (
@@ -319,7 +317,15 @@ class CompilationsController extends Controller
          *                   [...]
          *                 )
          */
-        $formattedCompilations = $statisticService->formatCompilations($compilations);
+        $formattedCompilations = [];
+        // $query->get() CANNOT BE USED:
+        // WITH AROUND 1000 COMPILATIONS, IT CAUSES MEMORY EXHAUSTED ERROR
+        $query->chunk(100, function ($compilations) use (&$formattedCompilations, $statisticService) {
+            $formattedCompilations = array_merge(
+                $formattedCompilations,
+                $statisticService->formatCompilations($compilations)
+            );
+        });
 
         /**
          * @var array e.g. Array (
