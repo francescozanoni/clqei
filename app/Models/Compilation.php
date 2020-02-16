@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Staudenmeir\EloquentParamLimitFix\ParamLimitFix;
 
 class Compilation extends Model
 {
 
     use SoftDeletes;
     use EloquentGetTableName;
+    use ParamLimitFix;
 
     /**
      * The attributes that should be mutated to dates.
@@ -30,7 +32,7 @@ class Compilation extends Model
      * Get the student who created this compilation
      * @return BelongsTo
      */
-    public function student() : BelongsTo
+    public function student(): BelongsTo
     {
         return $this->belongsTo("App\Models\Student")->withTrashed();
     }
@@ -39,7 +41,7 @@ class Compilation extends Model
      * Get the location where the stage of this compilation took place
      * @return BelongsTo
      */
-    public function stageLocation() : BelongsTo
+    public function stageLocation(): BelongsTo
     {
         return $this->belongsTo("App\Models\Location", "stage_location_id", "id")->withTrashed();
     }
@@ -48,7 +50,7 @@ class Compilation extends Model
      * Get the ward where the stage of this compilation took place
      * @return BelongsTo
      */
-    public function stageWard() : BelongsTo
+    public function stageWard(): BelongsTo
     {
         return $this->belongsTo("App\Models\Ward", "stage_ward_id", "id")->withTrashed();
     }
@@ -57,7 +59,7 @@ class Compilation extends Model
      * Get the items of this compilation (as relationship)
      * @return HasMany
      */
-    public function items() : HasMany
+    public function items(): HasMany
     {
         return $this->hasMany("App\Models\CompilationItem")
             // Compilation items are returned only once, although items related
@@ -73,7 +75,7 @@ class Compilation extends Model
      *
      * @return int
      */
-    public function getStageWeeksAttribute() : int
+    public function getStageWeeksAttribute(): int
     {
         return (int)round($this->getStageDays() / 7);
     }
@@ -83,7 +85,7 @@ class Compilation extends Model
      *
      * @return int
      */
-    public function getStageDays() : int
+    public function getStageDays(): int
     {
         return ((strtotime($this->stage_end_date) - strtotime($this->stage_start_date)) / 60 / 60 / 24) + 1;
     }

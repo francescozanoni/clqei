@@ -22,6 +22,7 @@
     "nesbot/carbon": "^1.22",
     "simplesoftwareio/simple-qrcode": "^2.0",
     "squareboat/sneaker": "^4.0",
+    "staudenmeir/eloquent-param-limit-fix": "^1.0",
     "umpirsky/country-list": "^2.0",
     "watson/bootstrap-form": "^1.1",
     "yadahan/laravel-authentication-log": "^1.1",

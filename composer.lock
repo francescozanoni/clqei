@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b08c4e304d1312013029e29ab68c83dc",
+    "content-hash": "651eab35f7d2d38aaabb0f8d87b08b03",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1946,6 +1946,43 @@
                 "laravel"
             ],
             "time": "2018-02-17T04:41:06+00:00"
+        },
+        {
+            "name": "staudenmeir/eloquent-param-limit-fix",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staudenmeir/eloquent-param-limit-fix.git",
+                "reference": "4374de89d0873ccfb2f37a3d6f4c8d76dc6d8c50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staudenmeir/eloquent-param-limit-fix/zipball/4374de89d0873ccfb2f37a3d6f4c8d76dc6d8c50",
+                "reference": "4374de89d0873ccfb2f37a3d6f4c8d76dc6d8c50",
+                "shasum": ""
+            },
+            "require-dev": {
+                "illuminate/database": "^6.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Staudenmeir\\EloquentParamLimitFix\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonas Staudenmeir",
+                    "email": "mail@jonas-staudenmeir.de"
+                }
+            ],
+            "description": "Laravel Eloquent eager loading fix for parameter limits of SQLite and SQL Server",
+            "time": "2019-12-14T18:33:43+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
