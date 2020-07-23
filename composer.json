@@ -10,7 +10,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.1.0",
     "ext-json": "*",
     "ext-zip": "*",
     "caouecs/laravel-lang": "^3.0",
