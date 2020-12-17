@@ -14,7 +14,7 @@
     "ext-json": "*",
     "ext-zip": "*",
     "caouecs/laravel-lang": "^3.0",
-    "doctrine/dbal": "^2.5",
+    "doctrine/dbal": "^2.9",
     "fideloper/proxy": "~3.3",
     "laravel/framework": "5.5.*",
     "laravel/tinker": "~1.0",
