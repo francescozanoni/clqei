@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\AccessiblePages;
 
 use App\Models\Location;
 use App\Models\Ward;
