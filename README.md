@@ -65,6 +65,20 @@ rm -rf node_modules
 php scripts/setdown.php
 ```
 
+### Update
+
+#### Dependency update
+
+```bash
+composer update
+npm update
+npm audit fix
+npm audit fix --force # required if fix requires breaking changes
+npm update
+npm run production
+npm run production # required if development dependencies have been installed by previous step
+```
+
 ### Local deployment
 
     php artisan serve

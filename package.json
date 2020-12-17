@@ -10,22 +10,26 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "axios": ">=0.18.1",
+    "axios": "^0.21.0",
     "bootstrap-sass": "^3.4.1",
-    "cross-env": "^5.2.0",
-    "jquery": "^3.4.1",
-    "laravel-mix": "^1.7.2",
-    "lodash": "^4.17.15"
+    "cross-env": "^5.2.1",
+    "jquery": "^3.5.1",
+    "laravel-mix": "^5.0.9",
+    "lodash": "^4.17.20",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.30.0",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "ajv": "^6.10.2",
-    "datatables.net": "^1.10.19",
-    "datatables.net-bs": "^1.10.19",
-    "datatables.net-plugins": "^1.10.19",
-    "highcharts": "^6.2.0",
+    "ajv": "^6.12.6",
+    "datatables.net": "^1.10.22",
+    "datatables.net-bs": "^1.10.22",
+    "datatables.net-plugins": "^1.10.22",
+    "highcharts": "^8.2.2",
     "hoek": "^5.0.4",
     "marked": "github:chjj/marked",
-    "moment": "^2.24.0",
+    "moment": "^2.29.1",
     "ssri": "^5.3.0"
   }
 }
