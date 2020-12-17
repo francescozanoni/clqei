@@ -19,6 +19,9 @@ class CompilationTest extends TestCase
     use RefreshDatabase;
     use ProvidesCompilationPayload;
 
+    const NUMBER_OF_COMPILATION_ITEMS = 37;
+    const NUMBER_OF_COMPILATION_ITEMS_ALWAYS_STORED = 34;
+
     public function setUp()
     {
         parent::setUp();
@@ -61,8 +64,8 @@ class CompilationTest extends TestCase
         $this->assertDatabaseHas("compilations", ["id" => 1]);
         $this->assertDatabaseMissing("compilations", ["id" => 2]);
         $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
-        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS + 1]);
 
     }
 
@@ -104,8 +107,8 @@ class CompilationTest extends TestCase
         $this->assertDatabaseHas("compilations", ["id" => 1]);
         $this->assertDatabaseMissing("compilations", ["id" => 2]);
         $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
-        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS + 1]);
 
         // Second compilation.
         $stageStartDate = Carbon::today()->subDays(60)->format("Y-m-d");
@@ -134,9 +137,9 @@ class CompilationTest extends TestCase
         );
         $this->assertDatabaseHas("compilations", ["id" => 2]);
         $this->assertDatabaseMissing("compilations", ["id" => 3]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 37, "compilation_id" => 2]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 72, "compilation_id" => 2]);
-        $this->assertDatabaseMissing("compilation_items", ["id" => 73]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS + 1, "compilation_id" => 2]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS * 2, "compilation_id" => 2]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS * 2 + 1]);
 
         // Third compilation.
         $stageStartDate = Carbon::today()->subDays(19)->format("Y-m-d");
@@ -165,9 +168,9 @@ class CompilationTest extends TestCase
         );
         $this->assertDatabaseHas("compilations", ["id" => 3]);
         $this->assertDatabaseMissing("compilations", ["id" => 4]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 73, "compilation_id" => 3]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 108, "compilation_id" => 3]);
-        $this->assertDatabaseMissing("compilation_items", ["id" => 109]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS * 2 + 1, "compilation_id" => 3]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS * 3, "compilation_id" => 3]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS * 3 + 1]);
 
     }
 
@@ -207,8 +210,8 @@ class CompilationTest extends TestCase
         $this->assertDatabaseHas("compilations", ["id" => 1]);
         $this->assertDatabaseMissing("compilations", ["id" => 2]);
         $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
-        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS + 1]);
 
     }
 
@@ -249,12 +252,12 @@ class CompilationTest extends TestCase
         $this->assertDatabaseHas("compilations", ["id" => 1]);
         $this->assertDatabaseMissing("compilations", ["id" => 2]);
         $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 33, "compilation_id" => 1]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS_ALWAYS_STORED, "compilation_id" => 1]);
         // Empty optional select box field is stored as NULL.
         $this->assertDatabaseHas("compilation_items", ["compilation_id" => 1, "question_id" => 7, "answer" => null]);
         // Empty optional checkbox field is stored as NULL.
         $this->assertDatabaseHas("compilation_items", ["compilation_id" => 1, "question_id" => 9, "answer" => null]);
-        $this->assertDatabaseMissing("compilation_items", ["id" => 34]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS_ALWAYS_STORED + 1]);
 
     }
 
@@ -581,8 +584,8 @@ class CompilationTest extends TestCase
         $this->assertDatabaseHas("compilations", ["id" => 1]);
         $this->assertDatabaseMissing("compilations", ["id" => 2]);
         $this->assertDatabaseHas("compilation_items", ["id" => 1, "compilation_id" => 1]);
-        $this->assertDatabaseHas("compilation_items", ["id" => 36, "compilation_id" => 1]);
-        $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
+        $this->assertDatabaseHas("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS, "compilation_id" => 1]);
+        $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS + 1]);
 
         // Following compilations, with overlapping date ranges.
         $data = [
@@ -637,7 +640,7 @@ class CompilationTest extends TestCase
 
             $response->assertSessionHasErrors(["stage_start_date", "stage_end_date"]);
             $this->assertDatabaseMissing("compilations", ["id" => 2]);
-            $this->assertDatabaseMissing("compilation_items", ["id" => 37]);
+            $this->assertDatabaseMissing("compilation_items", ["id" => self::NUMBER_OF_COMPILATION_ITEMS + 1]);
 
         }
 

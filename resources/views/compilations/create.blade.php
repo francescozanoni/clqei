@@ -148,7 +148,7 @@
                             @if ($question->type === 'text')
 
                                 {{-- Questions without predefined answers are free text --}}
-                                {!! BootForm::text(
+                                {!! BootForm::textarea(
                                 'q' . $question->id,
                                 $questionCounter++ . ' [q' . $question->id . ']. ' . $question->text
                                 ) !!}

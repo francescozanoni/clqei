@@ -154,5 +154,11 @@
       "type": "single_choice",
       "required": true
     }
+  ],
+  [
+    {
+      "type": "text",
+      "required": false
+    }
   ]
 ]

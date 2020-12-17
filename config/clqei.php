@@ -28,4 +28,6 @@ return [
     
     "viewers_can_view_compilation_details" => env("CLQEI_VIEWERS_CAN_VIEW_COMPILATION_DETAILS", true),
 
+    "compilation_notes_field_is_available" => env("CLQEI_COMPILATION_NOTES_FIELD_IS_AVAILABLE", true),
+
 ];
