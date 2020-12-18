@@ -143,7 +143,8 @@
                                     <p>{{ $answer->text }}</p>
                                 @endforeach
                             @elseif ($item->the_answer !== null)
-                                {{ $item->the_answer }}
+                                {{-- https://stackoverflow.com/questions/28569955/how-do-i-use-nl2br-in-laravel-5-blade --}}
+                                {!! nl2br(e($item->the_answer)) !!}
                             @else
 
                             @endif
