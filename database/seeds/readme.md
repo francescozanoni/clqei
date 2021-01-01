@@ -18,32 +18,21 @@ and used during validation so far:
 ### Examples of manual section/question/answer management
 
  * section addition:
-    ```sql
-    INSERT INTO sections (position,
-                          created_at,
-                          title,
-                          header,
-                          footer)
-    VALUES (8,
-            '2021-01-01 13:48:09',
-            'Note',
-            NULL,
-            NULL);
+    ```bash
+    php artisan tinker
+    >>> $section = new App\Models\Section();
+    >>> $section->title = 'Note';
+    >>> $section->position = ()App\Models\Section::count() + 1);
+    >>> $section->save();
     ```
 * question addition:
-    ```sql
-    INSERT INTO questions (text,
-                           section_id,
-                           type,
-                           required,
-                           options,
-                           position,
-                           created_at)
-    VALUES ('Note personali',
-            8,
-            'text',
-            0,
-            NULL,
-            1,
-            '2021-01-01 13:48:10');
+    ```bash
+    php artisan tinker
+    >>> $section = App\Models\Section::where('title', 'Note')->first();
+    >>> $question = new App\Models\Question();
+    >>> $question->text = 'Note personali';
+    >>> $question->position = ($section->questions->count() + 1); // question is appended to section
+    >>> $question->type = 'text';
+    >>> $question->required = false;
+    >>> $section->questions()->save($question);
     ```
