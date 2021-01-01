@@ -110,7 +110,7 @@
                             @endif
 
 
-                            {{--  @todo refactor label array creation to another location --}}
+                            {{-- @todo refactor label array creation to another location --}}
                             @php
                                 $labels = ['Compilations' => __('Compilations')];
                                 foreach (array_keys($answers) as $answerId) {
@@ -131,7 +131,13 @@
                                     @foreach ($answers as $answerId => $count)
                                         <tr class="row">
                                             <td class="col-xs-10 col-sm-10 col-md-10 col-lg-10">{{ $labels[$answerId] }}</td>
-                                            <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{ $count }}</td>
+                                            <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                            {{-- Free text answer counts are meaningless. --}}
+                                            {{-- @todo find a better way to detect free text answers --}}
+                                            @if (preg_match('/^(\d+|[A-Z]{2}|male|female)$/', (string)$answerId) === 1)
+                                                {{ $count }}
+                                            @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

@@ -123,6 +123,27 @@ class CompilationService
 
         return $questionId;
     }
+    
+    public function isFreeTextQuestion($questionId) : bool
+    {
+
+        $otherQuestion = $this->otherQuestions->get($questionId);
+
+        // All other questions are not free text.
+        if ($otherQuestion) {
+            return false;
+        }
+
+        $questionId = (string)$questionId;
+
+        $question = $this->questions->get(preg_replace("/^q/", "", $questionId));
+
+        if ($question) {
+            return $question->type === "text";
+        }
+
+        return false;
+    }
 
     /**
      * Get answer text from ID, if any.
