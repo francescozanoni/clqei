@@ -43,8 +43,21 @@ php artisan migrate --seed
   - real stage locations and wards
   - an image file **logo.svg** or **logo.png** or **logo.jpg** into **public** folder
 - disable
-  - example administrators and viewers
+  - example administrators, viewers and students
+    ```bash
+    php artisan tinker
+    >>> App\User::where('email', 'administrator@example.com')->first()->delete();
+    >>> App\User::where('email', 'viewer@example.com')->first()->delete();
+    >>> $user = App\User::where('email', 'student@example.com')->first();
+    >>> $user->delete();
+    >>> $user->student()->delete();
+    ```
   - example stage locations and wards
+    ```bash
+    php artisan tinker
+    >>> App\Models\Location::where('name', 'Example location')->first()->delete();
+    >>> App\Models\Ward::where('name', 'Example ward')->first()->delete();
+    ```
 - within file **.env** customize
   - students' identification number pattern
   - students' e-mail pattern
@@ -79,6 +92,21 @@ npm run production
 npm run production # required if development dependencies have been installed by previous step
 ```
 
-### Local deployment
+### Hints
 
-    php artisan serve
+#### Local deployment
+
+```bash
+php artisan serve
+```
+
+#### Restore deleted users
+
+```bash
+php artisan tinker
+>>> App\User::withTrashed()->where('email', 'administrator@example.com')->first()->restore();
+>>> App\User::withTrashed()->where('email', 'viewer@example.com')->first()->restore();
+>>> $user = App\User::withTrashed()->where('email', 'student@example.com')->first();
+>>> $user->restore();
+>>> $user->student()->restore();
+```
