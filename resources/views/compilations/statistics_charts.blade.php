@@ -56,6 +56,7 @@
             )
 
             {{-- Nav tabs --}}
+            {{-- @todo disable tab when no data is available --}}
             <ul class="nav nav-tabs" role="tablist" id="myTabs">
                 @foreach ($sections as $index => $section)
                     <li role="presentation"
