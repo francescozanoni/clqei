@@ -34,7 +34,7 @@
                     </button>
                 @endif
 
-            <!-- Filter modal trigger button -->
+                <!-- Filter modal trigger button -->
                 <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal"
                         data-target="#filterModal">
                     {{ __('Apply filters') }}
@@ -93,13 +93,15 @@
                             <h3>
                                 {{ $section->title }}
                             </h3>
-                            @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
-                                @if ($section->footer !== null)
-                                    <em>{{ $section->footer }}</em>
-                                @endif
-                                @php
-                                    $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
-                                @endphp
+
+                    @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
+
+                            @if ($section->footer !== null)
+                                <em>{{ $section->footer }}</em>
+                            @endif
+                            @php
+                                $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
+                            @endphp
                         </div>
 
                         <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}">
@@ -107,56 +109,63 @@
                                 {{ $section->title }}
                             </h3>
 
-                            @endif
+                    @endif
 
+                    {{-- @todo refactor label array creation to another location --}}
+                    @php
+                        $labels = ['Compilations' => __('Compilations')];
+                        foreach (array_keys($answers) as $answerId) {
+                        $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
+                        }
+                    @endphp
+                    <div id="count_{{ $questionId }}">
 
-                            {{-- @todo refactor label array creation to another location --}}
-                            @php
-                                $labels = ['Compilations' => __('Compilations')];
-                                foreach (array_keys($answers) as $answerId) {
-                                $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
-                                }
-                            @endphp
-                            <div id="count_{{ $questionId }}">
-
-                                <table class="table table-striped table-condensed">
-                                    <thead>
-                                    <tr class="row">
-                                        <th colspan="2">
-                                            {{ $compilationService->getQuestionText($questionId) }}
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                        <table class="table table-striped table-condensed">
+                            <thead>
+                            <tr class="row">
+                                <th colspan="2">
+                                    {{ $compilationService->getQuestionText($questionId) }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @if ($compilationService->isFreeTextQuestion($questionId) === true)
+                                    {{-- Free text answer counts are meaningless --}}
+                                    @foreach (array_keys($answers) as $answer)
+                                        <tr class="row">
+                                            {{-- https://stackoverflow.com/questions/28569955/how-do-i-use-nl2br-in-laravel-5-blade --}}
+                                            <td colspan="2">{!! nl2br(e($answer)) !!}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
                                     @foreach ($answers as $answerId => $count)
                                         <tr class="row">
                                             <td class="col-xs-10 col-sm-10 col-md-10 col-lg-10">{{ $labels[$answerId] }}</td>
-                                            <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                            {{-- Free text answer counts are meaningless. --}}
-                                            {{-- @todo find a better way to detect free text answers --}}
-                                            @if (preg_match('/^(\d+|[A-Z]{2}|male|female)$/', (string)$answerId) === 1)
-                                                {{ $count }}
-                                            @endif
-                                            </td>
+                                            <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{ $count }}</td>
                                         </tr>
                                     @endforeach
-                                    </tbody>
-                                </table>
+                                @endif
+                            </tbody>
+                        </table>
 
-                                <span class="hidden data">
-                                    @jsonize([
-                                        'question' => [
-                                            'id' => $questionId,
-                                            'text' => $compilationService->getQuestionText($questionId),
-                                        ],
-                                        'answers' => $answers,
-                                        'labels' => $labels,
-                                    ])
-                                </span>
+                        {{-- Question/answers data used to populate filters --}}
+                        {{-- Free-text questions/answers cannot be used with filters --}}
+                        @if ($compilationService->isFreeTextQuestion($questionId) === false)
+                            <span class="hidden data">
+                                @jsonize([
+                                    'question' => [
+                                        'id' => $questionId,
+                                        'text' => $compilationService->getQuestionText($questionId),
+                                    ],
+                                    'answers' => $answers,
+                                    'labels' => $labels,
+                                ])
+                            </span>
+                        @endif
 
-                            </div>
+                    </div>
 
-                            @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
+                    @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
                         </div>
                     @endif
 
@@ -201,7 +210,12 @@
             $('div[id^=count_]').each(function () {
 
                 // Question/answers data is extracted from count container tag.
-                var data = JSON.parse($(this).find('.data').html());
+                // Free-text questions/answers do not have data, in order to exclude them from filters.
+                var rawData = $(this).find('.data').html();
+                if (rawData === undefined) {
+                    return;
+                }
+                var data = JSON.parse(rawData);
 
                 window.addFilterToModal(modalBody, data, getUrlParameters());
 

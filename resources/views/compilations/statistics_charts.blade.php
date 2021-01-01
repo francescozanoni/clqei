@@ -84,22 +84,24 @@
                 @foreach ($statistics as $questionId => $answers)
 
                     @if ($section === null)
+
                         @php
                             $section = $sections->first();
                         @endphp
-
 
                         <div role="tabpanel" class="tab-pane active" id="section_{{ $section->id }}">
                             <h3>
                                 {{ $section->title }}
                             </h3>
-                            @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
-                                @if ($section->footer !== null)
-                                    <em>{{ $section->footer }}</em>
-                                @endif
-                                @php
-                                    $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
-                                @endphp
+
+                    @elseif($section->id !== ($compilationService->getQuestionSection($questionId) ?? $sections->first())->id)
+
+                            @if ($section->footer !== null)
+                                <em>{{ $section->footer }}</em>
+                            @endif
+                            @php
+                                $section = $compilationService->getQuestionSection($questionId) ?? $sections->first();
+                            @endphp
                         </div>
 
                         <div role="tabpanel" class="tab-pane" id="section_{{ $section->id }}">
@@ -107,31 +109,58 @@
                                 {{ $section->title }}
                             </h3>
 
-                            @endif
+                    @endif
 
+                    @if ($compilationService->isFreeTextQuestion($questionId) === true)
 
-                            {{--  @todo refactor label array creation to another location --}}
-                            @php
-                                $labels = ['Compilations' => __('Compilations')];
-                                foreach (array_keys($answers) as $answerId) {
+                        {{-- Free text answer counts are meaningless --}}
+                        <div id="count_{{ $questionId }}">
+                            <table class="table table-striped table-condensed">
+                                <thead>
+                                <tr class="row">
+                                    <th>
+                                        {{ $compilationService->getQuestionText($questionId) }}
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (array_keys($answers) as $answer)
+                                    <tr class="row">
+                                        {{-- https://stackoverflow.com/questions/28569955/how-do-i-use-nl2br-in-laravel-5-blade --}}
+                                        <td>{!! nl2br(e($answer)) !!}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    @else
+
+                        {{--  @todo refactor label array creation to another location --}}
+                        @php
+                            $labels = ['Compilations' => __('Compilations')];
+                            foreach (array_keys($answers) as $answerId) {
                                 $labels[$answerId] = $compilationService->getAnswerText($answerId, $questionId);
-                                }
-                            @endphp
-                            <div id="chart_{{ $questionId }}"
-                                 style="width: 100%; height: {{ (count($answers) > 5 || max(array_map('strlen', $answers)) > 16 ? (30 * count($answers)) : 100) }}px;">
-                                <span class="hidden data">
-                                    @jsonize([
-                                        'question' => [
-                                            'id' => $questionId,
-                                            'text' => $compilationService->getQuestionText($questionId),
-                                        ],
-                                        'answers' => $answers,
-                                        'labels' => $labels,
-                                    ])
-                                </span>
-                            </div>
+                            }
+                        @endphp
+                        {{-- Question/answers data used to populate filters --}}
+                        <div id="chart_{{ $questionId }}"
+                             style="width: 100%; height: {{ (count($answers) > 5 || max(array_map('strlen', $answers)) > 16 ? (30 * count($answers)) : 100) }}px;">
+                            <span class="hidden data">
+                                @jsonize([
+                                    'question' => [
+                                        'id' => $questionId,
+                                        'text' => $compilationService->getQuestionText($questionId),
+                                    ],
+                                    'answers' => $answers,
+                                    'labels' => $labels,
+                                ])
+                            </span>
+                        </div>
 
-                            @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
+                    @endif
+
+                    @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
                         </div>
                     @endif
 
@@ -175,8 +204,13 @@
 
             $('div[id^=chart_]').each(function () {
 
-                // Question/answers data is extracted from chart container tag.
-                var data = JSON.parse($(this).find('.data').html());
+                // Question/answers data is extracted from count container tag.
+                // Free-text questions/answers do not have data, in order to exclude them from filters.
+                var rawData = $(this).find('.data').html();
+                if (rawData === undefined) {
+                    return;
+                }
+                var data = JSON.parse(rawData);
                 var question = data['question'];
 
                 window.addFilterToModal(modalBody, data, getUrlParameters());

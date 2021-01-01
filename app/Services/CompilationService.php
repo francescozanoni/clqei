@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -74,7 +74,7 @@ class CompilationService
      *
      * @return bool
      */
-    public function isCompilationCreatable() : bool
+    public function isCompilationCreatable(): bool
     {
         return
             Location::count() > 0 &&
@@ -87,7 +87,7 @@ class CompilationService
      * @param int|string $sectionId section ID
      * @return string
      */
-    public function getSectionText($sectionId) : string
+    public function getSectionText($sectionId): string
     {
         $section = $this->sections->get($sectionId);
 
@@ -104,7 +104,7 @@ class CompilationService
      * @param int|string $questionId question ID
      * @return string
      */
-    public function getQuestionText($questionId) : string
+    public function getQuestionText($questionId): string
     {
 
         $otherQuestion = $this->otherQuestions->get($questionId);
@@ -123,8 +123,12 @@ class CompilationService
 
         return $questionId;
     }
-    
-    public function isFreeTextQuestion($questionId) : bool
+
+    /**
+     * @param int|string $questionId question ID
+     * @return bool
+     */
+    public function isFreeTextQuestion($questionId): bool
     {
 
         $otherQuestion = $this->otherQuestions->get($questionId);
@@ -154,7 +158,7 @@ class CompilationService
      *
      * @todo refactor
      */
-    public function getAnswerText($answerId, string $questionId = "") : string
+    public function getAnswerText($answerId, string $questionId = ""): string
     {
 
         $text = $answerId;
