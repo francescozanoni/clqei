@@ -12,9 +12,9 @@
             <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
             {{ __('Compilation statistics') }}
 
-            @if(empty($filters) === false && empty($statistics) === false)
+            @if(empty($filters) === false && empty($statistics) === false && empty($statistics['counts']) === false)
                 ({{
-                array_sum($statistics['stage_location_id']) .
+                array_sum($statistics['counts']['stage_location_id']) .
                 ' ' .
                 __('of') .
                 ' ' .
@@ -25,11 +25,11 @@
             @endif
             - ({!! link_to_route('compilations.statistics_charts', __('charts'), $filters) !!})
 
-            @if (empty($statistics) === false)
+            @if (empty($statistics) === false && empty($statistics['counts']) === false)
                 {{-- "Cancel filters" button is displayed only if any filters are active --}}
                 @if (empty($filters) === false)
                     <button type="button" class="btn btn-primary btn-xs pull-right" style="margin-left:4px"
-                            onclick="window.location.href='{{ route('compilations.statistics_counts') }}'">
+                            onclick="window.location.href='{{ route('compilations.statistics_numbers') }}'">
                         {{ __('Cancel filters') }}
                     </button>
                 @endif
@@ -45,7 +45,7 @@
 
         <div class="panel-body">
 
-            @if (empty($statistics) === true)
+            @if (empty($statistics) === true || empty($statistics['counts']) === true)
                 {{ __('No compilations found') }}
             @endif
 
@@ -82,7 +82,7 @@
                 @endphp
 
                 {{-- A container element for each question is created, together with its answers inside --}}
-                @foreach ($statistics as $questionId => $answers)
+                @foreach ($statistics['counts'] as $questionId => $answers)
 
                     @if ($section === null)
 
@@ -124,7 +124,7 @@
                         <table class="table table-striped table-condensed">
                             <thead>
                             <tr class="row">
-                                <th colspan="2">
+                                <th colspan="3">
                                     {{ $compilationService->getQuestionText($questionId) }}
                                 </th>
                             </tr>
@@ -135,14 +135,15 @@
                                     @foreach (array_keys($answers) as $answer)
                                         <tr class="row">
                                             {{-- https://stackoverflow.com/questions/28569955/how-do-i-use-nl2br-in-laravel-5-blade --}}
-                                            <td colspan="2">{!! nl2br(e($answer)) !!}</td>
+                                            <td colspan="3">{!! nl2br(e($answer)) !!}</td>
                                         </tr>
                                     @endforeach
                                 @else
                                     @foreach ($answers as $answerId => $count)
                                         <tr class="row">
                                             <td class="col-xs-10 col-sm-10 col-md-10 col-lg-10">{{ $labels[$answerId] }}</td>
-                                            <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{ $count }}</td>
+                                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">{{ $count }}</td>
+                                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1">{{ sprintf("%.2f%%", $statistics['percentages'][$questionId][$answerId] * 100) }}</td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -166,7 +167,7 @@
 
                     </div>
 
-                    @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
+                    @if (array_search($questionId, array_keys($statistics['counts'])) === count($statistics['counts']) - 1)
                         </div>
                     @endif
 

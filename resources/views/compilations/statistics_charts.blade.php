@@ -6,15 +6,15 @@
 
     <div class="panel panel-default">
 
-        {{-- @todo merge this tag with statistics_counts.blade.php --}}
+        {{-- @todo merge this tag with statistics_numbers.blade.php --}}
         <div class="panel-heading">
 
             <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
             {{ __('Compilation statistics') }}
 
-            @if(empty($filters) === false && empty($statistics) === false)
+            @if(empty($filters) === false && empty($statistics) === false && empty($statistics['counts']) === false)
                 ({{
-                array_sum($statistics['stage_location_id']) .
+                array_sum($statistics['counts']['stage_location_id']) .
                 ' ' .
                 __('of') .
                 ' ' .
@@ -23,9 +23,9 @@
             @else
                 ({{ \App\Models\Compilation::count() }})
             @endif
-            - ({!! link_to_route('compilations.statistics_counts', __('counts'), $filters) !!})
+            - ({!! link_to_route('compilations.statistics_numbers', __('numbers'), $filters) !!})
 
-            @if (empty($statistics) === false)
+            @if (empty($statistics) === false && empty($statistics['counts']) === false)
                 {{-- "Cancel filters" button is displayed only if any filters are active --}}
                 @if (empty($filters) === false)
                     <button type="button" class="btn btn-primary btn-xs pull-right" style="margin-left:4px"
@@ -45,7 +45,7 @@
 
         <div class="panel-body">
 
-            @if (empty($statistics) === true)
+            @if (empty($statistics) === true || empty($statistics['counts']) === true)
                 {{ __('No compilations found') }}
             @endif
 
@@ -82,7 +82,7 @@
                 @endphp
 
                 {{-- A container element for each question is created, together with its answers inside --}}
-                @foreach ($statistics as $questionId => $answers)
+                @foreach ($statistics['counts'] as $questionId => $answers)
 
                     @if ($section === null)
 
@@ -161,7 +161,7 @@
 
                     @endif
 
-                    @if (array_search($questionId, array_keys($statistics)) === count($statistics) - 1)
+                    @if (array_search($questionId, array_keys($statistics['counts'])) === count($statistics['counts']) - 1)
                         </div>
                     @endif
 

@@ -44,7 +44,7 @@ class AdministratorTest extends TestCase
 
         $response = $this->actingAs($user)->get(route("compilations.statistics_charts"));
         $response->assertStatus(200);
-        $response = $this->actingAs($user)->get(route("compilations.statistics_counts"));
+        $response = $this->actingAs($user)->get(route("compilations.statistics_numbers"));
         $response->assertStatus(200);
 
         // Administrators can see their own profile page.

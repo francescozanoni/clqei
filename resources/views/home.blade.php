@@ -66,7 +66,7 @@
                             <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
                             {{ __('Statistics') }}
                             ({!! link_to_route('compilations.statistics_charts', __('charts')) !!},
-                            {!! link_to_route('compilations.statistics_counts', __('counts')) !!})
+                            {!! link_to_route('compilations.statistics_numbers', __('numbers')) !!})
                         </li>
                     @endif
                 @endif

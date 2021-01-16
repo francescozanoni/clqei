@@ -254,6 +254,12 @@ class CompilationsController extends Controller
         );
     }
 
+    /**
+     * @param array $requestParameters
+     * @param App\Services\StatisticService $statisticService
+     *
+     * @return array
+     */
     private function getStatistics(array $requestParameters, App\Services\StatisticService $statisticService): array
     {
 
@@ -342,34 +348,50 @@ class CompilationsController extends Controller
          *                   [...]
          *                 )
          */
-        $statistics = $statisticService->getStatistics($formattedCompilations);
+        $counts = $statisticService->getCounts($formattedCompilations);
 
-        return $statistics;
+        $percentages = $statisticService->switchCountsToPercentages($counts);
+
+        return [
+            "counts" => $counts,
+            "percentages" => $percentages,
+        ];
     }
 
     /**
-     * Display compilation statistics as counts.
+     * Display compilation statistics as numbers.
      *
      * @param App\Services\StatisticService $statisticService
      *
      * @return \Illuminate\View\View
      */
-    public function statisticsCounts(App\Services\StatisticService $statisticService)
+    public function statisticsNumbers(App\Services\StatisticService $statisticService)
     {
 
         /**
          * @var array e.g. Array (
-         *                   [stage_location_id] => Array (
-         *                     [14] => 82
-         *                     [21] => 11
+         *                   [counts] => Array (
+         *                     [stage_location_id] => Array (
+         *                       [14] => 82
+         *                       [21] => 11
+         *                       [...]
+         *                     )
+         *                     [stage_ward_id] => Array (
+         *                       [65] => 3
+         *                       [3] => 7
+         *                       [...]
+         *                     )
          *                     [...]
          *                   )
-         *                   [stage_ward_id] => Array (
-         *                     [65] => 3
-         *                     [3] => 7
+         *                   [percentages] => Array (
+         *                     [stage_location_id] => Array (
+         *                       [...]
+         *                     )
+         *                     [stage_ward_id] => Array (
+         *                       [...]
+         *                     )
          *                     [...]
          *                   )
-         *                   [...]
          *                 )
          */
         $statistics = $this->getStatistics(request()->all(), $statisticService);
@@ -381,7 +403,7 @@ class CompilationsController extends Controller
         $sections->prepend($pseudoSection);
 
         return view(
-            "compilations.statistics_counts",
+            "compilations.statistics_numbers",
             [
                 "statistics" => $statistics,
                 "sections" => $sections,

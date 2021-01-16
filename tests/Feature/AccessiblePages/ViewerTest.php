@@ -43,7 +43,7 @@ class ViewerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route("compilations.statistics_charts"));
         $response->assertStatus(200);
-        $response = $this->actingAs($user)->get(route("compilations.statistics_counts"));
+        $response = $this->actingAs($user)->get(route("compilations.statistics_numbers"));
         $response->assertStatus(200);
 
         // Viewers can see their own profile page.

@@ -69,7 +69,7 @@ class StudentTest extends TestCase
         // Students cannot see compilation statistics.
         $response = $this->actingAs($user)->get(route("compilations.statistics_charts"));
         $response->assertStatus(403);
-        $response = $this->actingAs($user)->get(route("compilations.statistics_counts"));
+        $response = $this->actingAs($user)->get(route("compilations.statistics_numbers"));
         $response->assertStatus(403);
 
         // Students cannot do anything with stage locations.

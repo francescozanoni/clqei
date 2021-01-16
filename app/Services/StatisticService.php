@@ -1,9 +1,11 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services;
 
 use App\Models\Compilation;
+use InvalidArgumentException;
+use Traversable;
 
 class StatisticService
 {
@@ -21,7 +23,7 @@ class StatisticService
     /**
      * Export a set of compilation to a statistic-compliant format.
      *
-     * @param array|\Traversable $compilations
+     * @param array|Traversable $compilations
      *
      * @return array e.g. Array (
      *                      Array (
@@ -68,16 +70,15 @@ class StatisticService
      *                      [...]
      *                    )
      */
-    public function formatCompilations($compilations) : array
+    public function formatCompilations($compilations): array
     {
 
         if (is_array($compilations) === false &&
-            ($compilations instanceof \Traversable) === false
-        ) {
-            throw new \InvalidArgumentException("Compilation set must be an array or implement Traversable interface");
+            ($compilations instanceof Traversable) === false) {
+            throw new InvalidArgumentException("Compilation set must be an array or implement Traversable interface");
         }
 
-        if ($compilations instanceof \Traversable) {
+        if ($compilations instanceof Traversable) {
             $compilations = iterator_to_array($compilations);
         }
 
@@ -132,7 +133,7 @@ class StatisticService
      *                      [q35] => 236
      *                    )
      */
-    public function formatCompilation(Compilation $compilation) : array
+    public function formatCompilation(Compilation $compilation): array
     {
 
         $formatted = [
@@ -157,7 +158,8 @@ class StatisticService
     /**
      * Count occurrences of each answer of each question of the provided compilations.
      *
-     * @param array|\Traversable $formattedCompilations
+     * @param array|Traversable $formattedCompilations
+     *
      * @return array e.g. Array (
      *                      [stage_location_id] => Array (
      *                        [14] => 82
@@ -200,37 +202,138 @@ class StatisticService
      *                      [...]
      *                    )
      */
-    public function getStatistics($formattedCompilations) : array
+    public function getCounts($formattedCompilations): array
     {
         if (is_array($formattedCompilations) === false &&
-            ($formattedCompilations instanceof \Traversable) === false
-        ) {
-            throw new \InvalidArgumentException("Compilation set must be an array or implement Traversable interface");
+            ($formattedCompilations instanceof Traversable) === false) {
+            throw new InvalidArgumentException("Compilation set must be an array or implement Traversable interface");
         }
 
-        $statistics = [];
+        $counts = [];
 
         foreach ($formattedCompilations as $formattedCompilation) {
             foreach ($formattedCompilation as $questionId => $answerId) {
-                if (isset($statistics[$questionId]) === false) {
-                    $statistics[$questionId] = [];
+                if (isset($counts[$questionId]) === false) {
+                    $counts[$questionId] = [];
                 }
-                if (isset($statistics[$questionId][$answerId]) === false) {
-                    $statistics[$questionId][$answerId] = 0;
+                if (isset($counts[$questionId][$answerId]) === false) {
+                    $counts[$questionId][$answerId] = 0;
                 }
-                $statistics[$questionId][$answerId]++;
+                $counts[$questionId][$answerId]++;
             }
         }
 
         // Answers are sorted by record ID.
         // @todo sort by answer real sort value
-        foreach ($statistics as $questionId => &$answers) {
+        foreach ($counts as $questionId => &$answers) {
             if (preg_match("/^q\d+$/", $questionId) === 1) {
                 ksort($answers);
             }
         }
 
-        return $statistics;
+        return $counts;
+    }
+
+    /**
+     * Switch statistics as counts to statistics as percentages.
+     *
+     * @param array $counts e.g. Array (
+     *                                 [stage_location_id] => Array (
+     *                                   [14] => 82
+     *                                   [21] => 11
+     *                                   [...]
+     *                                 )
+     *                                 [stage_ward_id] => Array (
+     *                                   [65] => 3
+     *                                   [3] => 7
+     *                                   [...]
+     *                                 )
+     *                                 [stage_academic_year] => Array (
+     *                                   [2017/2018] => 120
+     *                                   [2016/2017] => 1
+     *                                 )
+     *                                 [stage_weeks] => Array (
+     *                                   [8] => 11
+     *                                   [5] => 1
+     *                                   [...]
+     *                                 )
+     *                                 [student_gender] => Array (
+     *                                   [female] => 95
+     *                                   [male] => 26
+     *                                 )
+     *                                 [student_nationality] => Array (
+     *                                   [RO] => 4
+     *                                   [IT] => 111
+     *                                   [...]
+     *                                 )
+     *                                 [q1] => Array (
+     *                                   [5] => 35
+     *                                   [8] => 5
+     *                                   [...]
+     *                                 )
+     *                                 [q2] => Array (
+     *                                   [84] => 18
+     *                                   [85] => 12
+     *                                   [...]
+     *                                 )
+     *                                 [...]
+     *                               )
+     *
+     * @return array e.g. Array (
+     *                      [stage_location_id] => Array (
+     *                        [14] => 82
+     *                        [21] => 11
+     *                        [...]
+     *                      )
+     *                      [stage_ward_id] => Array (
+     *                        [65] => 3
+     *                        [3] => 7
+     *                        [...]
+     *                      )
+     *                      [stage_academic_year] => Array (
+     *                        [2017/2018] => 120
+     *                        [2016/2017] => 1
+     *                      )
+     *                      [stage_weeks] => Array (
+     *                        [8] => 11
+     *                        [5] => 1
+     *                        [...]
+     *                      )
+     *                      [student_gender] => Array (
+     *                        [female] => 95
+     *                        [male] => 26
+     *                      )
+     *                      [student_nationality] => Array (
+     *                        [RO] => 4
+     *                        [IT] => 111
+     *                        [...]
+     *                      )
+     *                      [q1] => Array (
+     *                        [5] => 35
+     *                        [8] => 5
+     *                        [...]
+     *                      )
+     *                      [q2] => Array (
+     *                        [84] => 18
+     *                        [85] => 12
+     *                        [...]
+     *                      )
+     *                      [...]
+     *                    )
+     */
+    public function switchCountsToPercentages(array $counts): array
+    {
+
+        $percentages = [];
+
+        foreach ($counts as $questionId => $questionCounts) {
+            $percentages[$questionId] = [];
+            foreach ($questionCounts as $answerId => $answerCount) {
+                $percentages[$questionId][$answerId] = $answerCount / array_sum($questionCounts);
+            }
+        }
+
+        return $percentages;
     }
 
 }

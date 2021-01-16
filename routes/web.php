@@ -39,9 +39,9 @@ Route::middleware(["auth"])->group(function () {
     Route::get("compilations/statistics_charts", "CompilationsController@statisticsCharts")
         ->middleware(["can:viewAll,App\Models\Compilation"])
         ->name("compilations.statistics_charts");
-    Route::get("compilations/statistics_counts", "CompilationsController@statisticsCounts")
+    Route::get("compilations/statistics_numbers", "CompilationsController@statisticsNumbers")
         ->middleware(["can:viewAll,App\Models\Compilation"])
-        ->name("compilations.statistics_counts");
+        ->name("compilations.statistics_numbers");
 
     /*
      * Verb        URI                               Action   Route Name
