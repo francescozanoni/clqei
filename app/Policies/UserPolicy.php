@@ -116,11 +116,11 @@ class UserPolicy
      */
     public function update(User $user, User $model) : bool
     {
-        // A user can only update its own user
+        // A user can only update its own user (if it's not a student)
         // or be modified by an administrator.
         return
             $user->role === User::ROLE_ADMINISTRATOR ||
-            $user->id === $model->id;
+            ($user->id === $model->id && $user->role !== User::ROLE_STUDENT);
     }
 
     /**

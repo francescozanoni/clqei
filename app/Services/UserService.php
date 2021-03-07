@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App;
 use App\User;
+use Illuminate\Validation\Rule;
 
 class UserService
 {
@@ -56,14 +57,39 @@ class UserService
     }
 
     /**
-     * User creation validation rules for viewers:
-     * only viewers can be created.
+     * Base validation rules for user modification.
+     *
+     * @param User $managedUser user being modified
      *
      * @return array
      */
-    public function getViewerValidationRules() : array
+    public function getBaseValidationRulesForModification(User $managedUser) : array
+    {
+
+        return [
+            "first_name" => ["required", "string", "min:2", "max:255"],
+            "last_name" => ["required", "string", "min:2", "max:255"],
+            "email" => ["required", "string", "email", "max:255", Rule::unique("users")->ignore($managedUser->id)],
+            "role" => ["required"],
+        ];
+
+    }
+
+    /**
+     * User creation validation rules for viewers:
+     * only viewers can be created.
+     *
+     * @param User|null $managedUser user being created or modified
+     *
+     * @return array
+     */
+    public function getViewerValidationRules($managedUser = null) : array
     {
         $rules = $this->getBaseValidationRules();
+
+        if ($managedUser instanceof User) {
+            $rules = $this->getBaseValidationRulesForModification($managedUser);
+        }
 
         $rules["role"][] = "in:" . User::ROLE_VIEWER;
 
@@ -74,11 +100,17 @@ class UserService
      * User creation validation rules for administrators:
      * both viewers and administrators can be created.
      *
+     * @param User|null $managedUser user being created or modified
+     *
      * @return array
      */
-    public function getAdministratorValidationRules() : array
+    public function getAdministratorValidationRules($managedUser = null) : array
     {
         $rules = $this->getBaseValidationRules();
+
+        if ($managedUser instanceof User) {
+            $rules = $this->getBaseValidationRulesForModification($managedUser);
+        }
 
         $rules["role"][] = "in:" . User::ROLE_VIEWER . "," . User::ROLE_ADMINISTRATOR;
 

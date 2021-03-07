@@ -8,6 +8,7 @@ use App\Models\Ward;
 use App\Observers\EloquentModelObserver;
 use App\Services\CompilationService;
 use App\Services\DataTablesPluginService;
+use App\Services\UserService;
 use App\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -52,6 +53,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton("App\Services\CompilationService", function ($app) {
             return new CompilationService($app->make("App\Services\CountryService"));
+        });
+
+        $this->app->singleton("App\Services\UserService", function ($app) {
+            return new UserService();
         });
 
     }

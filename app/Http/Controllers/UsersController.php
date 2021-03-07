@@ -1,12 +1,12 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Http\Requests\IndexUsersRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\User;
 use DB;
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
@@ -115,7 +115,7 @@ class UsersController extends Controller
      *
      * @param \App\User $user
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -123,25 +123,33 @@ class UsersController extends Controller
     {
         $this->authorize("update", $user);
 
-        // @todo implement edit logic
-        return redirect(route("home"));
+        return view(
+            "users.edit",
+            ["user" => $user]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param \App\Http\Requests\StoreUserRequest $request
      * @param \App\User $user
      *
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(User $user)
+    public function update(StoreUserRequest $request, User $user)
     {
         $this->authorize("update", $user);
 
-        // @todo implement edit logic
-        return redirect(route("home"));
+        $user->first_name = $request->input("first_name");
+        $user->last_name = $request->input("last_name");
+        $user->email = $request->input("email");
+        $user->role = $request->input("role");
+        $user->save();
+
+        return \Redirect::route("users.index", ["role" => $user->role]);
     }
 
     /**

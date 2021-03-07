@@ -94,7 +94,7 @@ class ViewerTest extends TestCase
 
         // @todo add test viewers can see other viewers profile page
 
-        // Viewers can see students" profile page.
+        // Viewers can see students' profile page.
         $response = $this->actingAs($user)->get(route("users.show", ["user" => User::students()->first()]));
         $response->assertStatus(200);
 
@@ -111,6 +111,12 @@ class ViewerTest extends TestCase
         $response = $this->actingAs($user)->get(route("compilations.show", ["compilation" => $compilation]));
         $response->assertStatus(200);
 
+        // Viewers can edit their own profile.
+        $response = $this->actingAs($user)->get(route("users.edit", ["user" => $user]));
+        $response->assertStatus(200);
+        $response = $this->actingAs($user)->put(route("users.update", ["user" => $user]));
+        $response->assertRedirect(route("users.edit", ["user" => $user]));
+
     }
 
     /**
@@ -125,19 +131,13 @@ class ViewerTest extends TestCase
         $response = $this->actingAs($user)->get(route("users.index", ["role" => User::ROLE_ADMINISTRATOR]));
         $response->assertStatus(403);
 
-        // Viewers cannot see administrators" profile page.
+        // Viewers cannot see administrators' profile page.
         $response = $this->actingAs($user)->get(route("users.show", ["user" => User::administrators()->first()]));
         $response->assertStatus(403);
         // Viewers cannot delete themselves.
         $response = $this->actingAs($user)->delete(route("users.destroy", ["user" => $user]));
         $response->assertStatus(403);
         // @todo add test that viewers cannot delete other viewers
-        // These two assertions are to be updated and moved to available pages method,
-        // once user edit logic is implemented.
-        $response = $this->actingAs($user)->get(route("users.edit", ["user" => $user]));
-        $response->assertRedirect(route("home"));
-        $response = $this->actingAs($user)->put(route("users.update", ["user" => $user]));
-        $response->assertRedirect(route("home"));
 
         // Pages available only to unauthenticated users.
         $response = $this->get(route("login"));

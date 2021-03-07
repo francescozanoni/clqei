@@ -97,11 +97,11 @@ class AdministratorTest extends TestCase
 
         // @todo add test administrators can see other administrators profile page
 
-        // Administrators can see students" profile page.
+        // Administrators can see students' profile page.
         $response = $this->actingAs($user)->get(route("users.show", ["user" => User::students()->first()]));
         $response->assertStatus(200);
 
-        // Administrators can see viewers" profile page.
+        // Administrators can see viewers' profile page.
         $response = $this->actingAs($user)->get(route("users.show", ["user" => User::viewers()->first()]));
         $response->assertStatus(200);
 
@@ -117,6 +117,20 @@ class AdministratorTest extends TestCase
         $response = $this->actingAs($user)->get(route("compilations.show", ["compilation" => $compilation]));
         $response->assertStatus(200);
 
+        // Administrators can edit their own profile.
+        $response = $this->actingAs($user)->get(route("users.edit", ["user" => $user]));
+        $response->assertStatus(200);
+        $response = $this->actingAs($user)->put(route("users.update", ["user" => $user]));
+        $response->assertRedirect(route("users.edit", ["user" => $user]));
+
+        // @todo add test administrators can edit other administrators' profile
+
+        // Administrators can edit viewers' profile.
+        $response = $this->actingAs($user)->get(route("users.edit", ["user" => User::viewers()->first()]));
+        $response->assertStatus(200);
+        $response = $this->actingAs($user)->put(route("users.update", ["user" => User::viewers()->first()]));
+        $response->assertRedirect(route("users.edit", ["user" => User::viewers()->first()]));
+
     }
 
     /**
@@ -130,13 +144,8 @@ class AdministratorTest extends TestCase
         // Administrators cannot delete themselves.
         $response = $this->actingAs($user)->delete(route("users.destroy", ["user" => $user]));
         $response->assertStatus(403);
+
         // @todo add test that administrators can delete other administrators
-        // These two assertions are to be updated and moved to available pages method,
-        // once user edit logic is implemented.
-        $response = $this->actingAs($user)->get(route("users.edit", ["user" => $user]));
-        $response->assertRedirect(route("home"));
-        $response = $this->actingAs($user)->put(route("users.update", ["user" => $user]));
-        $response->assertRedirect(route("home"));
 
         // Pages available only to unauthenticated users.
         $response = $this->get(route("login"));

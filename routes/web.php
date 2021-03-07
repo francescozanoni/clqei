@@ -72,63 +72,63 @@ Route::middleware(["auth"])->group(function () {
         ["except" => ["create", "store"]]
     );
 
-        Route::post("locations/{location_id}/restore", "LocationsController@restore")
-            ->middleware("can:create,App\Models\Location")
-            ->name("locations.restore");
+    Route::post("locations/{location_id}/restore", "LocationsController@restore")
+        ->middleware("can:create,App\Models\Location")
+        ->name("locations.restore");
 
-        /*
-         * Verb        URI                               Action   Route Name
-         * ---------------------------------------------------------------------------
-         * GET         /locations                        index    locations.index
-         * POST        /locations                        store    locations.store
-         * GET         /locations/{location}/edit        edit     locations.edit
-         * PUT/PATCH   /locations/{location}             update   locations.update
-         * DELETE      /locations/{location}             destroy  locations.destroy
-         */
-        Route::resource(
-            "locations",
-            "LocationsController",
-            ["except" => ["create", "show"]]
-        )
-            ->middleware("can:create,App\Models\Location");
+    /*
+     * Verb        URI                               Action   Route Name
+     * ---------------------------------------------------------------------------
+     * GET         /locations                        index    locations.index
+     * POST        /locations                        store    locations.store
+     * GET         /locations/{location}/edit        edit     locations.edit
+     * PUT/PATCH   /locations/{location}             update   locations.update
+     * DELETE      /locations/{location}             destroy  locations.destroy
+     */
+    Route::resource(
+        "locations",
+        "LocationsController",
+        ["except" => ["create", "show"]]
+    )
+        ->middleware("can:create,App\Models\Location");
 
-        Route::post("wards/{ward_id}/restore", "WardsController@restore")
-            ->middleware("can:create,App\Models\Ward")
-            ->name("wards.restore");
-        /*
-         * Verb        URI                               Action   Route Name
-         * ---------------------------------------------------------------------------
-         * GET         /wards                            index    wards.index
-         * POST        /wards                            store    wards.store
-         * GET         /wards/{ward}/edit                edit     wards.edit
-         * PUT/PATCH   /wards/{ward}                     update   wards.update
-         * DELETE      /wards/{ward}                     destroy  wards.destroy
-         */
-        Route::resource(
-            "wards",
-            "WardsController",
-            ["except" => ["create", "show"]]
-        )
-            ->middleware("can:create,App\Models\Ward");
+    Route::post("wards/{ward_id}/restore", "WardsController@restore")
+        ->middleware("can:create,App\Models\Ward")
+        ->name("wards.restore");
+    /*
+     * Verb        URI                               Action   Route Name
+     * ---------------------------------------------------------------------------
+     * GET         /wards                            index    wards.index
+     * POST        /wards                            store    wards.store
+     * GET         /wards/{ward}/edit                edit     wards.edit
+     * PUT/PATCH   /wards/{ward}                     update   wards.update
+     * DELETE      /wards/{ward}                     destroy  wards.destroy
+     */
+    Route::resource(
+        "wards",
+        "WardsController",
+        ["except" => ["create", "show"]]
+    )
+        ->middleware("can:create,App\Models\Ward");
 
     Route::middleware("can:viewAll,App\Models\Compilation")
         ->group(function () {
 
-        // ---------------------------------------------------------------------------
-        // These routes are the entry points that provide frontend assets
-        // located within the private part of the application.
-        Route::get("/datatables/languages/{country}.json", function ($countryCode) {
-            return App::make("App\Services\DataTablesPluginService")->getLanguage($countryCode);
-        })
-            ->where("country", "[a-zA-Z]{2}")
-            ->name("datatables-language");
+            // ---------------------------------------------------------------------------
+            // These routes are the entry points that provide frontend assets
+            // located within the private part of the application.
+            Route::get("/datatables/languages/{country}.json", function ($countryCode) {
+                return App::make("App\Services\DataTablesPluginService")->getLanguage($countryCode);
+            })
+                ->where("country", "[a-zA-Z]{2}")
+                ->name("datatables-language");
 
-        Route::get("/datatables/datetime.js", function () {
-            return App::make("App\Services\DataTablesPluginService")->getDateTime();
-        })
-            ->name("datatables-datetime");
+            Route::get("/datatables/datetime.js", function () {
+                return App::make("App\Services\DataTablesPluginService")->getDateTime();
+            })
+                ->name("datatables-datetime");
 
-    });
+        });
 
 });
 

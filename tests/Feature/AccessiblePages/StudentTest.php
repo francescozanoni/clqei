@@ -99,7 +99,7 @@ class StudentTest extends TestCase
         // Students cannot see the list of users.
         $response = $this->actingAs($user)->get(route("users.index"));
         $response->assertRedirect(route("home"));
-        // Students cannot see other users" profile page.
+        // Students cannot see other users' profile page.
         $response = $this->actingAs($user)->get(route("users.show", ["user" => User::administrators()->first()]));
         $response->assertStatus(403);
         $response = $this->actingAs($user)->get(route("users.show", ["user" => User::viewers()->first()]));
@@ -111,9 +111,9 @@ class StudentTest extends TestCase
         // These two assertions are to be updated and moved to available pages method,
         // once user edit logic is implemented.
         $response = $this->actingAs($user)->get(route("users.edit", ["user" => $user]));
-        $response->assertRedirect(route("home"));
+        $response->assertStatus(403);
         $response = $this->actingAs($user)->put(route("users.update", ["user" => $user]));
-        $response->assertRedirect(route("home"));
+        $response->assertStatus(403);
 
         // Pages available only to unauthenticated users.
         $response = $this->get(route("login"));
@@ -134,7 +134,7 @@ class StudentTest extends TestCase
         // Switch user.
         $user = User::students()->orderBy("id", "desc")->first();
 
-        // Students cannot view other students" compilation details.
+        // Students cannot view other students' compilation details.
         $response = $this->actingAs($user)->get(route("compilations.show", ["compilation" => $compilation]));
         $response->assertStatus(403);
 
