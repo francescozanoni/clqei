@@ -26,7 +26,7 @@
     "datatables.net": "^1.10.23",
     "datatables.net-bs": "^1.10.23",
     "datatables.net-plugins": "^1.10.22",
-    "highcharts": "^8.2.2",
+    "highcharts": "^9.0.0",
     "hoek": "^5.0.4",
     "marked": "github:chjj/marked",
     "moment": "^2.29.1",
