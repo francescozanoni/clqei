@@ -29,7 +29,7 @@
     "highcharts": "^8.2.2",
     "hoek": "^5.0.4",
     "marked": "github:chjj/marked",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "ssri": "^5.3.0"
   }
 }
